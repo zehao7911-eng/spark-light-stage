@@ -4695,8 +4695,8 @@ body {
        front stage light (keeps the maid readable), and a dim violet ambient.
        ACES tone mapping compresses the highlights so the colour reads rich
        instead of washing out. The accent light is recoloured per phase. */
-    scene.add(new THREE.HemisphereLight(0x2a2040, 0x05030f, 0.10));
-    var front = new THREE.DirectionalLight(0xfff1e8, 0.52);
+    scene.add(new THREE.HemisphereLight(0xeaf3ff, 0x686075, 0.65));
+    var front = new THREE.DirectionalLight(0xfff1e8, 1.05);
     front.position.set(0, 3, 12);
     scene.add(front);
     var cyan = new THREE.DirectionalLight(0x23c8ff, 0.22);
@@ -5316,14 +5316,14 @@ body {
     });
   }
 
-function loadPublishedScene(url,onLoad,onProgress,onError){var parts=[],loaded=[0,0],done=0,failed=false;for(let i=0;i<2;i++){let x=new XMLHttpRequest();x.open('GET','neon-paradise-scene-'+(i+1)+'.bin');x.responseType='arraybuffer';x.timeout=180000;x.onprogress=function(e){loaded[i]=e.loaded;onProgress({loaded:loaded[0]+loaded[1],total:32851256})};function fail(){if(!failed){failed=true;onError(new Error('Model download failed. Please refresh to retry.'))}}x.onerror=fail;x.ontimeout=fail;x.onload=function(){if(x.status!==200){fail();return}parts[i]=new Uint8Array(x.response);if(++done===2&&!failed){var merged=new Uint8Array(32851256);merged.set(parts[0]);merged.set(parts[1],parts[0].length);try{loader.parse(merged.buffer,'',onLoad,onError)}catch(e){onError(e)}}};x.send()}}
+function loadPublishedScene(url,onLoad,onProgress,onError){var parts=[],loaded=[0,0],done=0,failed=false;for(let i=0;i<2;i++){let x=new XMLHttpRequest();x.open('GET','neon-paradise-scene-v2-'+(i+1)+'.bin');x.responseType='arraybuffer';x.timeout=180000;x.onprogress=function(e){loaded[i]=e.loaded;onProgress({loaded:loaded[0]+loaded[1],total:39449596})};function fail(){if(!failed){failed=true;onError(new Error('Model download failed. Please refresh to retry.'))}}x.onerror=fail;x.ontimeout=fail;x.onload=function(){if(x.status!==200){fail();return}parts[i]=new Uint8Array(x.response);if(++done===2&&!failed){var merged=new Uint8Array(39449596);merged.set(parts[0]);merged.set(parts[1],parts[0].length);try{loader.parse(merged.buffer,'',onLoad,onError)}catch(e){onError(e)}}};x.send()}}
   function start() {
     loadPublishedScene(
       'assets/scene.glb',
       function (gltf) {
         var obj = gltf.scene;
         hideRigidBodies(obj);
-        neonify(obj);
+        // Preserve the original PMX textures and material colours.
         scene.add(obj);
 
         // Frame on the maid, not the whole resort, so she is the star and the
