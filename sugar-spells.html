@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#d89072">
+  <meta name="description" content="Brew tiny magical creatures in a sunlit candy workshop.">
+  <title>SUGAR SPELLS — Little Magic, Big Surprises</title>
+  <link rel="stylesheet" href="sugar-spells.css">
+  <script src="sugar-spells.js" defer></script>
+</head>
+<body>
+  <main class="game" aria-label="Sugar Spells game">
+    <div class="sunwash"></div>
+    <header class="topbar">
+      <div class="titleblock"><span class="eyebrow">A LITTLE MAGIC WORKSHOP</span><h1>SUGAR <em>SPELLS</em></h1></div>
+      <div class="topright"><button id="sound" class="sound" aria-label="Toggle sound" aria-pressed="true">♫</button><div class="wallet"><span class="coin">✦</span><strong id="wallet">240</strong></div></div>
+    </header>
+    <div class="ribbon"><span id="chapter">DAY 01</span><span class="ribbon-center">BREW · STOP · DISCOVER</span><button id="albumTrigger" class="album-trigger" aria-label="Open discovery album"><span id="discovered">0 / 15</span> ▣</button></div>
+    <section class="machine" aria-label="Magic brewing machine">
+      <div class="machine-top"><span class="starlet">✦</span><span id="headline">MAKE A LITTLE MAGIC</span><span class="starlet">✦</span></div>
+      <div class="wanted"><span class="wanted-label">TODAY'S WISH</span><span id="wishIcon" class="wish-icon">✿</span><span id="wishName">BLOOM</span><span class="wish-bonus">+15</span></div>
+      <div class="reels" aria-label="Three ingredient dials">
+        <button class="reel" data-index="0" aria-label="Stop first dial"><span class="reel-shine"></span><span class="reel-symbol" id="symbol0">✿</span><span class="reel-name" id="name0">BLOOM</span><span class="reel-num">I</span></button>
+        <button class="reel" data-index="1" aria-label="Stop second dial"><span class="reel-shine"></span><span class="reel-symbol" id="symbol1">✦</span><span class="reel-name" id="name1">GLOW</span><span class="reel-num">II</span></button>
+        <button class="reel" data-index="2" aria-label="Stop third dial"><span class="reel-shine"></span><span class="reel-symbol" id="symbol2">❋</span><span class="reel-name" id="name2">FIZZ</span><span class="reel-num">III</span></button>
+      </div>
+      <div class="brew-area">
+        <div class="steam steam-a"></div><div class="steam steam-b"></div><div class="steam steam-c"></div>
+        <div class="cauldron"><div class="brew-surface"><div id="creature" class="creature"><span class="ear left"></span><span class="ear right"></span><span class="eye left"></span><span class="eye right"></span><span class="mouth"></span></div></div><div class="pot-body"><span>✦</span></div><div class="pot-foot left"></div><div class="pot-foot right"></div></div>
+        <div id="sparkLayer" class="spark-layer" aria-hidden="true"></div>
+      </div>
+      <div class="result" aria-live="polite"><strong id="resultName">A tiny surprise awaits</strong><span id="resultReward">TAP BREW TO BEGIN</span></div>
+      <img class="chef" src="sugar-spells-chef.webp" alt="Smiling salamander candy chef" decoding="async">
+      <div id="speech" class="speech">Let's brew! ✦</div>
+    </section>
+    <footer class="controls">
+      <div class="control-top"><div class="stake"><span>STAR COST</span><div class="stake-buttons"><button data-stake="5">5</button><button data-stake="10" class="selected">10</button><button data-stake="20">20</button></div></div><div class="status"><span id="rush">5 TO SUGAR RUSH</span><span id="best">BEST +0</span></div></div>
+      <button id="action" class="action">BREW MAGIC <span>✦</span></button>
+      <div id="hint" class="hint">TAP TO BREW · TAP 3 TIMES TO STOP</div>
+    </footer>
+    <section id="album" class="album" aria-label="Discovery album" hidden><div class="album-card"><div class="album-head"><div><small>YOUR LITTLE FRIENDS</small><h2>Discovery Album</h2></div><button id="albumClose" aria-label="Close discovery album">✕</button></div><div id="albumGrid" class="album-grid"></div><p>EVERY BREW CAN MAKE A NEW FRIEND</p></div></section>
+  </main>
+</body>
+</html>
