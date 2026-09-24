@@ -1,0 +1,13 @@
+{
+  "parts": [
+    "last-lantern-model-00.bin",
+    "last-lantern-model-01.bin",
+    "last-lantern-model-02.bin",
+    "last-lantern-model-03.bin",
+    "last-lantern-model-04.bin",
+    "last-lantern-model-05.bin",
+    "last-lantern-model-06.bin"
+  ],
+  "bytes": 132313196,
+  "sha256": "8b2662bbfc0015699a63111a3df2fcbdf101dd6fe9b7d3205fb588282fa0e0eb"
+}

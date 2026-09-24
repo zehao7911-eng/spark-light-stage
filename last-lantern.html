@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#100d12">
+  <title>The Last Lantern · An Interactive Halloween Tale</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=DM+Sans:wght@400;500;600&display=swap');
+    :root{color-scheme:dark;--gold:#f8c47d;--pale:#f7e9d1;--muted:#c0ac99}*{box-sizing:border-box}
+    html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#100d12;color:var(--pale);font-family:'DM Sans',sans-serif}
+    canvas{display:block}button{font:inherit}#game{position:fixed;inset:0}
+    #vignette,#grain{pointer-events:none;position:fixed;inset:0;z-index:5}
+    #vignette{background:radial-gradient(ellipse 65% 60% at 50% 45%,transparent 33%,#07060aa8 100%)}
+    #grain{opacity:.08;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.65'/%3E%3C/svg%3E")}
+    #flash{pointer-events:none;position:fixed;inset:0;z-index:8;background:#fff5c9;opacity:0;transition:opacity .45s}
+    #loading{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 42%,#302330,#110d15 55%,#09070b);transition:opacity 1s}
+    #loading.out{opacity:0;pointer-events:none}.load-inner{text-align:center;width:min(480px,calc(100vw - 50px))}
+    .eyebrow{letter-spacing:.36em;text-transform:uppercase;color:#d6a96d;font-size:10px;font-weight:600}
+    .sigil{margin:auto auto 24px;width:75px;height:75px;display:grid;place-items:center;border:1px solid #c69b6370;border-radius:50%;box-shadow:0 0 60px #e29b3d33,inset 0 0 28px #e29b3d2b;font-size:32px;color:#ffd99a;animation:breathe 3s ease-in-out infinite}
+    @keyframes breathe{50%{box-shadow:0 0 95px #e29b3d7a,inset 0 0 35px #e29b3d55;transform:scale(1.04)}}
+    h1{font:500 clamp(36px,5vw,66px)/1.08 'Cinzel',serif;letter-spacing:.12em;margin:10px 0 9px;text-shadow:0 0 40px #e7a0515e}
+    .subtitle{font:400 14px/1.65 'DM Sans',sans-serif;letter-spacing:.12em;color:#d3c1b0;margin:0 0 32px}
+    .bar{height:2px;width:100%;background:#ffffff27;position:relative;overflow:hidden}.bar i{display:block;width:0;height:100%;background:linear-gradient(90deg,#a95b39,#ffdd9e);box-shadow:0 0 15px #ffc071;transition:width .35s}
+    #loadText{font-size:11px;letter-spacing:.15em;color:#aa9786;margin:13px 0 30px;text-transform:uppercase}
+    .button{padding:13px 26px;border:1px solid #eab2769c;background:linear-gradient(135deg,#633920aa,#311f20bb);color:#ffe0ac;font:500 12px 'Cinzel',serif;letter-spacing:.18em;cursor:pointer;box-shadow:0 8px 30px #0008,inset 0 1px #ffffff25;transition:transform .2s,background .2s}.button:hover{transform:translateY(-2px);background:#7b4729}
+    #enter{display:none}.footnote{color:#917c70;font-size:10px;letter-spacing:.09em;line-height:1.6;margin-top:30px}
+    #hud{position:fixed;inset:0;z-index:10;pointer-events:none;opacity:0;transition:opacity .8s}#hud.show{opacity:1}
+    #top{position:absolute;left:36px;top:27px;display:flex;align-items:center;gap:13px;text-shadow:0 2px 10px #000}#top .mark{width:28px;height:28px;border:1px solid #e3b47788;border-radius:50%;display:grid;place-items:center;color:#ffd390;font-size:14px}#top .brand{font:500 15px 'Cinzel',serif;letter-spacing:.21em;color:#f5d2a5}#top .chapter{display:block;margin-top:4px;font:500 9px 'DM Sans',sans-serif;letter-spacing:.27em;text-transform:uppercase;color:#bda896}
+    #objective{position:absolute;left:36px;bottom:35px;border-left:1px solid #e9bd8494;padding-left:16px;max-width:330px;text-shadow:0 2px 10px #000}.tiny{display:block;color:#e6ad73;font-size:9px;letter-spacing:.25em;font-weight:600;margin-bottom:6px}.objective-text{font:400 15px 'Cinzel',serif;line-height:1.45;letter-spacing:.04em}
+    #controls{position:absolute;right:30px;bottom:34px;color:#d2bda699;font-size:10px;letter-spacing:.08em;text-align:right;line-height:1.8}
+    #crosshair{position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px;border:1px solid #fff5dd;border-radius:50%;box-shadow:0 0 10px #ffc977;transition:transform .2s,background .2s}#crosshair.active{transform:scale(2);background:#ffd28d}
+    #prompt{position:absolute;left:50%;top:calc(50% + 31px);transform:translateX(-50%);font:500 11px 'DM Sans',sans-serif;letter-spacing:.13em;text-shadow:0 2px 8px #000;color:#fff4dc;white-space:nowrap}
+    #centerMessage{position:absolute;left:50%;top:22%;transform:translate(-50%,-10px);font:400 22px 'Cinzel',serif;letter-spacing:.15em;text-shadow:0 0 20px #000,0 2px 8px #000;text-align:center;opacity:0;transition:opacity .35s,transform .35s;white-space:nowrap}#centerMessage.show{opacity:1;transform:translate(-50%,0)}
+    #align{position:absolute;left:50%;bottom:90px;transform:translateX(-50%);display:none;text-align:center}.align-ring{width:130px;height:14px;border:1px solid #d6ad7c78;background:#1c1216aa;position:relative;margin:12px auto}.align-ring:before{content:'';position:absolute;left:50%;top:-5px;height:22px;border-left:1px solid #f8c77f}.align-ring i{position:absolute;top:-3px;width:6px;height:18px;background:#f7d198;box-shadow:0 0 16px #ffb74a}.align-hint{font-size:10px;color:#e3cbb2;letter-spacing:.15em}
+    #note{position:fixed;z-index:20;left:50%;top:50%;transform:translate(-50%,-50%) scale(.95);opacity:0;pointer-events:none;transition:.4s;width:min(440px,calc(100vw - 40px));padding:37px 42px;background:linear-gradient(135deg,#dbb885,#b8946e);color:#35271f;box-shadow:0 28px 100px #000c,0 0 0 9px #29201c80;clip-path:polygon(0 0,100% 0,100% 98%,98% 100%,0 100%)}#note.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}#note .stamp{font:500 10px 'Cinzel',serif;letter-spacing:.25em;border:1px solid #5d4135;padding:8px 11px;width:max-content}#note .no{font:500 42px 'Cinzel',serif;margin:23px 0 2px}#note .copy{font-size:13px;line-height:1.7;letter-spacing:.08em}#note button{margin-top:25px;background:transparent;border:0;border-bottom:1px solid #533723;padding:4px 0;color:#432d25;cursor:pointer;font-size:11px;letter-spacing:.18em}
+    #ending{position:fixed;z-index:25;inset:0;background:radial-gradient(circle,#352944e8,#110d17f5 65%);display:none;align-items:center;justify-content:center;text-align:center;padding:30px}#ending.show{display:flex}#ending h2{font:500 clamp(36px,6vw,75px) 'Cinzel',serif;letter-spacing:.1em;margin:12px 0;color:#ffe3ba}#ending p{letter-spacing:.12em;font-size:14px;color:#d5bfa9;line-height:1.8;margin-bottom:34px}
+    @media(max-width:750px){#controls{display:none}#top{left:20px;top:20px}#objective{left:20px;bottom:22px}#loading .footnote{display:none}}
+  </style>
+</head>
+<body>
+  <div id="game"></div><div id="vignette"></div><div id="grain"></div><div id="flash"></div>
+  <div id="loading"><div class="load-inner"><div class="sigil">✦</div><div class="eyebrow">A small story of light and memory</div><h1>THE LAST<br>LANTERN</h1><p class="subtitle">The station has forgotten its final departure.</p><div class="bar"><i id="progress"></i></div><div id="loadText">Preparing the station</div><button class="button" id="enter">ENTER THE STATION</button><div class="footnote">Desktop experience · Headphones recommended<br>Original high-detail 3D model · No model compression</div></div></div>
+  <div id="hud"><div id="top"><div class="mark">✦</div><div><div class="brand">THE LAST LANTERN</div><span class="chapter" id="chapter">01 · The forgotten station</span></div></div><div id="objective"><span class="tiny">YOUR PATH</span><span class="objective-text" id="objectiveText">Find the last ticket.</span></div><div id="crosshair"></div><div id="prompt"></div><div id="centerMessage"></div><div id="align"><span class="tiny">SHADOW ALIGNMENT</span><div class="align-ring"><i id="needle"></i></div><span class="align-hint">DRAG LEFT / RIGHT · RELEASE TO SET</span></div><div id="controls">W A S D — MOVE &nbsp; · &nbsp; MOUSE — LOOK<br>E / CLICK — INTERACT &nbsp; · &nbsp; ESC — CURSOR</div></div>
+  <div id="note"><div class="stamp">ONE WAY · OCT 31</div><div class="no">NO. 001</div><div class="copy">The final departure waits for the one who can return its light.</div><button id="closeNote">KEEP THE TICKET →</button></div>
+  <div id="ending"><div><div class="eyebrow">The station remembers</div><h2>FIRST LIGHT</h2><p>One lantern was enough to bring the whole night home.</p><button class="button" id="again">WALK THE NIGHT AGAIN</button></div></div>
+  <script src="last-lantern-three.min.js"></script><script src="last-lantern-GLTFLoader.js"></script><script src="last-lantern.js"></script>
+</body></html>
