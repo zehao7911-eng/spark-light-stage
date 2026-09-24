@@ -16,28 +16,40 @@
 @media(max-width:680px){.app{padding:12px 12px max(18px,env(safe-area-inset-bottom))}.topbar{height:38px}.brand{font-size:10px;letter-spacing:.16em;gap:8px}.brand-icon{width:26px;height:26px}.top-right{gap:6px}.top-right>span{display:none}.sound{padding:8px 10px}.hero{position:relative;display:block;padding-right:86px;margin:22px 1px 14px;min-height:89px}.eyebrow{font-size:9px;margin-bottom:8px}.hero h1{font-size:clamp(34px,10vw,48px)}.hero-sub{font-size:10px;margin-top:9px}.best{position:absolute;right:0;bottom:4px;width:76px;min-width:0;padding-bottom:2px}.best label{font-size:8px;line-height:1.25}.best strong{font-size:19px}.layout{display:flex;flex-direction:column;gap:10px}.stage-card{min-height:0;height:min(62vw,300px);border-radius:15px}.stage-ui{padding:12px}.zone-chip{font-size:8px;padding:7px 9px;gap:6px}.depth-box small{font-size:8px}.depth-box b{font-size:19px}.event-sticker{width:62px;height:62px;font-size:30px}.scene-mid{top:47%}.scene-message{font-size:14px;margin-top:8px}.sonar{width:37px;height:37px}.scene-caption{font-size:8px}.depth-ticks b{width:10px}.panel{min-height:0;padding:16px 15px 13px;border-radius:15px}.bank-row{padding-bottom:10px}.bank-amount{font-size:18px}.haul{padding:13px 0 8px;display:grid;grid-template-columns:1fr auto;align-items:center}.haul-title{font-size:9px}.mult{font-size:38px}.haul-bottom{display:block;text-align:right;margin-top:17px;line-height:1.5}.haul-bottom span{display:block;font-size:8px}.haul-bottom b{font-size:11px}.danger{grid-column:1/-1;margin-top:9px}.risk-pips i{width:19px}.event-card{min-height:62px;margin:10px 0 11px;padding:8px 10px}.event-icon{width:35px;height:35px;font-size:20px}.event-copy b{font-size:10px}.event-copy span{font-size:10px}.wager-label{font-size:8px;margin-bottom:6px}.chip{min-height:37px}.primary{min-height:48px}.secondary{min-height:40px}.helper{font-size:8px;margin-top:7px}.lower{grid-template-columns:1fr auto;margin-top:9px;gap:7px}.log-strip{min-height:43px;padding:8px 10px;gap:7px}.log-dot{width:23px;height:23px}.log-text{font-size:10px;line-height:1.2}.field-btn{height:43px;padding:0 10px;font-size:8px}.footer{font-size:8px;margin:13px 2px 0;gap:10px}.footer span:last-child{text-align:right}.field-panel{padding:12px}.specimen{width:calc((100% - 24px)/4);height:64px}.toast{top:13%;font-size:10px;white-space:nowrap}}
 @media(max-width:370px){.app{padding-left:9px;padding-right:9px}.hero h1{font-size:32px}.hero-sub{font-size:9px}.panel{padding-left:12px;padding-right:12px}.field-btn{padding:0 8px}.scene-message{font-size:12px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+/* Keep the playfield quiet so each tap carries the feedback. */
+.eyebrow,.hero-sub,.scene-caption>span,.event-copy span,.footer,.helper,.wager-label span{display:none!important}
+.event-sticker{width:96px;height:96px;font-size:48px;border-color:#eff7bf80;background:radial-gradient(circle,#f1ffbf65,#caf1d00b 70%);box-shadow:0 0 34px #caffaa25}
+.scene-message{display:table;max-width:90%;padding:7px 14px;border:1px solid #e8f2bf45;border-radius:30px;background:#071c25b8;backdrop-filter:blur(8px);font:800 10px/1.15 ui-sans-serif,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.event-icon{display:none}.event-card{min-height:56px;margin:13px 0 12px}.event-copy b{font-size:12px}.log-strip{min-height:40px;padding:8px 12px}.field-btn{height:40px}
+.stage-card.dive canvas{animation:descend .55s cubic-bezier(.2,.8,.2,1)}@keyframes descend{0%{transform:translateY(0) scale(1);filter:brightness(1)}38%{transform:translateY(-13px) scale(1.035);filter:brightness(1.5)}100%{transform:translateY(0) scale(1);filter:brightness(1)}}
+.stage-card.bump{animation:bump .48s ease,alarm .48s ease}@keyframes alarm{0%,100%{box-shadow:0 24px 80px #0004, inset 0 0 35px #70ded00a}38%{box-shadow:0 0 0 3px #ff9276aa,0 0 40px #ff765f88}}
+.event-sticker.boop{animation:boop .52s cubic-bezier(.17,.89,.32,1.49)}@keyframes boop{0%{transform:scale(.55) rotate(-12deg);filter:brightness(2)}68%{transform:scale(1.14) rotate(4deg)}100%{transform:scale(1) rotate(0)}}
+.mult.flash{animation:multPop .45s cubic-bezier(.2,.8,.2,1)}@keyframes multPop{0%{transform:scale(.8);filter:brightness(2.3);text-shadow:0 0 38px var(--lime)}100%{transform:scale(1);filter:brightness(1);text-shadow:0 0 28px #c7ee7860}}
+.bank-amount b.counting{animation:coinGlow .5s ease}@keyframes coinGlow{40%{color:var(--lime);transform:scale(1.16)}100%{color:#e8eacb;transform:scale(1)}}
+.modal-box p.reward{font:700 28px Georgia;color:var(--lime);letter-spacing:.02em}
+@media(max-width:680px){.hero{min-height:78px;margin:19px 1px 11px}.hero h1{font-size:clamp(35px,10vw,48px)}.best{width:68px;bottom:7px}.stage-card{height:min(72vw,320px)}.stage-ui{padding:11px}.event-sticker{width:76px;height:76px;font-size:39px}.scene-mid{top:48%}.scene-message{font-size:9px;padding:6px 11px}.event-card{min-height:50px;margin:9px 0 10px}.haul{padding:10px 0 5px}.danger{margin-top:8px}.chip{min-height:44px}.field-btn{height:42px}.lower{margin-top:8px}.log-text{font-size:9px}}
 </style>
 </head>
 <body>
 <div class="grain"></div><div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="app">
-<header class="topbar"><div class="brand"><div class="brand-icon">◒</div><div>DEEP LUCK <span>FIELD CLUB</span></div></div><div class="top-right"><span>EST. WHENEVER THE TIDE SAYS SO</span><button class="sound" id="soundBtn" aria-label="Toggle sound">◖ SOUND OFF</button></div></header>
-<div class="hero"><div><p class="eyebrow">A tiny game of very deep decisions</p><h1>ONE MORE <em>DIVE.</em></h1><p class="hero-sub">Find something weird. Decide when to head home.</p></div><div class="best"><label>BEST DEPTH</label><strong id="best">0 m</strong></div></div>
+<header class="topbar"><div class="brand"><div class="brand-icon">◒</div><div>DEEP LUCK <span>FIELD CLUB</span></div></div><div class="top-right"><span>EST. WHENEVER THE TIDE SAYS SO</span><button class="sound" id="soundBtn" aria-label="Toggle sound">♪</button></div></header>
+<div class="hero"><div><p class="eyebrow">A tiny game of very deep decisions</p><h1>ONE MORE <em>DIVE.</em></h1><p class="hero-sub">Find something weird. Decide when to head home.</p></div><div class="best"><label>BEST</label><strong id="best">0 m</strong></div></div>
 <main>
 <div class="layout">
 <section class="stage-card" id="stageCard" aria-label="Underwater scene"><canvas id="ocean" aria-label="Animated deep sea illustration"></canvas><div class="stage-ui">
 <div class="stage-top"><span class="zone-chip"><i></i><span id="zoneName">SUNLIT SHELF</span></span><div class="depth-box"><small>DEPTH</small><b id="depth">00 m</b></div></div>
-<div class="scene-mid" id="sceneMid"><div class="event-sticker" id="sticker">🐠</div><div class="scene-message" id="sceneMessage">The sea looks suspiciously friendly.</div></div>
+<div class="scene-mid" id="sceneMid"><div class="event-sticker" id="sticker">🐠</div><div class="scene-message" id="sceneMessage">TAP DIVE</div></div>
 <div class="scene-caption"><div class="sonar">⌁</div><div class="depth-ticks" id="ticks"></div><span id="sceneTag">IT'S PRETTY SHALLOW DOWN HERE</span></div>
 </div></section>
 <aside class="panel" aria-label="Dive controls">
-<div class="bank-row"><span class="stat-label">SHELL BANK</span><div class="bank-amount"><span class="shell">◈</span><b id="bank">120</b></div></div>
-<div class="haul"><div><div class="haul-title">UNBANKED HAUL</div><div class="mult" id="mult">×1.00</div></div><div class="haul-bottom"><span>SAFE RETURN</span><b id="haul">—</b></div><div class="danger"><span class="danger-label">TROUBLE AHEAD</span><span class="risk-pips" id="riskPips"></span></div></div>
-<div class="event-card" id="eventCard"><div class="event-icon" id="eventIcon">🫧</div><div class="event-copy"><b id="eventTitle">A quiet patch of blue</b><span id="eventLine">Your little sub is ready when you are.</span></div></div>
-<div class="wager-wrap"><div class="wager-label"><label>PACK A STAKE</label><span>PLAY SHELLS · NO CASH VALUE</span></div><div class="chips" id="chips"><button class="chip sel" data-bet="10">10</button><button class="chip" data-bet="25">25</button><button class="chip" data-bet="50">50</button><button class="chip" data-bet="max">MAX</button></div>
-<div class="actions"><button class="primary" id="mainAction">DROP IN · 10 ◈</button><button class="secondary" id="bankAction" hidden>SURFACE · SECURE 10 ◈</button></div><p class="helper" id="helper">One lucky find grows your haul. Trouble takes it all.</p></div>
+<div class="bank-row"><span class="stat-label">SHELLS</span><div class="bank-amount"><span class="shell">◈</span><b id="bank">120</b></div></div>
+<div class="haul"><div><div class="haul-title" id="haul-title">AT RISK</div><div class="mult" id="mult">×1.00</div></div><div class="haul-bottom"><span>BANK NOW</span><b id="haul">—</b></div><div class="danger"><span class="danger-label">RISK</span><span class="risk-pips" id="riskPips"></span></div></div>
+<div class="event-card" id="eventCard"><div class="event-icon" id="eventIcon">🫧</div><div class="event-copy"><b id="eventTitle">READY TO DIVE</b><span id="eventLine">Your little sub is ready when you are.</span></div></div>
+<div class="wager-wrap"><div class="wager-label"><label>STAKE</label><span>NO CASH VALUE</span></div><div class="chips" id="chips"><button class="chip sel" data-bet="10">10</button><button class="chip" data-bet="25">25</button><button class="chip" data-bet="50">50</button><button class="chip" data-bet="max">MAX</button></div>
+<div class="actions"><button class="primary" id="mainAction">DIVE · 10 ◈</button><button class="secondary" id="bankAction" hidden>CASH OUT · 10 ◈</button></div><p class="helper" id="helper">One lucky find grows your haul. Trouble takes it all.</p></div>
 </aside></div>
-<div class="lower"><div class="log-strip"><span class="log-dot">✧</span><div class="log-text" id="logLine">The crew packed snacks. No one packed a map.</div></div><button class="field-btn" id="fieldBtn">FIELD NOTES&nbsp; <span id="findCount">0/28</span> ↗</button></div>
+<div class="lower"><div class="log-strip"><span class="log-dot">✧</span><div class="log-text" id="logLine">READY WHEN YOU ARE.</div></div><button class="field-btn" id="fieldBtn" aria-label="Open field notes">✧&nbsp; <span id="findCount">0/28</span></button></div>
 <div class="field-panel" id="fieldPanel"><div class="field-head"><span>ODD THINGS SEEN DOWN THERE</span><b id="fieldScore">0 FOUND</b></div><div class="specimens" id="specimens"></div></div>
 <footer class="footer"><span>GO DEEP · GET LUCKY · COME BACK</span><span>A KIND LITTLE GAME WITH A SHARP LITTLE EDGE</span></footer>
 </main></div>
@@ -91,6 +103,8 @@ function currentDepth(){return state.step===0?0:Math.round(42+state.step*78)}
 function currentBet(){return state.bet==="max"?Math.max(10,state.bank):Math.min(Number(state.bet),Math.max(10,state.bank))}
 function money(n){return Math.max(0,Math.round(n)).toLocaleString("en-US")}
 function toast(s){var el=$("toast");el.textContent=s;el.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(function(){el.classList.remove("show")},1700)}
+function vibrate(p){try{if(navigator.vibrate)navigator.vibrate(p)}catch(e){}}
+function countBank(from,to){if(from===to)return;var el=$("bank"),start=performance.now();el.classList.remove("counting");void el.offsetWidth;el.classList.add("counting");function tick(now){var p=Math.min(1,(now-start)/480);el.textContent=money(from+(to-from)*p);if(p<1)requestAnimationFrame(tick);else{el.textContent=money(to);setTimeout(function(){el.classList.remove("counting")},80)}}requestAnimationFrame(tick)}
 function ping(f,shape){if(!state.sound)return;try{var A=window.AudioContext||window.webkitAudioContext;if(!state.audio)state.audio=new A();if(state.audio.state==="suspended")state.audio.resume();var o=state.audio.createOscillator(),g=state.audio.createGain();o.type=shape||"sine";o.frequency.setValueAtTime(f,state.audio.currentTime);o.frequency.exponentialRampToValueAtTime(Math.max(90,f*.6),state.audio.currentTime+.2);g.gain.setValueAtTime(.06,state.audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,state.audio.currentTime+.25);o.connect(g);g.connect(state.audio.destination);o.start();o.stop(state.audio.currentTime+.26)}catch(e){}}
 function burst(){for(var i=0;i<26;i++)particles.push({x:canvas.width*(.3+Math.random()*.4),y:canvas.height*.48,vx:(Math.random()-.5)*3,vy:-Math.random()*3-1,r:1+Math.random()*3,life:1,color:["#d9f187","#f8d879","#70ded0","#fff0cc"][i%4],spark:true})}
 function renderField(){
@@ -99,13 +113,15 @@ state.seen.forEach(function(n){var c=creatures.concat(hazards).find(function(x){
 for(var i=0;i<Math.min(28-state.seen.length,8);i++){var q=document.createElement("div");q.className="specimen";q.innerHTML="<span>?</span><small>UNSEEN</small>";wrap.appendChild(q)}
 $("fieldScore").textContent=state.seen.length+" FOUND";$("findCount").textContent=state.seen.length+"/28";
 }
-function reveal(data){
-state.last=data;$("eventIcon").textContent=data.icon;$("eventTitle").textContent=data.name;$("eventLine").textContent=data.line;$("sceneMessage").textContent=data.line;$("sticker").textContent=data.icon;
+function reveal(data,delta){
+state.last=data;$("eventIcon").textContent=data.icon;$("eventTitle").textContent=data.hazard?data.name:(data.boost?"LUCKY FIND":"FOUND · "+data.name);$("eventLine").textContent=data.line;$("sticker").textContent=data.icon;
 var card=$("eventCard");card.className="event-card "+(data.hazard?"bad":"good");
-if(data.hazard){stage.classList.remove("bump");void stage.offsetWidth;stage.classList.add("bump");ping(105,"triangle")}
-else{stage.classList.remove("pop");void stage.offsetWidth;stage.classList.add("pop");burst();ping(data.boost?760:550)}
+$("sceneMessage").textContent=data.hazard?"CAUGHT!":(data.boost?"LUCKY!":"+"+delta.toFixed(2)+"×");
+$("sticker").classList.remove("boop");void $("sticker").offsetWidth;$("sticker").classList.add("boop");
+if(data.hazard){stage.classList.remove("bump");void stage.offsetWidth;stage.classList.add("bump");ping(105,"triangle");vibrate([65,30,80])}
+else{stage.classList.remove("pop","dive");void stage.offsetWidth;stage.classList.add("pop","dive");setTimeout(function(){stage.classList.remove("dive")},600);burst();if(data.boost){ping(880);setTimeout(function(){ping(1240)},90);vibrate([18,28,18])}else{ping(590);vibrate(14)}toast(data.boost?"LUCKY FIND! +"+delta.toFixed(2)+"×":"+"+delta.toFixed(2)+"×")}
 if(!state.seen.includes(data.name)){state.seen.push(data.name);save();renderField()}
-$("logLine").textContent=data.hazard?"The sea has filed a complaint. You'll be back.":data.name+" — "+data.line;
+$("logLine").textContent=data.hazard?"LOST · "+data.name:(data.boost?"LUCKY · ":"FOUND · ")+data.name;
 }
 function updateUI(){
 $("bank").textContent=money(state.bank);$("best").textContent=money(state.best)+" m";var bet=currentBet();
@@ -116,26 +132,31 @@ for(var i=0;i<5;i++){var pip=document.createElement("i");if(i<risk)pip.className
 var ticks="";for(var j=0;j<5;j++)ticks+='<b class="'+(j<state.step%5?"on":"")+'"></b>';$("ticks").innerHTML=ticks;
 $("chips").style.opacity=state.active?".48":"1";document.querySelectorAll(".chip").forEach(function(b){b.disabled=state.active});
 var main=$("mainAction"),bank=$("bankAction");
-if(state.active){main.textContent="DIVE DEEPER  ↘";bank.hidden=false;bank.textContent="SURFACE · SECURE "+money(state.betAmount*state.mult)+" ◈";$("helper").textContent="Each dive finds more. Trouble grows too."}
-else{bank.hidden=true;main.disabled=false;main.textContent=state.bank<10?"FIND 120 RESCUE SHELLS":"DROP IN · "+money(bet)+" ◈";$("helper").textContent=state.bank<10?"Your crew found spare shells in the snack tin.":"One lucky find grows your haul. Trouble takes it all."}
+if(state.active){main.textContent="GO DEEPER  ↘";bank.hidden=false;bank.textContent="CASH OUT · "+money(state.betAmount*state.mult)+" ◈";$("haul-title").textContent="AT RISK";$("sceneMessage").setAttribute("aria-live","polite")}
+else{bank.hidden=true;main.disabled=false;main.textContent=state.bank<10?"FIND 120 SHELLS":"DIVE · "+money(bet)+" ◈";$("haul-title").textContent="AT RISK"}
 }
-function closeModal(){ $("modal").classList.remove("show");state.last=null;$("sticker").textContent="🐠";$("sceneMessage").textContent="The sea looks suspiciously friendly.";updateUI() }
+function closeModal(){ $("modal").classList.remove("show");$("modalText").classList.remove("reward");state.last=null;$("sticker").textContent="🐠";$("sceneMessage").textContent="TAP DIVE";$("eventTitle").textContent="READY TO DIVE";$("eventCard").className="event-card";updateUI() }
 function dive(){
-if(!state.active){if(state.bank<10){state.bank=120;save();toast("A mysterious 120-shell rescue!");ping(660);updateUI();return}state.betAmount=currentBet();state.bank-=state.betAmount;state.active=true;state.step=0;state.mult=1}
+var oldBank=state.bank;
+if(!state.active){if(state.bank<10){state.bank=120;save();toast("+120 SHELLS");ping(660);updateUI();countBank(oldBank,state.bank);return}state.betAmount=currentBet();state.bank-=state.betAmount;state.active=true;state.step=0;state.mult=1}
 var danger=.16+Math.min(.26,state.step*.026);
-if(Math.random()<danger){var bad=hazards[Math.floor(Math.random()*hazards.length)];bad=Object.assign({},bad,{hazard:true});state.active=false;state.best=Math.max(state.best,currentDepth());save();reveal(bad);$("modalEmoji").textContent=bad.icon;$("modalTitle").textContent="OOPS, ALL BUBBLES.";$("modalText").textContent=bad.line+" Your haul and stake are gone, but the field notes stay.";$("modalBtn").textContent=state.bank<10?"FIND A RESCUE 120 ◈":"DIVE AGAIN";$("modal").classList.add("show");updateUI();return}
-state.step++;var r=Math.random(),item;if(r<.10){item=creatures.filter(function(c){return c.boost})[Math.floor(Math.random()*7)];state.mult+=.82;toast("LUCKY CURRENT! EXTRA HAUL!")}else if(r<.29){item=creatures.filter(function(c){return c.boost})[Math.floor(Math.random()*7)];state.mult+=.63}else{item=creatures[Math.floor(Math.random()*13)];state.mult+=.31+Math.random()*.12}
-state.best=Math.max(state.best,currentDepth());save();reveal(item);$("modal").classList.remove("show");updateUI();
+if(Math.random()<danger){var bad=hazards[Math.floor(Math.random()*hazards.length)];bad=Object.assign({},bad,{hazard:true});state.active=false;state.best=Math.max(state.best,currentDepth());save();reveal(bad,0);$("modalEmoji").textContent=bad.icon;$("modalTitle").textContent="OH NO!";$("modalText").classList.remove("reward");$("modalText").textContent="HAUL LOST";$("modalBtn").textContent=state.bank<10?"GET 120 ◈":"TRY AGAIN ↻";$("modal").classList.add("show");updateUI();countBank(oldBank,state.bank);return}
+var oldMult=state.mult;state.step++;var r=Math.random(),item;
+if(r<.10){item=creatures.filter(function(c){return c.boost})[Math.floor(Math.random()*7)];state.mult+=.82}
+else if(r<.29){item=creatures.filter(function(c){return c.boost})[Math.floor(Math.random()*7)];state.mult+=.63}
+else{item=creatures[Math.floor(Math.random()*13)];state.mult+=.31+Math.random()*.12}
+state.best=Math.max(state.best,currentDepth());save();reveal(item,state.mult-oldMult);$("modal").classList.remove("show");updateUI();
+var mult=$("mult");mult.classList.remove("flash");void mult.offsetWidth;mult.classList.add("flash");countBank(oldBank,state.bank);
 }
 function surface(){
-if(!state.active)return;var reward=Math.round(state.betAmount*state.mult);state.bank+=reward;state.active=false;
-$("modalEmoji").textContent="🛟";$("modalTitle").textContent="CLEAN GETAWAY!";$("modalText").textContent="You surfaced with "+money(reward)+" shells. The crew is already asking when you want to go again.";$("modalBtn").textContent="PLAN ANOTHER DIVE";$("modal").classList.add("show");
-$("logLine").textContent="Home safe with "+money(reward)+" shells. The kettle is on.";ping(880);burst();save();updateUI();
+if(!state.active)return;var oldBank=state.bank,reward=Math.round(state.betAmount*state.mult);state.bank+=reward;state.active=false;
+$("modalEmoji").textContent="🛟";$("modalTitle").textContent="SAFE!";$("modalText").classList.add("reward");$("modalText").textContent="+"+money(reward)+" ◈";$("modalBtn").textContent="GO AGAIN ↗";$("modal").classList.add("show");
+$("sceneMessage").textContent="BANKED!";$("logLine").textContent="BANKED · +"+money(reward)+" ◈";ping(760);setTimeout(function(){ping(1010)},90);setTimeout(function(){ping(1320)},180);vibrate([18,24,18]);burst();save();updateUI();countBank(oldBank,state.bank);
 }
 $("chips").addEventListener("click",function(e){var b=e.target.closest("button[data-bet]");if(b&&!state.active){state.bet=b.dataset.bet;document.querySelectorAll(".chip").forEach(function(x){x.classList.toggle("sel",x===b)});updateUI()}});
-$("mainAction").addEventListener("click",dive);$("bankAction").addEventListener("click",surface);$("modalBtn").addEventListener("click",closeModal);
-$("fieldBtn").addEventListener("click",function(){var p=$("fieldPanel");p.classList.toggle("show");$("fieldBtn").innerHTML=p.classList.contains("show")?"HIDE FIELD NOTES&nbsp; ↑":"FIELD NOTES&nbsp; "+state.seen.length+"/28 ↗"});
-$("soundBtn").addEventListener("click",function(){state.sound=!state.sound;$("soundBtn").textContent=state.sound?"◖ SOUND ON":"◖ SOUND OFF";if(state.sound)ping(600)});
+$("mainAction").addEventListener("click",dive);$("bankAction").addEventListener("click",surface);$("modalBtn").addEventListener("click",function(){var old=state.bank;closeModal();if(!state.active&&state.bank<10){state.bank=120;save();updateUI();countBank(old,state.bank);toast("+120 SHELLS") }});
+$("fieldBtn").addEventListener("click",function(){var p=$("fieldPanel");p.classList.toggle("show");$("fieldBtn").innerHTML=p.classList.contains("show")?"✕":"✧&nbsp; <span>"+state.seen.length+"/28</span>"});
+$("soundBtn").addEventListener("click",function(){state.sound=!state.sound;$("soundBtn").textContent=state.sound?"♫":"♪";if(state.sound)ping(600)});
 function resize(){var r=canvas.getBoundingClientRect(),dpr=Math.min(2,window.devicePixelRatio||1);canvas.width=Math.max(1,Math.round(r.width*dpr));canvas.height=Math.max(1,Math.round(r.height*dpr));ctx.setTransform(dpr,0,0,dpr,0,0)}
 function plant(x,y,h,color,flip){ctx.save();ctx.translate(x,y);ctx.scale(flip?-1:1,1);ctx.strokeStyle=color;ctx.lineWidth=3;ctx.globalAlpha=.82;for(var i=0;i<4;i++){ctx.beginPath();ctx.moveTo(0,0);ctx.bezierCurveTo(-8+i*7,-h*.35+Math.sin(t+i)*8,14-i*4,-h*.7+Math.cos(t+i)*8,(-8+i*7)*.45,-h);ctx.stroke()}ctx.restore()}
 function sub(w,h){
