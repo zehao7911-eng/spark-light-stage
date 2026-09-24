@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="theme-color" content="#bfe7f4"><title>Little Metro World</title><link rel="stylesheet" href="metro-world.css"></head>
+<body>
+<div id="view"></div><div class="skywash"></div>
+<div class="topbar"><div class="identity"><div class="logo">✳</div><div><b>LITTLE METRO</b><small>WORLD IN MOTION</small></div></div><div class="topright"><button id="sound" aria-label="Toggle sound">♪ <span>OFF</span></button><button id="photo" aria-label="Hide interface">◫</button></div></div>
+<div class="mission" id="mission"><div class="eyebrow">NEXT STOP <span id="stopno">01</span></div><div class="missionline"><span class="stationdot" id="stationdot"></span><strong id="target">SUNSET PLAZA</strong><span class="arrow">↗</span></div><div class="missionfoot"><span id="missionhint">Bring your train to the glowing station</span><b id="distance">—</b></div></div>
+<div class="scorebox"><div><small>PASSENGERS</small><b id="passengers">0</b></div><div><small>STREAK</small><b id="streak">0</b></div><div><small>WORLD</small><b id="level">01</b></div></div>
+<div class="toast" id="toast"></div>
+<div class="bottom"><div class="leftcontrols"><button id="camera" aria-label="Switch camera"><i>◉</i><span>ORBIT</span></button><button id="time" aria-label="Change time of day"><i>☀</i><span>DAY</span></button></div><div class="speed"><div class="speedtop"><span>SPEED</span><b id="speedtext">—</b></div><div class="speedbar"><i id="speedfill"></i></div><small id="drivehint">Tap BRAKE near the glowing platform</small></div><button id="brake" class="brake"><span class="brakeicon">▮▮</span><b>BRAKE</b></button></div>
+<div class="help">DRAG TO ORBIT · PINCH TO ZOOM</div>
+<div id="loading"><div class="loadbox"><div class="loadtrain">✳</div><small>A LITTLE WORLD IS COMING TO LIFE</small><h1>LITTLE<br>METRO</h1><p id="loadtext">Preparing the city…</p><div class="loadbar"><i id="loadfill"></i></div><button id="retry" hidden>RETRY</button></div></div>
+<script src="metro-three.min.js"></script><script src="metro-GLTFLoader.js"></script><script src="metro-world.js"></script>
+</body></html>
