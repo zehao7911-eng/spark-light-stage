@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#e3f3e8"><title>Lily Hop · A little path home</title><link rel="stylesheet" href="lily-hop.css"></head><body>
+<canvas id="world" aria-label="Island bridge puzzle"></canvas>
+<header><div class="brand"><span>✳</span><div>LILY HOP<small>A LITTLE PATH HOME</small></div></div><button id="sound" aria-label="Toggle sound" title="Sound">♪</button></header>
+<div class="hud"><div class="level"><small>POND</small><b id="level">01</b></div><div class="route"><span class="route-frog">●</span><div class="routebar"><i id="routefill"></i></div><span>⌂</span></div><div class="moves"><small>TURNS</small><b id="moves">0</b></div></div>
+<div id="tip">Tap an island to turn its bridge</div><div id="toast" role="status"></div>
+<div id="tiles" aria-label="Rotatable islands"></div>
+<footer><div class="tools"><button id="hint" aria-label="Show a helpful turn">✦<small>HINT</small></button><button id="reset" aria-label="Reset this puzzle">↶<small>RESET</small></button></div><button class="garden" id="garden"><span class="gardenicon">✿</span><div><small>YOUR LITTLE GARDEN</small><b><span id="stars">0</span> <span class="gold">★</span><span class="nextlabel" id="nextlabel"> / 6</span></b><div class="gardenbar"><i id="gardenfill"></i></div></div><span class="gardenarrow">↗</span></button></footer>
+<div id="celebration" hidden><div class="win-card"><div class="win-eyebrow">A LITTLE JOY, DELIVERED</div><h1>Home sweet home.</h1><div id="winstars">★ ★ ★</div><p id="winreward">Your garden is growing.</p><button id="next">ONE MORE POND <span>↗</span></button></div></div>
+<div id="collection" class="modal" hidden><div class="album"><button id="closealbum" aria-label="Close garden collection">×</button><small>SMALL WINS. A GROWING WORLD.</small><h2>Your little garden</h2><p id="albumcopy"></p><div id="albumgrid"></div></div></div>
+<script src="lily-hop.js"></script></body></html>
