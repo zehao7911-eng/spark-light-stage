@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#041b27">
+  <link rel="icon" href="data:,">
+  <title>Lumen Reef · Mermaid Tide</title>
+  <link rel="stylesheet" href="mermaid-tide.css">
+</head>
+<body>
+  <div id="world" aria-label="Interactive underwater stage"></div>
+  <div class="surface-glow" aria-hidden="true"></div><div class="vignette" aria-hidden="true"></div>
+  <header class="hud">
+    <div class="brand"><span class="brand-sigil">✧</span><span><strong>LUMEN REEF</strong><small>MERMAID TIDE</small></span></div>
+    <div class="hud-right"><span class="level-label">TIDE <b id="level">01</b></span><span class="score-label">✦ <b id="score">0000</b></span></div>
+  </header>
+  <div class="progress-wrap"><div id="progress"></div></div>
+  <div id="toast" aria-live="polite"></div>
+  <div id="float-layer" aria-hidden="true"></div>
+  <div class="bottom"><span id="hint">MATCH TWO LIGHTS</span><div class="controls"><button id="sound" type="button" aria-label="Toggle sound">♪</button><button id="view" type="button" aria-label="Change view">⌖</button></div></div>
+  <section id="intro" class="modal"><div class="intro-card"><div class="intro-mark">✧</div><p class="eyebrow">AN UNDERWATER PLAYGROUND</p><h1>MAKE THE<br><em>REEF GLOW.</em></h1><p class="intro-copy">Catch the wandering pearls. Watch the world answer.</p><button id="play" type="button">DIVE IN <span>↗</span></button><p class="mini">TAP PEARLS · BUILD A STREAK · UNLOCK NEW TIDES</p></div></section>
+  <section id="loading" class="loading"><div class="loading-orb">✧</div><p>AWAKENING THE REEF</p><div class="load-track"><i id="load-bar"></i></div><span id="load-status">Preparing the water…</span><button id="retry" type="button" hidden>RETRY</button></section>
+  <script src="mermaid-three.min.js"></script><script src="mermaid-GLTFLoader.js"></script><script src="mermaid-tide.js"></script>
+</body>
+</html>
