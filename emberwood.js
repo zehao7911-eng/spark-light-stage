@@ -14,7 +14,7 @@
   renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   ui.game.appendChild(renderer.domElement);
   const ambient=new THREE.HemisphereLight(0xa9cce8,0x263b33,.6);scene.add(ambient);
-  const sun=new THREE.DirectionalLight(0xffd8a6,1.45);sun.position.set(-12,22,14);sun.castShadow=true;sun.shadow.mapSize.set(mobile?512:1536,mobile?512:1536);sun.shadow.camera.left=-20;sun.shadow.camera.right=20;sun.shadow.camera.top=20;sun.shadow.camera.bottom=-20;sun.shadow.bias=-.001;scene.add(sun);
+  const sun=new THREE.DirectionalLight(0xffd8a6,1.45);sun.position.set(-12,22,14);sun.castShadow=true;sun.shadow.mapSize.set(mobile?512:1536,mobile?512:1536);sun.shadow.camera.left=-20;sun.shadow.camera.right=20;sun.shadow.camera.top=20;sun.shadow.camera.bottom=-20;sun.shadow.bias=-.001;scene.add(sun,sun.target);
   const fill=new THREE.PointLight(0x58dacf,.35,32);fill.position.set(7,7,-7);scene.add(fill);
   const artCache=new Map();
   const boxGeo=new THREE.BoxGeometry(1,1,1);
@@ -119,7 +119,7 @@
     const cave=floor%3===2,grass=cave?0x286768:0x367b52,stone=cave?0x424f66:0x84614c;
     for(let x=-19;x<=19;x++)for(let z=-19;z<=19;z++){
       const outer=Math.abs(x)>11||Math.abs(z)>11;
-      const height=outer?1+Math.floor((Math.sin(x*.46)+Math.cos(z*.37)+2)*1.15):0;
+      const height=outer&&Math.abs(x)>2.5?1+Math.floor((Math.sin(x*.46)+Math.cos(z*.37)+2)*1.15):0;
       const path=Math.abs(x*.42+z-Math.sin(x*.28)*1.8)<2.2||Math.abs(x+z*.45)<1.25;
       add('rock',stone,x,height/2-1,z,1,height+2,1);
       add(path?'brick':'grass',path?0x958878:grass,x,height+.015,z,1,.08,1);
@@ -228,7 +228,7 @@
   function makeChest(){const g=new THREE.Group();g.position.set(0,0,0);root.add(g);const wood=pixelMaterial('bark',0x9a6029),trim=pixelMaterial('metal',0x3b3025);box(g,0,0,.36,0,.95,.68,.73,wood);box(g,0,0,.73,0,1.02,.25,.8,wood);box(g,0,0,.62,.43,.13,.25,.07,pixelMaterial('metal',0xc8c4ac));for(const x of [-.43,.43])box(g,0,x,.43,.39,.075,.82,.07,trim);box(g,0,0,.61,.39,.9,.045,.065,trim);box(g,0,0,.06,.39,.9,.075,.065,trim);const glow=orb(g,0xffd97c,0,1.2,0,.25);glow.visible=false;chest={group:g,glow,open:false};}
   function makePortal(p){const g=new THREE.Group();g.position.set(0,0,0);root.add(g);const ring=new THREE.Mesh(new THREE.TorusGeometry(.9,.14,8,28),emissive(p.accent,.85));ring.position.y=1.25;g.add(ring);const inner=new THREE.Mesh(new THREE.CircleGeometry(.76,24),new THREE.MeshBasicMaterial({color:p.accent,transparent:true,opacity:.23,depthWrite:false,side:THREE.DoubleSide}));inner.position.set(0,1.25,-.01);g.add(inner);for(let i=0;i<8;i++){const a=i*Math.PI/4;orb(g,p.accent,Math.cos(a)*.92,1.25+Math.sin(a)*.92,.05,.1);}const light=new THREE.PointLight(p.accent,1.4,7);light.position.y=1.2;g.add(light);portal={group:g,ring,inner,t:0};}
 
-  function buildFloor(){
+  function old_buildFloor(){
     scene.remove(root);disposeTree(root);root=new THREE.Group();scene.add(root);effects.clear();
     enemies=[];drops=[];shots=[];bursts=[];chest=null;portal=null;nextFloorPending=false;waveTimer=0;
     const p=palettes[(floor-1)%palettes.length],random=rng(73419+floor*61813);
@@ -259,7 +259,7 @@
     drops.push({g,type,t:Math.random()*6,vx:(Math.random()-.5)*2,vz:(Math.random()-.5)*2});
   }
   function nearest(max=99){let best=null,dist=max;for(const e of enemies){if(e.dead)continue;const d=Math.hypot(e.x-player.x,e.z-player.z);if(d<dist){best=e;dist=d;}}return best;}
-  function hitEnemy(e,amount,critical=false){
+  function baseHitEnemy(e,amount,critical=false){
     if(e.dead)return;
     e.hp-=amount;e.hit=.16;e.body.material.emissive.setHex(0xffffff);e.body.material.emissiveIntensity=.9;
     number(String(Math.round(amount)),new THREE.Vector3(e.x,2,e.z),critical?'#ffe385':'#e8ffeb',critical);
@@ -271,10 +271,10 @@
       for(let i=0;i<(e.boss?11:3);i++)drop(e.x+(Math.random()-.5)*1.5,e.z+(Math.random()-.5)*1.5,'gem');
       drop(e.x,e.z,'xp');if(Math.random()<.16||e.boss)drop(e.x+.3,e.z,'heart');
       if(e.boss){ui.boss.classList.remove('show');toast('WARDEN DEFEATED!');}
-      if(enemies.every(enemy=>enemy.dead)){chest.glow.visible=true;ui.tip.textContent='CLAIM THE CHEST';toast('AREA CLEARED!');sound(850,.32,'triangle',.09);}
+
     }
   }
-  function melee(){
+  function baseMelee(){
     if(!playing||pausedForUpgrade||cooldown.melee>0)return;
     cooldown.melee=.43;player.attackTime=.25;
     const target=nearest(3.2);if(target){const a=Math.atan2(target.x-player.x,target.z-player.z);player.facing.set(Math.sin(a),0,Math.cos(a));}
@@ -285,7 +285,7 @@
     if(!hits)sparks(player.x+player.facing.x*1.3,1,player.z+player.facing.z*1.3,colors.white,4,.42);
     sound(hits?380:490,.12,'sawtooth',.055);updateHud();
   }
-  function bolt(){
+  function old_bolt(){
     if(!playing||pausedForUpgrade||cooldown.bolt>0)return;
     cooldown.bolt=1.05;const e=nearest(10);let dx=player.facing.x,dz=player.facing.z;
     if(e){const d=Math.hypot(e.x-player.x,e.z-player.z);dx=(e.x-player.x)/d;dz=(e.z-player.z)/d;}
@@ -297,7 +297,7 @@
     cooldown.dash=2.1;player.dashTime=.22;player.invuln=.32;
     sparks(player.x,.8,player.z,colors.aqua,15,.7);sound(220,.22,'sine',.07);
   }
-  function damagePlayer(amount){
+  function baseDamagePlayer(amount){
     if(player.invuln>0||!playing||pausedForUpgrade)return;
     player.invuln=.75;stats.hp=Math.max(0,stats.hp-Math.max(1,amount-stats.armor));
     flash('#ff4160',.42);shake=.45;number('−'+Math.round(amount),new THREE.Vector3(player.x,2.6,player.z),'#ff8593',true);
@@ -318,16 +318,16 @@
     const pool=[...upgrades].sort(()=>Math.random()-.5).slice(0,3);
     for(const u of pool){const b=document.createElement('button');b.type='button';b.className='choice';b.innerHTML='<strong>'+u.title+'</strong><small>'+u.detail+'</small>';b.addEventListener('click',()=>{u.apply();pausedForUpgrade=false;ui.upgrade.classList.add('hidden');updateHud();sound(950,.3,'triangle',.1);flash('#ffdf8b',.24);if(nextFloorPending){floor++;buildFloor();}});ui.choices.append(b);}
   }
-  function openChest(){
+  function old_openChest(){
     if(!chest||chest.open)return;chest.open=true;chest.group.visible=false;
     sparks(0,1,0,colors.gold,55,1.5);for(let i=0;i<12;i++)drop((Math.random()-.5)*2,(Math.random()-.5)*2,'gem');
     const heal=Math.min(stats.maxHp-stats.hp,20);stats.hp+=heal;gems+=20+floor*7;
     flash('#ffe499',.38);shake=.5;toast('TREASURE +'+(20+floor*7));sound(760,.45,'triangle',.13);
     makePortal(palettes[(floor-1)%palettes.length]);ui.tip.textContent='ENTER THE PORTAL';updateHud();
   }
-  function gainXp(n){xp+=n;if(xp>=xpGoal){xp-=xpGoal;xpGoal=Math.round(xpGoal*1.33+7);level++;toast('LEVEL UP!');sparks(player.x,1.2,player.z,colors.gold,35,1.2);chooseUpgrade();}updateHud();}
-  function updateHud(){ui.hp.style.width=Math.max(0,stats.hp/stats.maxHp*100)+'%';ui.hpText.textContent=Math.ceil(stats.hp)+' / '+stats.maxHp;ui.xp.style.width=Math.min(100,xp/xpGoal*100)+'%';ui.level.textContent='LEVEL '+level;ui.gems.textContent=gems;}
-  function movePlayer(dt,time){
+  function old_gainXp(n){xp+=n;if(xp>=xpGoal){xp-=xpGoal;xpGoal=Math.round(xpGoal*1.33+7);level++;toast('LEVEL UP!');sparks(player.x,1.2,player.z,colors.gold,35,1.2);chooseUpgrade();}updateHud();}
+  function baseUpdateHud(){ui.hp.style.width=Math.max(0,stats.hp/stats.maxHp*100)+'%';ui.hpText.textContent=Math.ceil(stats.hp)+' / '+stats.maxHp;ui.xp.style.width=Math.min(100,xp/xpGoal*100)+'%';ui.level.textContent='LEVEL '+level;ui.gems.textContent=gems;}
+  function old_movePlayer(dt,time){
     const sx=(keys.has('d')||keys.has('arrowright')?1:0)-(keys.has('a')||keys.has('arrowleft')?1:0)+stick.x;
     const sy=(keys.has('s')||keys.has('arrowdown')?1:0)-(keys.has('w')||keys.has('arrowup')?1:0)+stick.y;
     let x=.832*sx+.555*sy,z=-.555*sx+.832*sy;
@@ -343,7 +343,7 @@
     if(chest&&chest.glow.visible&&!chest.open&&Math.hypot(player.x,player.z)<1.5)openChest();
     if(portal&&Math.hypot(player.x,player.z)<1.05){portal=null;nextFloorPending=true;chooseUpgrade();}
   }
-  function updateEnemies(dt,time){
+  function old_updateEnemies(dt,time){
     for(const e of enemies){if(e.dead)continue;
       const dx=player.x-e.x,dz=player.z-e.z,d=Math.hypot(dx,dz)||1;
       e.attack-=dt;e.hit=Math.max(0,e.hit-dt);if(e.hit===0)e.body.material.emissiveIntensity=0;
@@ -354,14 +354,14 @@
       e.group.rotation.y=Math.atan2(dx,dz);if(e.boss&&d<5&&e.attack<.35)e.group.scale.setScalar(1.08);else e.group.scale.setScalar(1);
     }
   }
-  function updateShots(dt){
+  function old_updateShots(dt){
     for(let i=shots.length-1;i>=0;i--){const s=shots[i],m=s.m;s.life-=dt;m.position.x+=s.dx*10*dt;m.position.z+=s.dz*10*dt;m.rotation.y+=dt*9;m.rotation.z+=dt*8;
       let hit=null;for(const e of enemies)if(!e.dead&&Math.hypot(e.x-m.position.x,e.z-m.position.z)<(e.boss?1.05:.65)){hit=e;break;}
       if(hit){hitEnemy(hit,stats.bolt,Math.random()<stats.crit);sparks(m.position.x,1.2,m.position.z,colors.aqua,18,1.1);s.life=0;}
       if(s.life<=0){effects.remove(m);m.geometry.dispose();m.material.dispose();shots.splice(i,1);}
     }
   }
-  function updateDrops(dt,time){
+  function old_updateDrops(dt,time){
     for(let i=drops.length-1;i>=0;i--){const d=drops[i],g=d.g;d.t+=dt;const dx=player.x-g.position.x,dz=player.z-g.position.z,dist=Math.hypot(dx,dz);
       if(dist<3){const rate=dt*(dist<1?12:4);g.position.x+=dx*rate;g.position.z+=dz*rate;}else{g.position.x+=d.vx*dt;g.position.z+=d.vz*dt;d.vx*=.94;d.vz*=.94;}
       g.position.y=.64+Math.sin(d.t*4)*.13;g.rotation.y+=dt*3;
@@ -369,11 +369,11 @@
     }
   }
   function updateBursts(dt){for(let i=bursts.length-1;i>=0;i--){const b=bursts[i];b.life-=dt;if(!b.arc){b.m.position.x+=b.vx*dt;b.m.position.y+=b.vy*dt;b.m.position.z+=b.vz*dt;b.vy-=11*dt;b.m.scale.multiplyScalar(.985);}else b.m.material.opacity=Math.max(0,b.life/b.max);if(b.life<=0){effects.remove(b.m);if(b.m.geometry!==boxGeo)b.m.geometry.dispose();b.m.material.dispose();bursts.splice(i,1);}}}
-  function controls(){
+  function baseControls(){
     addEventListener('keydown',e=>{const k=e.key.toLowerCase();if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))e.preventDefault();keys.add(k);if(k==='j')melee();if(k==='k')bolt();if(k===' '||k==='l')dash();});
     addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));addEventListener('blur',()=>keys.clear());
     for(const [id,fn] of [['melee',melee],['ranged',bolt],['dash',dash],['touchSword',melee],['touchBolt',bolt],['touchDash',dash]])$(id).addEventListener('pointerdown',e=>{e.preventDefault();fn();});
-    renderer.domElement.addEventListener('pointerdown',e=>{if(!playing||mobile)return;melee();});
+
     ui.stick.addEventListener('pointerdown',e=>{e.preventDefault();stick.id=e.pointerId;ui.stick.setPointerCapture(e.pointerId);updateStick(e);});
     ui.stick.addEventListener('pointermove',e=>{if(e.pointerId===stick.id)updateStick(e);});
     for(const name of ['pointerup','pointercancel','lostpointercapture'])ui.stick.addEventListener(name,()=>{stick.id=null;stick.x=stick.y=0;ui.nub.style.transform='translate(-50%,-50%)';});
@@ -381,7 +381,7 @@
     ui.start.addEventListener('click',resetGame);ui.restart.addEventListener('click',resetGame);
   }
   function updateStick(e){const r=ui.stick.getBoundingClientRect(),x=e.clientX-(r.left+r.width/2),y=e.clientY-(r.top+r.height/2),d=Math.max(1,Math.hypot(x,y)),f=Math.min(1,45/d);stick.x=x*f/45;stick.y=y*f/45;ui.nub.style.transform='translate(calc(-50% + '+(x*f)+'px),calc(-50% + '+(y*f)+'px))';}
-  function resetGame(){
+  function baseResetGame(){
     Object.assign(stats,{maxHp:100,hp:100,damage:24,bolt:28,speed:4.25,armor:0,crit:.09,leech:0,boltChain:0});
     floor=1;gems=0;level=1;xp=0;xpGoal=15;ended=false;pausedForUpgrade=false;nextFloorPending=false;playing=true;
     ui.menu.classList.add('hidden');ui.dead.classList.add('hidden');ui.upgrade.classList.add('hidden');
@@ -393,8 +393,103 @@
     for(const [id,key,max] of [['melee','melee',.43],['ranged','bolt',1.05],['dash','dash',2.1]]){const el=$(id);el.style.setProperty('--cool',cooldown[key]/max);el.classList.toggle('hot',cooldown[key]>0);el.classList.toggle('ready',cooldown[key]<=0);}
     if(portal){portal.ring.rotation.z+=dt*.35;portal.inner.material.opacity=.22+Math.sin(time*3)*.08;}
     if(chest?.glow.visible)chest.glow.position.y=1.15+Math.sin(time*4)*.12;
+    sun.position.set(player.x-12,22,player.z+14);sun.target.position.set(player.x,0,player.z);
     const jitter=shake?(Math.random()-.5)*shake:0;shake*=.86;if(shake<.005)shake=0;
     const target=new THREE.Vector3(player.x,0,player.z);const camPos=new THREE.Vector3(player.x+14,18,player.z+21);camera.position.lerp(camPos,.07);camera.position.x+=jitter;camera.position.y+=jitter;camera.lookAt(target);renderer.render(scene,camera);
   }
+  const quest={revives:3,rescued:0,key:false,boss:false,complete:false,cages:[],zones:[],gates:[],arrows:30,potion:0,artifact:0,points:0,combo:0,comboTime:0,held:false,target:null,bag:[],equipped:{},marker:null};
+  const gearTypes=[{name:'Hunter Sword',slot:'sword',power:30},{name:'Storm Bow',slot:'bow',power:42},{name:'Guard Armor',slot:'armor',power:5}];
+  function buildFloor(){
+    scene.remove(root);disposeTree(root);disposeTree(effects);effects.clear();root=new THREE.Group();scene.add(root);
+    enemies=[];drops=[];shots=[];bursts=[];chest=null;portal=null;quest.cages=[];quest.zones=[];quest.gates=[];quest.rescued=0;quest.key=false;quest.boss=false;quest.complete=false;quest.target=null;
+    const world=root;
+    for(let i=0;i<3;i++){const zone=new THREE.Group();world.add(zone);zone.position.z=-38*i;root=zone;terrain(palettes[i],rng(73419+floor*601+i*722));quest.zones.push(zone);}
+    root=world;scene.background=new THREE.Color(0x132b31);scene.fog=new THREE.FogExp2(0x244b51,.012);sun.color.setHex(0xffd4a4);ambient.color.setHex(0x9bc5d9);
+    player.x=0;player.z=8;player.group.position.set(0,0,8);player.facing.set(0,0,-1);player.group.visible=true;player.invuln=1;
+    camera.position.set(14,18,29);camera.lookAt(player.group.position);
+    const placements=[[-5,1,'mystic'],[5,-1,'slime'],[-5,-7,'mystic'],[4,-7,'slime'],[0,-34,'mystic'],[-6,-39,'slime'],[5,-42,'mystic'],[-3,-71,'mystic'],[4,-73,'slime']];
+    placements.forEach(([x,z,t],i)=>{const e=makeEnemy(t,x,z,i);e.hp=e.maxHp=t==='slime'?40:64;e.alert=false;});
+    const keeper=makeEnemy('mystic',0,-43,23);keeper.hp=keeper.maxHp=150;keeper.keeper=true;keeper.group.scale.setScalar(1.2);keeper.body.material.color.setHex(0xffcc86);
+    const boss=makeEnemy('warden',0,-80,99);boss.hp=boss.maxHp=360+floor*30;boss.alert=false;ui.boss.classList.remove('show');
+    for(const [x,z] of [[-6,-3],[6,-4],[0,-8]])makeCage(x,z);
+    for(const z of [-16,-54]){const g=new THREE.Group();g.position.z=z;root.add(g);for(let i=-2;i<=2;i++)box(g,0,i,1.1,0,.16,2.2,.16,pixelMaterial('metal',0x65716c));box(g,0,0,1.6,0,4.4,.12,.2,pixelMaterial('metal',0x65716c));quest.gates.push(g);}
+    makeChest();chest.group.position.set(7,0,-38);chest.glow.visible=true;
+    makePortal(palettes[1]);portal.group.position.set(0,0,-85);portal.group.visible=false;
+    quest.marker=new THREE.Mesh(new THREE.RingGeometry(.25,.37,20),new THREE.MeshBasicMaterial({color:0xffd479,side:THREE.DoubleSide}));quest.marker.rotation.x=-Math.PI/2;quest.marker.visible=false;root.add(quest.marker);
+    ui.floor.textContent=String(floor).padStart(2,'0');ui.tip.textContent='FREE THE VILLAGERS · 0 / 3';updateHud();toast('CREEPER WOODS');
+  }
+  function makeCage(x,z){const g=new THREE.Group();g.position.set(x,0,z);root.add(g);const bars=new THREE.Group();g.add(bars);const iron=pixelMaterial('metal',0x657573);
+    for(const s of [-1,1])for(let i=-1;i<=1;i++){box(bars,0,s*.7,1,i*.6,.07,2,.07,iron);box(bars,0,i*.6,1,s*.7,.07,2,.07,iron);}box(bars,0,0,2,0,1.6,.13,1.6,iron);
+    const cloth=pixelMaterial('cloth',0x816049),skin=pixelMaterial('skin',0xb89974);box(g,0,0,.73,0,.54,1.1,.4,cloth);box(g,0,0,1.54,0,.61,.6,.6,skin);box(g,0,0,1.45,.38,.14,.3,.2,skin);for(const s of [-1,1])box(g,0,s*.15,1.6,.31,.12,.07,.03,pixelMaterial('skin',0x2c4937));
+    const icon=orb(g,0xffd676,0,2.55,0,.13);quest.cages.push({g,bars,icon,x,z,freed:false});
+  }
+  function walkable(x,z){
+    if(z>10.7||z< -87)return false;
+    const room=quest.zones.some((_,i)=>Math.abs(z+38*i)<=10.7&&Math.abs(x)<=10.7);
+    if(!room&&Math.abs(x)>2.15)return false;
+    if(quest.rescued<3&&z< -15.5)return false;
+    if(!quest.key&&z< -53.5)return false;
+    return true;
+  }
+  function goal(){if(quest.rescued<3){const c=quest.cages.find(c=>!c.freed);return{x:c.x,z:c.z};}if(!quest.key)return{x:0,z:-43};if(!quest.boss)return{x:0,z:-80};return{x:0,z:-85};}
+  function interaction(){
+    if(!playing||pausedForUpgrade)return;
+    const c=quest.cages.find(c=>!c.freed&&Math.hypot(player.x-c.x,player.z-c.z)<2.2);
+    if(c){c.freed=true;c.bars.visible=false;c.icon.visible=false;quest.rescued++;sparks(c.x,1,c.z,colors.gold,22);sound(780,.3);toast('VILLAGER FREED');if(quest.rescued===3){quest.gates[0].visible=false;pickupGear(player.x,player.z,true);toast('THE PATH IS OPEN');}updateHud();return;}
+    if(chest&&!chest.open&&Math.hypot(player.x-7,player.z+38)<2.2){openChest();return;}
+    if(quest.boss&&Math.hypot(player.x,player.z+85)<2.5){quest.complete=true;pausedForUpgrade=true;ui.upgrade.classList.remove('hidden');ui.upgrade.querySelector('.eyebrow').textContent='MISSION COMPLETE';ui.upgrade.querySelector('h1').innerHTML='VILLAGE<br><em>SAVED</em>';ui.choices.innerHTML='<p>3 villagers freed · '+gems+' emeralds · '+quest.bag.length+' items found</p><button class="primary" id="nextMission">NEXT EXPEDITION →</button>';$('nextMission').onclick=()=>{floor++;stats.hp=stats.maxHp;quest.arrows+=20;pausedForUpgrade=false;ui.upgrade.classList.add('hidden');buildFloor();};}
+  }
+  function pickupGear(x,z,guaranteed=false){const spec=gearTypes[Math.floor(Math.random()*3)],rare=guaranteed||Math.random()<.3;const item={...spec,power:Math.round(spec.power*(1+(floor-1)*.2+(rare?.35:0))),rare,enchanted:false,id:Date.now()+Math.random()};drop(x,z,'gear');const d=drops[drops.length-1];d.item=item;d.g.children[0].material.color.setHex(rare?0xbd75ff:0x8ef7e3);d.g.scale.setScalar(1.65);}
+  function hitEnemy(e,amount,critical=false){const alive=!e.dead;baseHitEnemy(e,amount,critical);if(alive&&e.dead){if(e.warning){root.remove(e.warning);e.warning.geometry.dispose();e.warning.material.dispose();}quest.arrows+=e.boss?8:2;if(e.keeper){quest.key=true;quest.gates[1].visible=false;toast('RUNE KEY ACQUIRED');pickupGear(e.x,e.z,true);}else if(e.boss){quest.boss=true;portal.group.visible=true;pickupGear(e.x,e.z,true);toast('THE VILLAGE IS SAFE');}else if(Math.random()<.38)pickupGear(e.x,e.z);updateHud();}}
+  function melee(){if(!playing||pausedForUpgrade||cooldown.melee>0)return;quest.combo=quest.comboTime>0?(quest.combo+1)%3:0;quest.comboTime=1.2;const original=stats.damage;if(quest.combo===2)stats.damage*=1.65;baseMelee();stats.damage=original;if(quest.combo===2){shake=.25;sound(160,.18,'sawtooth',.08);}}
+  function bolt(){if(!playing||pausedForUpgrade||cooldown.bolt>0)return;if(quest.arrows<=0){toast('NO ARROWS');return;}quest.arrows--;cooldown.bolt=.62;const e=nearest(12);let dx=player.facing.x,dz=player.facing.z;if(e){const d=Math.hypot(e.x-player.x,e.z-player.z)||1;dx=(e.x-player.x)/d;dz=(e.z-player.z)/d;}const m=new THREE.Mesh(new THREE.BoxGeometry(.075,.075,.8),pixelMaterial('bark',0xbdad84).clone());m.position.set(player.x,1.25,player.z);m.rotation.y=Math.atan2(dx,dz);effects.add(m);shots.push({m,dx,dz,life:1,damage:stats.bolt});sound(500,.08,'sawtooth',.04);updateHud();}
+  function potion(){if(!playing||pausedForUpgrade||quest.potion>0||stats.hp>=stats.maxHp)return;stats.hp=Math.min(stats.maxHp,stats.hp+65);quest.potion=18;sparks(player.x,1,player.z,0xff7891,30);sound(680,.25);updateHud();}
+  function artifact(){if(!playing||pausedForUpgrade||quest.artifact>0)return;quest.artifact=8;const targets=enemies.filter(e=>!e.dead&&Math.hypot(e.x-player.x,e.z-player.z)<7).slice(0,4);for(const e of targets){const m=new THREE.Mesh(new THREE.CylinderGeometry(.065,.12,7,5),new THREE.MeshBasicMaterial({color:0x92eaff,transparent:true,opacity:1}));m.position.set(e.x,3.5,e.z);effects.add(m);bursts.push({m,life:.22,max:.22,arc:true});hitEnemy(e,60+level*6,true);}sparks(player.x,1,player.z,colors.aqua,28);flash('#7ceeff',.15);sound(140,.4,'sawtooth',.09);}
+  function gainXp(n){xp+=n;while(xp>=xpGoal){xp-=xpGoal;xpGoal=Math.round(xpGoal*1.3+5);level++;quest.points++;stats.maxHp+=5;stats.hp=Math.min(stats.maxHp,stats.hp+25);toast('LEVEL UP · +1 ENCHANT POINT');sparks(player.x,1,player.z,colors.gold,25);}updateHud();}
+  function openChest(){if(!chest||chest.open)return;chest.open=true;chest.group.rotation.z=.12;chest.glow.visible=false;pickupGear(7,-38,true);quest.arrows+=12;for(let i=0;i<8;i++)drop(7+(Math.random()-.5),-38+(Math.random()-.5),'gem');sparks(7,1,-38,colors.gold,32);sound(760,.35);toast('RARE TREASURE');updateHud();}
+  function inventory(){if(!playing||quest.complete)return;pausedForUpgrade=!pausedForUpgrade;$('inventory').classList.toggle('hidden',!pausedForUpgrade);quest.held=false;keys.clear();if(pausedForUpgrade)drawInventory();}
+  function drawInventory(){const list=$('gearList');list.replaceChildren();$('enchantCount').textContent=quest.points+' ENCHANT POINTS';for(const item of quest.bag){const b=document.createElement('button');b.className='choice'+(item.rare?' rare':'');const equipped=quest.equipped[item.slot]===item.id;b.innerHTML='<strong>'+item.name+(item.enchanted?' ✦':'')+'</strong><small>'+item.slot.toUpperCase()+' · POWER '+item.power+(equipped?' · EQUIPPED':' · TAP TO EQUIP')+'</small>';b.onclick=()=>{quest.equipped[item.slot]=item.id;stats[item.slot==='sword'?'damage':item.slot==='bow'?'bolt':'armor']=item.power;drawInventory();sound(550,.12);};list.append(b);if(equipped&&!item.enchanted){const en=document.createElement('button');en.className='choice';en.textContent='✦ ENCHANT · 1 POINT';en.disabled=quest.points<1;en.onclick=()=>{if(quest.points<1)return;quest.points--;item.enchanted=true;item.power=Math.round(item.power*1.25+1);stats[item.slot==='sword'?'damage':item.slot==='bow'?'bolt':'armor']=item.power;drawInventory();sound(950,.2);};list.append(en);}}}
+  function updateHud(){baseUpdateHud();if(!$('ammo'))return;$('ammo').textContent='➶ '+quest.arrows;$('potion').textContent=quest.potion>0?Math.ceil(quest.potion)+'s':'♥';$('artifact').textContent=quest.artifact>0?Math.ceil(quest.artifact)+'s':'ϟ';ui.tip.textContent=quest.rescued<3?'FREE THE VILLAGERS · '+quest.rescued+' / 3':!quest.key?'FIND THE RUNE KEEPER':!quest.boss?'DEFEAT THE STONE GOLEM':'REACH THE EXIT';}
+  function movePlayer(dt,time){
+    quest.potion=Math.max(0,quest.potion-dt);quest.artifact=Math.max(0,quest.artifact-dt);quest.comboTime-=dt;
+    const sx=(keys.has('d')||keys.has('arrowright')?1:0)-(keys.has('a')||keys.has('arrowleft')?1:0)+stick.x,sy=(keys.has('s')||keys.has('arrowdown')?1:0)-(keys.has('w')||keys.has('arrowup')?1:0)+stick.y;
+    let x=.832*sx+.555*sy,z=-.555*sx+.832*sy;
+    if(Math.hypot(x,z)>.1)quest.target=null;else if(quest.target){const enemy=quest.target.enemy;if(enemy){quest.target.x=enemy.x;quest.target.z=enemy.z;}x=quest.target.x-player.x;z=quest.target.z-player.z;if(enemy&&enemy.dead){quest.target=null;x=z=0;}else if(Math.hypot(x,z)<(enemy?2.25:.22)){if(enemy)melee();else quest.target=null;x=z=0;}}
+    const mag=Math.hypot(x,z);if(mag>.1){x/=mag;z/=mag;if(player.dashTime<=0)player.facing.set(x,0,z);}
+    const rolling=player.dashTime>0,speed=rolling?12:stats.speed;if(rolling){x=player.facing.x;z=player.facing.z;player.dashTime-=dt;}
+    const nx=player.x+x*speed*dt,nz=player.z+z*speed*dt;if(walkable(nx,player.z))player.x=nx;if(walkable(player.x,nz))player.z=nz;
+    player.group.position.set(player.x,rolling?.2:Math.sin(time*13)*.04*(mag>.1?1:0),player.z);player.group.rotation.z=rolling?Math.sin(player.dashTime/.22*Math.PI)*.7:0;
+    if(mag>.1||rolling)player.group.rotation.y=Math.atan2(player.facing.x,player.facing.z);
+    const swing=Math.sin(time*12)*Math.min(1,mag)*.45;player.legs[0].rotation.x=swing;player.legs[1].rotation.x=-swing;player.arms[0].rotation.x=-swing*.65;player.arms[1].rotation.x=swing*.65-(player.attackTime>0?1.7:0);player.attackTime=Math.max(0,player.attackTime-dt);player.invuln=Math.max(0,player.invuln-dt);player.group.visible=player.invuln<=0||Math.floor(time*18)%2===0;
+    if(quest.held||keys.has('j'))melee();if(keys.has('k'))bolt();
+    quest.zones.forEach((g,i)=>g.visible=Math.abs(player.z+38*i)<29);
+    const nearCage=quest.cages.some(c=>!c.freed&&Math.hypot(player.x-c.x,player.z-c.z)<2.2),nearChest=chest&&!chest.open&&Math.hypot(player.x-7,player.z+38)<2.2,nearExit=quest.boss&&Math.hypot(player.x,player.z+85)<2.5;
+    $('interact').style.display=nearCage||nearChest||nearExit?'block':'none';$('interact').textContent=nearCage?'FREE · E':nearChest?'OPEN · E':'EXIT · E';
+    const g=goal(),a=Math.atan2(g.x-player.x,-(g.z-player.z));$('compass').style.transform='rotate('+a+'rad)';
+    if(quest.marker){quest.marker.visible=!!quest.target;if(quest.target)quest.marker.position.set(quest.target.x,.1,quest.target.z);}
+    updateHud();drawMap();
+  }
+  function updateEnemies(dt,time){for(const e of enemies){if(e.dead)continue;const dx=player.x-e.x,dz=player.z-e.z,d=Math.hypot(dx,dz)||1;e.hit=Math.max(0,e.hit-dt);if(e.hit===0)e.body.material.emissiveIntensity=0;
+    if(!e.alert&&d<6.5){e.alert=true;if(e.boss){ui.boss.classList.add('show');ui.bossHp.style.setProperty('--hp',e.hp/e.maxHp*100+'%');toast('STONE GOLEM');}}
+    if(!e.alert||d>18)continue;e.attack-=dt;
+    if(e.type==='slime'&&d<2.3&&e.fuse===undefined){e.fuse=.9;const ring=new THREE.Mesh(new THREE.RingGeometry(2.8,3,28),new THREE.MeshBasicMaterial({color:0xff5944,transparent:true,opacity:.8,side:THREE.DoubleSide}));ring.rotation.x=-Math.PI/2;ring.position.set(e.x,.08,e.z);root.add(ring);e.warning=ring;}
+    if(e.fuse!==undefined){e.fuse-=dt;e.body.material.emissive.setHex(0xffffff);e.body.material.emissiveIntensity=Math.sin(time*35)>.1?1:0;if(e.fuse<=0){if(d<3)damagePlayer(30);sparks(e.x,1,e.z,0xffa147,35,1.5);root.remove(e.warning);hitEnemy(e,e.hp);continue;}}
+    else if(e.windup!==undefined){e.windup-=dt;if(e.windup<=0){if(d<(e.boss?3.6:1.8))damagePlayer(e.boss?32:13);if(e.warning)root.remove(e.warning);e.windup=undefined;e.attack=e.boss?2.6:1.2;sparks(e.x,.3,e.z,0xd5c4a3,e.boss?25:4);}}
+    else if(d<(e.boss?3:1.45)&&e.attack<=0){e.windup=e.boss?.85:.35;if(e.boss){const ring=new THREE.Mesh(new THREE.RingGeometry(3.4,3.6,28),new THREE.MeshBasicMaterial({color:0xff704b,side:THREE.DoubleSide}));ring.rotation.x=-Math.PI/2;ring.position.set(e.x,.09,e.z);root.add(ring);e.warning=ring;}}
+    else if(d>(e.boss?2.7:1.25)){const speed=e.boss?1.35:1.65,nx=e.x+dx/d*speed*dt,nz=e.z+dz/d*speed*dt;if(walkable(nx,nz)){e.x=nx;e.z=nz;}}
+    e.group.position.set(e.x,Math.abs(Math.sin(time*5+e.seed))*.045,e.z);e.group.rotation.y=Math.atan2(dx,dz);
+  }}
+  function updateShots(dt){for(let i=shots.length-1;i>=0;i--){const s=shots[i];s.life-=dt;s.m.position.x+=s.dx*17*dt;s.m.position.z+=s.dz*17*dt;const e=enemies.find(e=>!e.dead&&Math.hypot(e.x-s.m.position.x,e.z-s.m.position.z)<(e.boss?1:.65));if(e){hitEnemy(e,s.damage);s.life=0;}if(s.life<=0){effects.remove(s.m);s.m.geometry.dispose();s.m.material.dispose();shots.splice(i,1);}}}
+  function updateDrops(dt,time){for(let i=drops.length-1;i>=0;i--){const d=drops[i],g=d.g;d.t+=dt;const dx=player.x-g.position.x,dz=player.z-g.position.z,dist=Math.hypot(dx,dz);if(dist<2.5){g.position.x+=dx*Math.min(1,dt*7);g.position.z+=dz*Math.min(1,dt*7);}else{g.position.x+=d.vx*dt;g.position.z+=d.vz*dt;d.vx*=.94;d.vz*=.94;}g.position.y=.6+Math.sin(d.t*4)*.12;g.rotation.y+=dt*2;if(dist<.55){if(d.type==='gear'){quest.bag.push(d.item);toast(d.item.name.toUpperCase()+' · I TO EQUIP');sound(950,.3);}else if(d.type==='gem')gems++;else if(d.type==='heart')stats.hp=Math.min(stats.maxHp,stats.hp+18);else gainXp(8);effects.remove(g);g.traverse(o=>{if(o.isMesh){o.geometry.dispose();o.material.dispose();}});drops.splice(i,1);updateHud();}}}
+  function drawMap(){const ctx=$('map').getContext('2d');ctx.clearRect(0,0,76,142);ctx.fillStyle='#425651';ctx.fillRect(34,12,8,115);for(let i=0;i<3;i++){ctx.fillStyle='#56736a';ctx.fillRect(18,15+i*41,40,28);}const toMap=(x,z)=>[38+x*1.7,120+z*1.25];for(const c of quest.cages){if(c.freed)continue;const a=toMap(c.x,c.z);ctx.fillStyle='#ffe38e';ctx.fillRect(a[0]-2,a[1]-2,4,4);}const goalPos=goal(),b=toMap(goalPos.x,goalPos.z);ctx.strokeStyle='#ffcf7c';ctx.strokeRect(b[0]-3,b[1]-3,6,6);const a=toMap(player.x,player.z);ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(a[0],a[1],3,0,7);ctx.fill();}
+  function controls(){baseControls();addEventListener('keydown',e=>{if(e.repeat)return;const k=e.key.toLowerCase();if(k==='e')interaction();if(k==='i'||k==='escape')inventory();if(k==='q')potion();if(k==='f')artifact();});
+    $('inventoryButton').onclick=inventory;$('closeInventory').onclick=inventory;$('potion').onclick=potion;$('artifact').onclick=artifact;$('interact').onclick=interaction;
+    for(const id of ['touchSword','melee'])$(id).addEventListener('pointerdown',()=>quest.held=true);addEventListener('pointerup',()=>quest.held=false);addEventListener('pointercancel',()=>quest.held=false);addEventListener('blur',()=>quest.held=false);
+    renderer.domElement.addEventListener('pointerdown',e=>{if(!playing||pausedForUpgrade||mobile)return;const ray=new THREE.Raycaster();ray.setFromCamera(new THREE.Vector2(e.clientX/innerWidth*2-1,1-e.clientY/innerHeight*2),camera);const hits=ray.intersectObjects(enemies.filter(e=>!e.dead).map(e=>e.group),true);if(hits.length){const victim=enemies.find(enemy=>{let o=hits[0].object;while(o){if(o===enemy.group)return true;o=o.parent;}return false;});if(victim)quest.target={x:victim.x,z:victim.z,enemy:victim};return;}const point=new THREE.Vector3();if(ray.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0,1,0),0),point)&&walkable(point.x,point.z))quest.target={x:point.x,z:point.z};});
+  }
+  function damagePlayer(amount){baseDamagePlayer(amount);if(ended){ui.dead.querySelector('h1').innerHTML=quest.revives>0?'BACK TO<br><em>THE FIGHT</em>':'QUEST<br><em>ENDED</em>';ui.result.textContent=quest.revives>0?quest.revives+' revives remaining · equipment kept':'No revives left';ui.restart.textContent=quest.revives>0?'REVIVE →':'NEW QUEST →';}}
+  function resetGame(){if(ended&&quest.revives>0){quest.revives--;ended=false;playing=true;stats.hp=stats.maxHp;player.x=0;player.z=quest.key?-68:quest.rescued===3?-30:8;player.invuln=2;quest.target=null;quest.held=false;ui.dead.classList.add('hidden');updateHud();return;}quest.revives=3;quest.arrows=30;quest.potion=0;quest.artifact=0;quest.points=0;quest.held=false;quest.combo=0;quest.bag=[{name:'Iron Sword',slot:'sword',power:24,id:1},{name:'Hunting Bow',slot:'bow',power:28,id:2},{name:'Traveler Armor',slot:'armor',power:0,id:3}];quest.equipped={sword:1,bow:2,armor:3};$('inventory').classList.add('hidden');baseResetGame();}
+  if(location.hostname==='127.0.0.1'&&new URLSearchParams(location.search).has('qa'))window.questQA={state:()=>({kills:enemies.filter(e=>e.dead).length,rescued:quest.rescued,key:quest.key,boss:quest.boss,complete:quest.complete,x:player.x,z:player.z,arrows:quest.arrows,hp:stats.hp,bag:quest.bag.length,paused:pausedForUpgrade}),place:(x,z)=>{player.x=x;player.z=z;},killKeeper:()=>hitEnemy(enemies.find(e=>e.keeper),10000),killBoss:()=>hitEnemy(enemies.find(e=>e.boss),10000),loot:()=>pickupGear(player.x,player.z,true),hurt:()=>{stats.hp=20;},xp:()=>gainXp(100),canWalk:walkable};
+
   controls();buildFloor();updateHud();frame();
 })();
