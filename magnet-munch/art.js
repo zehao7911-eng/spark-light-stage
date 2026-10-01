@@ -1,5 +1,14 @@
 /* Original toy-town artwork. Sprites are drawn once and reused by the renderer. */
 (() => {
+if(!CanvasRenderingContext2D.prototype.roundRect){
+ CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r=0){
+  r=Math.min(Math.max(0,Number(Array.isArray(r)?r[0]:r)||0),Math.abs(w)/2,Math.abs(h)/2);
+  this.moveTo(x+r,y);this.lineTo(x+w-r,y);this.arcTo(x+w,y,x+w,y+r,r);
+  this.lineTo(x+w,y+h-r);this.arcTo(x+w,y+h,x+w-r,y+h,r);
+  this.lineTo(x+r,y+h);this.arcTo(x,y+h,x,y+h-r,r);
+  this.lineTo(x,y+r);this.arcTo(x,y,x+r,y,r);this.closePath();return this;
+ };
+}
 const TAU=Math.PI*2,cache=new Map();
 const P={ink:'#3b5865',cream:'#f4e6b6',coral:'#e98770',blue:'#7caeb6',mint:'#85b8a0',gold:'#e1b65d',plum:'#a999b7'};
 function poly(c,pts,fill,stroke=P.ink,lw=1.4){c.beginPath();pts.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();if(fill){c.fillStyle=fill;c.fill()}if(stroke){c.strokeStyle=stroke;c.lineWidth=lw;c.lineJoin='round';c.stroke()}}
