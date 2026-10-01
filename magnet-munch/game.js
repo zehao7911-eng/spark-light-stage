@@ -78,3 +78,4 @@ let saved=get(SAVE,null);if(saved&&Array.isArray(saved.items)&&saved.items.lengt
 window.__munch={get run(){return run},get phase(){return phase},get view(){return view},get dimensions(){return{W,H}},get meta(){return meta},power,cap,field,mass,step:seconds=>{for(let t=0;t<seconds&&phase==='play';t+=.02)step(.02)}};
 
 
+
