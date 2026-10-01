@@ -34,9 +34,10 @@ function motion(c,t,time,season){let random=rng(t.seed+100),p=random()*TAU;if(t.
  if(t.type==='forest'&&t.rank>0){let x=-17+Math.sin(time*.17+p)*8,y=14;c.save();c.translate(x,y);ellipse(c,0,0,4,2,'#eae3c3');ellipse(c,3,-3,2,2.5,'#f8edcf');ellipse(c,3,-6,1,2,'#f8edcf');ellipse(c,5,-5.5,.8,2,'#f8edcf');c.restore()}
  if(t.type==='meadow'){let x=20*Math.sin(time*.3+p),y=-22+Math.sin(time*.8+p)*4;ellipse(c,x-2,y,2.5,1+Math.abs(Math.sin(time*6))*2,'#f0d796');ellipse(c,x+2,y,2.5,1+Math.abs(Math.sin(time*6))*2,'#eebca4')}
 }
-function draw(c,t,x,y,s,season,time=0,alpha=1,animated=true){c.save();c.translate(x,y);c.scale(s,s);c.globalAlpha=alpha;c.drawImage(staticTile(t,season),-80,-118,160,174);if(animated)motion(c,t.special&&!t.landmark?{...t,rank:(t.type==='water'||t.type==='meadow')?2:1,landmark:true}:t,time,season);c.restore()}
+function draw(c,t,x,y,s,season,time=0,alpha=1,animated=true){c.save();c.translate(x,y);c.scale(s,s);c.globalAlpha=alpha;c.drawImage(staticTile(t,season),-80,-118,160,174);if(animated||t.landmark||t.special)motion(c,t.special&&!t.landmark?{...t,rank:(t.type==='water'||t.type==='meadow')?2:1,landmark:true}:t,time,season);c.restore()}
 function card(canvas,t,season){let w=canvas.clientWidth||160,h=canvas.clientHeight||80,dpr=Math.min(2,devicePixelRatio||1);canvas.width=w*dpr;canvas.height=h*dpr;let c=canvas.getContext('2d');c.scale(dpr,dpr);let s=Math.min(w/140,h/97);draw(c,t,w/2,h*.77,s,season,0,1,false)}
 window.AtlasArt={R,Y,TAU,hex,poly,ellipse,line,draw,card,motion,rng,clear:()=>cache.clear(),quality:v=>{qualityScale=v;cache.clear()}};
 })();
+
 
 
