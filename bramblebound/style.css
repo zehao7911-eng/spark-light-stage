@@ -4,3 +4,5 @@
 
 .enemy.acting{background:#86614c;box-shadow:0 0 16px #ebad7777}.stage.resolving{border-color:#d5a36a}.card:disabled:hover{transform:none}.hand:after{content:"";flex:0 0 4px}
 @media(max-height:450px) and (orientation:landscape){header{height:34px}.title h2{font-size:22px}.title .eyebrow{font-size:9px}.title{margin-bottom:6px}.stage canvas{height:125px}.battle-tools{margin:4px 0}.battle-tools button{padding:7px 15px}.hand{padding-top:3px;padding-bottom:5px}.card canvas{height:32px}.card p{min-height:20px;font-size:10px}.card em{font-size:8px}.hero-ui{bottom:6px}.enemy{font-size:10px;padding:5px}}
+
+.enemy-name{display:block}@media(max-height:450px) and (orientation:landscape){.enemy-name{display:none}.enemy{font-size:9px;padding:4px}.enemy b{margin-bottom:2px}.enemy-ui{top:5px}.hpbar{margin-top:3px}}
