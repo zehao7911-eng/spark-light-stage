@@ -1,0 +1,5 @@
+ROLY REVERIE — ROLL A LITTLE WONDER
+Original 3D collecting game inspired by Katamari Damacy's rolling and growth loop. No commercial character, level, audio or model assets are used.
+Drag anywhere to steer with a floating joystick. Desktop also supports WASD and arrow keys. Small objects stick to the ball and rotate with it. Grow to collect bigger objects. Large objects push you back until you reach their required size. No time limit.
+Reach 175 cm to complete a world and receive a permanent star. Next worlds alternate between a sweet counter, toy corner and picnic blanket, with new item arrangements. Thirteen modeled treasure types, persistent discoveries and three ball colors; additional colors unlock at two and four stars. Three scene styles repeat with freshly seeded layouts after round three.
+Pause, resume, local run save, photo export, touch controls and synthesized collection sounds. Keyboard and input reset on hidden pages. English UI. WebGL required. No network dependencies. Open index.html or serve this folder. Three.js MIT license in vendor/LICENSE.txt.
