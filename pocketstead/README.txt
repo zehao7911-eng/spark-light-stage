@@ -1,11 +1,9 @@
-POCKETSTEAD
-An original card village game inspired by the resource-stacking loop of Stacklands.
-Open index.html in a modern browser. No external downloads, fonts, or libraries.
-Tap a villager then a resource site, or drag the villager onto it. Tap a working site to recall one worker.
-Gather, craft, build automatic production, sell materials, buy packs, and complete eleven village chapters. Progress continues endlessly after the bell tower.
-Two selected material types can craft a matching affordable recipe; the recipe book is the clearest way to choose.
-Food is consumed every minute. Hungry days lose the daily bonus but never destroy your village. No real-money mechanics.
-Progress is saved on this device. Production pauses when the page is hidden.
-All card illustrations and synthesized sounds are original. No Steam game assets are included.
-
-After all eleven chapters, the recipe book offers a new village. Each Legacy permanently adds 15% villager production speed and 10 starting coins.
+POCKETSTEAD — REBUILT
+An original HTML5 village game. No external files or libraries are needed.
+Tap a resource button or its site in the village to dispatch a villager. Hold to make villagers at that site work 2.7 times faster. Once everyone is working, tapping another site moves a villager there.
+The highlighted button shows the resource needed for your next building. The green Build button lights up when you have enough materials.
+Eight buildings change the village and unlock neighbors, automatic berry growing, visitors, better wood deliveries, faster production, a market, a glasshouse and a lighthouse.
+Visitors exchange requested resources for coins. Coins buy permanent boots and basket upgrades.
+Finish a village to save its postcard and sail to the next shore. Four palettes rotate. Later villages need more materials; upgrades remain.
+Progress saves on this device under pocketstead-v2. Old card-game saves remain untouched. Production pauses when hidden or when a menu is open.
+English UI. Portrait and landscape touch controls. Illustrations and synthesized audio are original.
