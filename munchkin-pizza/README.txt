@@ -6,3 +6,5 @@ Rub or tap the dough to spread it. Choose sauce and drag across the pizza, then 
 Six original guests. Four guests per day. Basil unlocks on Day 2; olives and half-and-half orders on Day 3. The Cafe Journal records your best guest ratings and offers oven and lighting upgrades. Active pizzas, earnings and upgrades save locally. Baking pauses when the journal opens or the tab is hidden.
 
 Serve this folder over HTTP; index.html is the entry point. All illustration and sound code is included; no external dependencies. Touch, mouse, portrait and landscape supported. Inspired by the cooking workflow in Good Pizza, Great Pizza, with original characters, artwork and audio.
+
+Quality update: live topping counts and coverage labels, ingredient undo history, half-order guides, instant guest reactions, streak ratings, extra-topping crispy recipes and daily earnings reports. Earn at least eight stars across four guests for a 15-coin daily bonus. Bonuses cannot repeat on reload. Existing progress is retained.
