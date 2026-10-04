@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#171d20"><title>Pip Is You · Small words, big possibilities</title><link rel="icon" href="data:,"><link rel="stylesheet" href="style.css?v=1"></head>
+<body><main>
+ <header><a class="brand" href="#" id="brand" aria-label="Open puzzle journal"><span>PIP</span><i>IS</i><b>YOU</b></a><div class="header-tools"><button id="sound" aria-label="Enable sound" title="Sound">♫</button><button id="journal" aria-label="Open puzzle journal" title="Puzzle journal">▦</button><button id="help" aria-label="How to play" title="How to play">?</button></div></header>
+ <section class="title-line"><div><small id="place">MOSSY MEADOW</small><h1 id="levelName">A wall is just a word</h1></div><span id="levelNumber">01 <i>/ 18</i></span></section>
+ <div class="play-layout"><section class="board-wrap"><canvas id="board" width="704" height="832" aria-label="Puzzle board. Swipe to move. Push the words to change the rules." tabindex="0"></canvas><div id="burst" aria-live="polite"></div></section>
+ <aside><div class="status"><span><b id="moves">0</b> STEPS</span><span id="best">A fresh little thought</span></div><div class="rule-card"><small>THE WORLD SAYS</small><div id="rules"></div></div>
+ <div class="hint-card"><span id="hintText">Swipe to waddle. Push the words.</span><button id="hint" aria-label="Get a puzzle hint">✧</button></div>
+ <div class="controls"><div class="small-tools"><button id="undo" aria-label="Undo last move" title="Undo (Z)"><span>↶</span><small>UNDO</small></button><button id="reset" aria-label="Restart puzzle" title="Restart (R)"><span>↻</span><small>RESET</small></button></div><div class="dpad" aria-label="Movement controls"><button data-dir="0" aria-label="Move up">↑</button><button data-dir="3" aria-label="Move left">←</button><div class="dpad-heart">✦</div><button data-dir="1" aria-label="Move right">→</button><button data-dir="2" aria-label="Move down">↓</button></div></div>
+ <div class="chapter-progress"><span id="chapterText">Little revelations</span><div id="pips"></div></div><p class="desktop-tip">ARROWS / WASD · Z TO UNDO · NO RUSH</p></aside></div>
+ <footer><span>SMALL WORDS. BIG POSSIBILITIES.</span><span id="collection">0 / 18 LITTLE REVELATIONS</span></footer>
+</main><div id="modal" class="overlay"><article id="panel"></article></div>
+<script src="engine.js?v=1"></script><script src="levels.js?v=1"></script><script src="art.js?v=1"></script><script src="game.js?v=1"></script></body></html>
