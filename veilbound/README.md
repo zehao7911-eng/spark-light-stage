@@ -33,3 +33,13 @@ Headless Microsoft Edge tests cover a full nine-room run using normal keyboard i
 ## Technical
 
 Canvas 2D; 60 Hz fixed simulation with bounded catch-up; maximum DPR 2; scenery cached per room; at most 230 particles, 60 hostile projectiles and 22 floating labels. The finite campaign has bounded foes; Nightfall increases stats rather than unbounded spawn counts. A room's unfinished loot is rolled back on reload/retry to avoid duplicating treasure. Reward choices and forging are persisted immediately.
+
+## Detail update 1.1
+
+- Attack and dash input buffering, independent keyboard/touch input sources, and immediate facing from held movement.
+- Visible dash cooldown and Focus progress rings, subtle offscreen foe direction hints, and a boss meter above the fight.
+- Hit flash, cosmetic hit chains, dissolving enemy silhouettes, collectible Geo trails, ground shadows, breathing lantern light, drifting leaves/dust and room fades.
+- Guardians sleep until approached. Half-health awakening cues and slam landing telegraphs clarify their attack timing.
+- Fixed guardian slam waves being cancelled before landing. Fixed Echo Bloom kills skipping loot/stat accounting. Fixed maxed nails accepting paid upgrades and Rest & Renew reducing a larger health cap.
+- Health DOM elements update only when their value changes. Defeated summoned foes are retired after their animation to keep enemy lists bounded. Existing v1 room-entry saves remain compatible.
+- Added regression scenarios for Echo reward idempotence, guardian engagement/landing, overlapping key bindings, input buffering, upgrade caps and portrait boss-HUD placement. Scenario hooks are injected by tests only; distributed code contains no mutable scenario hooks.
