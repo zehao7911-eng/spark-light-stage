@@ -26,3 +26,7 @@ A headless Godot test completed the ten-floor campaign in 109 normal-equipment a
 
 Reference: https://store.steampowered.com/app/1972440/Shotgun_King_The_Final_Checkmate/
 Godot: https://godotengine.org/
+
+## Visual revision — October 4, 2026
+Rebuilt all chess silhouettes in a shared navy/ivory pixel palette, with a diagonal outlined royal shotgun. Violet/ivory checkerboard, red shells/hearts, center-board widescreen composition, illustrated upgrade slots and light scanlines bring the art direction closer to the official reference. All sprites are newly drawn. VT323 font by Peter Hull is bundled under the included SIL OFL license.
+Verified touch movement, save/reload and layouts at 390x844, 360x740, 844x390 and 1280x800. Headless rule regression completed the ten-floor campaign in 108 normal-equipment actions. These checks do not certify physical phone performance.
