@@ -1,0 +1,16 @@
+/* Tile coordinates. Each room has a safe main route and optional berry detours. */
+const Rooms=[
+ {name:'First Steps',zone:0,spawn:[2,14],goal:[12,10],rock:[[0,14,5,2],[6,12,4,4],[11,10,4,6]],berry:[8,10],tip:'Jump ↑ · Land to refill your dash'},
+ {name:'A Little Further',zone:0,spawn:[2,14],goal:[12,10],rock:[[0,14,4,2],[7,12,3,4],[11,10,4,6]],spikes:[[4,15,3]],crystals:[[6,11]],berry:[5,10],tip:'Aim with the stick · Tap ✦ to dash'},
+ {name:'Blue Spring',zone:0,spawn:[2,14],goal:[12,8],rock:[[0,14,7,2],[8,10,3,6],[11,8,4,8]],springs:[[5,14]],berry:[6,9],tip:'Springs launch you higher'},
+ {name:'Across the Wind',zone:0,spawn:[2,14],goal:[12,8],rock:[[0,14,4,2],[5,12,3,1],[8,10,3,1],[11,8,4,8]],spikes:[[4,15,7]],crystals:[[8,9]],berry:[5,10],wind:12,tip:'Keep climbing · Your dash comes back on landing'},
+ {name:'Old Stone',zone:1,spawn:[2,14],goal:[12,6],rock:[[0,14,5,2],[6,12,3,1],[9,10,3,1],[6,8,3,1],[10,6,5,1]],berry:[7,6],crystals:[[9,7]],tip:'A short jump, then a dash'},
+ {name:'Wallflower',zone:1,spawn:[2,14],goal:[12,7],rock:[[0,14,5,2],[6,8,2,8],[10,7,5,9]],springs:[[3,14]],berry:[6,6],tip:'Touch a wall · Jump to kick away'},
+ {name:'Fragile Footing',zone:1,spawn:[2,14],goal:[12,8],rock:[[0,14,4,2],[11,8,4,8]],crumble:[[5,12,2],[8,10,2]],crystals:[[8,8]],spikes:[[4,15,7]],berry:[6,10],tip:'Cracked blocks crumble · Keep moving'},
+ {name:'The Bell Tower',zone:1,spawn:[2,14],goal:[12,4],rock:[[0,14,4,2],[5,12,3,1],[8,10,3,1],[5,8,3,1],[8,6,3,1],[11,4,4,1]],crystals:[[7,7]],berry:[5,6],tip:'Breathe · One ledge at a time'},
+ {name:'The Night Opens',zone:2,spawn:[2,14],goal:[12,8],rock:[[0,14,4,2],[6,11,3,1],[11,8,4,8]],springs:[[2,14]],crystals:[[9,9]],spikes:[[4,15,7]],berry:[7,9],tip:'Spring, steer, then dash'},
+ {name:'Between Stars',zone:2,spawn:[2,14],goal:[12,6],rock:[[0,14,4,2],[6,12,2,1],[10,10,2,1],[6,8,2,1],[10,6,5,1]],crystals:[[8,10],[8,6]],spikes:[[4,15,6]],berry:[4,7],tip:'Green crystals refill your dash in midair'},
+ {name:'Last Lantern',zone:2,spawn:[2,14],goal:[12,4],rock:[[0,14,4,2],[5,11,3,1],[9,8,3,1],[5,6,3,1],[10,4,5,1]],springs:[[2,14]],crystals:[[8,7],[9,4]],crumble:[[8,12,2]],spikes:[[4,15,6]],berry:[6,4],tip:'No rush · Every attempt teaches the route'},
+ {name:'A Little Higher',zone:2,spawn:[2,14],goal:[12,3],rock:[[0,14,4,2],[5,12,3,1],[9,10,3,1],[5,8,3,1],[9,6,3,1],[5,4,3,1],[10,3,5,1]],crystals:[[8,8],[8,4]],crumble:[[8,13,2]],spikes:[[4,15,6]],berry:[5,2],tip:'The summit is close'}
+];
+function buildRoom(index){let base=Rooms[(index-1)%Rooms.length],r=JSON.parse(JSON.stringify(base)),map=Array.from({length:16},()=>Array(15).fill('.'));for(let [x,y,w,h] of r.rock)for(let j=y;j<Math.min(16,y+h);j++)for(let i=x;i<Math.min(15,x+w);i++)map[j][i]='#';for(let [x,y,w] of r.spikes||[])for(let i=x;i<x+w;i++)map[y][i]='^';let blocks=[];for(let[x,y,w]of r.crumble||[])for(let i=x;i<x+w;i++){map[y][i]='C';blocks.push({x:i*16,y:y*16,timer:0,gone:0})}r.map=map;r.blocks=blocks;r.crystals=(r.crystals||[]).map(([x,y])=>({x:x*16+8,y:y*16+8,cool:0}));r.springs=(r.springs||[]).map(([x,y])=>({x:x*16+8,y:y*16,bounce:0}));r.spawn={x:r.spawn[0]*16+8,y:r.spawn[1]*16};r.goal={x:r.goal[0]*16+8,y:r.goal[1]*16};r.berry={x:r.berry[0]*16+8,y:r.berry[1]*16+8,taken:false};r.index=index;r.loop=Math.floor((index-1)/12);r.elapsed=0;return r}
