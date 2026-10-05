@@ -1,0 +1,8 @@
+# WORLDS BETWEEN
+An original eight-chapter HTML5 picture-rearrangement puzzle, inspired by Gorogoa's illustrated panel worlds and visual connections. Original illustrations, levels and code; it does not reproduce the commercial game's full story, layered-object mechanics or artwork.
+
+Exchange pictures by dragging onto another panel, or tap two pictures. The lens changes between two or three views inside each picture; views have different visible exits. Match exits across adjoining borders to create a route from the child through all three memories to the golden doorway. Follow the Path animates the actual connected route; an incomplete route stops and identifies the break without penalizing progress. Undo and reset are available. Hint searches the current state and indicates one swap or one lens change without performing it. Chapters unlock sequentially. Completed chapters can be replayed from the archive, with the fewest changes saved.
+
+Canvas illustrations include architecture, library shelves, gardens, ceramics, coastal bridges and moon observatories, with ink outlines, patterned rosettes, paper grain and synthesized music-box tones. Portrait and landscape touch UI, capped pixel ratio, no WebGL or external runtime. Hidden tabs pause the traveler. Resize interrupts walking while preserving the arrangement. Local storage saves chapter, layout, observation levels, changes, sound and records; undo history and walking do not persist.
+
+ZIP index.html is standalone, requires JavaScript, and works offline. Browser storage restrictions may prevent persistence. English UI. No commercial assets, external fonts, CDNs or image-generation assets.
