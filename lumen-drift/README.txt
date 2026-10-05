@@ -1,0 +1,8 @@
+LUMEN DRIFT
+Original compact p5.js particle-force sandbox inspired by Cosmic Sugar VR (Steam559010/560410). Original rendering/code/art; no commercial game assets. Touch / mouse browser adaptation, not the VR game or its million-particle simulation.
+Open index.html offline or host this complete folder on an HTTPS website.
+Pull, Orbit, Push, Seed: hold or drag on the universe. Up to four simultaneous touches. Pin leaves up to four persistent force wells; drag a well to move it, tap it to remove. Seed is direct emission and cannot be pinned. Starburst spreads the stars. Six initial universes and four spectral palettes. Fine-tune force/reach/afterglow, disable camera drift, clear pins, save PNG, optional synthesized sound.
+Bookmark stores the full particle positions, velocities, origin targets, simulation time, camera angle, pins, palette and settings locally. Restore pauses at the saved moment. A bookmark replaces the previous bookmark; available only when browser storage allows it. Export saves a PNG in browser downloads. Resize/rotation retains particle world state and force wells; only screen-space afterglow is rebuilt.
+Fixed-step60Hz bounded particle simulation. 18000 stars on coarse pointer devices /32000 otherwise, at40FPS rendering, max8 active force fields; WebGL1 with ordinary RGBA8 trail buffer, no float texture requirement. Display DPR capped1.5; trail long edge capped1100. Page visibility pauses simulation. Explicit error/retry screen for unsupported/lost WebGL.
+English UI, minimum44px touch buttons and portrait/landscape layouts.
+p5.js1.11.11 LGPL2.1, see P5-LICENSE.txt. Reference: https://store.steampowered.com/app/559010/Cosmic_Sugar_VR/
