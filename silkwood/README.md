@@ -21,3 +21,6 @@ Touch/mouse: tap branches. On-screen left/right, Jump, Release, Weave, Undo, Hin
 Current grove, body/rope state, paths, rescued moths, pollen, records, unlocks and cosmetics save locally, including on pause/visibility/page close. No offline simulation. Rendering caps at 30 FPS and reduces on menus; hidden tabs pause. Synthesized pluck/chime effects unlock through a gesture. Haptics are optional where supported. Browser local storage is needed for persistent saves.
 
 Tested all eight original groves and sixteen Wild Trails in the rules engine; full eight-grove touch route, 24 rescues/24 pollen, persistent thread collision, undo, jump/release, checkpoint, pause, exact paused reload, medals, replay and cosmetic purchases. Responsive checks cover 390x844,360x640,844x390 and1280x800. Physical device speed varies.
+
+## Visual revision 2
+Organic longitudinal bark with directional light, individually placed knots and lichen, connected tapering limbs, fine fern fronds, layered woodland haze, asymmetric orchid petals and veins, larger shaded spider with outlined articulated legs, woven cocoon surfaces and patterned moth wings. Reworked pollen glows, silk contrast, atmosphere and consistent original SVG controls. Geometry, physics and the existing save key are preserved. Asset URLs include a revision tag so returning players receive the new artwork.
