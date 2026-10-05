@@ -1,0 +1,7 @@
+# Mosswing
+
+An original compact HTML5 forest-flight adventure inspired by [Minishoot' Adventures](https://store.steampowered.com/app/1634860/Minishoot/). Official screenshot ss_6775382d9097f05b9400c8ee606a988f2af611f8 informed the green painted foliage, warm outlined winged ship, seed enemies, cyan shots and clearly outlined gold bullets. All Canvas illustrations, characters, encounters, rules and synthesized sounds are original. This is a smaller browser adaptation, not the commercial open world or its assets.
+
+Drag the ground or left joystick to fly; WASD/arrows also work. Auto fire aims at the nearest enemy; mouse aim is optional. Dodge gold bullets. Clear each grove, approach its central crystal, and press Rescue. Friends unlock dash/Space, core + wing shots, nova/Q, and two additional hearts. Follow the right portal or use the map to visit unlocked areas. Return to Haven and approach its workshop for three three-tier crystal upgrades. Defeats preserve earned progress and damage already dealt. Five saved friends complete the campaign; an endless grove adds increasing waves and saved best-wave records. Gentle Flight grants longer hit recovery.
+
+English UI, portrait/landscape touch, minimum44px buttons, user-gesture audio, complete local autosave, offline self-contained index, no login/CDN/fonts/analytics/network dependencies, no WebGL or image generation. Cached original backgrounds, bounded effects and hidden/modal pause. New-flight reset requires two taps and preserves records.
