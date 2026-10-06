@@ -1,0 +1,9 @@
+# Spring Scout
+
+Original compact HTML5 side-scrolling spring-glove adventure inspired by Pikuniku's playful physics, expressive simple characters and colourful world. Reference https://store.steampowered.com/app/572890/Pikuniku/ . Original art, code, levels and synthesized audio, no commercial assets/image generation/CDN. Not a recreation of the full commercial game.
+
+Walk with arrows/A/D or held touch buttons; Jump with Up/W; hold POW/Space/K to punch. Canvas drag also steers. Punch an orange ball into three switches to open gates, break wooden boxes and bounce patrol creatures away. Ground punches roll farther; jumping punches lift the ball to high switches. A spring sends the scout to higher platforms. Every walk has three optional flowers. Three medals: finishing, all flowers, no bumps/ball recalls. Best medals never decrease; nine earned medals automatically unlock a flower crown.
+
+Six authored walks have different switch/box placement, two introduce high switches and later flowers use spring routes. Subsequent walks repeat these six arrangements with extra patrols; they are remixes, not unlimited distinct maps. Village book replays first six unlocked walks. Gentle bump response/invulnerability with no lives or timed failure; paused menu can recall the ball with one mistake penalty or restart the room. Save contains exact ball/enemy velocities, switch/crate/flower states and profile. Pause/background freeze physics and release held pointers. Continue supports active and won saves. Stars are best records and cannot be farmed through reload.
+
+Mobile portrait/landscape, >=48px DOM buttons, two/three-finger input (move+punch+jump), DPR<=1.5 Canvas2D, 60Hz physics/30fps rendering, bounded particle effects. index.html in package is standalone and works offline. Phone tests are emulated, not physical device benchmarks.
