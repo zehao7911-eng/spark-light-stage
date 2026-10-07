@@ -1,0 +1,13 @@
+# Velvet Heist
+
+An original compact HTML5 miniature stealth puzzle, directionally inspired by Hitman GO: Definitive Edition (Steam 427820). Layered cream hotel facades, balcony rails, pool coping and ripples, loungers, hedges, trees, lanterns, tiny plaster-style figures and a brass display plinth are original code-authored geometry. No commercial assets, generated images, music recordings or external resources are included. This is a smaller independent game, not the commercial game's characters, maps or full campaign.
+
+Tap an adjacent stepping stone to move. The view button switches between close play and the complete diorama. Swipes and WASD/arrow keys also move in grid directions. Guards advance only when you move or Wait (Space). Rose rings show next-turn guard positions and one-stone lookouts. A guard's current stone is also blocked. Bushes conceal you from lookouts but not occupied guard stones. Get the golden key, take the jewel, and reach the green exit. The two golden keepsakes are optional. Spotted? Undo (Z) restores the entire turn. Hint (H) points to a safe route from your current position, prioritizing both keepsakes. There is no countdown or lives system.
+
+Twelve authored solvable cases introduce a stationary rotating lookout, walking patrols and two-guard timing. Three stars: finish, collect both keepsakes, and finish with no hint or alarm within four steps of the shortest all-keepsake route. Undo does not erase hint/alarm use. Best stars unlock navy (9), rose (18) and cream (27) coats in the casebook. Replaying retains best stars; rewards cannot be duplicated. These are twelve authored boards, not endless unique levels.
+
+The active case, guards' phase, inventory, move count, undo history, hint/alarm flags, star records, coat and mute preference save locally. Reload opens Continue. Opening another case or restarting requires confirmation. Pause, hidden tabs and blur freeze the simulation and sound. Portrait and landscape layouts respect safe areas; native touch, mouse and keyboard are supported. Browser touch emulation is used for mobile verification; no physical handset claim.
+
+Open index.html directly, or publish the package on any static host. The packaged HTML includes all styles and scripts and works offline without a build step. Three.js r147 is bundled under MIT (THREE-LICENSE.txt). DPR is capped at 1.5, drawing at 30 fps, shadow maps 768 px; static scenery is merged by material and meshes are disposed between cases. A simpler Canvas2D view is used when WebGL cannot initialize. If an existing WebGL context is lost, play pauses and offers an explicit reload using the saved case. No automatic reload loop.
+
+Reference: https://store.steampowered.com/app/427820/Hitman_GO_Definitive_Edition/
