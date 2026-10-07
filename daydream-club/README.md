@@ -1,0 +1,21 @@
+# Daydream Club
+
+An original compact HTML5 rhythm game directionally inspired by [Melatonin](https://store.steampowered.com/app/1585220/Melatonin/): soft pastel dream rooms, fine coloured outlines, expressive characters and cues inside the scenery. All scenes, characters, patterns, melodies and synthesized sounds are original code-authored work. No commercial assets, recordings, image generation or external resources are included. This is a smaller original browser interpretation, not Melatonin or its full campaign.
+
+## One button, four little dreams
+
+Tap the scene or the big button as the incoming object's shrinking ring meets the small halo. Space/Enter works too. The four initial dreams catch floating snacks, stamp love letters, photograph cloud birds and bloom moonflowers. A faster snack encore follows, then a four-scene dream parade. Six short authored songs, 108 targets in total, original percussion/bass/chords/chimes and cue tones. Four soft beat lights and a count-in teach the pulse. No lives or early game-over; missing a beat leaves you free to keep playing. Expressions, hand motions, stamp impacts, camera flashes/Polaroids, flower petals, starbursts and little chain counts respond to successful taps.
+
+Normal timing: Lovely within 105ms, Nice within 190ms. Gentle takes run 18% slower with 150/280ms timing windows and up to two stars. Timing & help offers input offset from -120 to +120ms in 20ms steps; it changes tap judgment, not the music. The audio clock drives gameplay when Web Audio is available, with a monotonic fallback when unavailable. Rendering speed does not determine note timing. Music schedules shortly ahead; pause stops scheduled voices, silences output and preserves the exact play position. Future cues are rescheduled when continuing.
+
+One star for finishing, another at 55% accuracy, a third at 86% in Normal. Nice notes earn 72% accuracy credit; misses earn none; extra taps add a denominator penalty. Rapid repeated input is debounced. Tapping constantly cannot earn a good accuracy grade. First clears award four dream pearls plus their stars; better replays award only the star improvement. Six perfect Normal takes pay at most 42 pearls. Mint, Rose and Honey outfits cost 8/12/16 pearls, and owned outfits can be freely switched. The album stores best stars/accuracy and small JPEG memories; actual current scenes can be exported as PNG postcards.
+
+Current song, exact playback time, note judgments, chains, preferences, outfits and reward state save locally. Reload opens Continue. Awarded results never pay again. Restarting a take or opening another album dream needs confirmation. Pause and hidden tabs freeze the dream. There are six authored songs, with the final song combining the four original scenes; no endless unique-song claim.
+
+## Desktop, phone and hosting
+
+Space/Enter taps, P/Escape pauses, R confirms a new take and B opens the album. Touch uses pointer-down for the actual rhythm action and suppresses compatibility-click duplication. All interface buttons have at least 46px targets. Portrait, landscape and safe-area layouts are included.
+
+Extract the ZIP and open its root `index.html`, or upload the extracted root to HTML5 hosting/GitHub Pages. The packaged index inlines every script and style; editable source files are also included. Canvas2D and Web Audio only: no WebGL, libraries, CDN, remote fonts, accounts, analytics, server APIs, service workers or build steps. Audio starts after interaction. Rendering is capped at 45FPS and DPR1.5; static illustrated scenery is cached, effects/history are bounded and paused scenes stop rendering. Oscillators are disconnected when their envelopes end and stopped on pause.
+
+Validation covers all six authored timing patterns, reward caps/replay, Gentle grading, offset compensation, anti-spam, misses, debounce and exact state continuation. Browser tests use native emulated touch for the full six-dream campaign, pause/raw pixels/reload, actual Web Audio output state, postcards, outfit purchases and 320/360/390px portrait plus 844px landscape. Native mouse/keyboard and safe-area checks complement those tests. A physical handset was not available; browser emulation is not physical hardware testing.
