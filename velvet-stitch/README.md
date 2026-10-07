@@ -1,0 +1,9 @@
+# Velvet Stitch
+
+An original p5.js tactile thread-painting studio, made entirely with local Canvas2D art and synthesized audio. Drag the needle over the highlighted parts of the hoop to grow long loops of yarn. Each completed colour automatically selects another unfinished colour. You can choose a thread manually. When the design is filled, brush scissors across it to trim the loops into short, glossy stitches. Finished hoops enter your album.
+
+Nine authored motifs cycle: mushrooms, fox, koi, lemon, jellyfish, tulips, moon rabbit, strawberry, and tea. Three completed hoops unlock Dusk threads; six unlock Marigold threads. There is no timer or penalty. The latest 24 finished pieces are retained. This is a relaxing craft toy with collection progression rather than a competitive embroidery simulation. Orders repeat after nine; no claim of unlimited unique content.
+
+The brush interpolates fast movements, accepts nearby edge stitches, and completes the last 1.5% to avoid pixel hunting. Undo reverts the last gesture in the current stage, with a 12-stroke cap. Undo history is session-only and clears when moving to trimming. Browser storage preserves the active stitches, trimmed fibers, selected thread, palette and album. Album/Pause stops the canvas and silences sound. Hiding the tab also pauses and silences it. Palette changes are available during stitching and preserve existing work.
+
+Open index.html directly or serve this directory through any static server. Bundled p5.js 1.11.11 uses the accompanying LGPL license. No CDN, WebGL, external art, generated images, build, login or network required. English interface, responsive touch/mouse controls, capped DPR1.5, 45 FPS, bounded fibers and effects. Browser touch/viewport emulation is tested; a physical handset is not available.
