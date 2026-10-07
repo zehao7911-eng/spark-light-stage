@@ -1,0 +1,11 @@
+# Lucent Lab
+
+An original p5.js light-routing puzzle on a small glass optical bench. Tap a round mirror to flip it, or drag its silver arm to choose one of two diagonal orientations. Light reflects immediately. Illuminate all crystals for 1.1 seconds to complete the experiment. Triangular prisms keep the straight beam and add a clockwise branch. Frosted square blocks stop light. Beam crossings do not interact; crystals absorb incoming light.
+
+Twelve authored experiments introduce single reflections, multi-turn paths, two/three branches and blockers. They cycle after twelve; this is not an unlimited unique-level generator. Three glass finishes: Sun from the start, Moon after four discoveries, Rose after eight. The latest 36 discoveries remain in the notebook. Each unassisted completion within mirror-count + 2 turns earns three stars; a longer unassisted solution earns two; using Hint earns one. No lives, timers, purchases, ads or accounts.
+
+Undo restores a previous orientation and removes its turn count, capped to 30 states. Reset requires a second tap. Hint highlights the intended orientation of one incorrect mirror for six seconds; assistance remains counted after reset/undo. Active orientations, moves, hint use, finish, mute and notebook are saved locally. Undo history, mirror interpolation, hint display and the short solve timer are session-only. Notebook/Pause and hiding the tab stop animation and silence audio. Reloading a completed experiment does not award it again.
+
+The simulation uses a bounded cardinal grid ray tracer, with actual nearest-cell reflections and branching, rather than a physically accurate optical/refraction model. Mirrors have two detents; the animated transition is decorative. Artwork is original Canvas2D code: glass crystals, brass pivots, bevelled silver mirrors, flowing light cores/halos and an inset mint optical board. No generated images or commercial game assets.
+
+Open index.html directly or serve this directory with any static server. Bundled p5.js 1.11.11 uses the included LGPL license. No external requests, CDN, WebGL, build or account required. English UI; touch/mouse, portrait and rotated landscape board, safe-area CSS, 45FPS, DPR1.5, bounded 90-ray segments/60 sparkles. Browser touch and viewport emulation are tested; no physical handset is available.
