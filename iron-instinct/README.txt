@@ -1,0 +1,17 @@
+IRON INSTINCT
+Original HTML5 top-down escape action, directionally inspired by APE OUT (Steam 447150). Official screenshots were inspected for bold flat floor colours, opaque ink silhouettes, perspective-extruded walls and printed grain. All maps, drawings, code, interface and sound synthesis here are original. No commercial assets, image generation, external fonts, CDN or libraries. This is a compact independent browser adaptation, not the commercial game or its complete campaign.
+
+Move using WASD / arrows, the touch pad, or relative drag anywhere on the scene.
+SHOVE / Space / right-click: knock nearby guards into architecture or other guards; break crates, glass, barrels and cages.
+GRAB / E: carry a nearby guard as a shield that absorbs two shots. SHOVE throws him. Gold guards must be stunned by a shove before grabbing.
+Find the green exit. Optional captive rescues and par times earn additional medals. There are eight authored floor layouts, three guard types, destructible obstacles, collateral hits, followers, persistent records and two medal-unlocked inks. Wild Shift repeats the authored floors with extra guards and faster reloads; it is not unlimited unique geometry.
+
+Four health per attempt; restart the current floor after defeat. Progress and an exact active floor save locally. Amber ink unlocks at six medals and Jade at twelve. Pause, hidden tabs and blur freeze the simulation and stop effects audio. Save Poster exports a PNG. All UI is English.
+
+Original Canvas2D geometry with bounded perspective wall extrusion, deterministic simulation and ray-tested guard sight. Axis-separated circle/rectangle collision and substeps; this is not a full rigid-body simulation. Guards telegraph their aim before firing; shots hit walls, glass, crates, barrels and other guards. Player shoves automatically face a visible nearby guard, reducing touch aiming friction. Combat effects use abstract ink and fragments.
+
+60 Hz fixed simulation, capped 1.5 DPR, maximum 72 projectiles, 220 transient effect fragments, 95 permanent marks and 20 simultaneous sound sources. Portrait/landscape layouts, safe areas and >=46px controls. Physical handsets are not available for QA; browser touch emulation is used. Audio requires an interaction; mute and saves are local. The packaged index.html is self-contained and works offline or on any static host. Editable source files are included.
+
+Reference: https://store.steampowered.com/app/447150/APE_OUT/
+
+Validation: all eight authored floors and eight first Wild Shift floors completed in fixed-step engine tests with unmodified health. All original captives and par-time medals earned. Browser-native portrait touch completed all eight floors and earned all 24 medals, including genuine deaths/retries; no player teleport, invulnerability or unlimited-health input hook is shipped. Simultaneous touch steering and shoving, exact paused state/pixels/silent sound, active-save reload, real PNG download, medal inks and Wild Shift reload passed. Actual keyboard movement/grab/throw destroyed a crate. A browser saved-state shooting-lane fixture verified two actual projectiles absorbed by a shield guard. Collision, ray occlusion, armour stun/grab gating, cooldown, loss and save continuation also passed. Cold file execution requested no HTTP assets; denied storage stayed playable. Five viewport sizes and four simulated safe-area help layouts passed. Physical phone performance is not certified.
