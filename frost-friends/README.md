@@ -1,0 +1,13 @@
+# Frost Friends
+
+An original miniature winter puzzle garden inspired by the snowball-growth and stacking idea of A Good Snowman Is Hard To Build. Twelve original courtyard puzzles and code-drawn isometric artwork. No commercial maps, artwork, audio, code or generated images.
+
+Roll three balls into a snowman: large at the bottom, medium in the middle, small on top. White snowy tiles grow a rolling ball by one size (maximum large), and that tile becomes cleared stone. A smaller ball can be pushed onto a larger ball. Pushing a stack moves only its top ball; the gardener stays put when another ball remains. All three sizes stacked together finish the garden. No timer or lives; undo freely, including the final move.
+
+Tap a neighboring diamond tile, swipe diagonally, or use the four direction buttons. Keyboard arrows/WASD, Z to undo, H for a guided step, Escape to pause. Diagonal onscreen arrows follow the isometric grid. The sun button highlights the next step when on the authored solution trail. Off the trail, it offers a guided restart and retains the album; this is not a solver for arbitrary states.
+
+Each new snowman joins the album. Three stars reward completion, meeting the displayed step goal, and meeting the displayed roll goal. Best totals cap at 36; undo and replay cannot farm rewards. Honey and Berry scarves unlock at four and eight completed friends. Actual completed-scene PNG postcards can be saved. Position, snow, ball sizes/stacks, step counts and up to 180 undo states persist; reload opens paused. Transient movement animation is not restored. Blocked browser storage falls back to an in-memory session.
+
+Open index.html directly or serve this folder. English UI, offline local assets, no build/network/WebGL/account. Canvas 2D using bundled p5.js 1.11.11 (LGPL-2.1; see P5-LICENSE.txt). 45 FPS target, capped DPR 1.5, 36 ambient flakes, bounded visual/audio effects. Native touch/mouse/keyboard, 44px+ controls, phone portrait/landscape layouts and safe areas. Browser phone emulation is not physical-device testing.
+
+Validation: twelve engine-proven solutions, all twelve completed through actual browser-native touch with three stars, and final landscape first three completed with three stars. Swipe/button/undo, exact paused model and canvas/audio silence, saved active reload and real PNG export passed. Cold-file mouse tile click, keyboard garden completion, guidance on/off trail, win undo, mute and earned cosmetic persistence, blocked-storage completion and safe areas at 320×568, 390×844 and 844×390 passed with zero external requests or script errors. No physical phone was available.
