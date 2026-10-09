@@ -26,7 +26,18 @@ class Atlas{
  update(dt){if(!Number.isFinite(dt)||dt<=0||this.state==='won')return;dt=Math.min(dt,.1);this.clock+=dt;if(this.state!=='walk')return;this.leg+=dt*1.7;if(this.leg<1)return;this.leg-=1;if(this.walk.length>1){this.walk.shift();this.hero=this.walk[0];const t=this.tiles[this.hero];if(t.stamp&&!this.collected.includes(t.id)){this.collected.push(t.id);this.emit('stamp',t.id);}}if(this.walk.length===1){if(this.hero===8&&this.collected.length===3){this.state='won';this.stars=1+(this.moves<=this.par?1:0)+(this.hints===0?1:0);this.emit('win',8);}else {this.emit('blocked',this.hero);this.state='edit';this.hero=0;this.walk=[];this.leg=0;this.collected=[];}}}
  emit(type,id){this.events.push({type,id});if(this.events.length>20)this.events.shift();}
  snapshot(){const v=copy(this);v.events=[];return v;}
- static restore(s){if(!s||!Number.isInteger(s.n)||s.n<1||s.n>9999||!Array.isArray(s.tiles)||s.tiles.length!==9||!['edit','walk','won'].includes(s.state))return null;const g=new Atlas(s.n,s.seed),ids=new Set(),pos=new Set();for(const t of s.tiles){if(!Number.isInteger(t.id)||t.id<0||t.id>8||!Number.isInteger(t.pos)||t.pos<0||t.pos>8||!Number.isInteger(t.rot)||t.rot<0||t.rot>3||ids.has(t.id)||pos.has(t.pos))return null;ids.add(t.id);pos.add(t.pos);if(JSON.stringify(t.links)!==JSON.stringify(g.tiles[t.id].links))return null;}if(!Number.isFinite(s.clock)||!Number.isFinite(s.leg)||!Array.isArray(s.walk)||s.walk.some(x=>!Number.isInteger(x)||x<0||x>8)||!Array.isArray(s.collected)||s.collected.some(x=>![2,4,6].includes(x))||!Number.isInteger(s.moves)||s.moves<0)return null;Object.assign(g,copy(s));g.events=[];return g;}
+ static restore(s){
+  const integer=(x,min,max)=>Number.isInteger(x)&&x>=min&&x<=max;
+  if(!s||!integer(s.n,1,9999)||!integer(s.seed,0,4294967295)||!['edit','walk','won'].includes(s.state)||!integer(s.hero,0,8)||!integer(s.moves,0,1000000)||!integer(s.hints,0,1000000)||!Number.isFinite(s.clock)||s.clock<0||!Number.isFinite(s.leg)||s.leg<0||s.leg>=1)return null;
+  const g=new Atlas(s.n,s.seed);
+  function tiles(raw){if(!Array.isArray(raw)||raw.length!==9)return null;const pos=new Set();for(let i=0;i<9;i++){const t=raw[i];if(!t||t.id!==i||!integer(t.pos,0,8)||!integer(t.rot,0,3)||pos.has(t.pos)||JSON.stringify(t.links)!==JSON.stringify(g.tiles[i].links))return null;pos.add(t.pos);}return raw.map((t,i)=>({...g.tiles[i],pos:t.pos,rot:t.rot}));}
+  const current=tiles(s.tiles);if(!current||!Array.isArray(s.walk)||s.walk.length>40||s.walk.some(x=>!integer(x,0,8))||!Array.isArray(s.collected)||s.collected.length>3||new Set(s.collected).size!==s.collected.length||s.collected.some(x=>![2,4,6].includes(x))||!Array.isArray(s.history)||s.history.length>150)return null;
+  const history=[];for(const h of s.history){if(!h||!integer(h.moves,0,1000000))return null;const t=tiles(h.tiles);if(!t)return null;history.push({tiles:t,moves:h.moves});}
+  Object.assign(g,{tiles:current,history,clock:s.clock,moves:s.moves,hints:s.hints,state:s.state,hero:s.hero,walk:[...s.walk],leg:s.leg,collected:[...s.collected]});
+  if(g.state==='walk'){if(!g.walk.length||g.walk[0]!==g.hero)return null;for(let i=1;i<g.walk.length;i++)if(!g.neighbors(g.walk[i-1]).includes(g.walk[i]))return null;}
+  if(g.state==='won'){if(g.hero!==8||g.collected.length!==3)return null;g.stars=1+(g.moves<=g.par?1:0)+(g.hints===0?1:0);}
+  if(g.state==='edit'&&g.hero!==0)return null;return g;
+ }
 }
 root.Atlas=Atlas;root.ATLAS_PATHS=paths;if(typeof module!=='undefined')module.exports={Atlas,paths};
 })(typeof window==='undefined'?globalThis:window);
