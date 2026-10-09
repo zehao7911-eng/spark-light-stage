@@ -1,0 +1,9 @@
+# Howl & Polish
+
+An original, friendly stealth-comedy cleaning game inspired by The WereCleaner. Eight original office layouts with detailed code-drawn furniture and expressive characters. No commercial artwork, levels, code, sound or generated images. No gore or lives.
+
+Drag anywhere in the scene to steer. Pause briefly over each mess: the mop cleans automatically. Collect the three optional golden mugs and return to the glowing lift after every mess is clean. Hold HIDE with another finger to put on a box. The disguise moves more slowly and cannot clean. Coworkers patrol, desk furniture blocks their vision, and the little bar above their heads warns when they are noticing you. Being noticed startles them and spills coffee; existing progress stays. HOWL stuns nearby coworkers for a few seconds, but makes more coffee spills. Six added spills per shift is the limit; there is no endless growing mess.
+
+Keyboard: arrows or WASD to move, Shift to hide, Space to howl, Escape to pause. Three stars reward finishing, all three mugs, and at most two notices. Best ratings cap at 24; replays cannot farm them. Mint and Berry aprons unlock at 6 and 15 stars. Shift journal, confirmed restarts, per-shift score records and actual-scene PNG postcards. Exact active player, NPC patrol/vision/cooldown, cleaning and collection progress persist; reload opens paused with held inputs cleared. No timer or game-over penalty. Disabled storage falls back to session play.
+
+Open index.html directly or serve this folder. English interface, fully local/offline assets, no network, account, WebGL or build needed. Canvas 2D via bundled p5.js 1.11.11 (LGPL-2.1; P5-LICENSE.txt), 60 Hz simulation, 45 FPS drawing, DPR capped at 1.5, bounded actors/effects/trails/audio. Native touch and independent drag+hide input, portrait/landscape side controls, 44px+ buttons and safe areas. Browser phone emulation is not physical-device testing.
