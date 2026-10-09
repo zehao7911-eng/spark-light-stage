@@ -1,0 +1,11 @@
+# Kickflip Cove
+
+An original illustrated skateboarding action game, inspired by the colorful skate-and-flow idea of OlliOlli World (Steam 1190170). Eight authored courses, gaps, cones, elevated grind rails, spring pads, three airborne shinies per ride, checkpoints, kickflips, landing chains, a ride book and earnable hoodies. No official assets, code, music, levels or branding from the reference are included.
+
+Hold anywhere on the scene to crouch and slow down. Release to jump; a longer crouch gives a little more height. Press again while airborne to kickflip, and keep holding to catch a rail while descending. Release from a rail to pop off. Landing with a held press gives a perfect-landing bonus. Springs bounce automatically. Collect shinies and reach the Good Vibes finish gate. Bails return you to a checkpoint, restoring its saved score and collectibles so a repeated section cannot farm points. There is no lives limit. Stars reward finishing, three shinies, and zero bails. Mint hoodie unlocks at six stars and Lilac at fifteen. There are eight original courses, not an unlimited unique-map campaign.
+
+Mouse and touch use Pointer Events. Space is the same hold/release control on desktop; Escape pauses. Touch cancellation, interruption and resize release the control without jumping. Backgrounding pauses and silences audio. A restored game waits behind Continue with its input released. Browser storage is optional; when unavailable, gameplay remains available for the session. Postcard saves a PNG where browser downloads are supported.
+
+Open index.html directly, or upload every file to a static host. All dependencies are local. No install, build step, account, CDN, WebGL or purchase is required. A current Canvas 2D and Pointer Events browser is needed. Audio begins after a user gesture and can be muted. Phone portrait/landscape and safe-area layouts are supported; physical-phone testing is not claimed.
+
+All art and synthesized audio are original code. p5.js 1.11.11 is bundled with its P5-LICENSE.txt (LGPL 2.1). Simulation uses a 60 Hz fixed step. Rendering targets 60 FPS with DPR capped at 1.5 and bounded effects and sound voices. No physical-device performance measurement is claimed.
