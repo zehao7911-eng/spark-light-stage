@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+		<title>TIDEBLOOM BATHS</title>
+		<style>
+html, body, #canvas {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+body {
+	color: white;
+	background-color: black;
+	overflow: hidden;
+	touch-action: none;
+}
+
+#canvas {
+	display: block;
+}
+
+#canvas:focus {
+	outline: none;
+}
+
+#status, #status-splash, #status-progress {
+	position: absolute;
+	left: 0;
+	right: 0;
+}
+
+#status, #status-splash {
+	top: 0;
+	bottom: 0;
+}
+
+#status {
+	background-color: #242424;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	visibility: hidden;
+}
+
+#status-splash {
+	max-height: 100%;
+	max-width: 100%;
+	margin: auto;
+}
+
+#status-splash.show-image--false {
+	display: none;
+}
+
+#status-splash.fullsize--true {
+	height: 100%;
+	width: 100%;
+	object-fit: contain;
+}
+
+#status-splash.use-filter--false {
+	image-rendering: pixelated;
+}
+
+#status-progress, #status-notice {
+	display: none;
+}
+
+#status-progress {
+	bottom: 10%;
+	width: 50%;
+	margin: 0 auto;
+}
+
+#status-notice {
+	background-color: #5b3943;
+	border-radius: 0.5rem;
+	border: 1px solid #9b3943;
+	color: #e0e0e0;
+	font-family: 'Noto Sans', 'Droid Sans', Arial, sans-serif;
+	line-height: 1.3;
+	margin: 0 2rem;
+	overflow: hidden;
+	padding: 1rem;
+	text-align: center;
+	z-index: 1;
+}
+		</style>
+		
+	</head>
+	<body>
+		<canvas id="canvas">
+			Your browser does not support the canvas tag.
+		</canvas>
+
+		<noscript>
+			Your browser does not support JavaScript.
+		</noscript>
+
+		<div id="status">
+			<img id="status-splash" class="show-image--true fullsize--true use-filter--true" src="index.png" alt="">
+			<progress id="status-progress"></progress>
+			<div id="status-notice"></div>
+		</div>
+
+		<script src="index.js"></script>
+		<script>
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":6703004,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+const GODOT_THREADS_ENABLED = false;
+const engine = new Engine(GODOT_CONFIG);
+
+(function () {
+	const statusOverlay = document.getElementById('status');
+	const statusProgress = document.getElementById('status-progress');
+	const statusNotice = document.getElementById('status-notice');
+
+	let initializing = true;
+	let statusMode = '';
+
+	function setStatusMode(mode) {
+		if (statusMode === mode || !initializing) {
+			return;
+		}
+		if (mode === 'hidden') {
+			statusOverlay.remove();
+			initializing = false;
+			return;
+		}
+		statusOverlay.style.visibility = 'visible';
+		statusProgress.style.display = mode === 'progress' ? 'block' : 'none';
+		statusNotice.style.display = mode === 'notice' ? 'block' : 'none';
+		statusMode = mode;
+	}
+
+	function setStatusNotice(text) {
+		while (statusNotice.lastChild) {
+			statusNotice.removeChild(statusNotice.lastChild);
+		}
+		const lines = text.split('\n');
+		lines.forEach((line) => {
+			statusNotice.appendChild(document.createTextNode(line));
+			statusNotice.appendChild(document.createElement('br'));
+		});
+	}
+
+	function displayFailureNotice(err) {
+		console.error(err);
+		if (err instanceof Error) {
+			setStatusNotice(err.message);
+		} else if (typeof err === 'string') {
+			setStatusNotice(err);
+		} else {
+			setStatusNotice('An unknown error occurred.');
+		}
+		setStatusMode('notice');
+		initializing = false;
+	}
+
+	const missing = Engine.getMissingFeatures({
+		threads: GODOT_THREADS_ENABLED,
+	});
+
+	if (missing.length !== 0) {
+		if (GODOT_CONFIG['serviceWorker'] && GODOT_CONFIG['ensureCrossOriginIsolationHeaders'] && 'serviceWorker' in navigator) {
+			let serviceWorkerRegistrationPromise;
+			try {
+				serviceWorkerRegistrationPromise = navigator.serviceWorker.getRegistration();
+			} catch (err) {
+				serviceWorkerRegistrationPromise = Promise.reject(new Error('Service worker registration failed.'));
+			}
+			// There's a chance that installing the service worker would fix the issue
+			Promise.race([
+				serviceWorkerRegistrationPromise.then((registration) => {
+					if (registration != null) {
+						return Promise.reject(new Error('Service worker already exists.'));
+					}
+					return registration;
+				}).then(() => engine.installServiceWorker()),
+				// For some reason, `getRegistration()` can stall
+				new Promise((resolve) => {
+					setTimeout(() => resolve(), 2000);
+				}),
+			]).then(() => {
+				// Reload if there was no error.
+				window.location.reload();
+			}).catch((err) => {
+				console.error('Error while registering service worker:', err);
+			});
+		} else {
+			// Display the message as usual
+			const missingMsg = 'Error\nThe following features required to run Godot projects on the Web are missing:\n';
+			displayFailureNotice(missingMsg + missing.join('\n'));
+		}
+	} else {
+		setStatusMode('progress');
+		engine.startGame({
+			'onProgress': function (current, total) {
+				if (current > 0 && total > 0) {
+					statusProgress.value = current;
+					statusProgress.max = total;
+				} else {
+					statusProgress.removeAttribute('value');
+					statusProgress.removeAttribute('max');
+				}
+			},
+		}).then(() => {
+			setStatusMode('hidden');
+		}, displayFailureNotice);
+	}
+}());
+		</script>
+	<style>
+:root{--cream:#fff0cf;--mint:#b9d6bc;--ink:#173c38}*{box-sizing:border-box}body{margin:0;background:#132c30;font-family:Georgia,serif;color:var(--cream)}#canvas{position:fixed;inset:0;width:100%;height:100%}.tb-top{position:fixed;inset:0 0 auto;z-index:4;height:68px;display:flex;align-items:center;justify-content:space-between;padding:12px 5%;background:#153632ed;border-bottom:1px solid #b8c9a32e}.brand{letter-spacing:3px;font-size:18px}.sub{font:10px Arial;letter-spacing:3px;color:#b5cbb9;margin-top:5px}.stats{font:14px Arial;display:flex;gap:18px;align-items:center}button{font:13px Arial;color:var(--cream);background:#254d46;border:1px solid #73947b66;border-radius:9px;min-height:44px;padding:8px 14px;cursor:pointer;touch-action:manipulation}button:hover{background:#3e6656}button:focus-visible{outline:3px solid #ffd786}button.active{background:#d9ba79;color:#243f34;border-color:#ffe4a7}button:disabled{opacity:.4;cursor:default}.tb-dock{position:fixed;bottom:0;left:0;right:0;z-index:4;background:#163c37f5;box-shadow:0 -8px 35px #102e2855;border-top:1px solid #d2d1a533;padding:8px 4% 12px}.row{display:flex;gap:8px;align-items:center;justify-content:center}.guests{display:flex;gap:8px;flex:1}.guest{flex:1;display:flex;align-items:center;gap:8px;text-align:left;padding:5px 8px;min-height:63px}.portrait{height:48px;width:44px;flex-shrink:0;image-rendering:pixelated;background-image:url('guests.png');background-size:176px 192px}.guest b{font:13px Georgia}.guest small{display:block;font:11px Arial;margin-top:4px;opacity:.8}.label{font:10px Arial;letter-spacing:2px;opacity:.65}.tools{display:flex;gap:8px;align-items:center;margin-top:8px;justify-content:center}.group{display:flex;gap:3px}.group button{min-width:56px;padding:6px 9px}.divider{width:1px;height:30px;background:#87a28c33;margin:0 7px}#notice{text-align:center;font:12px Arial;color:#ded7ae;margin:6px 0 2px;min-height:16px}#intro{position:fixed;z-index:8;inset:0;display:grid;place-items:center;background:#112a2370;backdrop-filter:blur(3px)}.card{max-width:410px;width:90%;padding:32px;background:#163f37f5;border:1px solid #c6c89a66;border-radius:18px;box-shadow:0 20px 100px #081e24aa;text-align:center}.card h1{font-weight:normal;font-size:33px;margin:12px 0;letter-spacing:2px}.card p{font:14px/1.8 Arial;color:#c1d4bc}.card button{background:#e0bc76;color:#264136;min-width:180px;margin-top:12px}.eyebrow{font:10px Arial;letter-spacing:4px;color:#b8c99c}#shop{position:fixed;inset:0;z-index:9;display:none;place-items:center;background:#071d23aa;backdrop-filter:blur(5px)}#shop .card{text-align:left}#shop button{width:100%;margin-top:7px;text-align:left}#shop .close{text-align:center;background:#35594b;color:#f7e7c6}.shop-desc{font:12px/1.6 Arial;color:#b8cdb6}.hud-tag{position:fixed;z-index:3;top:84px;left:5%;font:11px Arial;letter-spacing:2px;color:#ffedbd;background:#153a32b8;padding:9px 12px;border-radius:7px;pointer-events:none}#hint{font-size:11px;opacity:.7}#sound{min-width:44px;padding:8px}#loading-tip{position:fixed;z-index:10;bottom:25%;width:100%;text-align:center;color:#e8dab9;font:13px Arial;pointer-events:none}
+@media(max-width:699px){.tb-top{padding:8px 14px}.brand{font-size:14px;letter-spacing:2px}.stats{gap:9px;font-size:12px}.sub{font-size:8px;letter-spacing:2px}.tb-dock{padding:7px 9px max(10px,env(safe-area-inset-bottom))}.guest{padding:5px;gap:2px}.portrait{width:28px;height:40px;background-size:144px 160px}.guest b{font-size:11px}.guest small{font-size:10px}.tools{flex-wrap:wrap;gap:5px}.group button{min-width:47px;padding:5px;font-size:11px}.divider{display:none}.tools>.label{display:none}#notice{font-size:11px;margin:5px 0 0}.hud-tag{left:12px;top:80px;font-size:9px}#hint{display:none}.guests{gap:4px}#shop-button{padding:5px 9px}button{min-height:44px}.row{gap:5px}}
+@media(max-height:550px){.tb-top{height:48px}.sub,.hud-tag{display:none}.tb-dock{padding:4px 12px}.guest{min-height:46px}.portrait{height:34px}.tools{margin-top:3px}#notice{margin:2px}button{min-height:36px}}
+</style>
+<header class="tb-top"><div><div class="brand">TIDEBLOOM</div><div class="sub">A SEASIDE BATHHOUSE</div></div><div class="stats"><span id="day">DAY 1</span><span id="money">◈ 30</span><button id="sound" aria-label="Toggle sound">♪</button></div></header>
+<div class="hud-tag" id="milestone">A LITTLE REST GOES A LONG WAY</div>
+<div class="tb-dock"><div class="row"><div id="guests" class="guests"></div><button id="shop-button">Garden<br><small>shop</small></button></div><div class="tools"><span id="bath-label" class="label">BATH 1</span><div id="temps" class="group"></div><span class="divider"></span><div id="aromas" class="group"></div><button data-act="clean">Rinse ✧</button></div><p id="notice">Preparing your courtyard…</p></div>
+<div id="intro"><section class="card"><div class="eyebrow">SLOW DAYS · WARM WATER</div><h1>Tidebloom<br>Baths</h1><p>A quiet corner beside the sea.<br>Choose a guest. Tap a bath.<br>Match their water and aroma.<br>Grow a garden with every happy visit.</p><button id="begin">Open the gates</button><p style="font-size:11px">No rush. Everyone can take their time.</p></section></div>
+<div id="shop"><section class="card"><div class="eyebrow">MAKE YOURSELF AT HOME</div><h1>The garden shop</h1><div id="shop-items"></div><p class="shop-desc" id="journal"></p><button class="close" id="close-shop">Back to the baths</button></section></div>
+<script>
+(()=>{const names=['Mika','Finn','Poppy','Jules'],temps=['Cool','Warm','Hot'],aromas=['Mint','Bloom','Yuzu'];let last=null,audio=null,volume=null;let prevVisits=0;const $=id=>document.getElementById(id),cache={};function html(id,value){if(cache[id]!==value){cache[id]=value;$(id).innerHTML=value}};function chime(){if(!audio||last?.muted)return;[523.25,659.25,783.99].forEach((freq,i)=>{let o=audio.createOscillator(),g=audio.createGain(),t=audio.currentTime+i*.095;o.type='sine';o.frequency.value=freq;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.07,t+.015);g.gain.exponentialRampToValueAtTime(.001,t+.8);o.connect(g);g.connect(audio.destination);o.start(t);o.stop(t+.85)})}function act(a){if(!window.tbAction)return;if(!audio){audio=new(window.AudioContext||window.webkitAudioContext)()}if(!volume){volume=audio.createGain();volume.gain.value=.018;volume.connect(audio.destination);const b=audio.createBuffer(1,audio.sampleRate*3,audio.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1);const source=audio.createBufferSource(),filter=audio.createBiquadFilter();source.buffer=b;source.loop=true;filter.type='lowpass';filter.frequency.value=650;source.connect(filter);filter.connect(volume);source.start();setInterval(()=>{if(!last?.muted&&last?.started){const o=audio.createOscillator(),g=audio.createGain(),t=audio.currentTime;o.type='sine';o.frequency.value=[261.63,293.66,329.63,392,440][Math.floor(Math.random()*5)];g.gain.setValueAtTime(.018,t);g.gain.exponentialRampToValueAtTime(.0001,t+2);o.connect(g);g.connect(audio.destination);o.start(t);o.stop(t+2.1)}},4500)}if(audio.state==='suspended')audio.resume();window.tbAction(a)}document.addEventListener('click',e=>{let b=e.target.closest('[data-act]');if(b)act(b.dataset.act)});$('begin').onclick=()=>act('begin');$('sound').onclick=()=>act('sound');$('shop-button').onclick=()=>{$('shop').style.display='grid';renderShop()};$('close-shop').onclick=()=>{$('shop').style.display='none'};function renderShop(){if(!last)return;let items=[['unlock:2','Basalt bath',90,last.pools[2].open],['unlock:3','Blossom bath',160,last.pools[3].open],['tea','Tea service · +4 tips',75,last.tea],['linen','Soft towels · faster rest',65,last.linen],['garden','Petal garden',120,last.garden]];html('shop-items',items.map(([a,n,c,owned])=>`<button data-act="${a}" ${owned||last.coins<c?'disabled':''}>${n} <span style="float:right">${owned?'✓':c+' ◈'}</span></button>`).join(''));$('journal').textContent=`${last.visits} visits · ${last.perfect} perfect soaks. Your progress is saved automatically.`}
+window.tbState=s=>{document.body.dataset.state=JSON.stringify(s);last=s;if(volume)volume.gain.value=s.muted?0:.018;$('intro').style.display=s.started?'none':'grid';$('day').textContent='DAY '+s.day;$('money').textContent='◈ '+s.coins;$('notice').textContent=s.notice;$('sound').textContent=s.muted?'♫̸':'♪';$('bath-label').textContent='BATH '+(s.selected+1);html('guests',s.waiting.map((g,i)=>`<button class="guest ${s.guest===i?'active':''}" data-act="guest:${i}" aria-label="Select ${names[g.kind]}, ${temps[g.temp]}, ${aromas[g.aroma]}, ${g.social?'social':'quiet'}"><span class="portrait" style="background-position:${innerWidth<700?'0px '+(-g.kind*40)+'px':'0px '+(-g.kind*48)+'px'}"></span><span><b>${names[g.kind]}</b><small>${temps[g.temp]} · ${aromas[g.aroma]}</small><small>${g.social?'Together ♡':'Quiet ☾'}</small></span></button>`).join(''));let p=s.pools[s.selected];html('temps',temps.map((n,i)=>`<button class="${p.temp===i?'active':''}" data-act="temp:${i}">${n}</button>`).join(''));html('aromas',aromas.map((n,i)=>`<button class="${p.aroma===i?'active':''}" data-act="aroma:${i}">${n}</button>`).join(''));$('milestone').textContent=s.visits<6?`${s.visits}/6 VISITS · YOUR FIRST LITTLE GARDEN`:s.perfect<10?`${s.perfect}/10 PERFECT SOAKS · FIND THEIR FAVORITES`:'A HOME BESIDE THE SEA · DAY '+s.day;if(s.visits>prevVisits)chime();prevVisits=s.visits;if($('shop').style.display==='grid')renderShop()};setTimeout(()=>{if(!last){let p=document.createElement('div');p.id='loading-tip';p.textContent='The first visit takes a little longer. Loading the bathhouse…';document.body.append(p)}},20000);let timer=setInterval(()=>{if(last){$('loading-tip')?.remove();clearInterval(timer)}},1000);
+})();
+</script>
+
+</body>
+</html>
+
