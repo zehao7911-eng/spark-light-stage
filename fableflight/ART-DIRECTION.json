@@ -1,0 +1,18 @@
+{
+  "title": "Fableflight",
+  "reference": "Magic Archery, Steam app 2905170",
+  "method": "Original code-authored native pixel art; no image generation used in the game",
+  "nativeCanvas": [480, 270],
+  "rendering": "Nearest-neighbor; integer pixel geometry, scanline circles and polygons, Bresenham lines, cached backgrounds",
+  "palette": "Forest teal shadows, sage grass, warm straw and parchment; blue moon grove and ochre sun ruins variants",
+  "assets": {
+    "scenes": "Three original training environments, layered mountains, distant bridge and tower, woodland workshop, ruins, water, foliage and flowers",
+    "archer": "Code-articulated idle, draw and release poses, breathing, three cloak tiers and master crown",
+    "targets": "Straw bundle, oak wheel, crystal bloom, moon bell, sun disc, runestone and articulated stone guardian",
+    "growthProps": "Bow rack, guild pennant, mechanical bow and arrow crate, mastery trophy",
+    "effects": "Native pixel arrows, wood chips, damage figures, ring bursts, frost outlines, lightning chains and confetti",
+    "icons": "Original 24px equipment and elemental rune icons"
+  },
+  "source": "art.js",
+  "discardedConcepts": "Earlier AI-generated scenery and character concepts are not included or referenced. The user requested native pixel art and authorized a code-only replacement."
+}
