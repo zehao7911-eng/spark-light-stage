@@ -109,7 +109,7 @@ body {
 
 		<script src="index.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":26660,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":36820,"index.wasm":39514754,"atelier-art3.pck":36820},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4,"mainPack":"atelier-art3.pck"};
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
 
@@ -213,18 +213,19 @@ const engine = new Engine(GODOT_CONFIG);
 	}
 }());
 		</script>
-	<link rel="stylesheet" href="ui.css?v=20261021-2">
+	<link rel="stylesheet" href="ui.css?v=20261021-art3">
 <div id="toyui">
  <header><div class="brand"><span class="tiny">A SMALL PLACE FOR BIG LITTLE SOUNDS</span><h1>Tiny Tape <i>Club</i><b>✳</b></h1></div><div class="headtools"><button id="album" aria-label="Cassette collection">▣ <span id="tapecount">0</span></button><button id="menu" aria-label="Menu">☷</button></div></header>
  <section id="idea" aria-label="Musical idea"><div class="ideaicon">✳</div><div class="ideatext"><span class="tiny" id="ideaindex">LITTLE IDEA 01 / 12</span><h2 id="ideatitle">A little heartbeat</h2><p id="ideadesc">Add 3 drum beats.</p></div><button id="claim" disabled>Listen…</button></section>
  <div id="toys" aria-label="Musical toys"></div>
+ <button id="viewmode" aria-label="Studio view">◈ Studio view</button>
  <div id="toast" role="status"></div>
  <div id="transport"><button id="play" aria-label="Pause music">Ⅱ</button><div id="beats" aria-label="Loop playhead"></div><button id="slower" aria-label="Slower tempo">−</button><span id="bpm">96</span><button id="faster" aria-label="Faster tempo">+</button></div>
  <footer id="desk"><div id="tracktabs" role="group" aria-label="Instruments"></div><div class="strip"><div><span class="tiny">YOUR EIGHT LITTLE STEPS</span><span id="trackname">Drum garden</span></div><div class="edittools"><button id="undo" aria-label="Undo edit">↶</button><button id="level" aria-label="Instrument volume">100%</button><button id="solo" aria-label="Mute selected instrument">◉</button><button id="clear" aria-label="Clear selected instrument">⌫</button></div></div><div id="steps" role="group" aria-label="Eight step sequencer"></div><div class="bottomline"><span>Tap: rest · low · middle · high</span><button id="help">?</button><button id="savetape">Save cassette <span>↗</span></button></div></footer>
 </div>
 <div id="welcome"><div class="welcome-card"><div class="tape-art"><i></i><i></i><b>tiny tape club</b><span>PLAY SOMETHING LITTLE</span></div><p class="tiny">A MUSIC-MAKING PLAYGROUND</p><h2>A little tap.<br>A whole lot of <em>happy.</em></h2><p>Wake the toys. Layer a loop.<br>Make a sound that's entirely yours.</p><button id="begin" disabled>Unpacking the toys…</button><p class="loadinfo" id="loadinfo">Loading Godot</p></div></div>
 <div id="overlay" hidden><section id="modal" role="dialog" aria-modal="true" aria-labelledby="modaltitle"><button id="close" aria-label="Close">×</button><div class="tiny">TINY TAPE CLUB</div><h2 id="modaltitle"></h2><div id="modalbody"></div></section></div>
-<script src="audio.js?v=20261021-2"></script><script src="ui.js?v=20261021-2"></script>
+<script src="audio.js?v=20261021-art3"></script><script src="ui.js?v=20261021-art3"></script>
 
 </body>
 </html>
