@@ -10,7 +10,7 @@ The surrounding world is a continuous wetland rather than a single pond on an em
 Far scenery uses shared lower-detail meshes and a vertex-lit material. Water detail is distance-limited. Geometry is procedural; the scene does not require downloading large terrain/model assets. Desktop/phone-size browser checks are performed; physical-device frame rates depend on the device and are not certified.
 
 ## Watch and interact
-- The default scene slowly travels along a continuous 65-second five-part camera loop: whole creature, face, water/flowers, cottage, and return. Perspective and parallax reveal the garden's depth. Portrait close-ups use their own field of view.
+- The default scene slowly travels along a continuous 78-second six-part camera loop: whole creature, face, water/flowers, cottage, side garden and a broad wetland return. Perspective and parallax reveal the garden's depth. Portrait uses a separately fitted field of view and camera distance: the hero silhouette remains inside the screen throughout the loop.
 - Touch a flower to unfold it and briefly gather drifting petals. Touch elsewhere to greet the tortoise, now with a visible smile. Drag to take control of the camera.
 - Bloom unfolds all six large flowers in a staggered wave. Rain adds falling drops and faster pond ripples. Season cycles through four smoothly blended foliage palettes. Night fades into blue hour, warm windows and flickering fireflies with additive halos.
 - **Film** enters a clean continuous tour and starts a flower wave. The return arrow fades out after 2.5 idle seconds. Touch or move the pointer to reveal it again; use the corner arrow or Escape to return. Film is a viewing mode, not a video-file encoder: use your phone/computer screen recorder for video.
@@ -41,3 +41,8 @@ The finalizer restores the loader/lifecycle wrapper and generates the hashed pac
 
 ## Credits
 Original code, procedural geometry, shaders and synthesized chime. Bitter font under OFL: fonts/OFL.txt / FONT-OFL.txt. Godot: GODOT-LICENSE.txt and GODOT-COPYRIGHT.txt. No commercial game affiliation or promise of social-media performance.
+
+## Living Lake refinement
+A mother duck and four ducklings swim in a sheltered crescent, bob, dip their heads and leave fading surface rings. Twelve softly colored lake fish, four hovering dragonflies and eight floating lotus flowers add quiet movement around the hero. Tip-bending reeds, articulated flock wings, fluttering two-piece sails and fine vertical cascade threads replace static silhouettes and hard water stripes. The cottage has recessed door panels, brass hinges, a porch mat, fine gable trim and four gently swinging wind chimes. Shared meshes and instanced water/flower/animal details keep additions bounded. The soft material has stronger warm-light/cool-shadow separation while keeping the original palette.
+
+For a phone recording, choose portrait orientation, tap **Film**, then leave the controls idle: the return arrow fades away. The seamless tour is78 seconds. Use the device screen recorder; Film itself does not encode a video. Escape or the upper-left corner returns to the normal controls.
