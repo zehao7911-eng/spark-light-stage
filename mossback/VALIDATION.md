@@ -1,9 +1,7 @@
-# Validation
+# Living Garden update validation
 
-- Godot 4.7.2 Compatibility single-thread Web release export succeeds.
-- Native QA: 168 checks, zero failures. Covers six flowers, smooth opening, burst expiry, four seasons, pause, malformed saves, JSON restoration, 44px targets and non-overlap at 320x480, 390x844, 844x390, 640x360, 1280x720; short-screen menu, cinema exit, hidden-tab and menu freezing.
-- Actual local WebGL browser: rendered original 3D scene, flower touch increments wake counter, Bloom opens flowers, Rain changes weather, Night changes palette, phone framing inspected at 390x844. Browser reported 45fps on this desktop environment; this is not a phone hardware benchmark.
-- Photo produces a PNG from the actual 3D render viewport, excluding native UI. Public deployment and final PNG metadata are recorded in the delivery log outside the ZIP.
-- Independent fresh-source import, native QA, and re-export are checked before publication.
+Godot 4.7.2 native Compatibility Web export. Native QA:957 checks,0 failures, covering bloom/wave expiry, JSON/malformed state, five responsive layouts320x480/390x844/844x390/640x360/1280x720,44px non-overlapping controls,short menu,pause/visibility,Film entry/exit and 262 samples of the full camera loop across desktop/portrait. Camera samples check finite transforms, minimum subject distance/height, centered target and loop seam continuity.
 
-This is an interactive art miniature, not a full commercial game or a reproduction of the reference content.
+Actual browser visual inspection of the updated perspective camera, layered garden, material treatment and phone layout. All final public checks, photo PNG metadata and screenshot evidence are recorded in the delivery log outside the archive. Native mathematical camera checks do not substitute for visual review; both were performed. A physical handset performance certification is not claimed.
+
+Archive source is independently extracted, imported, tested and re-exported before publishing. Browser load uses a content-hashed game pack and retains the existing save key. Film uses the browser's ordinary rendering loop; it is not an MP4 exporter.
