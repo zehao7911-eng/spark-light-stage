@@ -53,3 +53,5 @@ The lake now combines shallow turquoise gradients, view-dependent sky sheen, sof
 Soft canopy shade, subtle watery light on the lower body and softened silhouette shading complement the warm/cool material. The garden pond now follows the night palette. Screen finishing retains delicate highlight bloom with a modest contrast adjustment.
 
 Tap open water in front of the tortoise to send out rings and briefly attract the little fish. Four recent taps share a fixed instanced ring buffer; no unbounded particle creation. Eighteen petals drift on the lake. Butterflies occasionally linger above open flowers. Camera motion gently eases through each passage while retaining the seamless 78-second loop and portrait-safe framing. Existing saves remain compatible.
+
+The distant bird flock stays beyond the camera corridor, so no bird suddenly fills the foreground during the tour.
