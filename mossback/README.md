@@ -1,6 +1,13 @@
-# MOSSBACK — The Living Garden update
+# MOSSBACK — The Living Wetland update
 
 An original Godot 4.7.2 interactive miniature: a gentle tortoise carries a tiled-roof cottage, layered trees, flower beds and a koi pond through a shallow water garden. All geometry, shading, animation and chime audio are original code-generated work. No commercial/reference-video assets.
+
+## Expanded environment / placement repair
+The garden trees now have independently built crown envelopes, including their wind margin, separated from the cottage roof and chimney. A contour-following stone foundation joins the flat cottage floor to the curved shell. Native checks inspect the generated crown meshes, not only their planned positions.
+
+The surrounding world is a continuous wetland rather than a single pond on an empty backdrop: foreground islands and reeds, lily water, middle-distance shores and bushes, an arched bridge with connected banks, a windmill, two complete cascades, two gently drifting sailboats, birds, 48 instanced forest trees, two continuous mountain ridges and 16 drifting clouds. Haze and night/season palettes tie the layers together. Tall forests remain outside the entire film-camera corridor. The final wide shot reveals more of the landscape.
+
+Far scenery uses shared lower-detail meshes and a vertex-lit material. Water detail is distance-limited. Geometry is procedural; the scene does not require downloading large terrain/model assets. Desktop/phone-size browser checks are performed; physical-device frame rates depend on the device and are not certified.
 
 ## Watch and interact
 - The default scene slowly travels along a continuous 65-second five-part camera loop: whole creature, face, water/flowers, cottage, and return. Perspective and parallax reveal the garden's depth. Portrait close-ups use their own field of view.

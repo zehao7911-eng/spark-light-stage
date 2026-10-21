@@ -1,7 +1,11 @@
-# Living Garden update validation
+# Living Wetland update validation
 
-Godot 4.7.2 native Compatibility Web export. Native QA:957 checks,0 failures, covering bloom/wave expiry, JSON/malformed state, five responsive layouts320x480/390x844/844x390/640x360/1280x720,44px non-overlapping controls,short menu,pause/visibility,Film entry/exit and 262 samples of the full camera loop across desktop/portrait. Camera samples check finite transforms, minimum subject distance/height, centered target and loop seam continuity.
+Godot 4.7.2 native Compatibility Web export. Native QA:1226 checks,0 failures, covering bloom/wave expiry, JSON/malformed state, five responsive layouts320x480/390x844/844x390/640x360/1280x720,44px non-overlapping controls,short menu,pause/visibility,Film entry/exit and 262 samples of the full camera loop across desktop/portrait. Camera samples check finite transforms, minimum subject distance/height, centered target and loop seam continuity.
 
 Actual browser visual inspection of the updated perspective camera, layered garden, material treatment and phone layout. All final public checks, photo PNG metadata and screenshot evidence are recorded in the delivery log outside the archive. Native mathematical camera checks do not substitute for visual review; both were performed. A physical handset performance certification is not claimed.
 
 Archive source is independently extracted, imported, tested and re-exported before publishing. Browser load uses a content-hashed game pack and retains the existing save key. Film uses the browser's ordinary rendering loop; it is not an MP4 exporter.
+
+Placement checks: two generated canopy AABBs plus wind clearance must not intersect the roof envelope and its safety margin. The complete camera-path samples must stay inside the forest-free corridor. Added forest/cloud instance counts are checked. The cottage foundation follows four sampled shell heights. Existing saved-state format and six bloom indices are preserved.
+
+During local browser measurement, both this update and an independently opened prior public version reported 1fps in the automation browser. The new scene's sampled script/process time after warm-up was 4.7ms, with roughly250k rendered primitives. These readings cannot establish physical phone performance; no45fps claim is made for this update. All captured browser error/warning logs were empty.
