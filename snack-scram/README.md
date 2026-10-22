@@ -1,23 +1,25 @@
-# Snack & Scram — Courtyard Update
+# Snack & Scram — Districts & Mischief
 
-Original Unity 6 WebGL food-and-escape game inspired by Pizza Possum. Original procedural 3D models, shaders, articulated animation, and synthesized audio; no commercial game assets.
+Original Unity 6000.6.5f1 WebGL game inspired by Pizza Possum's mischievous food-and-escape rhythm. All geometry, animation, shaders, UI artwork and synthesized audio are original. No commercial assets or external CDN dependencies.
 
-## Three courtyards
-1. Bakery Break-in: six cake bites and one flower refuge.
-2. Market Mischief: two courses across the red-striped market; ten bites in total.
-3. The Garden Feast: three meals and two pursuing guards; twelve bites.
+## Three genuinely different districts
+- Bakery Alley: terracotta cobbles, inward-facing shop facades, street oven and flour sack. Eat the cake, burst the flour to make the guard stop and sneeze for 3.8 seconds, then hide in the flowers.
+- Harbour Hustle: two wooden quays separated by a water canal, two arched footbridges, fishmongers, cargo crane and bobbing skiff. Both player and guard must use the bridges. Roll the barrel along the lower bridge to lure the guard for 8 seconds and spill six oranges. Each orange can be collected once for 8 bonus points. The flower refuge is in the opposite direction from the barrel's final position.
+- Sunset Soiree: an elevated restaurant roof with visible lower storeys, balustrades, fountain, string lights and a gramophone. Music draws both guards away for 6.5 seconds and makes them dance, while three courses are eaten across the terrace.
 
-A successful getaway advances to the next courtyard. After the garden, another lap begins with slightly faster pursuit (capped). Three wins unlock the tiny chef hat. Best score, wins, round and audio preference persist locally. Previous v1 records migrate without a reset. This remains a compact three-courtyard game, not a full commercial campaign.
+The districts contain 6/10/12 main food bites respectively. After the rooftop escape, another lap starts with capped guard speed increases. Three successful getaways unlock a chef hat. This is a compact three-district game, not a full commercial campaign.
 
-## Controls and feedback
-Drag with one finger or WASD/arrows to move. Tap a food callout to approach and eat automatically; each course switches the target. Eat all courses, then enter the marked flower refuge and stay hidden until its bar fills. Tap DASH (Space on keyboard) for a 0.85-second burst with a four-second cooldown. Guard dogs react to the second bite, then pursue; the opening grace is 5.5/7/8 seconds for the three courtyards. Hide before they catch you.
+## Controls
+Drag with one finger, tap the ground, or use WASD/arrows. Tap the food callout to approach and eat automatically; courses change the active target. After all courses, enter the flower refuge until the hide meter fills. DASH (Space) grants a 0.85-second burst with a four-second cooldown. FLOUR / ROLL / MUSIC (E) approaches the district prop and activates it once per attempt. While distracted, guards cannot catch the player. Pause freezes gameplay, cooldowns and interaction effects. Tapping canal water directs the player to the shore.
 
-Bites arc into the mouth, with jaw/cheek animation, belly inflation, flying crumbs, crunchy sound and score bounce. Chasing includes persistent alert marks, guard rings, running dust, barks and a proximity vignette/heartbeat. Dash, pause, mute, retry, confirmed record reset and rendered PNG postcard are available. All interface text is English.
+Bites fly into the animated mouth; cheeks/belly inflate, crumbs bounce, score pulses and crunches play. Guards have alert marks, dust, barks and proximity feedback. Music and lure effects suppress chase barks. Menu: mute, resume, retry, confirmed record reset, native rendered PNG postcard. English interface. Wins, round, best score and sound persist locally; v1/v2 records are preserved. Transient attempt state resets when reopening the game.
 
-## Hosting and editable project
-Serve this folder over HTTP(S), not file://. Upload the root index.html and accompanying files. All runtime assets are local; gzip fallback supports GitHub Pages without special server headers. Versioned v2 build filenames avoid stale v1 engine caches.
+## Hosting and source
+Serve root index.html and accompanying files over HTTP(S); file:// is unsupported. Unity gzip fallback works on GitHub Pages without special response headers. Versioned v3 engine filenames and UI revision5 avoid stale builds.
 
-Unity-source contains Assets, Packages and ProjectSettings for Unity 6000.6.5f1. Install official WebGL Build Support, then invoke SnackBuild.Build. Generated Library/Temp/Logs are excluded. Source template uses the engine's generated filenames; packaged export uses versioned names.
+Unity-source contains Assets, Packages, ProjectSettings and meta files; generated caches are excluded. Install official Unity WebGL Build Support and invoke SnackBuild.Build. The editor export uses generated default filenames; the distribution uses versioned filenames.
 
-## Validation and limits
-Native core tests cover three stages across six runs, meal boundaries, duplicate feeding, first-bite timing, hide success, pause and catch grace. Actual browser UI tests completed all three courtyards twice including one full pass at 390x844, score 102/210/276; catch/retry, dash cooldown freeze, save/reload and hat retention passed. Also inspected 320x667 and 844x390 layouts. Desktop mobile viewport emulation is not physical handset certification. Runtime is approximately 5 MB compressed. First bite about 0.55 seconds is measured after input; network/engine startup is separate.
+## Validation
+Native tests: six runs across three stages, meal boundaries, first bite, duplicate feeding, hide/catch/pause; four bidirectional canal routes, no water walking, water-tap snap, one-shot interactions, unique bonus pickup and effect pause/reset. Unity build succeeded with zero errors.
+
+Actual browser tests completed all three final native districts at 390x844 using the interactive props. Market collected four/five bonus oranges on different runs; rewards did not duplicate. Earlier short lure timing caused a delayed escape failure and was extended/repositioned. Music effect stayed at6.425 seconds during pause. Retry/reload retained records and reset per-attempt props. Portrait, narrow and landscape layouts inspected; desktop browser emulation is not physical handset certification. Compressed runtime remains about5MB. First bite around0.55 seconds starts after movement input, not network startup.
