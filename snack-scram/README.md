@@ -15,7 +15,7 @@ Drag with one finger, tap the ground, or use WASD/arrows. Tap the food callout t
 Bites fly into the animated mouth; cheeks/belly inflate, crumbs bounce, score pulses and crunches play. Guards have alert marks, dust, barks and proximity feedback. Music and lure effects suppress chase barks. Menu: mute, resume, retry, confirmed record reset, native rendered PNG postcard. English interface. Wins, round, best score and sound persist locally; v1/v2 records are preserved. Transient attempt state resets when reopening the game.
 
 ## Hosting and source
-Serve root index.html and accompanying files over HTTP(S); file:// is unsupported. Unity gzip fallback works on GitHub Pages without special response headers. Versioned v3 engine filenames and UI revision5 avoid stale builds.
+Serve root index.html and accompanying files over HTTP(S); file:// is unsupported. Unity gzip fallback works on GitHub Pages without special response headers. Versioned v4 engine filenames and UI revision6 avoid stale builds.
 
 Unity-source contains Assets, Packages, ProjectSettings and meta files; generated caches are excluded. Install official Unity WebGL Build Support and invoke SnackBuild.Build. The editor export uses generated default filenames; the distribution uses versioned filenames.
 
