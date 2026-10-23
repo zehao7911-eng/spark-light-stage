@@ -1,3 +1,5 @@
+> Preserved art specification, revision 01. The complete game is now index.html; see README.md for its controls and progression. The original animated art study is art-book.html.
+
 # TIDEBYTE — Clear-grain retro pixel art
 
 Original art direction, revision 01. This package establishes a reusable visual system, not a finished game campaign. All graphics, cast and setting are original. No existing game's characters, logos or interface have been copied.

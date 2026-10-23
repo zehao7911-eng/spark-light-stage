@@ -1,0 +1,51 @@
+{
+  "world.png": {
+    "size": [
+      768,
+      480
+    ],
+    "sha256": "38632290f8cc1957399a1ce4a9653763be05ea95e77fe325e3bb5ab9b4b331df"
+  },
+  "sandbars.png": {
+    "size": [
+      768,
+      480
+    ],
+    "sha256": "a7faa42570973494a6ba533388e34db60ceb9c506d65809af8bbbf1c5aaf8e7d"
+  },
+  "font-ink.png": {
+    "size": [
+      96,
+      18
+    ],
+    "sha256": "2a1fa60a53631dd5fd0fd058cf412662a20d3eec49fdf7a70a0e506fb44537ab"
+  },
+  "font-light.png": {
+    "size": [
+      96,
+      18
+    ],
+    "sha256": "c79ed5b95b62880f563055245cbed04fc9dcfe4cae94f0cc1781ae4d7a0c9fde"
+  },
+  "characters-coral.png": {
+    "size": [
+      64,
+      96
+    ],
+    "sha256": "fc2abde5e6a75f5f568dfa41aacb978516e29d604354cc3dc6abc532e17b1e0d"
+  },
+  "characters-moss.png": {
+    "size": [
+      64,
+      96
+    ],
+    "sha256": "4f9b004c1ff40fafa2c527d77e043f20f371b26c98ee5bb2ac45e808a6f5ced2"
+  },
+  "characters-gold.png": {
+    "size": [
+      64,
+      96
+    ],
+    "sha256": "7ef3d02d41ef2006d7672a5aa25b30ebaa8b6116acf2c32f5baf316962b7bbd2"
+  }
+}

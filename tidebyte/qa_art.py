@@ -1,6 +1,6 @@
 from pathlib import Path
 from PIL import Image
-import json,hashlib,re
+import json,hashlib,re,ast
 ROOT=Path(__file__).parent
 p=json.loads((ROOT/'palette.json').read_text());palette={tuple(bytes.fromhex(c['hex'][1:])) for c in p['colors']};count=0
 def check(name,fn):
@@ -11,7 +11,7 @@ def colours():
  for f in ROOT.glob('*.png'):
   im=Image.open(f).convert('RGBA')
   for rgba in set(im.get_flattened_data()):assert rgba[3] in [0,255] and (not rgba[3] or rgba[:3] in palette),f.name
-check('All 17 PNG assets use the same 20 colours with binary alpha',colours)
+check('Every authored PNG uses the master 20 colours and binary alpha',colours)
 def crop():
  a=Image.open(ROOT/'far-native.png').crop((112,64,272,154));b=Image.open(ROOT/'near-native.png');assert a.size==b.size and a.tobytes()==b.tobytes()
 check('Close view is an exact source crop, without redrawn detail',crop)
@@ -42,8 +42,15 @@ def gif():
   im.seek(i);assert all(v[:3] in palette for v in im.convert('RGBA').get_flattened_data() if v[3])
 check('Four-frame walk GIF retains the production palette',gif)
 def links():
- for name in ['index.html']:
+ for name in ['index.html','art-book.html','game.html']:
   for s in re.findall(r'(?:src|href)="([^"]+)"',(ROOT/name).read_text(encoding='utf-8')):
    if not s.startswith(('http','#')):assert (ROOT/s).is_file(),s
 check('Browser study and source links are local and complete',links)
+def extensions():
+ m=json.loads((ROOT/'game-assets.json').read_text(encoding='utf-8'))
+ for name,data in m.items():
+  f=ROOT/name;assert hashlib.sha256(f.read_bytes()).hexdigest()==data['sha256'];assert list(Image.open(f).size)==data['size']
+ source=(ROOT/'game.js').read_text(encoding='utf-8');match=re.search(r'const P=(\[.*?\])',source);assert match;assert ast.literal_eval(match.group(1))==[v['hex'] for v in p['colors']]
+ world=json.loads((ROOT/'world.json').read_text(encoding='utf-8'));js=(ROOT/'world-data.js').read_text(encoding='utf-8');assert json.loads(js.split('=',1)[1].strip().rstrip(';'))==world
+check('Game art hashes, world data and runtime palette match the approved kit',extensions)
 print(count,'art production suites passed.')
