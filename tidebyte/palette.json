@@ -1,0 +1,105 @@
+{
+  "name": "Tidebyte20",
+  "colors": [
+    {
+      "index": 0,
+      "name": "Ink",
+      "hex": "#172e42"
+    },
+    {
+      "index": 1,
+      "name": "Deep sea",
+      "hex": "#294b62"
+    },
+    {
+      "index": 2,
+      "name": "Blue slate",
+      "hex": "#47748b"
+    },
+    {
+      "index": 3,
+      "name": "Distant mist",
+      "hex": "#80a2ab"
+    },
+    {
+      "index": 4,
+      "name": "Cloud shade",
+      "hex": "#c3d8cd"
+    },
+    {
+      "index": 5,
+      "name": "Warm cream",
+      "hex": "#fff0c2"
+    },
+    {
+      "index": 6,
+      "name": "Signal yellow",
+      "hex": "#f9c56b"
+    },
+    {
+      "index": 7,
+      "name": "Ochre",
+      "hex": "#db8b49"
+    },
+    {
+      "index": 8,
+      "name": "Clay shadow",
+      "hex": "#aa5746"
+    },
+    {
+      "index": 9,
+      "name": "Plum shadow",
+      "hex": "#713f4a"
+    },
+    {
+      "index": 10,
+      "name": "Coral",
+      "hex": "#e57b65"
+    },
+    {
+      "index": 11,
+      "name": "Peach",
+      "hex": "#f4aa89"
+    },
+    {
+      "index": 12,
+      "name": "Lagoon shade",
+      "hex": "#397d86"
+    },
+    {
+      "index": 13,
+      "name": "Lagoon",
+      "hex": "#54a5a4"
+    },
+    {
+      "index": 14,
+      "name": "Shallow mint",
+      "hex": "#8cc8bc"
+    },
+    {
+      "index": 15,
+      "name": "Leaf shade",
+      "hex": "#42664e"
+    },
+    {
+      "index": 16,
+      "name": "Leaf",
+      "hex": "#708f56"
+    },
+    {
+      "index": 17,
+      "name": "Young leaf",
+      "hex": "#a5b86a"
+    },
+    {
+      "index": 18,
+      "name": "Sand",
+      "hex": "#e9db9a"
+    },
+    {
+      "index": 19,
+      "name": "Paper",
+      "hex": "#f7e9d8"
+    }
+  ]
+}

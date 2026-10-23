@@ -1,0 +1,175 @@
+{
+  "original": true,
+  "world": [
+    320,
+    180
+  ],
+  "tile": [
+    16,
+    16
+  ],
+  "characterCell": [
+    16,
+    24
+  ],
+  "characterAnchor": [
+    8,
+    22
+  ],
+  "propCell": [
+    16,
+    16
+  ],
+  "nearCrop": [
+    112,
+    64,
+    272,
+    154
+  ],
+  "characters": [
+    "Nori / courier",
+    "Bex / crab porter",
+    "Uma / heron postkeeper"
+  ],
+  "props": [
+    "Parcel",
+    "Mailbox",
+    "Ticket",
+    "Tide gauge",
+    "Reeds",
+    "Lantern",
+    "Mail boat",
+    "Heart"
+  ],
+  "tiles": [
+    "Water",
+    "Sand",
+    "Grass",
+    "Stone",
+    "Wood",
+    "Clay",
+    "Glass",
+    "Signal"
+  ],
+  "files": {
+    "art-direction-board.png": {
+      "size": [
+        1344,
+        1432
+      ],
+      "sha256": "b02efb202db56a0964c24118210b56ca42e03b3c1f80d03bbd819d7d77b7b5ce"
+    },
+    "characters.png": {
+      "size": [
+        64,
+        96
+      ],
+      "sha256": "9c53461752d45b99238abf97bf0ad107d3d7035ce668ccdebe50585e71758939"
+    },
+    "effects.png": {
+      "size": [
+        128,
+        24
+      ],
+      "sha256": "2e73cc37c38ff07b24440837ec9889bb5a130795d637dcc58d8ddb31c1b443ce"
+    },
+    "far-dusk.png": {
+      "size": [
+        320,
+        180
+      ],
+      "sha256": "7c05f9bf8d445f5e1cb26a42cf46cbd1bc5f3e9533e1caa5e0cdfcc32f10c1d0"
+    },
+    "far-native.png": {
+      "size": [
+        320,
+        180
+      ],
+      "sha256": "69d1dfc23ac51ddc0073474236f481d89500588558e4f0caea91b5b8bb92c148"
+    },
+    "far-view.png": {
+      "size": [
+        960,
+        540
+      ],
+      "sha256": "948227ff56330929ab4b9280b99fce4c628fa89c3103c24eb404e907bf47bd6d"
+    },
+    "icon.png": {
+      "size": [
+        32,
+        32
+      ],
+      "sha256": "26fcb7a2341c8641276a56b24724e9a396f1c31e17220c22a4f4d5a0456de779"
+    },
+    "interface-native.png": {
+      "size": [
+        320,
+        104
+      ],
+      "sha256": "2dd583d384fd83b8816aa1cd29fad3d8b00b8a1fa2a40fb2f88465f9de56a5ec"
+    },
+    "interface-view.png": {
+      "size": [
+        960,
+        312
+      ],
+      "sha256": "8347877b55b7b38b7e6ae40084c187e8dbf507fa1230c32d9fc863ecb9c8f064"
+    },
+    "lighting-study.png": {
+      "size": [
+        1344,
+        440
+      ],
+      "sha256": "0b4148991fabecd73e07072e2dbfe656c0e9adf98f38e48927576bbcdd61e409"
+    },
+    "near-native.png": {
+      "size": [
+        160,
+        90
+      ],
+      "sha256": "cce38b5b28dec2aae2906e5ca0708ffae693441dc174f22f2433484f998ed4f3"
+    },
+    "near-view.png": {
+      "size": [
+        960,
+        540
+      ],
+      "sha256": "986d8432bde6d04a9d5bdcbae195ceaa43b1e76b29d04e06dd68145b1de280d1"
+    },
+    "props.png": {
+      "size": [
+        128,
+        16
+      ],
+      "sha256": "32121f603374e1b871477555f616a218a50cbb591a74edc0459ea8d34be7f2bd"
+    },
+    "scene-base.png": {
+      "size": [
+        320,
+        180
+      ],
+      "sha256": "7d910b30c80d8ddd96573e1f237bcaeb5df3fd77181d5fc80f93c2703a706de7"
+    },
+    "scene-dusk.png": {
+      "size": [
+        320,
+        180
+      ],
+      "sha256": "e83d6880b6702c9a7dbbbc8617735bb98ccd60e61ca640def4c24b197b5c0eb2"
+    },
+    "silhouette-study.png": {
+      "size": [
+        672,
+        264
+      ],
+      "sha256": "cfb8242d473b8290e58a4769825c1588eb7643970e127d65328d1ea138706a69"
+    },
+    "tiles.png": {
+      "size": [
+        128,
+        16
+      ],
+      "sha256": "a4f8c19cb58a492b3cd9dc579a8f309662dda34df98334e43ffc86298bd634f3"
+    }
+  }
+}
