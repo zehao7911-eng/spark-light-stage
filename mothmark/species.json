@@ -1,0 +1,142 @@
+[
+  {
+    "id": 0,
+    "name": "MINTWING",
+    "needs": [
+      0,
+      1
+    ],
+    "night": 1,
+    "reward": 6,
+    "kind": 0
+  },
+  {
+    "id": 1,
+    "name": "DEWTAIL",
+    "needs": [
+      1,
+      0
+    ],
+    "night": 1,
+    "reward": 7,
+    "kind": 0
+  },
+  {
+    "id": 2,
+    "name": "AMBERMOTH",
+    "needs": [
+      0,
+      0
+    ],
+    "night": 2,
+    "reward": 8,
+    "kind": 2
+  },
+  {
+    "id": 3,
+    "name": "VIOLETWING",
+    "needs": [
+      2,
+      1
+    ],
+    "night": 2,
+    "reward": 9,
+    "kind": 1
+  },
+  {
+    "id": 4,
+    "name": "ROSEVEIL",
+    "needs": [
+      1,
+      1
+    ],
+    "night": 3,
+    "reward": 10,
+    "kind": 1
+  },
+  {
+    "id": 5,
+    "name": "FERNSKIP",
+    "needs": [
+      1,
+      0,
+      1
+    ],
+    "night": 4,
+    "reward": 12,
+    "kind": 0
+  },
+  {
+    "id": 6,
+    "name": "MOONMOTH",
+    "needs": [
+      2,
+      2,
+      0
+    ],
+    "night": 5,
+    "reward": 15,
+    "kind": 1
+  },
+  {
+    "id": 7,
+    "name": "COPPERFIN",
+    "needs": [
+      0,
+      1,
+      0
+    ],
+    "night": 6,
+    "reward": 16,
+    "kind": 2
+  },
+  {
+    "id": 8,
+    "name": "GLASSWING",
+    "needs": [
+      2,
+      1,
+      2
+    ],
+    "night": 7,
+    "reward": 18,
+    "kind": 0
+  },
+  {
+    "id": 9,
+    "name": "STARDUST",
+    "needs": [
+      0,
+      2,
+      0
+    ],
+    "night": 8,
+    "reward": 20,
+    "kind": 2
+  },
+  {
+    "id": 10,
+    "name": "SILKMOON",
+    "needs": [
+      2,
+      1,
+      0
+    ],
+    "night": 10,
+    "reward": 24,
+    "kind": 1
+  },
+  {
+    "id": 11,
+    "name": "AURORA",
+    "needs": [
+      0,
+      1,
+      2,
+      0
+    ],
+    "night": 12,
+    "reward": 32,
+    "kind": 0
+  }
+]

@@ -1,0 +1,165 @@
+{
+  "card": {
+    "width": 72,
+    "height": 104,
+    "padding": 4,
+    "title": [
+      5,
+      5,
+      62,
+      10
+    ],
+    "art": [
+      5,
+      17,
+      62,
+      55
+    ],
+    "footer": [
+      6,
+      86,
+      60,
+      16
+    ]
+  },
+  "cards": [
+    {
+      "id": 0,
+      "name": "MINTWING",
+      "type": "SPECIMEN",
+      "atlas": [
+        0,
+        0,
+        72,
+        104
+      ]
+    },
+    {
+      "id": 1,
+      "name": "DUSKKEEP",
+      "type": "ARCHIVIST",
+      "atlas": [
+        72,
+        0,
+        72,
+        104
+      ]
+    },
+    {
+      "id": 2,
+      "name": "LANTERN",
+      "type": "TOOL",
+      "atlas": [
+        144,
+        0,
+        72,
+        104
+      ]
+    },
+    {
+      "id": 3,
+      "name": "FIELD JAR",
+      "type": "VESSEL",
+      "atlas": [
+        216,
+        0,
+        72,
+        104
+      ]
+    },
+    {
+      "id": 4,
+      "name": "NIGHTGLASS",
+      "type": "TOOL",
+      "atlas": [
+        288,
+        0,
+        72,
+        104
+      ]
+    },
+    {
+      "id": 5,
+      "name": "HERBARIUM",
+      "type": "ARCHIVE",
+      "atlas": [
+        360,
+        0,
+        72,
+        104
+      ]
+    },
+    {
+      "id": 6,
+      "name": "MOON SEAL",
+      "type": "EVENT",
+      "atlas": [
+        432,
+        0,
+        72,
+        104
+      ]
+    },
+    {
+      "id": 7,
+      "name": "VIOLETWING",
+      "type": "SPECIMEN",
+      "atlas": [
+        504,
+        0,
+        72,
+        104
+      ]
+    }
+  ],
+  "icons": {
+    "size": 16,
+    "names": [
+      "currency",
+      "vitality",
+      "pollen",
+      "locked",
+      "confirmed",
+      "archive"
+    ]
+  },
+  "character_size": [
+    24,
+    32
+  ],
+  "palette": "palette.json",
+  "close_crop": [
+    20,
+    96,
+    174,
+    216
+  ],
+  "motion_ms": [
+    160,
+    160,
+    100,
+    80,
+    100,
+    120,
+    180,
+    400
+  ],
+  "edition": 2,
+  "idle_atlas": {
+    "file": "idle-atlas.png",
+    "cell": [
+      72,
+      104
+    ],
+    "columns": 4,
+    "rows": 8,
+    "frame_ms": 240
+  },
+  "hero": {
+    "native": [
+      320,
+      180
+    ],
+    "export_scale": 4
+  }
+}

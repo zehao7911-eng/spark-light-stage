@@ -1,0 +1,122 @@
+[
+  {
+    "index": 0,
+    "name": "Night",
+    "hex": "#171522"
+  },
+  {
+    "index": 1,
+    "name": "Velvet",
+    "hex": "#292336"
+  },
+  {
+    "index": 2,
+    "name": "Plum",
+    "hex": "#403149"
+  },
+  {
+    "index": 3,
+    "name": "Mulberry",
+    "hex": "#61465a"
+  },
+  {
+    "index": 4,
+    "name": "Dust rose",
+    "hex": "#8b6470"
+  },
+  {
+    "index": 5,
+    "name": "Clay",
+    "hex": "#bd8e87"
+  },
+  {
+    "index": 6,
+    "name": "Parchment shade",
+    "hex": "#e2bba0"
+  },
+  {
+    "index": 7,
+    "name": "Parchment",
+    "hex": "#f5dfb5"
+  },
+  {
+    "index": 8,
+    "name": "Ivory",
+    "hex": "#fff1cf"
+  },
+  {
+    "index": 9,
+    "name": "Umber",
+    "hex": "#664c3e"
+  },
+  {
+    "index": 10,
+    "name": "Brass shade",
+    "hex": "#987147"
+  },
+  {
+    "index": 11,
+    "name": "Brass",
+    "hex": "#c29b58"
+  },
+  {
+    "index": 12,
+    "name": "Gold",
+    "hex": "#ebc77c"
+  },
+  {
+    "index": 13,
+    "name": "Pine ink",
+    "hex": "#243d40"
+  },
+  {
+    "index": 14,
+    "name": "Patina",
+    "hex": "#3d6660"
+  },
+  {
+    "index": 15,
+    "name": "Sage",
+    "hex": "#6e9c83"
+  },
+  {
+    "index": 16,
+    "name": "Mint",
+    "hex": "#a7c9a0"
+  },
+  {
+    "index": 17,
+    "name": "Pollen",
+    "hex": "#d9e6b5"
+  },
+  {
+    "index": 18,
+    "name": "Indigo",
+    "hex": "#4e476d"
+  },
+  {
+    "index": 19,
+    "name": "Lilac shade",
+    "hex": "#78658d"
+  },
+  {
+    "index": 20,
+    "name": "Lilac",
+    "hex": "#a58cb0"
+  },
+  {
+    "index": 21,
+    "name": "Petal",
+    "hex": "#d5b2cd"
+  },
+  {
+    "index": 22,
+    "name": "Seal",
+    "hex": "#9c535f"
+  },
+  {
+    "index": 23,
+    "name": "Coral",
+    "hex": "#df8290"
+  }
+]
