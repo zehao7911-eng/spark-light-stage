@@ -4,7 +4,7 @@
 
 Nine art suites pass: all authored PNGs use the approved 20-colour palette with binary transparency; the original near view is an exact crop; presentation exports are integer nearest-neighbour enlargements; character/prop/tile/effect atlases retain documented cells; original and game art manifests match; dusk samples are indexed remaps; the walk GIF retains four frames; local HTML resources exist; world-data.js exactly matches world.json; the game renderer palette matches the original kit.
 
-Nine gameplay suites complete all 18 story deliveries and 60 repeat deliveries. They check gates, actual route walking, wet/dry sandbar passability, boat access, collision-free destinations, low/high tide reachability, safe return to shore, upgrades/cost caps, repeat rounds, two-parcel batching, collections, claims, boost cooldown, malformed saves and receipt reloads without duplicate coins. Additional movement samples prove boots/sail/boost change distance, seal upgrades change a postmark result and Finder Bell changes collection range. Runtime scripts pass JavaScript syntax checks.
+Ten gameplay suites complete all 18 story deliveries and 60 repeat deliveries. They check gates, actual route walking, wet/dry sandbar passability, boat access, collision-free destinations, roof/tree/lighthouse/mill solids, low/high tide reachability, safe return to shore, upgrades/cost caps, repeat rounds, two-parcel batching, collections, claims, boost cooldown, malformed saves and receipt reloads without duplicate coins. Additional movement samples prove boots/sail/boost change distance, seal upgrades change a postmark result and Finder Bell changes collection range. Runtime scripts pass JavaScript syntax checks.
 
 ## Actual browser input
 
