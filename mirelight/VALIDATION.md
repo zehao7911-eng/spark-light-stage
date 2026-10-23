@@ -1,18 +1,15 @@
-# Validation — 2026-10-23
+# MIRELIGHT validation — 2026-10-23
 
-## Production asset checks
+11 production art suites passed: all PNGs, including new districts/capes/machinery, use the master 32 colours and binary alpha. Original asset hashes, exact near/far crop, integer review enlargements and six-frame GIFs remain valid.
 
-`qa_art.py` checks all PNGs against the single 32-colour palette, binary alpha edges, exact wide-to-close crop identity, exact integer review enlargement, atlas sizes and nonempty character cells, six-frame GIF palette membership, dusk-only index remapping, manifest hashes/anchors, local resource paths, changing action poses and renderer palette agreement. These verify production constraints, not subjective commercial art quality.
+7 gameplay suites complete all 16 story jobs and 60 repeat commissions: model walking, district gates, ending, distinct night jobs, upgrade effects/costs/caps, duplicate reward protection, collection/cape gates, request claims, malformed saves and interrupted repair/reward persistence. Runtime scripts pass JavaScript syntax and local resource checks.
 
-## Actual browser review
+The full 16-job campaign was also completed with actual browser input: timed strikes, a real glass swipe, Sweep and held Turn/Fit. All four districts opened and the ending appeared. Night Watch supplied new jobs; its first commission was completed. A tool was purchased, a street curio collected and two resident rewards claimed.
 
-- Visually inspected the original wide scene, exact close view, direction board, character samples and interface mockup.
-- Completed all three bells through ordinary native browser input: approach, contact, answered state and the final district message.
-- Inspected the corrected character/target spacing; Tamsin is separate from the high bell and Iona starts beside the middle bell.
-- Tested the near and dusk controls. Completed a separate middle-bell action in the 390 × 844 portrait scene after spacing corrections.
-- Paused the study and compared simulation time after 900 ms: exactly unchanged.
-- Selected the lantern in the native inventory sample and confirmed its name, description and focused state.
-- All five presentation sections checked at 320 × 568, 390 × 844 and 844 × 390: no horizontal document overflow and visible button dimensions at least 44 × 44 CSS pixels.
-- Captured browser console after interaction and navigation: no page errors or warnings.
+Reloading a reward retained the same parts balance. Partially cleaned night glass reloaded with the same clear panes and balance. New Journey confirmation was cancelled without losing progress. Reload pauses; underlying controls are inert during pause. Browser error/warning logs were empty.
 
-The browser's read-only DOM interface does not expose the canvas rendering context, so no runtime canvas colour readback is claimed. PNG palette checks are direct image-byte tests; renderer colours and integer coordinates were inspected in source. Physical phone tests and exact screen-capture colour under display scaling are not claimed.
+Viewport tests: desktop, 390×844 portrait, 844×390 landscape and 320×640 small portrait. The small portrait HUD had no horizontal overflow and all six buttons were at least 44×44 CSS pixels; its 256×160 workbench was fully on-screen. Landscape repair buttons were at least 44×44 and in-bounds. A full district and the final four repairs were completed at mobile viewport sizes.
+
+These are browser viewport tests, not physical iOS/Android certification or measured device FPS/battery tests. Audio requires a gesture. Backgrounding saves and pauses; restricted storage displays a warning.
+
+This is a compact complete original repair adventure with repeating post-story commissions. Three repair disciplines recur with new places, mastery, tools and tighter night timing. It does not claim commercial Steam content volume or exact replication.
