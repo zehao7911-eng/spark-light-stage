@@ -1,0 +1,48 @@
+{
+  "tile": [
+    32,
+    16
+  ],
+  "height_step": 8,
+  "projection": "screen=(originX+16*(x-y),originY+8*(x+y)-z)",
+  "cast": {
+    "cell": [
+      24,
+      32
+    ],
+    "pivot": [
+      12,
+      29
+    ],
+    "roles": [
+      "Iri / tea apprentice",
+      "Mallow / gardener",
+      "Pin / clockwork finch"
+    ],
+    "frames": 4
+  },
+  "props": {
+    "cell": [
+      32,
+      32
+    ],
+    "pivot": [
+      16,
+      29
+    ],
+    "ids": [
+      "teapot",
+      "dye roll",
+      "herbs",
+      "lantern",
+      "scale",
+      "cup"
+    ]
+  },
+  "close_crop": [
+    168,
+    115,
+    328,
+    235
+  ]
+}
