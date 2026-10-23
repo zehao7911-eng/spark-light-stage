@@ -1,0 +1,184 @@
+{
+  "version": 1,
+  "original": true,
+  "palette": "palette.json",
+  "spriteAnchor": [
+    16,
+    44
+  ],
+  "characters": {
+    "file": "characters.png",
+    "cell": [
+      32,
+      48
+    ],
+    "columns": 6,
+    "rows": [
+      "Iona walk",
+      "Orren walk",
+      "Tamsin walk",
+      "Iona strike"
+    ]
+  },
+  "props": {
+    "file": "props.png",
+    "cell": [
+      32,
+      32
+    ],
+    "names": [
+      "bell",
+      "tools",
+      "lantern",
+      "gear",
+      "fern pot",
+      "crate",
+      "satchel",
+      "field book"
+    ]
+  },
+  "moth": {
+    "file": "moth.png",
+    "cell": [
+      32,
+      32
+    ],
+    "frames": 4
+  },
+  "effects": {
+    "file": "effects.png",
+    "cell": [
+      32,
+      48
+    ],
+    "frames": 6
+  },
+  "walkBand": [
+    226,
+    270
+  ],
+  "bells": [
+    {
+      "x": 133,
+      "y": 241,
+      "note": 0
+    },
+    {
+      "x": 330,
+      "y": 239,
+      "note": 2
+    },
+    {
+      "x": 459,
+      "y": 247,
+      "note": 4
+    }
+  ],
+  "files": {
+    "action-study.png": {
+      "width": 1280,
+      "height": 400,
+      "sha256": "adbfb148370348098bc1e20e146835fd06f19205c4ecb5872fecdd32c1f5b018"
+    },
+    "art-direction-board.png": {
+      "width": 1920,
+      "height": 1440,
+      "sha256": "d8405cdcfe461dd5efd6ffaec8a766362db6cfbfcab100c127b0582999cc0d82"
+    },
+    "character-study.png": {
+      "width": 1280,
+      "height": 720,
+      "sha256": "2e590845172467a13564ce0bc3a6c5f7483a1902961add5ea8454859ae3692c4"
+    },
+    "characters.png": {
+      "width": 192,
+      "height": 192,
+      "sha256": "1ed9cb599c693081cb5ea29eaa6cfa1517bb22e78c9b82636af5dd685623fd43"
+    },
+    "dusk-study.png": {
+      "width": 1280,
+      "height": 720,
+      "sha256": "b81668fa517f783681a1ab7f82a5874164130c881fc267f2350a34e84e35f786"
+    },
+    "effects.png": {
+      "width": 192,
+      "height": 48,
+      "sha256": "52e83c973791073f71f85669ba7c170a08f75c3bd53fa8b9f26717343259237b"
+    },
+    "far-native.png": {
+      "width": 640,
+      "height": 360,
+      "sha256": "9286dcec0d459cc214a1d34da2ed73e98a740ece0e9f7e6a49f8ce6621b5585d"
+    },
+    "far-view.png": {
+      "width": 1280,
+      "height": 720,
+      "sha256": "3fc902deb0c167e34920d57bb5e33de94d90daede61a44dceacdb5f5d30a1667"
+    },
+    "font.png": {
+      "width": 96,
+      "height": 32,
+      "sha256": "65daf72de02154316fde75dda289da8e9dc6501e74ddbc1d8d0d07f86a50472d"
+    },
+    "icon.png": {
+      "width": 32,
+      "height": 32,
+      "sha256": "0607b83b9e5eef9025949b7688e424d12227486f908c09c05bc91b4ed4979f4b"
+    },
+    "interface-native.png": {
+      "width": 640,
+      "height": 360,
+      "sha256": "654f9e0c6b2122273142c6615980274a365ac0acfcf046531df203a0784d7434"
+    },
+    "interface-study.png": {
+      "width": 1280,
+      "height": 720,
+      "sha256": "54e2c62c8ea4742c46d8d88b863615d25e1424396fbf32c72d1586efb64828f0"
+    },
+    "material-study.png": {
+      "width": 1280,
+      "height": 720,
+      "sha256": "fc20cf31b6c14db8cb47f6986d6d24a6e0377039bb09d6ff61a97e447d520d5e"
+    },
+    "materials.png": {
+      "width": 128,
+      "height": 64,
+      "sha256": "e7081da35c2cd8441a07ebfdd39f957ad1cad3e0df9ab1f05abf3f672895159f"
+    },
+    "moth.png": {
+      "width": 128,
+      "height": 32,
+      "sha256": "81d3482d76984896365fbdc992cd1860991cc96478d8df5e8a0ec13c83e36f9e"
+    },
+    "near-native.png": {
+      "width": 320,
+      "height": 180,
+      "sha256": "ec3a75b36fa196fa582704e7396e68ffeea9a7196162f3bdeeccb9958804900c"
+    },
+    "near-view.png": {
+      "width": 1280,
+      "height": 720,
+      "sha256": "dd687e62d751771f92df974a9872e9334cae800228402af04d687c063cac5f5f"
+    },
+    "palette-study.png": {
+      "width": 1280,
+      "height": 496,
+      "sha256": "960e31680c764af4f08ad0655b931ed0648325228b8f8f0e41f6dbaf1c280cd8"
+    },
+    "props.png": {
+      "width": 256,
+      "height": 32,
+      "sha256": "04eb115cb618f09dc3db00433de754e308aba1ba1b6e1b296c75e14c77ace2a2"
+    },
+    "quay-base.png": {
+      "width": 640,
+      "height": 360,
+      "sha256": "7f30fe371c1ce7228bce744af080db100dafa3ed59af7ab37f21a85d1c019ef6"
+    },
+    "quay-dusk.png": {
+      "width": 640,
+      "height": 360,
+      "sha256": "299db10286df59ff27a73a90384a31215f41a39abdfed1a914fc4581abf949ba"
+    }
+  }
+}

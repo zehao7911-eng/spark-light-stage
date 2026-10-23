@@ -1,0 +1,204 @@
+{
+  "name": "Mirelight32",
+  "colors": [
+    {
+      "index": 0,
+      "name": "Ink",
+      "hex": "#14202b"
+    },
+    {
+      "index": 1,
+      "name": "Night",
+      "hex": "#20333e"
+    },
+    {
+      "index": 2,
+      "name": "Deep water",
+      "hex": "#2c4851"
+    },
+    {
+      "index": 3,
+      "name": "Slate",
+      "hex": "#42606a"
+    },
+    {
+      "index": 4,
+      "name": "Mist",
+      "hex": "#65818a"
+    },
+    {
+      "index": 5,
+      "name": "Rain",
+      "hex": "#92a6a8"
+    },
+    {
+      "index": 6,
+      "name": "Pearl",
+      "hex": "#c6ccbb"
+    },
+    {
+      "index": 7,
+      "name": "Linen",
+      "hex": "#ede1bc"
+    },
+    {
+      "index": 8,
+      "name": "Moss shade",
+      "hex": "#293e3b"
+    },
+    {
+      "index": 9,
+      "name": "Pine",
+      "hex": "#3b5547"
+    },
+    {
+      "index": 10,
+      "name": "Fern",
+      "hex": "#57725a"
+    },
+    {
+      "index": 11,
+      "name": "Sage",
+      "hex": "#81916a"
+    },
+    {
+      "index": 12,
+      "name": "Leaf light",
+      "hex": "#b0b58a"
+    },
+    {
+      "index": 13,
+      "name": "Peat",
+      "hex": "#493e3c"
+    },
+    {
+      "index": 14,
+      "name": "Bark",
+      "hex": "#655048"
+    },
+    {
+      "index": 15,
+      "name": "Timber",
+      "hex": "#886752"
+    },
+    {
+      "index": 16,
+      "name": "Oak edge",
+      "hex": "#b18a65"
+    },
+    {
+      "index": 17,
+      "name": "Brick shade",
+      "hex": "#6d4e48"
+    },
+    {
+      "index": 18,
+      "name": "Terracotta",
+      "hex": "#986950"
+    },
+    {
+      "index": 19,
+      "name": "Clay",
+      "hex": "#bc8960"
+    },
+    {
+      "index": 20,
+      "name": "Copper shade",
+      "hex": "#6e573e"
+    },
+    {
+      "index": 21,
+      "name": "Bronze",
+      "hex": "#a67c48"
+    },
+    {
+      "index": 22,
+      "name": "Brass",
+      "hex": "#d5ab64"
+    },
+    {
+      "index": 23,
+      "name": "Lamplight",
+      "hex": "#f2cf88"
+    },
+    {
+      "index": 24,
+      "name": "Cloak shade",
+      "hex": "#293f58"
+    },
+    {
+      "index": 25,
+      "name": "Indigo",
+      "hex": "#3e5d78"
+    },
+    {
+      "index": 26,
+      "name": "Cornflower",
+      "hex": "#63859a"
+    },
+    {
+      "index": 27,
+      "name": "Skin shade",
+      "hex": "#b88068"
+    },
+    {
+      "index": 28,
+      "name": "Skin",
+      "hex": "#dbad87"
+    },
+    {
+      "index": 29,
+      "name": "Rose shade",
+      "hex": "#75546b"
+    },
+    {
+      "index": 30,
+      "name": "Rose",
+      "hex": "#a77c8d"
+    },
+    {
+      "index": 31,
+      "name": "Glint",
+      "hex": "#f9edcc"
+    }
+  ],
+  "ramps": {
+    "masonry": [
+      17,
+      18,
+      19
+    ],
+    "oak": [
+      13,
+      14,
+      15,
+      16
+    ],
+    "brass": [
+      20,
+      21,
+      22,
+      23
+    ],
+    "cloth": [
+      24,
+      25,
+      26
+    ],
+    "leaf": [
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "water": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "light": "upper left",
+  "glintBudget": "31 is reserved for contact, UI focus and tiny glints"
+}
