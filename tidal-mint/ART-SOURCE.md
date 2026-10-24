@@ -1,0 +1,26 @@
+# Original art pipeline
+
+Two images were made with the built-in image generation tool, using the approved BLUE HOUR artwork as a drawing-style reference. The CLI/API fallback was not used. No RACCOIN assets were downloaded or repainted.
+
+## Saved assets
+
+- `cabinet.webp`: full-resolution 1024 by 1536 lossless cabinet background.
+- `coins.webp`: full-resolution 1774 by 887 RGBA atlas, sampled as four equal columns by two equal rows. Cell width and height are both 443.5 source pixels; transparent gutters prevent neighboring medallions from entering the samples. Slicing uses exact source proportions, with image smoothing disabled.
+- PNG masters remain in the workspace sibling directory `tidal-mint-art-sources/`. Both WebP files were checked to decode to identical pixels as their PNG masters.
+- `font.json` is the author's existing original bitmap glyph toolkit.
+
+## Shared visual rules
+
+Fine clustered pixels, hard stepped edges, restrained shade ramps and high-contrast silhouettes. Navy and turquoise enamel, warm brass, walnut, cream and pink coral form one material family. The sea-otter mascot is original. Coin types differ in both emblem and palette. The eight medallions share one perspective and embossed rim. Game effects use block-shaped sparks, discrete ripple marks and matching bitmap digits.
+
+The cabinet's empty tray is a background, not baked gameplay. Perspective-projected moving bodies, the pusher, falling coins, center payout stripe, aiming guide and score plaque are drawn by the live game. Coin flights, chain bursts, reflections and impacts belong to the renderer; source artwork is unchanged apart from lossless file encoding.
+
+## Final prompt set
+
+### Cabinet — style-reference generation
+
+Use case: stylized-concept. Production background artwork for original mobile HTML5 coin-pusher game TIDAL MINT. Reference image is ONLY the refined pixel drawing style: crisp small square pixel clusters, intricate warm walnut and brass material details, enamel blue and turquoise, readable silhouettes, warm cream highlights. Entirely NEW subject and layout. Portrait 1024x1536. A front-facing slightly overhead view of an exquisite sea-themed vintage arcade coin pusher cabinet. Ornate navy blue cabinet with turquoise enamel, gold wave and shell engravings, pink coral accents, mother-of-pearl inlays. At very top an elegant marquee reading only TIDAL MINT in large clean pixel lettering, with a tiny ORIGINAL smiling sea otter holding a seashell coin as mascot in upper left. Main EMPTY rectangular playing tray from x120 to900, y400 to1200, flat dark teal textured brushed metal floor with subtle grid of engraved wave shapes. This empty center has NO COINS and NO STATIC PUSHER because the game renders moving coins and mechanism here. Thin brass side rails straight and axis-aligned, no heavy perspective, rectangular open coin-catching mouth along bottom edge of tray. Above empty tray a short coin-entry slot centered and empty horizontal rail. Glass case sides with restrained pixel reflections kept at outer edges, reflections do not obscure central play area. Below tray a beautiful dark blue payout trough with brass edging, small empty cream score plaque on right and a red mechanical shake button to left; ornamental only, game draws actual controls separately. Around cabinet edges a cozy seaside arcade at dusk with tiny lamp, postcard, potted sea grass, distant warm fairy lights. Warm walnut tabletop visible around lower edges. Must look like sophisticated modern pixel game art, not coarse 8-bit, not smooth vector, not photorealistic or 3D render. Large clear center for gameplay, square pixel steps everywhere, no random noise, no copied commercial characters, no logos other than original TIDAL MINT, no extra words or numbers.
+
+### Coins — cabinet as style reference
+
+Use case: stylized-concept. Production sprite atlas for original TIDAL MINT pixel coin pusher game. Match reference cabinet's refined crisp small pixel clusters, warm brass and mother of pearl, navy/turquoise enamel, coral pink, hard square pixel steps and restrained material ramps. TRUE transparent background, STRICT 4 columns by 2 rows, eight equal square cells, each object centered with at least 15% transparent padding, no lettering, no numbers, no background glows. Each is one circular thick collectible arcade medallion seen from almost directly overhead with a tiny visible thickness at bottom, uniform identical size and perspective. Row1 left to right: 1 copper coin engraved simple seashell; 2 silver coin engraved small breaking wave; 3 gold coin with coral orange sunburst emblem; 4 two linked mint-green rings on a gold coin representing twins, still one circular token. Row2 left to right: 5 turquoise gold medallion with horseshoe magnet emblem; 6 luminous ivory pearl in pink shell on silver circular rim; 7 midnight blue coin with tiny polished brass bell emblem; 8 royal purple and gold crown coin. Strong embossed rim, lower dark rim, tiny bright edge pixels, readable at 32 pixels. Distinguish with color AND emblem. No stars, no black background, no smooth vector, no photorealistic render, no text, no branding. Do not let sprites overlap grid cell boundaries. This atlas will be mechanically sampled into 4 equal columns and 2 equal rows.
