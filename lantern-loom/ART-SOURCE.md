@@ -1,0 +1,13 @@
+# Art direction and provenance
+
+Original world: a moonlit copper conservatory tended by a sleepy moth. Indigo glass, walnut joinery, old gold, celadon foliage and ivory lights use stepped pixel edges and compact highlight ramps. Decorative clusters concentrate along the frame; the interaction pane remains dark. Native pixel glyphs, square particles and clustered leaves share a stable logical pixel grid.
+
+## Greenhouse backdrop
+
+Created with the built-in image-generation tool for this project, 24 October 2026. Master: `exec-a4fa738b-930d-4b4f-8b05-18cceccd6fef.png`, 1024 by 1536 RGB. The shipped `greenhouse.webp` is losslessly encoded; no painted edits, stock assets, commercial sprites, characters or marks were added. Runtime lanterns, foliage, particles, card icons and five-row lettering are drawn in code on a 384 by 576 canvas with image smoothing off.
+
+Final prompt:
+
+Create an ORIGINAL production game BACKGROUND asset for LANTERN LOOM, a refined pixel art physics garden game. Portrait 2:3 image. Fixed front elevation, not isometric. Art style reference: dense exquisitely clustered pixel art, clearly visible consistent pixel grid, navy and teal shadows, honey gold highlights, walnut wood, copper machinery, NOT smooth illustration. Scene is the inside of a magical Victorian glass greenhouse at blue hour. Ornate copper arch at top framing starry twilight, a tiny crescent moon outside. Finely drawn ivy, ferns, hanging glass terrariums, glowing bell flowers and botanical books adorn the narrow LEFT and RIGHT border (outer 12% each). At bottom a rich walnut potting bench with ceramic pots and a small sleeping cream moth gardener, spools of gold silk thread, copper scissors, seed trays. MAIN REQUIREMENT: the central 70% width from 18% to 84% height is a VERY DARK clean navy tinted glass pane with extremely subtle square glass reflections, almost empty usable gameplay field, no plants or props in the gameplay space. Thin brass ledge around center pane. Attractive artisanal cabinet feels handcrafted and cozy. NO text, NO UI, NO logos, NO balls, NO ramps, NO interface, NO humans. All image elements aligned to a uniform pixel grid, limited restrained color ramps and stepping edges, satisfying tiny material details, no blur or noisy dots. Original artwork, no recognizable commercial game assets.
+
+The locally inspected BLUE HOUR artwork informed the material palette and pixel-cluster density. The game does not reproduce its ticket layout or scratch gameplay. Generated illustration details and the low-resolution live sprites have different source resolutions, so this is a composite pixel art pipeline rather than a claim that every backdrop pixel was manually authored on the gameplay grid.
