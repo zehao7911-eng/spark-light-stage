@@ -1,0 +1,2293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Dicey Pocket</title>
+<style>
+:root{--bg:#120d1c;--panel:#231a38;--line:#4e3c78;--gold:#f5c542;--gold2:#ffe08a;--text:#f1eaff;--dim:#a99cc8;--red:#ff5a6e;--blue:#5ab0ff;--purple:#b77bff;--green:#5fe0a0;--orange:#ff9a3c}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+body{background:radial-gradient(ellipse 80% 60% at 50% -10%,#452a6e 0%,#1a1229 55%,#0d0914 100%)}
+body::before{content:"";position:fixed;inset:-20% 0 0 0;pointer-events:none;background:linear-gradient(105deg,transparent 30%,rgba(255,220,150,.05) 38%,transparent 46%),linear-gradient(75deg,transparent 54%,rgba(200,160,255,.05) 62%,transparent 70%);animation:beams 12s ease-in-out infinite alternate}
+@keyframes beams{from{transform:translateX(-6%)}to{transform:translateX(6%)}}
+#app{position:relative;display:flex;flex-direction:column;height:100%;max-width:1360px;margin:0 auto}
+#top{display:flex;align-items:center;gap:8px;padding:7px 12px;background:linear-gradient(#2b2046,#1c1530);border-bottom:2px solid var(--line);box-shadow:0 3px 14px #0009;flex-wrap:wrap;z-index:5}
+#top:empty{display:none}
+.logo{font-weight:900;color:var(--gold);letter-spacing:.3px;text-shadow:0 0 12px #f5c54266;white-space:nowrap;font-size:15px;margin-right:4px}
+.pill{display:inline-flex;align-items:center;gap:6px;background:#0006;border:1px solid #ffffff14;padding:4px 10px;border-radius:999px;font-size:13px;font-weight:700;white-space:nowrap}
+.pill small{color:var(--dim);font-weight:600}
+.bar{position:relative;height:14px;background:#000a;border-radius:7px;overflow:hidden;min-width:96px;border:1px solid #ffffff1c}
+.bar>i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#e8364f,#ff7a59);transition:width .35s}
+.bar.xp{min-width:54px;height:8px}.bar.xp>i{background:linear-gradient(90deg,#7b5cff,#c79bff)}
+.bar>span{position:relative;display:block;text-align:center;font-size:11px;line-height:13px;font-weight:800;text-shadow:0 1px 2px #000}
+.sp{flex:1}
+.btn{appearance:none;border:0;cursor:pointer;font:inherit;font-weight:800;color:#2a1a05;background:linear-gradient(#ffe08a,#f5b942);padding:9px 16px;border-radius:10px;box-shadow:0 3px 0 #a86f12,0 5px 12px #0007;transition:transform .08s,filter .15s;white-space:nowrap}
+.btn:hover{filter:brightness(1.1)}.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #a86f12}
+.btn.alt{color:var(--text);background:linear-gradient(#43336a,#30244e);box-shadow:0 3px 0 #1b1430,0 5px 12px #0007}
+.btn.red{color:#fff;background:linear-gradient(#ff6f7f,#d93a50);box-shadow:0 3px 0 #7d1a2a,0 5px 12px #0007}
+.btn.sm{padding:5px 10px;font-size:13px;border-radius:8px}
+.btn small{font-weight:600;opacity:.8}
+.btn:disabled{filter:grayscale(1) brightness(.55);cursor:not-allowed;transform:none}
+.btn.on{outline:3px solid #7ff;outline-offset:2px;animation:pulse 1s infinite}
+.btn.glow{animation:glow 1.2s infinite}
+@keyframes pulse{50%{outline-color:transparent}}
+@keyframes glow{50%{box-shadow:0 3px 0 #a86f12,0 0 22px #ffd54a}}
+#screen{position:relative;flex:1;min-height:0;overflow:auto}
+.card:focus-visible,.pickgrid .card:focus-visible{outline:3px solid #7ff;outline-offset:3px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.node:focus{outline:none}.node:focus-visible circle{stroke:#7ff;stroke-width:1.6}
+#fx{position:fixed;left:0;top:0;pointer-events:none;z-index:80}
+/* ---------- cards ---------- */
+.cards{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-content:center}
+.card{--c1:#333;--c2:#222;--cb:#888;position:relative;width:148px;min-height:132px;padding:8px 8px 10px;border-radius:14px;background:linear-gradient(160deg,var(--c1),var(--c2));border:2px solid var(--cb);box-shadow:0 4px 0 #0007,0 8px 16px #0006,inset 0 1px 0 #ffffff22;display:flex;flex-direction:column;gap:6px;transition:transform .15s,filter .2s,opacity .2s,box-shadow .2s}
+.t-weapon{--c1:#6a2436;--c2:#381320;--cb:#ff6b7d}
+.t-shield{--c1:#23466e;--c2:#142842;--cb:#5ab0ff}
+.t-spell{--c1:#472a78;--c2:#28164a;--cb:#b77bff}
+.t-utility{--c1:#5a4717;--c2:#302509;--cb:#f5c542}
+.c-head{display:flex;align-items:center;gap:5px;font-weight:900;font-size:13.5px;line-height:1.1}
+.c-ico{font-size:18px}
+.c-name{flex:1;min-width:0}
+.plus{color:var(--gold);margin-left:1px}
+.c-uses{font-size:11px;background:#0007;border-radius:8px;padding:1px 6px;font-weight:800;white-space:nowrap}
+.c-slots{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.c-slots.col{flex-direction:column;align-items:center}
+.srow{display:flex;gap:6px;justify-content:center}
+.slot{position:relative;width:50px;height:50px;border-radius:11px;border:2px dashed #ffffff5c;background:#0005;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;font-size:12px;line-height:1.1;text-align:center;color:#fffd;transition:all .15s}
+.slot .big{font-size:24px;color:#fff}
+.slot.filled{border-style:solid;border-color:#fff8;background:#0003}
+#pcards .slot.filled{cursor:pointer}
+.slot.cd{width:auto;min-width:78px;padding:0 8px}
+.cdn{font-size:19px;color:#fff;line-height:1}
+.cdbar{width:100%;height:5px;border-radius:3px;background:#0008;margin-top:3px;overflow:hidden}.cdbar i{display:block;height:100%;background:var(--gold)}
+.mini{display:flex;gap:2px}.mini img{width:18px;height:18px}
+.dimg{width:44px;height:44px;display:block;filter:drop-shadow(0 2px 2px #0008)}
+.slot .fl{position:absolute;top:-9px;right:-7px;font-size:14px}
+.c-desc{font-size:12px;line-height:1.35;color:#efe6ff;text-align:center;margin-top:auto}
+.dv{display:inline-block;width:12px;height:12px;border-radius:3px;background:#f7f0dc;box-shadow:inset 0 0 0 1.5px #0005;vertical-align:-1px;margin:0 1px}
+.card.used{filter:grayscale(.85) brightness(.5)}
+.card.can{box-shadow:0 0 0 3px var(--gold),0 0 22px #f5c542aa;transform:translateY(-4px);cursor:pointer}
+.card.can .slot:not(.filled){border-color:var(--gold);background:#f5c54226}
+.card.hov{transform:translateY(-7px) scale(1.05)}
+.card.dim{opacity:.38}
+.card.flash{animation:cflash .5s}
+.card.bad{animation:cshake .35s}
+.card.off::after,.card.stolen::after{content:attr(data-off);position:absolute;inset:0;border-radius:12px;background:#000b;display:flex;align-items:center;justify-content:center;font-weight:900;color:#ffe65a;font-size:15px}
+.card.temp{border-style:dashed}
+.card.book{box-shadow:0 0 0 2px #b77bff66,0 0 18px #b77bff55,0 4px 0 #0007}
+.badge{position:absolute;top:-9px;right:-6px;background:#b77bff;color:#fff;font-size:11px;font-weight:900;padding:2px 6px;border-radius:8px;box-shadow:0 2px 6px #0008}
+.badge.g{background:#2f9e6e}
+.intent{font-size:13px;font-weight:900;text-align:center;color:#fff;background:#000a;border:1px solid #ff6b7d66;border-radius:8px;padding:2px 4px}
+.burnt{color:var(--orange)}
+.ecards .card{width:136px;min-height:116px}
+.rar{position:absolute;top:-9px;left:10px;font-size:10px;color:var(--gold);background:#1b1430;border:1px solid #f5c54255;padding:0 5px;border-radius:6px;letter-spacing:-1px}
+.icard{min-height:150px;padding-bottom:16px}
+.icard .btn{margin-top:4px}
+@keyframes cflash{0%{transform:scale(1)}30%{transform:scale(1.1);box-shadow:0 0 0 4px #fff,0 0 30px #fff}100%{transform:scale(1)}}
+@keyframes cshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+/* ---------- combat ---------- */
+#combat{display:flex;flex-direction:column;height:100%;padding:8px 10px 10px;gap:6px}
+.ez{display:flex;gap:18px;align-items:center;justify-content:center;padding:8px;border-radius:18px;background:radial-gradient(ellipse at 30% 50%,#5a1f3a55,#0000 70%)}
+.fighter{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:170px}
+.por{font-size:70px;line-height:1.05;filter:drop-shadow(0 8px 10px #000a);animation:bob 2.6s ease-in-out infinite}
+.por.small{font-size:44px;animation:none}
+.por.hit{animation:hit .35s}
+.por.dead{animation:die 1.1s forwards}
+@keyframes bob{50%{transform:translateY(-5px)}}
+@keyframes hit{0%,100%{transform:translate(0)}20%{transform:translate(-8px,2px) rotate(-6deg);filter:brightness(2) drop-shadow(0 0 10px #f00)}60%{transform:translate(6px,-2px) rotate(4deg)}}
+@keyframes die{to{transform:scale(.2) rotate(40deg) translateY(40px);opacity:0;filter:grayscale(1)}}
+.fname{font-weight:900;font-size:16px;text-align:center}
+.fname small{color:var(--dim);font-weight:700;font-size:12px}
+.fighter .bar{width:170px;height:16px}.fighter .bar>span{line-height:15px;font-size:12px}
+.chips{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;min-height:22px;max-width:220px}
+.chip{font-size:12px;font-weight:800;padding:2px 7px;border-radius:999px;background:#000a;border:1px solid #fff3;cursor:help}
+.chip.blk{background:#1d4d86;border-color:#5ab0ff}
+#ann{text-align:center;min-height:24px;font-weight:800;color:var(--gold2);text-shadow:0 0 10px #f5c54255;font-size:15px}
+#ann.show{animation:annIn .4s}
+@keyframes annIn{from{opacity:0;transform:translateY(-6px) scale(.97)}}
+.pz{flex:1;min-height:0;overflow:auto;display:flex;align-items:center;justify-content:center;padding:8px 0}
+.tz{display:flex;gap:10px;align-items:stretch}
+.pinfo{width:200px;justify-content:center;background:#0004;border-radius:16px;padding:6px}
+.traywrap{flex:1;min-width:0;height:150px;border-radius:20px;background:radial-gradient(ellipse at 50% 40%,#23704e,#0f3b29 75%);border:6px solid #6d4a26;box-shadow:inset 0 0 34px #000b,0 6px 16px #0008,0 0 0 2px #3b2712;position:relative;overflow:hidden}
+.traywrap::after{content:"FORTUNA ✦ DICE SHOW";position:absolute;inset:auto 0 6px 0;text-align:center;font-size:11px;letter-spacing:4px;color:#ffffff18;font-weight:900;pointer-events:none}
+#tray{width:100%;height:100%;display:block;touch-action:none}
+.acts{display:flex;flex-direction:column;gap:8px;justify-content:center;width:180px}
+.acts .btn{width:100%}
+.hintline{font-size:12px;color:var(--dim);text-align:center}
+.warn{font-size:12px;font-weight:800;color:#ffb3bd;text-align:center}
+.chg{height:6px;border-radius:3px;background:#0008;overflow:hidden;margin-top:4px}.chg i{display:block;height:100%;background:linear-gradient(90deg,#2f9e6e,#8dffc9)}
+/* ---------- floats ---------- */
+.float{position:fixed;pointer-events:none;font-weight:900;font-size:24px;text-shadow:0 2px 0 #000,0 0 8px #000;z-index:90;animation:floatUp 1.1s ease-out forwards;white-space:nowrap}
+.float.small{font-size:16px}.float.big{font-size:38px}
+@keyframes floatUp{0%{opacity:0;transform:translate(-50%,-30%) scale(.6)}15%{opacity:1;transform:translate(-50%,-70%) scale(1.15)}100%{opacity:0;transform:translate(-50%,-190%) scale(1)}}
+.shake{animation:scr .3s}
+@keyframes scr{25%{transform:translate(-5px,3px)}50%{transform:translate(5px,-3px)}75%{transform:translate(-3px,-2px)}}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:95;display:flex;flex-direction:column;gap:6px;align-items:center;pointer-events:none}
+#toast div{background:#1b1430f0;border:1px solid var(--gold);color:var(--gold2);padding:8px 16px;border-radius:12px;font-weight:800;box-shadow:0 6px 18px #000a;animation:annIn .3s}
+/* ---------- tooltip & modal ---------- */
+#tip{position:fixed;z-index:100;max-width:300px;background:#130e20f5;border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-size:12.5px;line-height:1.5;pointer-events:none;display:none;box-shadow:0 8px 24px #000c}
+#tip .tt-h{font-weight:900;font-size:14px;margin-bottom:2px}
+#tip .tt-t{color:var(--dim);font-size:11px;margin-bottom:4px}
+#tip .tt-up{margin-top:6px;padding-top:6px;border-top:1px dashed #ffffff30;color:var(--gold2)}
+.rr{font-size:10px;padding:1px 6px;border-radius:6px;margin-left:4px;vertical-align:1px}
+.r0{background:#555}.r1{background:#4a4a5a}.r2{background:#2d5fa8}.r3{background:#a8742d}
+#modal{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;z-index:70;padding:14px}
+#modal.show{display:flex}
+.mbox{background:linear-gradient(#2a2045,#1b1430);border:2px solid var(--line);border-radius:18px;padding:18px 20px;max-width:960px;width:100%;max-height:90vh;overflow:auto;box-shadow:0 12px 40px #000c;animation:annIn .25s}
+.mbox h2{margin:0 0 10px;color:var(--gold)}
+.mbox h3{margin:14px 0 8px;color:var(--gold2);font-size:15px}
+.mbox p,.mbox li{line-height:1.6;color:#e6dcff;font-size:14px}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+/* ---------- pages ---------- */
+.page{min-height:100%;display:flex;align-items:center;justify-content:center;padding:18px}
+.panel{background:linear-gradient(#2a2045ee,#1b1430ee);border:2px solid var(--line);border-radius:22px;padding:22px;max-width:1000px;width:100%;box-shadow:0 10px 40px #000a;text-align:center}
+.panel h2{margin:6px 0;font-size:26px;color:var(--gold)}
+.panel h3{margin:18px 0 10px;color:var(--gold2)}
+.panel p{color:#e2d8ff;line-height:1.6}
+.bigico{font-size:84px;line-height:1.1;filter:drop-shadow(0 8px 12px #000a)}
+.gains{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.lvup{margin:10px auto;display:inline-block;padding:8px 16px;border-radius:12px;background:linear-gradient(90deg,#7b5cff55,#f5c54255);border:1px solid var(--gold);font-weight:900;color:var(--gold2);animation:glow 1.4s infinite}
+.fortuna{display:flex;gap:12px;align-items:center;justify-content:center;margin:12px auto;max-width:640px;text-align:left}
+.fortuna .face{font-size:46px}
+.fortuna .say{background:#fff1;border:1px solid #fff3;border-radius:14px;padding:10px 14px;font-weight:700;color:var(--gold2);line-height:1.5}
+/* title */
+.title{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;gap:10px}
+#titlecv{width:min(520px,90vw);height:150px}
+.title h1{margin:0;font-size:clamp(38px,7vw,74px);line-height:1.05;font-weight:900;color:#fff;text-shadow:0 0 30px #b77bff88,0 4px 0 #3a1f6a}
+.title h1 span{color:var(--gold);text-shadow:0 0 26px #f5c542aa,0 4px 0 #7a4f0a}
+.t-sub{color:var(--gold2);font-weight:800;letter-spacing:2px}
+.t-desc{color:#d9ccff;line-height:1.7;max-width:620px}
+.t-btns{display:flex;flex-direction:column;gap:10px;min-width:260px;margin-top:8px}
+.best{margin-top:8px;color:var(--dim);font-size:13px}
+.t-src{display:inline-flex;align-items:center;gap:6px;margin-top:4px;color:var(--dim);font-size:13px;text-decoration:none;opacity:.85}.t-src:hover,.t-src:focus-visible{color:var(--gold);opacity:1}
+.classes{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:14px;text-align:left}
+.cls{background:#0005;border:2px solid #ffffff22;border-radius:18px;padding:14px;cursor:pointer;transition:transform .15s,border-color .15s,box-shadow .15s;display:flex;flex-direction:column;gap:6px}
+.cls:hover{transform:translateY(-4px);border-color:var(--cc);box-shadow:0 0 24px color-mix(in srgb,var(--cc) 40%,transparent)}
+.cls .ci{font-size:50px;text-align:center}
+.cls h3{margin:0;text-align:center;color:var(--cc)}
+.cls .d{font-size:13px;color:#dcd0ff;line-height:1.5}
+.cls .k{font-size:12.5px;background:#ffffff10;border-radius:10px;padding:8px;line-height:1.5}
+.cls .its{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;font-size:22px}
+.cls .its span{cursor:help}
+/* map */
+.mapwrap{display:flex;gap:14px;padding:12px;height:100%;min-height:0}
+.mapbox{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;background:radial-gradient(ellipse at 50% 0%,#3a2a5e88,#0000 70%),#0003;border:2px solid #ffffff14;border-radius:20px;padding:10px;min-height:0}
+.mapbox h2{margin:0;color:var(--gold);font-size:20px}
+.mapbox .sub{color:var(--dim);font-size:13px}
+svg.map{flex:1;min-height:0;width:100%;max-width:640px}
+svg.map line{stroke:#ffffff30;stroke-width:.7;stroke-dasharray:1.6 1.4}
+svg.map line.done{stroke:var(--gold);stroke-dasharray:none;stroke-width:.9}
+svg.map line.next{stroke:#ffe08acc;stroke-width:.8}
+.node circle{fill:#2e2349;stroke:#6b5a9e;stroke-width:.6;transition:all .2s}
+.node text{font-size:5.4px;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.node.avail{cursor:pointer}
+.node.avail circle{stroke:var(--gold);stroke-width:1;fill:#4a3a1e;animation:npulse 1.2s infinite}
+.node.avail:hover circle{fill:#6a5220}
+.node.visited circle{fill:#1a1428;stroke:#4a3a6e}
+.node.visited text{opacity:.45}
+.node.cur circle{stroke:#fff;stroke-width:1.2;fill:#3a2f5e}
+.node.cur text{opacity:1}
+.node.boss circle{stroke:#ff6b7d;stroke-width:1}
+@keyframes npulse{50%{stroke-width:1.8;stroke:#fff3b0}}
+.side{width:330px;display:flex;flex-direction:column;gap:10px;overflow:auto}
+.box{background:#0005;border:1px solid #ffffff18;border-radius:16px;padding:12px}
+.box h4{margin:0 0 8px;color:var(--gold2)}
+.eqlist{display:flex;flex-direction:column;gap:5px}
+.eqi{display:flex;align-items:center;gap:8px;background:#ffffff0c;border-radius:9px;padding:5px 8px;font-size:13px;cursor:help;border-left:3px solid var(--cb)}
+.eqi b{font-weight:800}.eqi small{color:var(--dim);margin-left:auto;font-size:11px;text-align:right}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:12px;color:var(--dim)}
+/* shop etc */
+.shopgrid{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.price{font-weight:900;color:var(--gold)}
+.sold{opacity:.35;pointer-events:none}
+.svc{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.pickgrid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.pickgrid .card{cursor:pointer}
+.pickgrid .card:hover{transform:translateY(-4px);box-shadow:0 0 0 3px var(--gold)}
+.arrow{font-size:12px;color:var(--gold2);margin-top:4px}
+.wheel{position:relative;width:300px;height:300px;margin:10px auto}
+.wheel .disc{position:absolute;inset:0;border-radius:50%;border:8px solid #6d4a26;box-shadow:0 0 0 3px var(--gold),0 10px 30px #000a;transition:transform 4.2s cubic-bezier(.12,.7,.12,1)}
+.wheel .lbl{position:absolute;left:50%;top:50%;width:0;height:0}
+.wheel .lbl span{position:absolute;left:0;top:-128px;transform:translateX(-50%);font-size:12px;font-weight:900;color:#fff;text-shadow:0 1px 2px #000;white-space:nowrap;width:78px;text-align:center}
+.wheel .ptr{position:absolute;left:50%;top:-14px;transform:translateX(-50%);font-size:30px;z-index:2;filter:drop-shadow(0 3px 3px #000)}
+.wheel .hub{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px;border-radius:50%;background:radial-gradient(#ffe08a,#b8801c);box-shadow:0 0 10px #000;display:flex;align-items:center;justify-content:center;font-size:24px}
+.duel{display:flex;gap:30px;justify-content:center;align-items:center;margin:14px 0}
+.duel .side2{display:flex;flex-direction:column;align-items:center;gap:6px}
+.duel img{width:56px;height:56px}
+.duel .tot{font-size:26px;font-weight:900}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.stats div{background:#0005;border-radius:12px;padding:10px}
+.stats b{display:block;font-size:22px;color:var(--gold)}
+.tblwrap{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th,.tbl td{padding:6px 8px;border-bottom:1px solid #ffffff18;text-align:left;white-space:nowrap}
+.tbl th{color:var(--gold2);font-weight:800}
+.bagcols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .side{display:none}
+  .card{width:128px;min-height:124px}.ecards .card{width:118px}
+  .slot{width:44px;height:44px}.dimg{width:38px;height:38px}
+  .fighter{min-width:120px}.por{font-size:52px}
+  .pinfo{width:150px}.acts{width:140px}
+  .bagcols{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .logo{display:none}
+  #top{gap:4px;padding:5px 6px}.pill{padding:3px 7px;font-size:12px}.pill small{display:none}
+  #top .bar{min-width:70px}
+  #combat{height:auto;min-height:100%;padding:6px 6px 12px}
+  .ez{gap:8px;padding:4px;flex-wrap:wrap}
+  .ez .fighter{min-width:0}.ez .fighter .bar{width:120px}
+  .por{font-size:42px}
+  .pz{flex:none;overflow:visible;padding:2px 0}
+  .tz{flex-wrap:wrap;gap:6px;position:sticky;bottom:0;z-index:3;padding-top:6px;background:linear-gradient(#120d1c00,#120d1cf2 14%)}
+  .traywrap{order:-1;flex-basis:100%;height:112px}
+  .pinfo .por.small{display:none}
+  .pinfo{flex:1 1 140px;width:auto;padding:4px}
+  .pinfo .bar{width:120px}
+  .acts{flex:1 1 140px;width:auto}
+  .card{width:112px;padding:6px;min-height:112px}
+  .ecards .card{width:100px;min-height:92px;padding:5px;gap:4px}
+  .ecards .slot{width:34px;height:34px}.ecards .dimg{width:30px;height:30px}.ecards .slot .big{font-size:18px}
+  .c-head{font-size:12px}.c-desc{font-size:11px}
+  .slot{width:40px;height:40px}.dimg{width:34px;height:34px}
+  .mapwrap{padding:6px}.mapbox{padding:6px}
+}
+</style>
+
+<meta name="theme-color" content="#255b6d"><link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+
+<link rel="stylesheet" href="polish.css"></head>
+<body>
+<div id="app">
+  <header id="top"></header>
+  <main id="screen"></main>
+</div>
+<canvas id="fx"></canvas>
+<div id="modal"></div>
+<div id="tip"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script id="engine">
+'use strict';
+/* =====================================================================
+   Dicey Pocket — Game engine (Pure logic)
+   · DOM·오디오·타이머·Save소에 접근하지 않는다. tests/engine.test.mjs가 이 블록만 떼어 Node에서 실행한다.
+   · Effects이 필요한 the result emit() 이벤트 만 알리고, 난수는 setRng()  바꿔 끼울 수 있다.
+   ===================================================================== */
+
+// ---------- 난수 · 유틸 ----------
+let rng=Math.random;
+function setRng(f){rng=f||Math.random}
+// 시드 고정 난수 (mulberry32) — 테스트 재현용
+function seededRng(seed){let a=seed>>>0;return()=>{a=a+0x6D2B79F5>>>0;let t=a;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}}
+const R=(a,b)=>a+Math.floor(rng()*(b-a+1));
+const pick=a=>a[Math.floor(rng()*a.length)];
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const d6=()=>R(1,6);
+function wpick(w){let t=0;for(const k in w)t+=w[k];let r=rng()*t;for(const k in w){r-=w[k];if(r<0)return k}return Object.keys(w)[0]}
+
+// ---------- Dice Requirement ----------
+const A={t:'any'},ODD={t:'odd'},EVEN={t:'even'},SAME={t:'same'};
+const MX=n=>({t:'max',n}),MN=n=>({t:'min',n}),EQ=n=>({t:'eq',n}),RG=(a,b)=>({t:'rg',a,b}),CD=n=>({t:'cd',n});
+function condOk(c,v){
+  switch(c.t){
+    case 'any':case 'same':case 'cd':return true;
+    case 'odd':return v%2===1;case 'even':return v%2===0;
+    case 'max':return v<=c.n;case 'min':return v>=c.n;case 'eq':return v===c.n;
+    case 'rg':return v>=c.a&&v<=c.b;
+  }
+  return false;
+}
+function condLabel(c){
+  switch(c.t){
+    case 'any':return '';case 'odd':return 'ODD';case 'even':return 'EVEN';
+    case 'max':return 'MAX<br><b class="big">'+c.n+'</b>';case 'min':return 'MIN<br><b class="big">'+c.n+'</b>';
+    case 'eq':return '<b class="big">'+c.n+'</b>';case 'rg':return c.a+'~'+c.b;case 'same':return 'matching<br>value';
+  }
+  return '';
+}
+function condText(c){
+  switch(c.t){
+    case 'any':return 'Any die';case 'odd':return 'ODD';case 'even':return 'EVEN';
+    case 'max':return c.n+'  or less';case 'min':return c.n+'  or more';case 'eq':return 'exactly '+c.n;
+    case 'rg':return c.a+'~'+c.b;case 'same':return 'Match the previous die';case 'cd':return 'COUNTDOWN '+c.n+' (subtract die value)';
+  }
+  return '';
+}
+
+// ---------- Equipment 데이터 (플레이어 풀 52종 + Monster 전용) ----------
+const TYPEN={weapon:'Weapon',shield:'Armor',spell:'Spell',utility:'Tool'};
+const RARN={0:'Monster',1:'Common',2:'Rare',3:'Legendary'};
+const IT={};
+function I(id,name,icon,type,rar,slots,desc,act,o){IT[id]=Object.assign({id,name,icon,type,rar,slots,desc,act},o||{})}
+const up=(u,a,b)=>u?b:a;
+
+// ⚔ Weapon
+I('sword','Rusty Sword','🗡️','weapon',1,u=>[A],u=>`Damage ■${up(u,'','+2')}`,(c,v,u)=>c.dmg(v[0]+up(u,0,2)));
+I('dagger','Dagger','🔪','weapon',1,u=>[MX(up(u,3,4))],()=>'Damage ■+1',(c,v)=>c.dmg(v[0]+1));
+I('greatsword','Greatsword','⚔️','weapon',2,u=>[MN(up(u,5,4))],()=>'Damage ■+4',(c,v)=>c.dmg(v[0]+4));
+I('twin','Twin Blades','🗡️','weapon',3,u=>[A,SAME],u=>`matching values 2  → Damage ■×${up(u,3,4)}`,(c,v,u)=>c.dmg(v[0]*up(u,3,4)));
+I('spear','Divine Spear','🔱','weapon',3,u=>[up(u,EQ(6),MN(5))],u=>`Damage 14${up(u,'',', piercing block')}`,(c,v,u)=>c.dmg(14,{pierce:!!u}));
+I('axe','Odd Axe','🪓','weapon',1,u=>[ODD],u=>`Damage ■+${up(u,2,3)}`,(c,v,u)=>c.dmg(v[0]+up(u,2,3)));
+I('hammer','Even Hammer','🔨','weapon',2,u=>[EVEN,EVEN],u=>`Damage ■+■${up(u,'+1','+4')}`,(c,v,u)=>c.dmg(v[0]+v[1]+up(u,1,4)));
+I('bow','Hunter Bow','🏹','weapon',1,u=>[A],u=>`Damage ⌈■÷2⌉${up(u,'','+1')}`,(c,v,u)=>c.dmg(Math.ceil(v[0]/2)+up(u,0,1)),{uses:()=>3});
+I('whip','Thorn Whip','➰','weapon',2,u=>[MX(4)],u=>`Damage ■, Poison ${up(u,1,2)}`,(c,v,u)=>{c.dmg(v[0]);c.st('foe','poison',up(u,1,2))});
+I('flamesword','Flame Sword','🔥','weapon',2,u=>[EVEN],u=>`Damage ■${up(u,'','+2')}, Burn 1`,(c,v,u)=>{c.dmg(v[0]+up(u,0,2));c.st('foe','burn',1)});
+I('luckblade','Lucky Blade','🍀','weapon',2,u=>[A],u=>`Damage ■ (if value ${up(u,'6','5  or more')} then 2x)`,(c,v,u)=>c.dmg(v[0]>=up(u,6,5)?v[0]*2:v[0]));
+I('ram','Battering Ram','🐏','weapon',2,u=>[CD(up(u,12,9))],()=>'Countdown complete: deal 16',c=>c.dmg(16));
+I('shockmace','Shock Mace','⚡','weapon',3,u=>[MN(up(u,5,4))],()=>'Damage ■+2, Shock 1',(c,v)=>{c.dmg(v[0]+2);c.st('foe','shock',1)});
+I('rapier','Rapier','🤺','weapon',2,u=>[MX(2)],u=>`Damage ${up(u,3,4)}`,(c,v,u)=>c.dmg(up(u,3,4)),{uses:()=>4});
+I('scythe','Vampiric Scythe','🌙','weapon',3,u=>[ODD],u=>`Damage ■${up(u,'','+2')}, Heal ⌈■÷2⌉`,(c,v,u)=>{c.dmg(v[0]+up(u,0,2));c.heal(Math.ceil(v[0]/2))});
+I('executioner','Executioner Axe','🪓','weapon',2,u=>[EQ(1)],u=>`Damage ${up(u,9,12)}`,(c,v,u)=>c.dmg(up(u,9,12)));
+I('gloves','Duelist Gloves','🥊','weapon',1,u=>[EQ(2)],u=>`Damage ${up(u,6,8)}`,(c,v,u)=>c.dmg(up(u,6,8)));
+I('bash','Shield Bash','💥','weapon',2,u=>[A],u=>`Current block${up(u,'','+■')} damage`,(c,v,u)=>c.dmg(c.myBlock()+up(u,0,v[0])));
+// 🛡 Armor
+I('woodshield','Wooden Shield','🛡️','shield',1,u=>[MX(up(u,4,5))],u=>`Block ■${up(u,'','+1')}`,(c,v,u)=>c.block(v[0]+up(u,0,1)));
+I('steelshield','Steel Shield','🛡️','shield',2,u=>[A],u=>`Block ■+${up(u,1,3)}`,(c,v,u)=>c.block(v[0]+up(u,1,3)));
+I('tower','Tower Shield','🏰','shield',2,u=>[MN(up(u,5,4))],()=>'Block ■×2',(c,v)=>c.block(v[0]*2));
+I('buckler','Buckler','🔰','shield',1,u=>[MX(2)],u=>`Block ${up(u,3,4)}`,(c,v,u)=>c.block(up(u,3,4)),{uses:()=>2});
+I('turtle','Turtle Shell','🐢','shield',1,u=>[ODD],u=>`Block ■+${up(u,1,3)}`,(c,v,u)=>c.block(v[0]+up(u,1,3)));
+I('spikeshield','Spiked Shield','🌵','shield',2,u=>[EVEN],u=>`Block ■, Thorns ${up(u,2,4)}`,(c,v,u)=>{c.block(v[0]);c.st('self','thorns',up(u,2,4))});
+I('cloak','Shadow Cloak','🧥','shield',2,u=>[up(u,EQ(6),MN(5))],()=>'Dodge 1 (Dodge the next attack)',c=>c.st('self','dodge',1));
+I('amulet','Sacred Charm','📿','shield',2,u=>[CD(8)],u=>`Countdown complete: heal ${up(u,7,11)}`,(c,v,u)=>c.heal(up(u,7,11)));
+I('mirrorshield','Mirror Shield','🪞','shield',3,u=>[A,SAME],u=>`matching values 2  → Block ■×2${up(u,'','+2')}, Thorns ■`,(c,v,u)=>{c.block(v[0]*2+up(u,0,2));c.st('self','thorns',v[0])});
+// ✨ Spell
+I('fireball','Fireball','☄️','spell',2,u=>[MN(4)],u=>`Damage ■${up(u,'','+2')}, Burn ${up(u,1,2)}`,(c,v,u)=>{c.dmg(v[0]+up(u,0,2));c.st('foe','burn',up(u,1,2))});
+I('icelance','Ice Lance','❄️','spell',2,u=>[ODD],u=>`Damage ■${up(u,'','+2')}, Freeze 1`,(c,v,u)=>{c.dmg(v[0]+up(u,0,2));c.st('foe','freeze',1)});
+I('lightning','Lightning','🌩️','spell',3,u=>[up(u,EQ(5),MN(5))],()=>'Damage 10, Shock 1',c=>{c.dmg(10);c.st('foe','shock',1)});
+I('poisoncloud','Poison Cloud','☁️','spell',2,u=>[MX(3)],u=>`Poison ■${up(u,'','+2')}`,(c,v,u)=>c.st('foe','poison',v[0]+up(u,0,2)));
+I('heal','Healing Light','💚','spell',1,u=>[A],u=>up(u,'Heal ⌈■÷2⌉+1','Heal ■+1'),(c,v,u)=>c.heal(up(u,Math.ceil(v[0]/2),v[0])+1));
+I('arcane','Arcane Burst','✨','spell',3,u=>[A,A],u=>`Damage ■+■${up(u,'','+3')}`,(c,v,u)=>c.dmg(v[0]+v[1]+up(u,0,3)));
+I('scales','Scales of Fate','⚖️','spell',2,u=>[A],u=>`Damage ${up(u,7,9)}−■`,(c,v,u)=>c.dmg(up(u,7,9)-v[0]));
+I('meteor','Meteor','🌠','spell',3,u=>[CD(up(u,20,15))],()=>'Countdown complete: deal 25, Burn 2',c=>{c.dmg(25);c.st('foe','burn',2)});
+I('curse','Weakening Curse','🕯️','spell',2,u=>[MX(3)],u=>`Weaken 1${up(u,'',', Damage ■')}`,(c,v,u)=>{c.st('foe','weak',1);if(u)c.dmg(v[0])});
+I('rage','Rage','💢','spell',3,u=>[EVEN],u=>`Strength +1${up(u,'',', Block ■')}`,(c,v,u)=>{c.st('self','str',1);if(u)c.block(v[0])});
+I('drain','Life Drain','🩸','spell',3,u=>[up(u,EQ(3),RG(3,4))],()=>'Damage 5, Heal 5',c=>{c.dmg(5);c.heal(5)});
+I('frostarmor','Frost Armor','🧊','spell',2,u=>[MX(4)],u=>`Block ■+${up(u,2,3)}${up(u,'',', Freeze 1')}`,(c,v,u)=>{c.block(v[0]+up(u,2,3));if(u)c.st('foe','freeze',1)});
+// 🔧 Tool (Dice 변형)
+I('plus','Hammer Tap','➕','utility',1,u=>[MX(5)],()=>'die value +1',(c,v)=>c.dice([v[0]+1]),{uses:u=>up(u,1,2)});
+I('minus','Chisel','➖','utility',1,u=>[MN(2)],()=>'die value −1',(c,v)=>c.dice([v[0]-1]),{uses:u=>up(u,1,2)});
+I('flip','Flipper','🔄','utility',1,u=>[A],()=>'Flip die (7−■)',(c,v)=>c.dice([7-v[0]]),{uses:u=>up(u,1,2)});
+I('split','Splitter','✂️','utility',2,u=>[MN(2)],()=>'Split this die into 2 smaller dice',(c,v)=>c.dice([Math.ceil(v[0]/2),Math.floor(v[0]/2)]),{uses:u=>up(u,1,2)});
+I('combine','Combiner','⚗️','utility',2,u=>[A,A],()=>'Merge two dice (MAX 6)',(c,v)=>c.dice([Math.min(6,v[0]+v[1])]),{uses:u=>up(u,1,2)});
+I('reroll','Dice Cup','🥤','utility',1,u=>[A],()=>'Reroll this die',c=>c.dice([d6()]),{uses:u=>up(u,2,3)});
+I('clone','Clone Mirror','🪩','utility',3,u=>[MX(up(u,3,4))],()=>'Matching dice 2 copies',(c,v)=>c.dice([v[0],v[0]]),{uses:()=>2,perCombat:true});
+I('coin','Lucky Coin','🪙','utility',2,u=>[A],u=>`50%: 6 / 50%: ${up(u,1,3)}`,(c,v,u)=>c.dice([rng()<.5?6:up(u,1,3)]));
+I('pot','Golden Pot','🏺','utility',2,u=>[EQ(1)],u=>`Gold +${up(u,3,5)}`,(c,v,u)=>c.gold(up(u,3,5)),{uses:()=>2});
+I('hourglass','Reverse Hourglass','⏳','utility',3,u=>[CD(up(u,6,4))],()=>'On countdown completion, create a die 6 Create',c=>c.dice([6]));
+I('whetstone','Whetstone','💎','utility',2,u=>[MX(4)],()=>'die value +2',(c,v)=>c.dice([v[0]+2]),{uses:u=>up(u,1,2)});
+I('twins','Twin Charm','♊','utility',2,u=>[up(u,EQ(1),MX(2))],()=>'Random dice 2 dice created',c=>c.dice([d6(),d6()]));
+I('doubler','Double Lens','🔍','utility',3,u=>[MX(3)],()=>'die value ×2',(c,v)=>c.dice([v[0]*2]),{uses:u=>up(u,1,2)});
+// 👾 Monster 전용
+const M={mon:1};
+I('bite','Bite','🦷','weapon',0,u=>[A],u=>`Damage ■${up(u,'','+1')}`,(c,v,u)=>c.dmg(v[0]+up(u,0,1)),M);
+I('claw','Claw','🐾','weapon',0,u=>[MX(3)],()=>'Damage ■+1',(c,v)=>c.dmg(v[0]+1),{mon:1,uses:()=>2});
+I('goo','Slime Coat','🫧','shield',0,u=>[MX(3)],()=>'Block ■+2',(c,v)=>c.block(v[0]+2),M);
+I('venom','Venom Fang','🐍','weapon',0,u=>[ODD],u=>`Damage ■, Poison ${up(u,2,3)}`,(c,v,u)=>{c.dmg(v[0]);c.st('foe','poison',up(u,2,3))},M);
+I('spore','Spore','🍄','spell',0,u=>[MX(4)],()=>'Poison ⌈■÷2⌉',(c,v)=>c.st('foe','poison',Math.ceil(v[0]/2)),M);
+I('howl','Howl','🐺','spell',0,u=>[EVEN],()=>'Strength +1',c=>c.st('self','str',1),M);
+I('frosttouch','Frost Touch','🥶','spell',0,u=>[MX(3)],()=>'Damage ■, Freeze 1',(c,v)=>{c.dmg(v[0]);c.st('foe','freeze',1)},M);
+I('firebreath','Fire Breath','🐲','spell',0,u=>[MN(4)],u=>`Damage ■${up(u,'','+2')}, Burn 2`,(c,v,u)=>{c.dmg(v[0]+up(u,0,2));c.st('foe','burn',2)},M);
+I('icebreath','Ice Breath','🌬️','spell',0,u=>[MN(4)],()=>'Damage ■−1, Freeze 2',(c,v)=>{c.dmg(v[0]-1);c.st('foe','freeze',2)},M);
+I('zap','Electric Tentacle','🪼','spell',0,u=>[A],()=>'Damage ⌈■÷2⌉, Shock 1',(c,v)=>{c.dmg(Math.ceil(v[0]/2));c.st('foe','shock',1)},M);
+I('stoneskin','Stone Skin','🪨','shield',0,u=>[A],u=>`Block ■+${up(u,2,4)}`,(c,v,u)=>c.block(v[0]+up(u,2,4)),M);
+I('jackpot','Jackpot Punch','🎰','weapon',0,u=>[CD(up(u,10,8))],u=>`Countdown complete: deal ${up(u,12,15)}`,(c,v,u)=>c.dmg(up(u,12,15)),M);
+I('roulette','Roulette Spin','🎡','weapon',0,u=>[CD(12)],()=>'Countdown complete: deal 18',c=>c.dmg(18),M);
+I('coinspit','Coin Spit','💰','weapon',0,u=>[A],()=>'Damage ■, Gold 2 Steal',(c,v)=>{c.dmg(v[0]);c.gold(2)},M);
+I('fatehand','Fate Touch','🌟','weapon',0,u=>[A,SAME],()=>'matching values 2  → Damage ■×3',(c,v)=>c.dmg(v[0]*3),M);
+I('hex','Unlucky Hex','🐈‍⬛','spell',0,u=>[MX(2)],()=>'Freeze 1, Burn 1',c=>{c.st('foe','freeze',1);c.st('foe','burn',1)},M);
+
+function usesMax(c){const d=IT[c.id];return d.uses?d.uses(c.u):1}
+
+// ---------- STATUS EFFECTS ----------
+const ST={
+  burn:{i:'🔥',n:'Burn',c:'#ff9a3c',d:'Dice rolled next turn N dice ignite. Using a burning die costs 2 is lost. (To the enemy: Announced dice N dice burn,  damage each time it is used 2)'},
+  freeze:{i:'❄️',n:'Freeze',c:'#8fd8ff',d:'Your highest dice next turn N dice 1becomes. (To the enemy: the highest announced die immediately becomes 1  — Invalid requirements cancel the action)'},
+  shock:{i:'⚡',n:'Shock',c:'#ffe65a',d:'Random equipment next turn N items are sealed. (To the enemy: Announced actions N actions immediately canceled)'},
+  poison:{i:'🧪',n:'Poison',c:'#8be36b',d:'At turn start, take poison damage(ignores block), then 1 decreases.'},
+  weak:{i:'💧',n:'Weaken',c:'#9aa7ff',d:'Your attack damage is halved during your next turn.'},
+  str:{i:'💪',n:'Strength',c:'#ff7b7b',d:'All attacks gain damage until combat ends +N.'},
+  thorns:{i:'🌵',n:'Thorns',c:'#b5e36b',d:'Until the start of your next turn, deal damage to an attacker whenever hit N Damage.'},
+  dodge:{i:'💨',n:'Dodge',c:'#bff',d:'Next attack 1 incoming attack is completely avoided.'},
+};
+
+// ---------- 적 데이터 ----------
+const EN={
+  slime:{n:'Jelly Slime',i:'🟢',hp:16,d:2,it:[['goo'],['bite']]},
+  rat:{n:'Sewer Rat',i:'🐀',hp:13,d:2,it:[['claw']]},
+  bat:{n:'Vampire Bat',i:'🦇',hp:14,d:2,it:[['bite'],['heal']]},
+  skel:{n:'Skeleton Soldier',i:'💀',hp:18,d:2,it:[['sword'],['woodshield']]},
+  clown:{n:'Goblin Jester',i:'🤡',hp:30,d:3,it:[['axe'],['dagger'],['buckler']]},
+  dealer:{n:'Goblin Dealer',i:'🃏',hp:44,d:3,it:[['jackpot'],['sword'],['buckler']],t:'Dice instead of cards, How interesting!',enr:{str:1,msg:'Dealer: "Shall we raise the stakes!" (Strength +1)'}},
+  gambler:{n:'Goblin Gambler',i:'👺',hp:28,d:2,it:[['axe'],['luckblade']]},
+  spider:{n:'Cave Spider',i:'🕷️',hp:25,d:2,it:[['venom'],['bite']]},
+  shroom:{n:'Spore Sprite',i:'🍄',hp:30,d:3,it:[['spore'],['heal'],['bite']]},
+  cactus:{n:'Thorn Vine',i:'🌵',hp:32,d:2,it:[['spikeshield'],['whip']]},
+  ogre:{n:'Ogre Gatekeeper',i:'👹',hp:50,d:3,it:[['greatsword'],['tower'],['bite',1]]},
+  slot:{n:'Slot Machine Golem',i:'🎰',hp:85,d:3,it:[['jackpot',1],['twin'],['coinspit'],['steelshield']],t:'Jackpot! Jackpot! Jackpot!',enr:{str:1,msg:'Slot Machine: "Enter the bonus round!" (Strength +1)'}},
+  wolf:{n:'Hungry Wolf',i:'🐺',hp:40,d:3,it:[['howl'],['claw'],['bite']]},
+  ghost:{n:'Stage Ghost',i:'👻',hp:36,d:3,it:[['cloak'],['frosttouch'],['bite']]},
+  snake:{n:'Golden Viper',i:'🐍',hp:38,d:3,it:[['venom',1],['turtle'],['bite']]},
+  pirate:{n:'Pirate Wraith',i:'🏴‍☠️',hp:45,d:3,it:[['spear'],['buckler'],['sword']]},
+  vamp:{n:'Vampire Count',i:'🧛',hp:70,d:3,it:[['scythe'],['icelance'],['steelshield']]},
+  wheel:{n:'Roulette Wraith',i:'🎡',hp:105,d:4,it:[['roulette'],['fireball'],['icelance'],['stoneskin']],t:'Spin, Spin, Wheel of fortune!',enr:{str:1,msg:'Wheel: "Double the spin speed!" (Strength +1)'}},
+  fire:{n:'Fire Elemental',i:'🔥',hp:52,d:3,it:[['firebreath'],['flamesword'],['bite']]},
+  ice:{n:'Ice Elemental',i:'🧊',hp:56,d:3,it:[['icebreath'],['tower'],['bite']]},
+  boar:{n:'Berserker Boar',i:'🐗',hp:60,d:3,it:[['greatsword'],['rage'],['bite',1]]},
+  jelly:{n:'Electric Jellyfish',i:'🪼',hp:50,d:3,it:[['lightning'],['zap'],['goo']]},
+  mino:{n:'Minotaur',i:'🐂',hp:92,d:4,it:[['ram'],['greatsword',1],['tower']]},
+  twin:{n:'Twin Dice Demons',i:'🎲',hp:145,d:4,it:[['twin'],['hammer'],['spore'],['steelshield',1]],t:'Two of us means double the trouble!',enr:{str:1,msg:'Twin Demons: "Now for the real double chance!" (Strength +1)'}},
+  knight:{n:'Spectral Knight',i:'🏇',hp:72,d:3,it:[['greatsword'],['tower',1],['sword',1]]},
+  mimic:{n:'Mimic',i:'🎁',hp:66,d:3,it:[['coinspit'],['bite',1],['stoneskin']]},
+  witch:{n:'Audience Witch',i:'🧙‍♀️',hp:64,d:3,it:[['curse'],['fireball',1],['poisoncloud']]},
+  gargoyle:{n:'Gargoyle',i:'🗿',hp:76,d:3,it:[['stoneskin',1],['claw'],['bite',1]]},
+  dknight:{n:'Death Knight',i:'☠️',hp:112,d:4,it:[['shockmace'],['scythe',1],['tower',1]]},
+  reaper:{n:'Time Reaper',i:'⌛',hp:175,d:4,it:[['meteor'],['curse'],['scythe',1],['icelance',1]],t:'How much time remains in your show… how much time remains?',enr:{str:1,dice:1,msg:'Reaper: "Time speeds up…" (Strength +1, Dice +1)'}},
+  drake:{n:'Dragon Whelp',i:'🐉',hp:88,d:4,it:[['firebreath',1],['scales'],['claw'],['bite']]},
+  demon:{n:'Lesser Demon',i:'😈',hp:82,d:4,it:[['hex'],['rage'],['flamesword',1],['bite',1]]},
+  angel:{n:'Archangel Statue',i:'👼',hp:92,d:4,it:[['spear'],['heal',1],['steelshield',1],['sword',1]]},
+  kraken:{n:'Kraken',i:'🦑',hp:90,d:4,it:[['venom',1],['zap'],['goo'],['bite',1]]},
+  golem:{n:'Golden Golem',i:'🤖',hp:130,d:4,it:[['ram',1],['hammer',1],['stoneskin',1]]},
+  fortuna:{n:'Fortuna, Host of Fortune',i:'👸',hp:180,d:4,it:[['spear'],['fatehand'],['luckblade'],['meteor'],['steelshield',1]],t:'Now, The final stage. Let us see who fortune favors?',pas:'fickle',enr:{str:1,dice:1,msg:'Fortuna: "Hmph, Impressive. Now I will take this seriously!" (Strength +1, Dice +1)'}},
+};
+
+const FL=[
+  {n:'Backstage',s:'Before the curtain rises, Backstage',en:['slime','rat','bat','skel'],el:['clown'],boss:'dealer',l:'Welcome, Challenger! This is the backstage lounge. Let us warm up?'},
+  {n:'Game Hall',s:'A hall of chips and rolling dice',en:['gambler','spider','shroom','cactus'],el:['ogre'],boss:'slot',l:'Welcome to the sparkling game hall. The stake… your life!'},
+  {n:'Mirror Maze',s:'A corridor of endless reflections',en:['wolf','ghost','snake','pirate'],el:['vamp'],boss:'wheel',l:'Do not lose yourself in the mirrors. Heh.'},
+  {n:'Furnace Stage',s:'A stage of fire and ice',en:['fire','ice','boar','jelly'],el:['mino'],boss:'twin',l:'Fire and ice! The audience loves this stage.'},
+  {n:'Haunted Stands',s:'The audience rises from its seats',en:['knight','mimic','witch','gargoyle'],el:['dknight'],boss:'reaper',l:'Shh… This audience is rather demanding.'},
+  {n:'Fortuna Stage',s:'The final stage beneath golden lights',en:['drake','demon','angel','kraken'],el:['golem'],boss:'fortuna',l:'You made it this far! The star of the final stage is… me, of course♡'},
+];
+
+// ---------- Class ----------
+const CL={
+  warrior:{n:'Warrior',i:'🛡️',hp:60,c:'#ff6b7d',d:'Endure with a generous health pool, Reroll unwanted dice with your special ability.',sk:'Reroll',ski:'🔁',skd:'per turn 2 times(Lv5 from 3 times), Reroll one die.',it:['sword','greatsword','woodshield','plus']},
+  thief:{n:'Thief',i:'🗡️',hp:52,c:'#5fe0a0',d:'Quick fingers. Steal enemy equipment and turn it against them.',sk:'Pickpocket',ski:'🫳',skd:'Total used dice values 10 charges this ability. Steal an enemy item for the rest of this fight and, cancel its announced action.',it:['dagger','dagger','buckler','whip']},
+  mage:{n:'Mage',i:'🔮',hp:46,c:'#b77bff',d:'Chain spells from your spellbook for powerful magic.',sk:'Turn the Page',ski:'📖',skd:'Your spellbook reveals 2 (Lv5 from 3 ) spells are revealed. Consecutive spells build a chain bonus(Damage·Heal +1 per chain). per turn 1 times(Lv5 from 2 times) Turn the page to reveal different spells. Equipment slots 8 slots.',it:['fireball','icelance','heal','woodshield','flip']},
+  gambler:{n:'Gambler',i:'🎲',hp:46,c:'#f5c542',d:'The favorite jester of fortune. Roll one extra die and, always risk it all.',sk:'All In',ski:'🎰',skd:'per turn 1 times(Lv5 from 2 times), One die 50%  chance 6, 50%  chance 1changes it to. Passive: Dice +1 .',it:['luckblade','coin','executioner','buckler']},
+};
+
+const NODE={fight:{i:'⚔️',n:'Fight'},elite:{i:'💀',n:'Elite'},treasure:{i:'🎁',n:'TREASURE'},apple:{i:'🍎',n:'Healing Apple'},shop:{i:'🛒',n:'Shop'},forge:{i:'🔨',n:'Forge'},event:{i:'🎡',n:'Fortune Event'},boss:{i:'👑',n:'Boss room'}};
+
+// =====================================================================
+//  런 상태 · 이벤트
+// =====================================================================
+let S=null;            // Current run state (all JSON serializable). UIcan be replaced by tests.
+// Save 형식  바꾸면 SAVE_V  올리고 아래 MIGRATIONS에 '이전 버전 → 다음 버전' 변환  추가한다.
+// tests/fixtures/save-v*.json( and 거 버전의 실제 세이브)은 언제나 최신 버전으  불러와져야 한다.
+const SAVE_V=2;
+const LVXP=[0,0,2,5,9,14,20,27,35,44,54];
+const STEAL=10;
+const diceCount=()=>(S.level>=6?5:S.level>=3?4:3)+(S.cls==='gambler'?1:0);
+const maxEq=()=>S.cls==='mage'?8:6;
+const bookSize=()=>S.level>=5?3:2;
+function skillMax(){
+  if(S.cls==='warrior')return S.level>=5?3:2;
+  if(S.cls==='gambler'||S.cls==='mage')return S.level>=5?2:1;
+  return 0;
+}
+// 엔진은 결 and 만 이벤트  알리고, 소리·숫Now·파티클은 UI가 구Poison해서 처리한다.
+// 이벤트 이름은 여기에 등록된 것만 쓸 수 있다 (오타는 즉시 YES외 → 테스트에서 잡힌다)
+const EVENTS=Object.freeze(['attack','dodge','blocked','hurt','zero','thorns','lose','block','heal','status','fizzle','gold','dieAdded','fire','tick','chain','enrage']);
+const EVENT_SET=new Set(EVENTS);
+let emitFn=()=>{};
+function onEvent(f){emitFn=f||(()=>{})}
+function emit(type,p={}){if(!EVENT_SET.has(type))throw new Error('Unknown engine event: '+type);emitFn(type,p)}
+
+// =====================================================================
+//  런 Create · Dungeon 맵
+// =====================================================================
+function createRun(cls,now=0){
+  const c=CL[cls];
+  return{v:SAVE_V,cls,hp:c.hp,maxhp:c.hp,gold:15,level:1,xp:0,floor:1,eq:c.it.map(id=>({id,u:0})),bag:[],map:genMap(),pos:null,screen:'floor',ctx:null,combat:null,lastEn:null,
+    st:{kills:0,turns:0,dmg:0,maxHit:0,gold:0,items:0,start:now}};
+}
+function genMap(){
+  const rows=[];
+  for(let r=0;r<6;r++){
+    const n=r===0?R(2,3):R(2,4),row=[];
+    for(let i=0;i<n;i++){
+      let t;
+      if(r===0)t='fight';
+      else if(r===5)t=rng()<.6?'apple':'forge';
+      else t=wpick({fight:44,elite:r>=2?11:0,treasure:12,apple:6,shop:9,forge:6,event:12});
+      row.push({t,x:(i+1)/(n+1)+(rng()-.5)*.05,l:[],v:0});
+    }
+    rows.push(row);
+  }
+  rows.push([{t:'boss',x:.5,l:[],v:0}]);
+  if(!rows.slice(2,5).some(r=>r.some(n=>n.t==='shop')))pick(rows[R(2,4)]).t='shop';
+  if(!rows[5].some(n=>n.t==='apple'))rows[5][0].t='apple';
+  if(!rows.slice(2,5).some(r=>r.some(n=>n.t==='elite'))){const f=rows.slice(2,5).flat().filter(n=>n.t==='fight');if(f.length)pick(f).t='elite'}
+  for(let r=0;r<6;r++){
+    const A=rows[r],B=rows[r+1];
+    A.forEach((a,i)=>{
+      const j=B.length===1?0:Math.round(i*(B.length-1)/Math.max(1,A.length-1));a.l.push(j);
+      if(B.length>1&&rng()<.4){const k=clamp(j+(rng()<.5?-1:1),0,B.length-1);if(!a.l.includes(k))a.l.push(k)}
+    });
+    B.forEach((b,j)=>{if(!A.some(a=>a.l.includes(j))){let bi=0,bd=9;A.forEach((a,i)=>{const d=Math.abs(a.x-b.x);if(d<bd){bd=d;bi=i}});A[bi].l.push(j)}});
+    A.forEach(a=>a.l.sort((x,y)=>x-y));
+  }
+  return rows;
+}
+function availNodes(){
+  if(!S.pos)return S.map[0].map((n,i)=>[0,i]);
+  if(S.pos.r>=S.map.length-1)return[];
+  return S.map[S.pos.r][S.pos.i].l.map(j=>[S.pos.r+1,j]);
+}
+// 갈 수 있는 노드면 방문 처리하고 노드  돌려준다
+function visitNode(r,i){
+  if(!availNodes().some(([a,b])=>a===r&&b===i))return null;
+  S.pos={r,i};const n=S.map[r][i];n.v=1;return n;
+}
+function pickEnemy(kind){
+  const fl=FL[S.floor-1];
+  if(kind==='boss')return fl.boss;
+  if(kind==='elite')return pick(fl.el);
+  const l=fl.en.filter(k=>k!==S.lastEn);return pick(l.length?l:fl.en);
+}
+// 방  마친 뒤: Boss방 then 다음 F, 아니면 맵으 
+function advanceNode(){
+  S.ctx=null;
+  const n=S.pos&&S.map[S.pos.r][S.pos.i];
+  if(n&&n.t==='boss'){S.floor++;S.map=genMap();S.pos=null;S.screen='floor'}
+  else S.screen='map';
+}
+
+// =====================================================================
+//  Equipment Gain
+// =====================================================================
+function rollItems(n,minRar=1,epic=false){
+  const f=S.floor,w={1:Math.max(25,80-f*10),2:20+f*4,3:Math.max(3,f*4-2)};
+  if(minRar>=2)delete w[1];
+  const pool=Object.values(IT).filter(d=>!d.mon),out=[],used=new Set();
+  for(let k=0;k<n;k++){
+    const rar=(epic&&k===0)?3:+wpick(w);
+    let cand=pool.filter(d=>d.rar===rar&&!used.has(d.id));if(!cand.length)cand=pool.filter(d=>!used.has(d.id));
+    const d=pick(cand);used.add(d.id);out.push({id:d.id,u:rng()<.06+f*.035?1:0});
+  }
+  return out;
+}
+// EQUIP  slots이 남으면 EQUIP, 아니면 BAG. 들어간 곳('eq'|'bag')  돌려준다
+function gainItem(it){
+  S.st.items++;
+  if(S.eq.length<maxEq()){S.eq.push(it);return 'eq'}
+  S.bag.push(it);return 'bag';
+}
+
+// =====================================================================
+//  Fight: Fight원 · Effect
+// =====================================================================
+function mkCard(id,u){const d=IT[id],cd=d.slots(u).find(s=>s.t==='cd');return{id,u,uses:usesMax({id,u}),placed:[],cd:cd?cd.n:0,intent:null,done:0,dn:0,off:0,stolen:0,temp:0,sp:0}}
+function F(side){
+  const C=S.combat;
+  return side==='p'
+    ?{get hp(){return S.hp},set hp(v){S.hp=v},get maxhp(){return S.maxhp},get block(){return C.pb},set block(v){C.pb=v},st:C.pst}
+    :{get hp(){return C.E.hp},set hp(v){C.E.hp=v},get maxhp(){return C.E.maxhp},get block(){return C.E.block},set block(v){C.E.block=v},st:C.E.st};
+}
+function makeCtx(side,card){
+  const C=S.combat,foe=side==='p'?'e':'p',def=IT[card.id];
+  const bonus=(side==='p'&&S.cls==='mage'&&def.type==='spell')?C.chain:0;
+  return{
+    dmg:(n,o)=>dealDmg(side,foe,n+bonus,o||{}),
+    block:n=>gainBlock(side,n),
+    heal:n=>healSide(side,n+bonus),
+    st:(who,k,n)=>addStatus(who==='foe'?foe:side,k,n),
+    gold:n=>{
+      if(side==='p'){S.gold+=n;S.st.gold+=n;emit('gold',{n})}
+      else{const l=Math.min(S.gold,n);S.gold-=l;if(l)emit('gold',{n:-l})}
+    },
+    dice:vals=>{if(side==='p')addDice(vals)},
+    myBlock:()=>F(side).block,
+  };
+}
+// 미리보기: Effect  적용하지 않고 기록만 한다 (적 Intent·Expected damage 표시용). 난수 Effect는 고정값으  본다.
+function preview(side,card,vals){
+  const o={dmg:0,block:0,heal:0,st:{},gold:0,dice:0,pierce:0};
+  const src=side==='p'?S.combat.pst:S.combat.E.st;
+  const c={dmg:(n,x)=>{let a=n+(src.str||0);if(src.weak)a=Math.floor(a/2);o.dmg+=Math.max(0,a);if(x&&x.pierce)o.pierce=1},
+    block:n=>o.block+=n,heal:n=>o.heal+=n,st:(w,k,n)=>o.st[k]=(o.st[k]||0)+n,gold:n=>o.gold+=n,dice:v=>o.dice+=v.length,myBlock:()=>F(side).block};
+  const r=rng;rng=()=>.99;try{IT[card.id].act(c,vals,card.u)}finally{rng=r}
+  return o;
+}
+function incoming(){
+  const E=S.combat.E;let t=0;
+  E.cards.forEach(c=>{if(!c.intent||c.done||c.stolen)return;const conds=IT[c.id].slots(c.u);
+    if(conds[0].t==='cd'){if(c.cd-c.intent[0].reduce((s,d)=>s+d.v,0)<=0)t+=preview('e',c,[0]).dmg}
+    else c.intent.slice(c.dn||0).forEach(g=>t+=preview('e',c,g.map(d=>d.v)).dmg)});
+  return t;
+}
+function dealDmg(src,dst,n,o){
+  const C=S.combat;if(!C||C.over)return 0;
+  const A=F(src),D=F(dst);
+  let a=n+(o.raw?0:(A.st.str||0));
+  if(A.st.weak&&!o.raw)a=Math.floor(a/2);
+  a=Math.max(0,a);
+  if(!o.raw)emit('attack',{src,dst});
+  if(D.st.dodge>0&&!o.raw){D.st.dodge--;emit('dodge',{side:dst});return 0}
+  let hp=a;
+  if(D.block>0&&!o.pierce){const b=Math.min(D.block,hp);D.block-=b;hp-=b;if(b>0)emit('blocked',{side:dst,n:b})}
+  if(hp>0){
+    D.hp=Math.max(0,D.hp-hp);emit('hurt',{side:dst,n:hp});
+    if(src==='p'){S.st.dmg+=hp;if(hp>S.st.maxHit)S.st.maxHit=hp}
+  }else if(a===0)emit('zero',{side:dst});
+  if(D.st.thorns>0&&!o.raw&&D.hp>0){emit('thorns',{side:src});dealDmg(dst,src,D.st.thorns,{raw:1})}
+  return hp;
+}
+function loseHp(side,n,cause){const D=F(side);D.hp=Math.max(0,D.hp-n);emit('lose',{side,n,cause})}
+function gainBlock(side,n){if(n<=0)return;F(side).block+=n;emit('block',{side,n})}
+function healSide(side,n){const D=F(side),h=Math.max(0,Math.min(n,D.maxhp-D.hp));D.hp+=h;emit('heal',{side,n:h})}
+function addStatus(side,k,n){
+  if(n<=0)return;
+  if(side==='e'&&(k==='freeze'||k==='burn'||k==='shock'))applyEnemyDice(k,n);
+  else{const st=F(side).st;st[k]=(st[k]||0)+n}
+  emit('status',{side,k,n});
+}
+// To the enemy 거는 Freeze/Burn/Shock은 이미 Announced dice에 즉시 적용
+function intentDice(){const o=[];S.combat.E.cards.forEach(c=>{if(c.intent&&!c.done&&!c.stolen)c.intent.forEach(g=>g.forEach(d=>o.push({c,d})))});return o}
+function applyEnemyDice(k,n){
+  const E=S.combat.E;
+  for(let t=0;t<n;t++){
+    if(k==='freeze'){const l=intentDice().filter(o=>o.d.v>1).sort((a,b)=>b.d.v-a.d.v);if(!l.length)break;const o=l[0];o.d.v=1;o.d.fr=1;revalidate(o.c)}
+    else if(k==='burn'){const l=intentDice().filter(o=>!o.d.burn);if(!l.length)break;pick(l).d.burn=1}
+    else{const l=E.cards.filter(c=>c.intent&&!c.done&&!c.stolen);if(!l.length)break;const c=pick(l);c.intent=null;c.off=1}
+  }
+}
+function revalidate(card){
+  const conds=IT[card.id].slots(card.u);if(conds[0].t==='cd')return;
+  const before=card.intent.length;card.intent=card.intent.filter(g=>groupFits(conds,g.map(d=>d.v)));
+  if(card.intent.length<before)emit('fizzle',{});
+  if(!card.intent.length)card.intent=null;
+}
+function perms(a){return a.length<=1?[a]:a.flatMap((x,i)=>perms([...a.slice(0,i),...a.slice(i+1)]).map(p=>[x,...p]))}
+function groupFits(conds,vals){const same=conds.some(c=>c.t==='same');return perms(vals).some(p=>p.every((v,i)=>condOk(conds[i],v))&&(!same||p.every(v=>v===p[0])))}
+function fillGroup(conds,rem){
+  const res=[],used=new Set(),same=conds.some(c=>c.t==='same');
+  const bt=i=>{if(i===conds.length)return true;
+    for(const d of rem){if(used.has(d)||!condOk(conds[i],d.v))continue;if(same&&res.length&&res[0].v!==d.v)continue;
+      used.add(d);res.push(d);if(bt(i+1))return true;used.delete(d);res.pop()}return false};
+  return bt(0)?res.slice():null;
+}
+const RESTRICT={eq:0,same:1,min:2,rg:2,max:3,odd:3,even:3,any:5,cd:9};
+// 적 AI: dice 굴려, Requirement이 까다 운 Equipment from Intent(인텐트) 슬롯  채운다
+function planIntents(){
+  const C=S.combat,E=C.E;
+  E.cards.forEach(c=>{c.intent=null;c.done=0;c.dn=0;c.off=0});
+  const vals=[];for(let i=0;i<E.dice;i++)vals.push(d6());
+  if(E.pas==='fickle')vals[R(0,vals.length-1)]=6;
+  const pool=vals.map(v=>({id:'e'+(C.nid++),v,burn:0,fr:0}));
+  C.eroll=pool.map(d=>({id:d.id,v:d.v}));
+  let rem=[...pool].sort((a,b)=>b.v-a.v);
+  const act=E.cards.filter(c=>!c.stolen).sort((a,b)=>Math.min(...IT[a.id].slots(a.u).map(s=>RESTRICT[s.t]))-Math.min(...IT[b.id].slots(b.u).map(s=>RESTRICT[s.t])));
+  for(const c of act){
+    const conds=IT[c.id].slots(c.u);if(conds[0].t==='cd')continue;
+    for(let u=usesMax(c);u>0;u--){const g=fillGroup(conds,rem);if(!g)break;rem=rem.filter(d=>!g.includes(d));(c.intent=c.intent||[]).push(g)}
+  }
+  for(const c of act){
+    const conds=IT[c.id].slots(c.u);if(conds[0].t!=='cd'||!rem.length)continue;
+    const g=[];let need=c.cd;rem.sort((a,b)=>a.v-b.v);
+    while(rem.length&&need>0){const d=rem.pop();g.push(d);need-=d.v}
+    c.intent=[g];
+  }
+  E.idle=rem.map(d=>d.id);
+}
+
+// =====================================================================
+//  Fight: 플레이어 Dice x치
+// =====================================================================
+function visibleCard(ci){const C=S.combat,c=C.cards[ci];return !c.sp||C.hand.includes(ci)}
+function cardActive(ci){const c=S.combat.cards[ci];return !!c&&c.uses>0&&!c.off&&visibleCard(ci)}
+// die value v가 들어갈 슬롯  times호 (불가하면 -1). si  주면 그 슬롯  우선한다
+function canPlace(ci,v,si){
+  const c=S.combat.cards[ci];if(!cardActive(ci))return -1;
+  const conds=IT[c.id].slots(c.u);if(conds[0].t==='cd')return 0;
+  const pv=c.placed.filter(Boolean).map(p=>p.v),same=conds.some(x=>x.t==='same');
+  const ok=i=>!c.placed[i]&&condOk(conds[i],v)&&(!same||pv.every(p=>p===v));
+  if(si!=null&&si<conds.length&&ok(si))return si;
+  for(let i=0;i<conds.length;i++)if(ok(i))return i;
+  return -1;
+}
+function addDice(vals){
+  const C=S.combat;
+  for(const v of vals){const d={id:C.nid++,v:clamp(v,1,6)};C.dice.push(d);emit('dieAdded',{die:d})}
+}
+// dice Equipment에 넣는다. 결 and : {ok, slot, die}
+function putDie(ci,id,si){
+  const C=S.combat;if(!C||C.over||C.phase!=='player')return{ok:false};
+  const di=C.dice.findIndex(d=>d.id===id);if(di<0)return{ok:false};
+  const die=C.dice[di],c=C.cards[ci],s=canPlace(ci,die.v,si);
+  if(s<0)return{ok:false};
+  C.dice.splice(di,1);
+  if(S.cls==='thief')C.steal=Math.min(STEAL,C.steal+die.v);
+  if(die.burn){loseHp('p',2,'burn');if(outcome())return{ok:true,slot:s,die}}
+  const conds=IT[c.id].slots(c.u);
+  if(conds[0].t==='cd'){
+    c.cd-=die.v;
+    if(c.cd<=0){c.cd=conds[0].n;c.uses--;fire(ci,[die.v])}else emit('tick',{side:'p',ci});
+  }else{
+    c.placed[s]={v:die.v,id:die.id};
+    if(conds.every((_,i)=>c.placed[i])){const vals=c.placed.map(p=>p.v);c.placed=[];c.uses--;fire(ci,vals)}
+  }
+  return{ok:true,slot:s,die};
+}
+// 여러  slots Equipment에 넣어 둔 dice 되돌린다
+function takeBack(ci,si){
+  const C=S.combat,c=C&&C.cards[ci],p=c&&c.placed[si];if(!p)return null;
+  c.placed[si]=null;if(!c.placed.some(Boolean))c.placed=[];
+  const d={id:p.id,v:p.v};C.dice.push(d);emit('dieAdded',{die:d});return d;
+}
+function fire(ci,vals){
+  const C=S.combat,c=C.cards[ci],def=IT[c.id];
+  emit('fire',{side:'p',ci,spell:def.type==='spell'});
+  def.act(makeCtx('p',c),vals,c.u);
+  if(S.cls==='mage'&&def.type==='spell'){C.chain++;emit('chain',{n:C.chain})}
+}
+function drawBook(flip){
+  const C=S.combat,sp=C.cards.map((c,i)=>c.sp?i:-1).filter(i=>i>=0),k=bookSize();
+  if(sp.length<=k){C.hand=sp;return}
+  if(!flip){C.hand=shuffle(sp.slice()).slice(0,k);return}
+  C.hand.forEach(ci=>C.cards[ci].placed.forEach((p,si)=>p&&takeBack(ci,si)));
+  const rest=shuffle(sp.filter(i=>!C.hand.includes(i))),old=shuffle(C.hand.slice());
+  C.hand=rest.concat(old).slice(0,k);
+}
+// Fight 결 and  판정: 'lose' | 'win' | null
+function outcome(){
+  const C=S.combat;if(!C)return null;
+  if(S.hp<=0)return 'lose';
+  if(C.E.hp<=0)return 'win';
+  return null;
+}
+
+// =====================================================================
+//  Fight: Turn 흐름 (UI는 단계 사이에 Effects  끼워 넣는다)
+// =====================================================================
+function createCombat(kind,key,opt={}){
+  const d=EN[key],hp=opt.hp||d.hp;
+  const E={key,n:d.n,i:d.i,hp,maxhp:hp,block:0,st:{},dice:d.d,pas:d.pas||null,enr:0,idle:[],cards:d.it.map(([id,u])=>mkCard(id,u||0))};
+  const cards=S.eq.map(it=>{const c=mkCard(it.id,it.u);if(S.cls==='mage'&&IT[it.id].type==='spell')c.sp=1;return c});
+  S.combat={E,cards,kind,pb:0,pst:{},dice:[],nid:1,turn:1,phase:'start',chain:0,steal:0,sk:0,hand:[],eroll:[],eStart:0,over:0,hp0:S.hp,gold0:S.gold};
+  S.screen='combat';S.lastEn=key;
+  return S.combat;
+}
+// 플레이어 Turn 시작: Block·Thorns 초기화, Poison, Boss Rage, Equipment 초기화, 적 Intent, Dice 굴림(Freeze·Burn·Shock 반영)
+function beginPlayerTurn(){
+  const C=S.combat;
+  C.pb=0;C.pst.thorns=0;
+  if(C.pst.poison){loseHp('p',C.pst.poison,'poison');C.pst.poison--;if(outcome())return}
+  const E=C.E,ed=EN[E.key];
+  if(ed.enr&&!E.enr&&E.hp<=E.maxhp/2){E.enr=1;E.st.str=(E.st.str||0)+ed.enr.str;E.dice+=ed.enr.dice||0;emit('enrage',{msg:ed.enr.msg})}
+  C.cards.forEach(c=>{c.placed=[];c.off=0;if(!IT[c.id].perCombat)c.uses=usesMax(c)});
+  C.chain=0;C.sk=skillMax();
+  if(S.cls==='mage')drawBook(false);
+  planIntents();
+  const dice=[];for(let i=0;i<diceCount();i++)dice.push({id:C.nid++,v:d6()});
+  if(C.pst.freeze){[...dice].sort((a,b)=>b.v-a.v).slice(0,C.pst.freeze).forEach(d=>{d.v=1;d.fr=1});C.pst.freeze=0}
+  if(C.pst.burn){shuffle([...dice]).slice(0,C.pst.burn).forEach(d=>d.burn=1);C.pst.burn=0}
+  if(C.pst.shock){const vis=C.cards.map((c,i)=>i).filter(visibleCard);shuffle(vis).slice(0,C.pst.shock).forEach(i=>C.cards[i].off=1);C.pst.shock=0}
+  C.dice=dice;C.phase='player';C.eStart=0;
+  S.st.turns++;
+}
+function endPlayerTurn(){
+  const C=S.combat;
+  C.dice=[];C.cards.forEach(c=>c.placed=[]);
+  if(C.pst.weak)C.pst.weak--;
+  C.phase='enemy';C.eStart=0;
+}
+// 적 Turn 시작: 적 Block·Thorns 초기화, Poison
+function enemyTurnBegin(){
+  const C=S.combat,E=C.E;if(C.eStart)return;
+  E.block=0;E.st.thorns=0;
+  if(E.st.poison){loseHp('e',E.st.poison,'poison');E.st.poison--}
+  C.eStart=1;
+}
+// 다음에 실행할 적 행동 {ci, gi}. 행동 단위 진행도(dn)  Save해 새 고침 후에도 중복 실행하지 않는다
+function nextEnemyAction(){
+  const E=S.combat.E;
+  for(let ci=0;ci<E.cards.length;ci++){
+    const c=E.cards[ci];if(!c.intent||c.done||c.stolen)continue;
+    if((c.dn||0)>=c.intent.length){c.done=1;continue}
+    return{ci,gi:c.dn||0};
+  }
+  return null;
+}
+function enemyAct(){
+  const a=nextEnemyAction();if(!a)return null;
+  const c=S.combat.E.cards[a.ci],conds=IT[c.id].slots(c.u),g=c.intent[a.gi];
+  c.dn=a.gi+1;if(c.dn>=c.intent.length)c.done=1;
+  const burned=g.filter(d=>d.burn).length;
+  if(burned){loseHp('e',burned*2,'burn');if(outcome())return a}
+  if(conds[0].t==='cd'){
+    c.cd-=g.reduce((s,d)=>s+d.v,0);
+    if(c.cd<=0){c.cd=conds[0].n;IT[c.id].act(makeCtx('e',c),[0],c.u)}else emit('tick',{side:'e',ci:a.ci});
+  }else IT[c.id].act(makeCtx('e',c),g.map(d=>d.v),c.u);
+  return a;
+}
+function enemyTurnEnd(){
+  const C=S.combat;
+  if(C.E.st.weak)C.E.st.weak--;
+  C.turn++;
+}
+
+// ---------- Skill ----------
+function rerollDie(id){const C=S.combat,d=C.dice.find(x=>x.id===id);if(!d||C.sk<=0)return null;d.v=d6();d.fr=0;d.burn=0;C.sk--;return d}
+function allInDie(id){const C=S.combat,d=C.dice.find(x=>x.id===id);if(!d||C.sk<=0)return null;d.v=rng()<.5?6:1;d.fr=0;d.burn=0;C.sk--;return d}
+function flipPage(){
+  const C=S.combat;if(C.sk<=0||C.cards.filter(c=>c.sp).length<=bookSize())return false;
+  drawBook(true);C.sk--;return true;
+}
+// 결 and : {ok:true, card} | {ok:false, reason:'charge'|'none'}
+function stealCard(){
+  const C=S.combat;
+  if(C.steal<STEAL)return{ok:false,reason:'charge'};
+  const l=C.E.cards.filter(c=>!c.stolen);
+  if(l.length<2)return{ok:false,reason:'none'};
+  const c=pick(l);c.stolen=1;c.intent=null;
+  const nc=mkCard(c.id,c.u);nc.temp=1;C.cards.push(nc);C.steal=0;
+  return{ok:true,card:nc,ci:C.cards.length-1};
+}
+
+// ---------- Fight 종료 ----------
+function resolveVictory(){
+  const C=S.combat,E=C.E,kind=C.kind,f=S.floor;
+  const gold=Math.round((R(7,12)+f*4)*(kind==='elite'?1.8:kind==='boss'?3:1));
+  const xp=kind==='boss'?3:kind==='elite'?2:1,dice0=diceCount(),lv0=S.level;
+  S.gold+=gold;S.st.gold+=gold;S.st.kills++;S.xp+=xp;
+  while(S.level<10&&S.xp>=LVXP[S.level+1]){S.level++;S.maxhp+=5;S.hp=Math.min(S.maxhp,S.hp+10)}
+  if(kind==='boss')S.hp=Math.min(S.maxhp,S.hp+Math.round(S.maxhp*.4));
+  const last=kind==='boss'&&f>=FL.length;
+  S.ctx={kind,gold,xp,lvUp:S.level-lv0,dice0,enemy:{n:E.n,i:E.i},items:last?[]:rollItems(3,kind==='normal'?1:2,kind==='boss')};
+  S.combat=null;S.screen=last?'victory':'reward';
+  if(last)S.dead=1;
+  return{last,lv0};
+}
+function resolveDefeat(){S.combat=null;S.screen='gameover';S.dead=1}
+// 오류 복구용: Save된 Combat state 때문에 CONTINUE 실패할 때, matching 적 and  처음 from 다시 (HP·Gold는 Fight 시작 시점으 )
+function restartCombat(){
+  const C=S.combat;if(!C)return null;
+  if(num(C.hp0))S.hp=clamp(C.hp0,1,S.maxhp);
+  if(num(C.gold0))S.gold=Math.max(0,C.gold0); // Gold gained or lost in this fight is also restored (gold0Older saves without this value use)
+  return createCombat(C.kind,C.E.key,C.E.maxhp!==EN[C.E.key].hp?{hp:C.E.maxhp}:{});
+}
+// 오류 복구용: 보상 없이 Fight  건너뛴다 (Boss방 then 다음 F으 )
+function skipCombat(){if(!S.combat)return false;S.combat=null;advanceNode();return true}
+// 오류 복구용: Shop·TREASURE·Apple나무·Forge·이벤트·보상 Screen  그대  나가 맵으  (Boss 보상 then 다음 F으 )
+const ROOMS=['shop','treasure','apple','forge','event','reward'];
+function leaveRoom(){if(!ROOMS.includes(S.screen))return false;advanceNode();return true}
+
+// =====================================================================
+//  EQUIPMENT · UPGRADE (ref = {it, l:'eq'|'bag', i})
+// =====================================================================
+function allItems(){return[...S.eq.map((it,i)=>({it,l:'eq',i})),...S.bag.map((it,i)=>({it,l:'bag',i}))]}
+const upgradable=()=>allItems().filter(r=>!r.it.u);
+// ref가 지금도 matching Equipment  가리키는지 (목록  연 뒤 바뀌었  수 있음)
+const refOk=r=>!!r&&(r.l==='eq'?S.eq:S.bag)[r.i]===r.it;
+function upgradeItem(r){if(!refOk(r)||r.it.u)return false;r.it.u=1;return true}
+function unequip(i){if(S.eq.length<=1||!S.eq[i])return false;S.bag.push(...S.eq.splice(i,1));return true}
+function equip(i){if(S.eq.length>=maxEq()||!S.bag[i])return false;S.eq.push(...S.bag.splice(i,1));return true}
+
+// =====================================================================
+//  방: Shop · TREASURE · Apple나무 · Forge · Fortune Event
+//  (UI는 Screen만 그리고, 가능 여부 판단 and  상태 변경은 모두 여기서 한다)
+// =====================================================================
+const price=it=>Math.round(({1:30,2:52,3:85}[IT[it.id].rar]+S.floor*3)*(it.u?1.4:1));
+const sellPrice=it=>Math.floor(price(it)*.4);
+const upPrice=()=>40+S.floor*6;
+const APPLE_COST=20,APPLE_HEAL=20;
+function openShop(){S.ctx={stock:rollItems(4,1).map(it=>({...it,sold:0})),apples:2,upg:1};S.screen='shop'}
+const canBuy=k=>{const it=S.ctx.stock[k];return !!it&&!it.sold&&S.gold>=price(it)};
+// 결 and : {it, where} | null
+function buyItem(k){
+  if(!canBuy(k))return null;
+  const s=S.ctx.stock[k];S.gold-=price(s);s.sold=1;
+  const it={id:s.id,u:s.u};return{it,where:gainItem(it)};
+}
+const canBuyApple=()=>S.ctx.apples>0&&S.gold>=APPLE_COST&&S.hp<S.maxhp;
+function buyApple(){if(!canBuyApple())return false;S.gold-=APPLE_COST;S.ctx.apples--;S.hp=Math.min(S.maxhp,S.hp+APPLE_HEAL);return true}
+const canBuyUpgrade=()=>S.ctx.upg>0&&S.gold>=upPrice()&&upgradable().length>0;
+function buyUpgrade(r){if(!canBuyUpgrade())return false;const cost=upPrice();if(!upgradeItem(r))return false;S.gold-=cost;S.ctx.upg--;return true}
+// 마지막 Equipped items는 팔 수 없다
+const sellable=()=>allItems().filter(r=>r.l==='bag'||S.eq.length>1);
+function sellItem(r){
+  if(!refOk(r)||(r.l==='eq'&&S.eq.length<=1))return 0;
+  const g=sellPrice(r.it);S.gold+=g;(r.l==='eq'?S.eq:S.bag).splice(r.i,1);return g;
+}
+
+// TREASURE: 2F from 12%  chance Mimic. 결 and : {mimic:true, hp} | {mimic:false}
+function openTreasure(){
+  if(S.floor>=2&&rng()<.12)return{mimic:true,hp:16+S.floor*9};
+  S.ctx={opened:0,items:rollItems(2,S.floor>=3?2:1),gold:R(15,25)+S.floor*5};S.screen='treasure';
+  return{mimic:false};
+}
+function treasureOpen(){S.ctx.opened=1}
+function treasurePick(k){const x=S.ctx;if(!x.opened||!x.items[k])return null;const it=x.items[k];return{it,where:gainItem(it)}}
+function treasureGold(){const x=S.ctx;if(!x.opened)return 0;S.gold+=x.gold;S.st.gold+=x.gold;return x.gold}
+
+// Apple나무: Red Apple(Maximum health 35% Heal) or Golden Apple(Maximum health +6, HP 6 Heal)
+const appleHeal=()=>Math.round(S.maxhp*.35);
+function eatApple(kind){
+  if(kind==='gold'){S.maxhp+=6;S.hp=Math.min(S.maxhp,S.hp+6);return 6}
+  const h=Math.min(appleHeal(),S.maxhp-S.hp);S.hp+=h;return h;
+}
+// Forge: FREE UPGRADE 1 times or 휴식
+const FORGE_REST=12;
+function forgeUpgrade(r){if(S.ctx.done||!upgradeItem(r))return false;S.ctx.done=1;return true}
+function forgeRest(){const h=Math.min(FORGE_REST,S.maxhp-S.hp);S.hp+=h;return h}
+
+// Fortune Event
+const WHEEL=[
+  {k:'gold',t:'🪙 +40',c:'#b8871c'},{k:'heal',t:'❤️ +25',c:'#2f9e6e'},{k:'item',t:'🎁 Equipment',c:'#6a3fb0'},{k:'none',t:'Miss!',c:'#444'},
+  {k:'upgrade',t:'🔨 UPGRADE',c:'#2d5fa8'},{k:'hurt',t:'💔 -10',c:'#a8283f'},{k:'maxhp',t:'❤️ MAX+5',c:'#c0622a'},{k:'halve',t:'🪙 halved',c:'#5a2030'},
+];
+function openEvent(){S.ctx={type:pick(['roulette','duel','deal']),done:0};S.screen='event'}
+// the result 돌리는 순간 정해 Save한다 (Effects 중 새 고침해도 다시 뽑  수 없음)
+function spinWheel(){const x=S.ctx;if(x.res==null){x.res=R(0,WHEEL.length-1);x.applied=0}return x.res}
+// 결 and  적용. 반환: {k, it?, where?, fallback?} | null(이미 적용됨)
+function applyWheel(){
+  const x=S.ctx;if(x.res==null||x.applied)return null;
+  x.applied=1;const w=WHEEL[x.res],out={k:w.k};
+  switch(w.k){
+    case 'gold':S.gold+=40;S.st.gold+=40;break;
+    case 'heal':S.hp=Math.min(S.maxhp,S.hp+25);break;
+    case 'item':{const it=rollItems(1,2)[0];out.it=it;out.where=gainItem(it);break}
+    case 'upgrade':if(upgradable().length)x.pendUp=1;else{S.gold+=25;out.fallback=25}break;
+    case 'hurt':S.hp=Math.max(1,S.hp-10);break;
+    case 'maxhp':S.maxhp+=5;S.hp+=5;break;
+    case 'halve':S.gold=Math.floor(S.gold/2);break;
+  }
+  return out;
+}
+function wheelUpgrade(r){if(!S.ctx.pendUp||!upgradeItem(r))return false;S.ctx.pendUp=0;return true}
+// DICE DUEL: 2  합이 높은 쪽이 판돈  가져간다
+const DUEL_BETS=[20,50];
+function duel(bet){
+  const x=S.ctx;if(x.done||!DUEL_BETS.includes(bet)||S.gold<bet)return null;
+  const p=[d6(),d6()],h=[d6(),d6()],win=Math.sign(p[0]+p[1]-h[0]-h[1]);
+  S.gold+=win*bet;if(win>0)S.st.gold+=bet;
+  x.duel={p,h,win,bet};x.done=1;return x.duel;
+}
+// Fortune Bargain
+const DEAL_HP=12,DEAL_GOLD=40;
+const canDealBlood=()=>!S.ctx.done&&S.hp>DEAL_HP;
+const canDealCoin=()=>!S.ctx.done&&S.gold>=DEAL_GOLD&&upgradable().length>0;
+function dealBlood(){if(!canDealBlood())return null;S.hp-=DEAL_HP;const it=rollItems(1,2)[0];S.ctx.done=1;S.ctx.got=it;return{it,where:gainItem(it)}}
+function dealCoin(){if(!canDealCoin())return null;S.gold-=DEAL_GOLD;const r=pick(upgradable());r.it.u=1;S.ctx.done=1;S.ctx.upId=r.it.id;return r}
+
+// =====================================================================
+//  세이브 검증 · 복구
+// =====================================================================
+const num=v=>typeof v==='number'&&isFinite(v);
+const validItem=it=>!!(it&&IT[it.id]&&(it.u===0||it.u===1));
+const SCREENS=['floor','map','combat','reward','shop','treasure','apple','forge','event'];
+const CTX_OK={
+  reward:x=>x&&x.enemy&&Array.isArray(x.items)&&x.items.every(validItem),
+  shop:x=>x&&Array.isArray(x.stock)&&x.stock.every(validItem),
+  treasure:x=>x&&Array.isArray(x.items)&&x.items.every(validItem),
+  event:x=>x&&['roulette','duel','deal'].includes(x.type),
+  apple:x=>!!x,forge:x=>!!x,
+};
+function validSave(s){
+  if(!s||typeof s!=='object'||!CL[s.cls])return false;
+  if(!['hp','maxhp','gold','level','xp','floor'].every(k=>num(s[k])))return false;
+  if(s.floor<1||s.floor>FL.length||s.level<1||s.level>10||s.maxhp<1)return false;
+  if(!Array.isArray(s.eq)||!s.eq.length||!Array.isArray(s.bag)||![...s.eq,...s.bag].every(validItem))return false;
+  if(!Array.isArray(s.map)||!s.map.length||!s.map.every(r=>Array.isArray(r)&&r.length&&r.every(n=>n&&NODE[n.t]&&Array.isArray(n.l))))return false;
+  if(s.pos&&!(s.map[s.pos.r]&&s.map[s.pos.r][s.pos.i]))return false;
+  return SCREENS.includes(s.screen)&&!!s.st&&typeof s.st==='object';
+}
+function validCombat(C){
+  if(!C||!C.E||!EN[C.E.key]||!num(C.E.hp)||!Array.isArray(C.E.cards)||!Array.isArray(C.cards)||!Array.isArray(C.dice)||!C.pst)return false;
+  if(![...C.E.cards,...C.cards].every(c=>c&&IT[c.id]&&Array.isArray(c.placed||[])))return false;
+  if(!Array.isArray(C.hand)||!C.hand.every(i=>C.cards[i]))return false;
+  return C.dice.every(d=>d&&[1,2,3,4,5,6].includes(d.v));
+}
+const MIGRATIONS={
+  // v1 → v2: Fortune Bargain 결 and   안내 문구(msg) 대신 Equipment id(got / upId)  Save
+  1:s=>{
+    const x=s.ctx;
+    if(x&&x.type==='deal'&&typeof x.msg==='string'){
+      const d=Object.values(IT).filter(d=>!d.mon&&x.msg.includes(d.name)).sort((a,b)=>b.name.length-a.name.length)[0];
+      if(d){if(/upgrade/i.test(x.msg))x.upId=d.id;else x.got={id:d.id,u:x.msg.includes(d.name+'+')?1:0}}
+      delete x.msg;
+    }
+    return s;
+  },
+};
+// 이전 버전은 한 단계씩 최신으  변환한다. 변환 경 가 없거나 미래 버전 then 거부.
+function migrate(s){
+  if(!s||typeof s!=='object'||!Number.isInteger(s.v))return null;
+  while(s.v<SAVE_V){const f=MIGRATIONS[s.v];if(!f)return null;s=f(s);s.v++}
+  return s.v===SAVE_V?s:null;
+}
+// Save 문Now열 → {s: 복구된 상태 | null, note: 사용Now 안내 | null}
+function parseSave(raw){
+  let s;try{s=migrate(JSON.parse(raw))}catch(e){s=null}
+  if(!validSave(s))return{s:null,note:'The save is damaged or incompatible and cannot be loaded.'};
+  let note=null;
+  if(s.screen==='combat'&&!validCombat(s.combat)){s.combat=null;s.screen='map';note='Combat data was damaged; continuing from the map.'}
+  else if(CTX_OK[s.screen]&&!CTX_OK[s.screen](s.ctx)){s.ctx=null;s.screen='map';note='Room data was damaged; continuing from the map.'}
+  if(s.screen!=='combat')s.combat=null;
+  // Boss방 직후 복구된 경우: 맵에 갈 곳이 없으므  다음 F으 
+  if(s.screen==='map'&&s.pos&&s.pos.r>=s.map.length-1){s.floor=Math.min(FL.length,s.floor+1);s.map=genMap();s.pos=null;s.screen='floor'}
+  return{s,note};
+}
+
+Object.assign(CL.warrior,{d:'A sturdy fighter with a second chance at every roll.',skd:'Reroll one die twice per turn. Three rerolls from level 5.'});
+Object.assign(CL.thief,{d:'Turn the enemy equipment against its owner.',skd:'Spend 10 total dice points to steal an enemy item and cancel its intent.'});
+Object.assign(CL.mage,{d:'Chain spells for escalating damage and healing.',skd:'Open two spells per turn, three at level 5. Turn the page to reveal more. Eight equipment slots.'});
+Object.assign(CL.gambler,{d:'One extra die. An all-or-nothing special ability.',skd:'Once per turn, turn one die into either a 1 or a 6. Two uses from level 5.'});
+ST.burn.d='Your next N dice ignite. Using a burning die costs 2 HP. On enemies, their announced dice burn immediately.';
+ST.freeze.d='Your next N highest dice become 1. On enemies, the highest announced dice change immediately and may cancel invalid actions.';
+ST.shock.d='Seal N random equipment cards next turn. On enemies, cancel N announced actions immediately.';
+ST.poison.d='At the start of your turn, take N damage ignoring block. Poison then decreases by 1.';
+ST.weak.d='Attack damage is halved during the next turn.';
+ST.str.d='All attacks deal N extra damage for the rest of this fight.';
+ST.thorns.d='Deal N damage back to each attacker until your next turn.';
+ST.dodge.d='Completely avoid the next attack.';
+</script>
+<script>
+'use strict';
+/* =====================================================================
+   Dicey Pocket — Screen · Input · Effects
+   No external runtime assets · Canvas Dice · Web Audio Synthesized audio · LocalStorage Save
+   Game rules live in the engine block above, The interface renders engine events and sounds.
+   ===================================================================== */
+
+// ---------- 유틸 ----------
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+const KEY='dicey-pocket-save-v1',BESTKEY='dicey-pocket-best-v1',SETKEY='dicey-pocket-settings-v1';
+const SET=Object.assign({sound:true,speed:1},(()=>{try{return JSON.parse(localStorage.getItem(SETKEY))||{}}catch(e){return {}}})());
+function saveSet(){try{localStorage.setItem(SETKEY,JSON.stringify(SET))}catch(e){}}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms/SET.speed));
+
+// ---------- Web Audio Merge Effect음 ----------
+const SFX=(()=>{
+  let ac=null,out=null,nb=null,lastClack=0;
+  function ready(){
+    if(!SET.sound)return false;
+    if(!ac){
+      try{
+        ac=new (window.AudioContext||window.webkitAudioContext)();
+        out=ac.createDynamicsCompressor();
+        const g=ac.createGain();g.gain.value=.6;out.connect(g);g.connect(ac.destination);
+      }catch(e){ac=null;return false}
+    }
+    if(ac.state==='suspended')ac.resume();
+    return true;
+  }
+  function noise(){
+    if(!nb){nb=ac.createBuffer(1,ac.sampleRate,ac.sampleRate);const d=nb.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1}
+    const s=ac.createBufferSource();s.buffer=nb;return s;
+  }
+  function env(p,t,a,v,d){p.setValueAtTime(.0001,t);p.exponentialRampToValueAtTime(v,t+a);p.exponentialRampToValueAtTime(.0001,t+a+d)}
+  function tone(f,type,t,d,v,f2,a=.004){
+    const o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.setValueAtTime(f,t);
+    if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);
+    env(g.gain,t,a,v,d);o.connect(g);g.connect(out);o.start(t);o.stop(t+a+d+.05);
+  }
+  function nz(t,d,v,type,f,q,f2){
+    const s=noise(),fl=ac.createBiquadFilter(),g=ac.createGain();fl.type=type;fl.frequency.setValueAtTime(f,t);
+    if(f2)fl.frequency.exponentialRampToValueAtTime(f2,t+d);fl.Q.value=q;env(g.gain,t,.002,v,d);
+    s.connect(fl);fl.connect(g);g.connect(out);s.start(t,Math.random()*.8);s.stop(t+d+.05);
+  }
+  const T=()=>ac.currentTime;
+  return{
+    unlock(){ready()},
+    // Dice 달그락
+    clack(k=1){if(!ready())return;const t=T();if(t-lastClack<.035)return;lastClack=t;nz(t,.035,.4*k,'bandpass',2200+Math.random()*2200,6);tone(900+Math.random()*1400,'square',t,.02,.05*k)},
+    rattle(){if(!ready())return;const t=T();for(let i=0;i<18;i++){const tt=t+Math.pow(Math.random(),1.5)*.75;nz(tt,.03,.28,'bandpass',1800+Math.random()*3200,7);tone(800+Math.random()*1600,'triangle',tt,.02,.05)}nz(t,.6,.06,'lowpass',600,1)},
+    // 칼 휘두르기 (휙)
+    swing(){if(!ready())return;const t=T();nz(t,.2,.55,'bandpass',4800,1.4,600);nz(t+.02,.12,.2,'highpass',6000,1)},
+    hit(big){if(!ready())return;const t=T()+.06;tone(big?110:170,'sine',t,.2,.75,42);nz(t,.1,.5,'lowpass',big?900:1600,1);if(big)tone(60,'sine',t,.35,.5,30)},
+    // 방패 막기 (챙-)
+    clang(){if(!ready())return;const t=T();[1,2.76,5.4,8.93].forEach((m,i)=>tone(880*m,'sine',t,.55/(1+i*.6),.2/(1+i)));nz(t,.12,.4,'highpass',5000,1)},
+    block(){if(!ready())return;const t=T();[1,2.4,4.1].forEach((m,i)=>tone(1250*m,'triangle',t,.35/(1+i),.13/(1+i)));nz(t,.05,.2,'highpass',6000,1)},
+    heal(){if(!ready())return;const t=T();[523,659,784,1046].forEach((f,i)=>tone(f,'sine',t+i*.06,.28,.18))},
+    burn(){if(!ready())return;const t=T();nz(t,.5,.45,'lowpass',400,1,2800)},
+    freeze(){if(!ready())return;const t=T();for(let i=0;i<7;i++)tone(2000+Math.random()*2600,'sine',t+i*.04,.3,.06)},
+    shock(){if(!ready())return;const t=T();tone(90,'sawtooth',t,.25,.25,60);nz(t,.25,.3,'bandpass',3000,3)},
+    poison(){if(!ready())return;const t=T();for(let i=0;i<4;i++)tone(300+Math.random()*200,'sine',t+i*.07,.08,.2,700)},
+    place(){if(!ready())return;const t=T();tone(520,'triangle',t,.07,.2,780);nz(t,.02,.2,'bandpass',3000,4)},
+    select(){if(!ready())return;tone(660,'triangle',T(),.05,.12)},
+    error(){if(!ready())return;const t=T();tone(150,'square',t,.12,.1);tone(110,'square',t+.09,.15,.1)},
+    coin(){if(!ready())return;const t=T();tone(988,'square',t,.06,.09);tone(1319,'square',t+.07,.25,.09)},
+    spell(){if(!ready())return;const t=T();for(let i=0;i<6;i++)tone(700+i*170,'sine',t+i*.035,.2,.1);nz(t,.3,.12,'highpass',4000,1)},
+    steal(){if(!ready())return;const t=T();tone(400,'triangle',t,.08,.22,900);tone(900,'triangle',t+.08,.12,.22,1600);nz(t,.15,.15,'bandpass',5000,2)},
+    dodge(){if(!ready())return;nz(T(),.28,.35,'bandpass',1200,2,5000)},
+    tick(){if(!ready())return;const t=T();nz(t,.02,.35,'bandpass',3500,5);tone(1500,'square',t,.015,.05)},
+    page(){if(!ready())return;const t=T();nz(t,.18,.3,'bandpass',2500,.8,5000)},
+    fanfare(){if(!ready())return;const t=T();const seq=[[523,0,.12],[523,.13,.12],[523,.26,.12],[659,.39,.34],[587,.74,.12],[659,.87,.12],[784,1,.7]];
+      seq.forEach(([f,d,l])=>{tone(f,'square',t+d,l,.08);tone(f/2,'triangle',t+d,l,.14)});[523,659,784,1046].forEach(f=>tone(f,'sawtooth',t+1,.9,.035))},
+    levelup(){if(!ready())return;const t=T();[392,523,659,784,1046,1319].forEach((f,i)=>tone(f,'square',t+i*.07,.2,.07))},
+    defeat(){if(!ready())return;const t=T();[392,370,349,311,262].forEach((f,i)=>{tone(f,'triangle',t+i*.28,.4,.16);tone(f/2,'sawtooth',t+i*.28,.4,.04)})},
+    boss(){if(!ready())return;const t=T();for(let i=0;i<4;i++){tone(70,'sine',t+i*.22,.3,.8,40);nz(t+i*.22,.15,.3,'lowpass',300,1)}tone(220,'sawtooth',t+.9,.9,.08,110)},
+    open(){if(!ready())return;const t=T();tone(180,'sawtooth',t,.25,.06,260);[784,988,1175,1568].forEach((f,i)=>tone(f,'sine',t+.25+i*.07,.35,.12))},
+    buy(){if(!ready())return;const t=T();[1319,1568,2093].forEach((f,i)=>tone(f,'square',t+i*.06,.12,.07))},
+  };
+})();
+
+// ---------- 여신의 멘트 ----------
+const LINES={
+  start:['Now, The next opponent is… {e}!','A round of applause! {e} makes an entrance!','The dice have been cast. Put on a good show~','What does fortune hold today? {e}DUEL!'],
+  elite:['Special guest! powerful {e} takes the stage!','This opponent has some bite. {e}!'],
+  boss:['The main event tonight! {e}!!','Spotlight! Master of this floor, {e}!','One mistake here and… The show ends. {e} Appears!'],
+  six:['6! The host smiles ✨','Oh~ Luck is pouring down!','The stands are shaking! 6 was rolled!'],
+  ones:['1indeed… The audience boos.','Heh, Luck was not with you today?','The dice seem displeased~'],
+  big:['What a hit! The crowd goes wild!','Wow! The highlight of tonight!','This is what the audience came to see!'],
+  low:['Danger! Leaving the show so soon?','The audience holds its breath…'],
+  win:['Bravo! NEXT FLOOR!','Excellent, Challenger! Applause~','Fortune smiles upon you!'],
+};
+// 멘트·팁 matching Effects용 무작위는 엔진 난수(rng)  쓰지 않는다 → matching 시드면 게임 진행이 같다
+const uiPick=a=>a[Math.floor(Math.random()*a.length)];
+const line=(k,e)=>uiPick(LINES[k]).replace('{e}',e||'');
+
+// =====================================================================
+//  UI 상태 · Save소 (LocalStorage 실시간 동기화)
+// =====================================================================
+let VIEW='title';    // The screen shown without an active run (title | cls)
+const UI={busy:false,sel:null,mode:null,hideIntents:false,drag:null,flashQ:[]};
+let saveWarned=false,loadNote=null;
+function storageOK(){try{localStorage.setItem('__fortuna_probe','1');localStorage.removeItem('__fortuna_probe');return true}catch(e){return false}}
+function save(){
+  if(!S||S.dead)return;
+  try{localStorage.setItem(KEY,JSON.stringify(S))}
+  catch(e){console.warn('Save failed',e);if(!saveWarned){saveWarned=true;toast('⚠ Progress could not be saved. Private mode or insufficient storage may prevent saving.',6000)}}
+}
+function loadSave(){
+  loadNote=null;let raw;
+  try{raw=localStorage.getItem(KEY)}catch(e){return null}
+  if(!raw)return null;
+  const r=parseSave(raw);loadNote=r.note;return r.s;
+}
+function wipeSave(){try{localStorage.removeItem(KEY)}catch(e){}}
+// ---------- 플레이 기록 (Boss 밸런스 측정용, 브라우저에만 Save) ----------
+const LOGKEY='dicey-pocket-log-v1';
+function getLog(){try{const l=JSON.parse(localStorage.getItem(LOGKEY));return Array.isArray(l)?l:[]}catch(e){return []}}
+function logFight(won){
+  const C=S.combat;if(!C)return;
+  const l=getLog();
+  l.push({t:Date.now(),cls:S.cls,lv:S.level,floor:S.floor,en:C.E.key,kind:C.kind,turns:C.turn,hp0:C.hp0??S.hp,hp1:Math.max(0,S.hp),maxhp:S.maxhp,won:won?1:0});
+  try{localStorage.setItem(LOGKEY,JSON.stringify(l.slice(-400)))}catch(e){}
+}
+function getBest(){try{return JSON.parse(localStorage.getItem(BESTKEY))}catch(e){return null}}
+function recordBest(win){
+  const b=getBest()||{floor:0,wins:0};
+  if(win)b.wins=(b.wins||0)+1;
+  if(S.floor>=b.floor||win){b.floor=Math.max(b.floor||0,S.floor);b.cls=S.cls}
+  try{localStorage.setItem(BESTKEY,JSON.stringify(b))}catch(e){}
+}
+
+// =====================================================================
+//  3D Dice 렌더링 (쿼터니언  times전 + 원근 투영)
+// =====================================================================
+const Q={
+  mul(a,b){return[a[0]*b[0]-a[1]*b[1]-a[2]*b[2]-a[3]*b[3],a[0]*b[1]+a[1]*b[0]+a[2]*b[3]-a[3]*b[2],a[0]*b[2]-a[1]*b[3]+a[2]*b[0]+a[3]*b[1],a[0]*b[3]+a[1]*b[2]-a[2]*b[1]+a[3]*b[0]]},
+  axis(ax,ang){const l=Math.hypot(ax[0],ax[1],ax[2])||1,s=Math.sin(ang/2);return[Math.cos(ang/2),ax[0]/l*s,ax[1]/l*s,ax[2]/l*s]},
+  rot(q,v){const[w,x,y,z]=q;const tx=2*(y*v[2]-z*v[1]),ty=2*(z*v[0]-x*v[2]),tz=2*(x*v[1]-y*v[0]);
+    return[v[0]+w*tx+(y*tz-z*ty),v[1]+w*ty+(z*tx-x*tz),v[2]+w*tz+(x*ty-y*tx)]},
+  norm(q){const l=Math.hypot(q[0],q[1],q[2],q[3])||1;return q.map(c=>c/l)},
+  slerp(a,b,t){let d=a[0]*b[0]+a[1]*b[1]+a[2]*b[2]+a[3]*b[3];if(d<0){b=b.map(c=>-c);d=-d}
+    if(d>.9995)return Q.norm(a.map((c,i)=>c+(b[i]-c)*t));const th=Math.acos(d),s=Math.sin(th),k1=Math.sin((1-t)*th)/s,k2=Math.sin(t*th)/s;return a.map((c,i)=>c*k1+b[i]*k2)},
+  rand(){return Q.norm([Math.random()-.5,Math.random()-.5,Math.random()-.5,Math.random()-.5])},
+};
+const randAxis=()=>{const v=[Math.random()-.5,Math.random()-.5,Math.random()-.5];const l=Math.hypot(...v)||1;return v.map(x=>x/l)};
+function fromTo(u,v){const d=u[0]*v[0]+u[1]*v[1]+u[2]*v[2];if(d>.9999)return[1,0,0,0];if(d<-.9999)return Q.axis([0,1,0],Math.PI);
+  return Q.axis([u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]],Math.acos(d))}
+// 마주보는 면의 합 = 7
+const FACES=[
+  {n:[0,0,1],a:[1,0,0],b:[0,1,0],v:1},{n:[0,0,-1],a:[-1,0,0],b:[0,1,0],v:6},
+  {n:[1,0,0],a:[0,0,-1],b:[0,1,0],v:3},{n:[-1,0,0],a:[0,0,1],b:[0,1,0],v:4},
+  {n:[0,1,0],a:[1,0,0],b:[0,0,-1],v:5},{n:[0,-1,0],a:[1,0,0],b:[0,0,1],v:2},
+];
+const PIPS={1:[[0,0]],2:[[-.5,-.5],[.5,.5]],3:[[-.5,-.5],[0,0],[.5,.5]],4:[[-.5,-.5],[.5,-.5],[-.5,.5],[.5,.5]],5:[[-.5,-.5],[.5,-.5],[0,0],[-.5,.5],[.5,.5]],6:[[-.5,-.6],[.5,-.6],[-.5,0],[.5,0],[-.5,.6],[.5,.6]]};
+const TILT=Q.mul(Q.axis([1,0,0],-.42),Q.axis([0,1,0],-.36));
+function faceQ(v,tw=0){
+  const f=FACES.find(x=>x.v===v)||FACES[0];
+  const r1=fromTo(f.n,[0,0,1]),b1=Q.rot(r1,f.b);
+  const r2=Q.axis([0,0,1],Math.PI/2-Math.atan2(b1[1],b1[0])+tw);
+  return Q.norm(Q.mul(TILT,Q.mul(r2,r1)));
+}
+const DC={
+  p:{b:[247,240,220],p:'#2b1d3d',one:'#d62c4a',e:'#6d5a3a'},
+  e:{b:[214,58,84],p:'#fff4f4',one:'#fff4f4',e:'#4e0d1b'},
+  f:{b:[184,226,255],p:'#1c3b5a',one:'#1c3b5a',e:'#3a6a90'},
+};
+const rgb=(c,k)=>`rgb(${Math.min(255,c[0]*k)|0},${Math.min(255,c[1]*k)|0},${Math.min(255,c[2]*k)|0})`;
+const LIGHT=(()=>{const v=[-.45,-.6,.66],l=Math.hypot(...v);return v.map(x=>x/l)})();
+function drawCube(g,x,y,s,q,col){
+  const h=s*.36,P=5.5,C=DC[col]||DC.p;
+  const proj=p=>{const k=P/(P-p[2]);return[x+p[0]*h*k,y+p[1]*h*k]};
+  const fs=[];
+  for(const f of FACES){const n=Q.rot(q,f.n);if(n[2]>.02)fs.push({f,n})}
+  fs.sort((a,b)=>a.n[2]-b.n[2]);
+  g.lineJoin='round';
+  for(const{f,n}of fs){
+    const a=Q.rot(q,f.a),b=Q.rot(q,f.b);
+    const pt=(u,v)=>proj([n[0]+a[0]*u+b[0]*v,n[1]+a[1]*u+b[1]*v,n[2]+a[2]*u+b[2]*v]);
+    const lum=.52+.3*Math.max(0,n[0]*LIGHT[0]+n[1]*LIGHT[1]+n[2]*LIGHT[2])+.22*n[2];
+    g.beginPath();[[-1,-1],[1,-1],[1,1],[-1,1]].forEach(([u,v],i)=>{const p=pt(u,v);i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1])});g.closePath();
+    g.fillStyle=rgb(C.b,lum);g.fill();g.lineWidth=s*.08;g.strokeStyle=rgb(C.b,lum*.96);g.stroke();
+    const pr=f.v===1?.3:.19;g.fillStyle=f.v===1?C.one:C.p;
+    for(const[pu,pv]of PIPS[f.v]){g.beginPath();for(let k=0;k<12;k++){const t=k/12*Math.PI*2,p=pt(pu*1.05+Math.cos(t)*pr,pv*1.05+Math.sin(t)*pr);k?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1])}g.closePath();g.fill()}
+  }
+}
+function rrect(g,x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
+function drawFlat(g,x,y,s,v,col,rot=0){
+  const C=DC[col]||DC.p;g.save();g.translate(x,y);g.rotate(rot);
+  const h=s/2,gr=g.createLinearGradient(-h,-h,h,h);gr.addColorStop(0,rgb(C.b,1.08));gr.addColorStop(1,rgb(C.b,.74));
+  rrect(g,-h,-h,s,s,s*.2);g.fillStyle=gr;g.fill();g.lineWidth=Math.max(1,s*.045);g.strokeStyle=C.e;g.stroke();
+  g.fillStyle=v===1?C.one:C.p;
+  for(const[pu,pv]of PIPS[clamp(v,1,6)]){g.beginPath();g.arc(pu*s*.55,pv*s*.55,s*(v===1?.13:.09),0,Math.PI*2);g.fill()}
+  g.restore();
+}
+function drawFlame(g,x,y,s,t){for(let i=0;i<3;i++){const ox=(i-1)*s*.17,fl=Math.sin(t/90+i*2.1)*.18+1;g.fillStyle=i===1?'rgba(255,225,100,.95)':'rgba(255,110,40,.9)';g.beginPath();g.ellipse(x+ox,y-s*.06*fl,s*.08,s*.19*fl,0,0,Math.PI*2);g.fill()}}
+const _du={};
+function dieURL(v,col){const k=v+col;if(_du[k])return _du[k];const c=document.createElement('canvas');c.width=c.height=64;drawFlat(c.getContext('2d'),32,32,54,v,col);return _du[k]=c.toDataURL()}
+const dieImg=(d,col)=>`<img class="dimg" src="${dieURL(d.v,d.fr?'f':col)}" alt="${d.v}">${d.burn?'<b class="fl">🔥</b>':''}`;
+
+// =====================================================================
+//  Dice tray (2D 물리 + 3D  times전 Effects)
+// =====================================================================
+const Tray={cv:null,g:null,W:0,H:0,dpr:1,list:[],s:56,wait:[],frames:0,lastSig:'',
+  attach(cv){this.cv=cv;this.g=cv.getContext('2d');this.list=[];this.lastSig='';this.resize()},
+  detach(){this.cv=null;this.list=[];this.wait.splice(0).forEach(f=>f())},
+  resize(){
+    if(!this.cv)return;const r=this.cv.getBoundingClientRect();if(!r.width)return;
+    this.dpr=Math.min(2,window.devicePixelRatio||1);this.W=r.width;this.H=r.height;
+    this.cv.width=Math.round(r.width*this.dpr);this.cv.height=Math.round(r.height*this.dpr);
+    this.s=clamp(Math.min(r.height*.5,r.width/7.4),32,66);this.layout(true);
+  },
+  mk(d,col){return{id:d.id,v:d.v,col,burn:!!d.burn,fr:!!d.fr,x:this.W/2,y:this.H/2,vx:0,vy:0,q:[1,0,0,0],ax:[1,0,0],st:'rest',t:0,dur:0,rx:this.W/2,ry:this.H/2,a:1,sc:1,tw:(Math.random()-.5)*.3}},
+  get(id){return this.list.find(d=>d.id===id)},
+  layout(snap){
+    const L=this.list.filter(d=>d.st!=='fade');const n=L.length;if(!n)return;
+    const gap=n>1?Math.min(this.s*1.42,(this.W-this.s*1.1)/(n-1)):0,x0=this.W/2-gap*(n-1)/2;
+    L.forEach((d,i)=>{d.rx=x0+gap*i;d.ry=this.H/2;if(snap&&d.st!=='roll'){d.x=d.rx;d.y=d.ry}});
+  },
+  setRest(dice,col){this.list=dice.map(d=>{const o=this.mk(d,col);o.q=faceQ(d.v,o.tw);return o});this.layout(true)},
+  launch(o){const r=this.s/2;o.x=r+Math.random()*this.s;o.y=r+Math.random()*Math.max(1,this.H-2*r);o.vx=this.W*(1.6+Math.random()*.8);o.vy=(Math.random()-.5)*this.H*6;
+    o.q=Q.rand();o.ax=randAxis();o.st='roll';o.t=0;o.dur=.6+Math.random()*.35},
+  roll(dice,col){if(!this.cv)return Promise.resolve();this.list=dice.map(d=>{const o=this.mk(d,col);this.launch(o);return o});this.layout();SFX.rattle();return this.idle()},
+  idle(){return new Promise(res=>this.wait.push(res))},
+  screen(d){const r=this.cv.getBoundingClientRect();return{x:r.left+d.x,y:r.top+d.y}},
+  take(id){const d=this.get(id);if(!d||!this.cv)return null;const p=this.screen(d);this.list=this.list.filter(x=>x!==d);this.layout();return p},
+  add(d,col){if(!this.cv)return;const o=this.mk(d,col);o.q=faceQ(d.v,o.tw);o.st='pop';o.sc=0;this.list.push(o);this.layout();o.x=o.rx;o.y=o.ry},
+  reroll(id,v){const d=this.get(id);if(!d)return Promise.resolve();d.v=v;d.fr=false;d.burn=false;d.st='roll';d.t=0;d.dur=.45;d.vx=(Math.random()-.5)*300;d.vy=-(250+Math.random()*250);d.ax=randAxis();SFX.rattle();return this.idle()},
+  fadeAll(){this.list.forEach(d=>d.st='fade')},
+  hit(x,y){for(let i=this.list.length-1;i>=0;i--){const d=this.list[i];if(d.st==='rest'&&d.col==='p'&&Math.hypot(d.x-x,d.y-y)<this.s*.6)return d}return null},
+  step(dt){
+    if(!this.cv)return;
+    const r=this.s*.5,W=this.W,H=this.H;let busy=false;
+    for(const d of this.list){
+      if(d.st==='roll'){
+        busy=true;d.t+=dt;d.x+=d.vx*dt;d.y+=d.vy*dt;let b=0;
+        if(d.x<r){d.x=r;d.vx=Math.abs(d.vx)*.6;b=1}else if(d.x>W-r){d.x=W-r;d.vx=-Math.abs(d.vx)*.6;b=1}
+        if(d.y<r){d.y=r;d.vy=Math.abs(d.vy)*.6;b=1}else if(d.y>H-r){d.y=H-r;d.vy=-Math.abs(d.vy)*.6;b=1}
+        if(b){d.ax=randAxis();if(Math.hypot(d.vx,d.vy)>120)SFX.clack(.8)}
+        const k=Math.pow(.12,dt);d.vx*=k;d.vy*=k;
+        const w=Math.hypot(d.vx,d.vy)/(this.s*.35)+4*(1-d.t/d.dur);
+        d.q=Q.norm(Q.mul(Q.axis(d.ax,w*dt),d.q));
+        if(d.t>=d.dur){d.st='settle';d.t=0;d.q0=d.q;d.q1=faceQ(d.v,d.tw)}
+      }else if(d.st==='settle'){
+        busy=true;d.t+=dt;const k=Math.min(1,d.t/.24);d.q=Q.slerp(d.q0,d.q1,1-Math.pow(1-k,3));
+        d.x+=(d.rx-d.x)*Math.min(1,dt*8);d.y+=(d.ry-d.y)*Math.min(1,dt*8);
+        if(k>=1){d.st='rest';SFX.clack(.5)}
+      }else if(d.st==='fade'){d.a-=dt*3.5;d.sc+=dt*.5}
+      else{
+        d.x+=(d.rx-d.x)*Math.min(1,dt*12);d.y+=(d.ry-d.y)*Math.min(1,dt*12);
+        if(d.st==='pop'){d.t+=dt;const k=Math.min(1,d.t/.3);d.sc=1+2.7*Math.pow(k-1,3)+1.7*Math.pow(k-1,2);if(k>=1){d.st='rest';d.sc=1}}
+        if(d.st!=='drag'&&(Math.abs(d.x-d.rx)>2||Math.abs(d.y-d.ry)>2))busy=true;
+      }
+    }
+    // 굴러가는 Dice끼리 충돌
+    for(let i=0;i<this.list.length;i++)for(let j=i+1;j<this.list.length;j++){
+      const a=this.list[i],b=this.list[j];if(a.st!=='roll'||b.st!=='roll')continue;
+      const dx=b.x-a.x,dy=b.y-a.y,dist=Math.hypot(dx,dy)||1,min=this.s*.95;
+      if(dist<min){const nx=dx/dist,ny=dy/dist,push=(min-dist)/2;a.x-=nx*push;a.y-=ny*push;b.x+=nx*push;b.y+=ny*push;
+        const va=a.vx*nx+a.vy*ny,vb=b.vx*nx+b.vy*ny;if(va-vb>0){a.vx+=(vb-va)*nx*.9;a.vy+=(vb-va)*ny*.9;b.vx+=(va-vb)*nx*.9;b.vy+=(va-vb)*ny*.9;SFX.clack(.6)}}
+    }
+    this.list=this.list.filter(d=>!(d.st==='fade'&&d.a<=0));
+    if(!busy&&this.wait.length)this.wait.splice(0).forEach(f=>f());
+  },
+  draw(now){
+    if(!this.cv)return;const g=this.g,s=this.s;
+    // Keyboard 포커스가 Dice 버튼에 있으면 해당 Dice에 점선 고리 (포커스 이벤트 대신 현재 포커스  직접 읽음)
+    const ae=document.activeElement,kf=ae&&ae.dataset&&ae.dataset.did!=null?+ae.dataset.did:null;
+    // 모두 멈춰 있고 보이는 상태도 그대 면 다시 그리지 않는다 (모바일 x터리·CPU 절약).
+    // 움직이는 Dice, 불꽃·SELECT 고리 matching 반복 Effects, 표시 상태(value·단계·포커스·크기) 변화가 있  때만 그린다.
+    const moving=this.list.some(d=>d.st!=='rest'||Math.abs(d.x-d.rx)>.5||Math.abs(d.y-d.ry)>.5);
+    const pulsing=UI.sel!=null||!!UI.mode||this.list.some(d=>d.burn);
+    const sig=this.list.map(d=>d.id+':'+d.v+':'+d.st+':'+(d.fr?1:0)).join()+'|'+kf+'|'+UI.sel+'|'+UI.mode+'|'+this.cv.width+'x'+this.cv.height;
+    if(!moving&&!pulsing&&sig===this.lastSig)return;
+    this.lastSig=sig;this.frames++;
+    g.setTransform(this.dpr,0,0,this.dpr,0,0);g.clearRect(0,0,this.W,this.H);
+    for(const d of this.list){
+      if(d.st==='drag'){g.save();g.globalAlpha=.4;g.setLineDash([5,5]);g.strokeStyle='#fff';g.lineWidth=2;g.beginPath();g.arc(d.rx,d.ry,s*.45,0,Math.PI*2);g.stroke();g.restore();continue}
+      g.save();g.globalAlpha=Math.max(0,d.a);
+      g.fillStyle='rgba(0,0,0,.35)';g.beginPath();g.ellipse(d.x+s*.08,d.y+s*.38*d.sc,s*.42*d.sc,s*.13*d.sc,0,0,Math.PI*2);g.fill();
+      const sel=d.id===UI.sel,mode=UI.mode&&d.col==='p'&&d.st==='rest';
+      if(d.id===kf&&!sel){g.save();g.setLineDash([6,4]);g.strokeStyle='#7ff';g.lineWidth=3;g.beginPath();g.arc(d.x,d.y,s*.6,0,Math.PI*2);g.stroke();g.restore()}
+      if(sel||mode){g.save();g.shadowColor=mode?'#7ff':'#ffd54a';g.shadowBlur=18;g.strokeStyle=mode?'#7ff':'#ffd54a';g.lineWidth=3;g.beginPath();g.arc(d.x,d.y,s*.56+Math.sin(now/150)*2,0,Math.PI*2);g.stroke();g.restore()}
+      drawCube(g,d.x,d.y-(sel?4:0),s*d.sc,d.q,d.fr?'f':d.col);
+      if(d.burn)drawFlame(g,d.x,d.y-s*.42,s,now);
+      if(d.fr){g.font=`${s*.32}px sans-serif`;g.textAlign='center';g.fillText('❄️',d.x+s*.36,d.y-s*.3)}
+      g.restore();
+    }
+  },
+};
+
+// =====================================================================
+//  전체 Screen FX 캔버스 (날아가는 Dice·드래그 고스트·파티클)
+// =====================================================================
+const FX={cv:null,g:null,dpr:1,fl:[],pt:[],ghost:null,dirty:false,
+  init(){this.cv=$('#fx');this.g=this.cv.getContext('2d');this.resize()},
+  resize(){this.dpr=Math.min(2,window.devicePixelRatio||1);this.cv.width=innerWidth*this.dpr;this.cv.height=innerHeight*this.dpr;this.cv.style.width=innerWidth+'px';this.cv.style.height=innerHeight+'px'},
+  fly(v,col,a,b,dur=.38){return new Promise(res=>this.fl.push({v,col,a,b,t:0,dur,res,r0:(Math.random()-.5)*8}))},
+  burst(x,y,c,n=16){for(let i=0;i<n;i++){const an=Math.random()*Math.PI*2,sp=80+Math.random()*260;this.pt.push({x,y,vx:Math.cos(an)*sp,vy:Math.sin(an)*sp-90,l:.5+Math.random()*.45,c,s:2+Math.random()*4})}},
+  step(dt){
+    for(const f of this.fl){f.t+=dt;if(f.t>=f.dur&&!f.done){f.done=1;f.res()}}
+    this.fl=this.fl.filter(f=>!f.done);
+    for(const p of this.pt){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=520*dt;p.l-=dt}
+    this.pt=this.pt.filter(p=>p.l>0);
+  },
+  draw(now){
+    const g=this.g,active=this.fl.length||this.pt.length||this.ghost;
+    if(!active&&!this.dirty)return;
+    g.setTransform(this.dpr,0,0,this.dpr,0,0);g.clearRect(0,0,innerWidth,innerHeight);this.dirty=!!active;
+    for(const f of this.fl){const k=Math.min(1,f.t/f.dur),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+      drawFlat(g,f.a.x+(f.b.x-f.a.x)*e,f.a.y+(f.b.y-f.a.y)*e-Math.sin(Math.PI*k)*60,42-8*k,f.v,f.col,f.r0*(1-k))}
+    if(this.ghost){const h=this.ghost;g.save();g.shadowColor='#000a';g.shadowBlur=16;g.shadowOffsetY=10;drawFlat(g,h.x,h.y,56,h.v,h.col,Math.sin(now/120)*.12);g.restore()}
+    for(const p of this.pt){g.globalAlpha=Math.max(0,p.l*1.6);g.fillStyle=p.c;g.fillRect(p.x-p.s/2,p.y-p.s/2,p.s,p.s)}
+    g.globalAlpha=1;
+  },
+};
+function center(el){const r=el.getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height/2}}
+
+// 떠오르는 숫Now / 흔들림
+const _fq={};
+function floatAt(sel,text,color,cls=''){
+  const el=typeof sel==='string'?$(sel):sel;if(!el)return;
+  const r=el.getBoundingClientRect(),now=Date.now(),q=_fq[sel]||(_fq[sel]={t:0,k:0});
+  q.k=now-q.t<350?q.k+1:0;q.t=now;
+  const s=document.createElement('div');s.className='float '+cls;s.textContent=text;s.style.color=color;
+  s.style.left=(r.left+r.width/2+(Math.random()-.5)*30)+'px';s.style.top=(r.top+r.height*.4-q.k*26)+'px';
+  document.body.appendChild(s);setTimeout(()=>s.remove(),1150);
+}
+function bump(sel){const el=$(sel);if(!el)return;el.classList.remove('hit');void el.offsetWidth;el.classList.add('hit')}
+function shakeScreen(){const el=$('#screen');el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake')}
+function announce(t){const a=$('#ann');if(!a)return;a.textContent=t;a.classList.remove('show');void a.offsetWidth;a.classList.add('show')}
+function toast(t,ms=2400){const b=$('#toast'),d=document.createElement('div');d.textContent=t;b.appendChild(d);setTimeout(()=>d.remove(),ms)}
+
+// =====================================================================
+//  Fight Effects: 엔진 이벤트 → 소리·떠오르는 숫Now·파티클
+// =====================================================================
+const POR=s=>s==='e'?'#e-por':'#p-por';
+function fmtFx(o){const p=[];if(o.dmg)p.push('⚔️'+o.dmg+(o.pierce?'↯':''));if(o.block)p.push('🛡'+o.block);if(o.heal)p.push('💚'+o.heal);for(const k in o.st)p.push(ST[k].i+o.st[k]);if(o.gold)p.push('🪙'+o.gold);return p.join(' ')||'—'}
+function burstAt(sel,color,n){const el=$(sel);if(el){const c=center(el);FX.burst(c.x,c.y,color,n)}}
+const STATUS_SFX={burn:'burn',freeze:'freeze',shock:'shock',poison:'poison',weak:'poison',str:'levelup',thorns:'block',dodge:'dodge'};
+onEvent((type,p)=>{
+  switch(type){
+    case 'attack':SFX.swing();break;
+    case 'dodge':floatAt(POR(p.side),'Dodge!','#bff');SFX.dodge();break;
+    case 'blocked':SFX.clang();floatAt(POR(p.side),'🛡-'+p.n,'#8cf','small');break;
+    case 'hurt':
+      floatAt(POR(p.side),'-'+p.n,'#ff5a6e',p.n>=15?'big':'');SFX.hit(p.n>=12);bump(POR(p.side));burstAt(POR(p.side),'#ff5a6e',Math.min(30,8+p.n));
+      if(p.side==='p'&&p.n>=8)shakeScreen();
+      if(p.side==='e'&&p.n>=15)announce(line('big'));
+      break;
+    case 'zero':floatAt(POR(p.side),'0','#ccc','small');break;
+    case 'thorns':floatAt(POR(p.side),'🌵','#b5e36b','small');break;
+    case 'lose':floatAt(POR(p.side),(p.cause==='burn'?'🔥':'🧪')+'-'+p.n,'#ff9a6e');bump(POR(p.side));break;
+    case 'block':SFX.block();floatAt(POR(p.side),'🛡+'+p.n,'#7fc3ff');break;
+    case 'heal':SFX.heal();floatAt(POR(p.side),'+'+p.n,'#5fe0a0');burstAt(POR(p.side),'#5fe0a0',10);break;
+    case 'status':{const s=ST[p.k];floatAt(POR(p.side),s.i+' '+s.n+(p.n>1?' '+p.n:''),s.c,'small');SFX[STATUS_SFX[p.k]]();break}
+    case 'fizzle':floatAt('#e-por','Action canceled!','#8fd8ff','small');break;
+    case 'gold':SFX.coin();floatAt('#p-por',(p.n>0?'🪙+':'🪙-')+Math.abs(p.n),'#f5c542','small');break;
+    case 'dieAdded':Tray.add(p.die,'p');break;
+    case 'fire':UI.flashQ.push(`#pcards [data-ci="${p.ci}"]`);if(p.spell)SFX.spell();break;
+    case 'tick':SFX.tick();if(p.side==='p')UI.flashQ.push(`#pcards [data-ci="${p.ci}"]`);break;
+    case 'chain':if(p.n>=2)floatAt('#p-por','Chain +'+p.n,'#d9b3ff','small');break;
+    case 'enrage':announce(p.msg);SFX.boss();break;
+  }
+});
+
+// =====================================================================
+//  Fight 흐름 (엔진 단계 사이에 Effects and  Save  끼워 넣는다)
+// =====================================================================
+const alive=C=>!!(S&&S.combat===C&&!C.over);
+function checkEnd(){
+  const C=S&&S.combat;if(!C||C.over)return true;
+  const o=outcome();if(!o)return false;
+  C.over=1;o==='win'?win():lose();return true;
+}
+function placeDie(ci,id,si,dropped){
+  const C=S&&S.combat;if(!C||UI.busy||C.phase!=='player')return false;
+  const die=C.dice.find(d=>d.id===id);if(!die)return false;
+  const s=canPlace(ci,die.v,si);
+  if(s<0){SFX.error();const el=$(`#pcards [data-ci="${ci}"]`);if(el){el.classList.remove('bad');void el.offsetWidth;el.classList.add('bad')}return false}
+  const slotEl=$(`#pcards [data-ci="${ci}"] .slot[data-s="${s}"]`),from=Tray.take(id);
+  if(!dropped&&from&&slotEl)FX.fly(die.v,die.fr?'f':'p',from,center(slotEl),.2);
+  UI.sel=null;SFX.place();
+  putDie(ci,id,s);
+  if(!checkEnd()){save();render()}
+  return true;
+}
+function unplace(ci,si){if(takeBack(ci,si)){SFX.select();save();render()}}
+function startCombat(kind,key,opt={}){beginCombatUI(createCombat(kind,key,opt))}
+function beginCombatUI(C){
+  const d=EN[C.E.key];save();
+  UI.busy=true;render();
+  if(C.kind==='boss'){SFX.boss();announce(line('boss',d.n)+(d.t?'  — “'+d.t+'”':''))}
+  else announce(line(C.kind==='elite'?'elite':'start',d.n));
+  setTimeout(()=>{if(alive(C))startPlayerTurn()},700/SET.speed);
+}
+async function startPlayerTurn(){
+  const C=S&&S.combat;if(!C||C.over)return;
+  UI.busy=true;UI.sel=null;UI.mode=null;
+  beginPlayerTurn();if(checkEnd())return;
+  save();
+  // --- Effects: 적 Dice → Intent 슬롯으 , 이어서 YOUR DICE ---
+  const E=C.E;
+  UI.hideIntents=true;render();
+  await Tray.roll(C.eroll,'e');if(!alive(C))return;
+  await sleep(150);
+  const flights=[];
+  E.cards.forEach((c,ci)=>{if(!c.intent)return;c.intent.forEach((g,gi)=>g.forEach((d,di)=>{
+    const t=Tray.get(d.id),el=$(`#ecards [data-eci="${ci}"] .srow[data-g="${gi}"] .slot[data-s="${IT[c.id].slots(c.u)[0].t==='cd'?0:di}"]`);
+    if(t&&el){const from=Tray.screen(t);Tray.list=Tray.list.filter(x=>x!==t);flights.push(FX.fly(d.v,d.fr?'f':'e',from,center(el),.34))}
+  }))});
+  Tray.list.forEach(t=>t.st='fade');
+  await Promise.all(flights);if(!alive(C))return;
+  UI.hideIntents=false;render();SFX.place();
+  await sleep(120);
+  await Tray.roll(C.dice,'p');if(!alive(C))return;
+  UI.busy=false;fatalCount=0;render();
+  const sixes=C.dice.filter(d=>d.v===6).length,ones=C.dice.filter(d=>d.v===1).length;
+  if(S.hp<S.maxhp*.25)announce(line('low'));
+  else if(sixes>=2)announce(line('six'));
+  else if(ones>=2)announce(line('ones'));
+}
+async function endTurn(){
+  const C=S&&S.combat;if(!C||UI.busy||C.phase!=='player')return;
+  UI.busy=true;UI.sel=null;UI.mode=null;
+  Tray.fadeAll();endPlayerTurn();save();render();
+  await sleep(300);if(!alive(C))return;
+  await enemyTurn();
+}
+async function enemyTurn(){
+  const C=S&&S.combat;if(!C||C.over)return;
+  UI.busy=true;render();
+  if(!C.eStart){
+    enemyTurnBegin();save();render();if(checkEnd())return;
+    await sleep(300);if(!alive(C))return;
+  }
+  let a;
+  while((a=nextEnemyAction())){
+    if(a.gi===0){UI.flashQ.push(`#ecards [data-eci="${a.ci}"]`);render();await sleep(260);if(!alive(C))return}
+    enemyAct();
+    if(checkEnd())return;
+    save();render();await sleep(380);if(!alive(C))return;
+  }
+  enemyTurnEnd();save();render();
+  await sleep(250);if(!alive(C))return;
+  await startPlayerTurn();
+}
+
+// ---------- Skill ----------
+function useSkill(){
+  const C=S&&S.combat;if(!C||UI.busy||C.phase!=='player')return;
+  if(S.cls==='warrior'||S.cls==='gambler'){
+    if(C.sk<=0){SFX.error();return}
+    UI.mode=UI.mode?null:(S.cls==='warrior'?'reroll':'allin');UI.sel=null;SFX.select();
+    if(UI.mode)announce(S.cls==='warrior'?'🔁 Choose a die to reroll.':'🎰 Choose a die for your special ability!');
+    render();return;
+  }
+  if(S.cls==='mage'){
+    if(!flipPage()){SFX.error();return}
+    SFX.page();save();render();return;
+  }
+  if(S.cls==='thief'){
+    const r=stealCard();
+    if(!r.ok){SFX.error();toast(r.reason==='charge'?`Dice total ${STEAL} charges this ability.`:'No equipment remains to steal!');return}
+    SFX.steal();announce(`🫳 ${IT[r.card.id].name}${r.card.u?'+':''} ( ) Stolen! also cancels the enemy intent!`);
+    UI.flashQ.push(`#pcards [data-ci="${r.ci}"]`);save();render();
+  }
+}
+async function skillOnDie(id){
+  const C=S.combat,mode=UI.mode;
+  const d=mode==='allin'?allInDie(id):rerollDie(id);if(!d)return;
+  UI.mode=null;UI.busy=true;save();render();
+  await Tray.reroll(id,d.v);if(!alive(C))return;
+  UI.busy=false;
+  if(mode==='allin'){if(d.v===6){announce('🎰 Jackpot! 6!');SFX.buy()}else{announce('🎰 Miss… 1 was rolled.');SFX.error()}}
+  render();
+}
+
+// ---------- Fight 종료 ----------
+function win(){
+  logFight(true);
+  const r=resolveVictory();
+  if(r.last){recordBest(true);wipeSave()}else save();
+  UI.busy=true;UI.sel=null;UI.mode=null;FX.ghost=null;
+  const el=$('#e-por');if(el)el.classList.add('dead');
+  announce(line('win'));SFX.fanfare();if(S.level>r.lv0)setTimeout(()=>SFX.levelup(),1500);
+  Tray.fadeAll();
+  const s0=S;setTimeout(()=>{if(S!==s0)return;UI.busy=false;Tray.detach();render()},1500/SET.speed);
+}
+function lose(){
+  logFight(false);
+  resolveDefeat();recordBest(false);wipeSave();
+  UI.busy=true;FX.ghost=null;SFX.defeat();
+  const el=$('#p-por');if(el)el.classList.add('dead');
+  announce('The show…  complete.');
+  const s0=S;setTimeout(()=>{if(S!==s0)return;UI.busy=false;Tray.detach();render()},1600/SET.speed);
+}
+
+// =====================================================================
+//  Screen 렌더링
+// =====================================================================
+const descHTML=s=>String(s).replace(/■/g,'<i class="dv"></i>');
+const plain=s=>String(s).replace(/<[^>]+>/g,'').replace(/■/g,'die value').replace(/\s+/g,' ').trim();
+const TIPS=['ENEMY INTENT(Red dice) to decide whether to block, or strike first.','Use tools to change dice and satisfy equipment requirements. The Flipper 1  6changes it to!','Freeze changes the highest enemy die to 1changes it to. An invalid requirement cancels that entire action!','Shock immediately cancels an enemy action.','Countdown equipment can collect dice over several turns.','Forge·Upgrades improve effects or relax dice requirements.','Level 3 and  6 grant one extra die each.','Block expires when your next turn begins. Use it while you can!','Using a burning die costs 2 is lost. It may still be worth the cost~','Bosses become enraged below half health.','Drag a die or, Select a die and then tap equipment. Number keys 1~9can also select dice.'];
+
+
+// Original character atlas: 4 heroes followed by 36 enemy portraits.
+let portraitsReady=false;
+const PORTRAIT_KEYS=['slime','rat','bat','skel','clown','dealer','gambler','spider','shroom','cactus','ogre','slot','wolf','ghost','snake','pirate','vamp','wheel','fire','ice','boar','jelly','mino','twin','knight','mimic','witch','gargoyle','dknight','reaper','drake','demon','angel','kraken','golem','fortuna'];
+const HERO_KEYS=['warrior','thief','mage','gambler'];
+function decoratePortraits(){
+ if(!portraitsReady)return;
+ document.querySelectorAll('.por,.ci,.face,.bigico').forEach(el=>{
+  let idx=-1,label=el.textContent;
+  const chosen=el.closest('[data-c]');
+  if(el.id==='p-por'&&S){idx=HERO_KEYS.indexOf(S.cls);label=CL[S.cls].n;}
+  else if(el.id==='e-por'&&S&&S.combat){idx=4+PORTRAIT_KEYS.indexOf(S.combat.E.key);label=S.combat.E.n;}
+  else if(chosen){idx=HERO_KEYS.indexOf(chosen.dataset.c);label=CL[chosen.dataset.c].n;}
+  else if(el.textContent==='👸'){idx=39;label='Fortuna';}
+  else {const k=PORTRAIT_KEYS.find(k=>EN[k].i===el.textContent);if(k)idx=4+PORTRAIT_KEYS.indexOf(k);}
+  if(idx<0)return;if(el.dataset.art===String(idx)&&el.firstElementChild)return;
+  el.dataset.art=idx;el.classList.add('has-art');
+  el.innerHTML='<span class="avatar-cell" role="img" aria-label="'+esc(label||'Challenger')+'" style="background-position:'+(idx%8)*100/7+'% '+Math.floor(idx/8)*100/4+'%"></span>';
+ });
+}
+const portraitImage=new Image();portraitImage.onload=()=>{portraitsReady=true;decoratePortraits()};portraitImage.src='characters.webp';
+
+function render(){
+  renderTop();
+  const s=S?S.screen:VIEW;
+  if(s!=='combat'&&Tray.cv)Tray.detach();
+  hideTip();
+  ({title:renderTitle,cls:renderClass,floor:renderFloor,map:renderMap,combat:renderCombat,reward:renderReward,shop:renderShop,treasure:renderTreasure,apple:renderApple,forge:renderForge,event:renderEvent,gameover:()=>renderEnd(false),victory:()=>renderEnd(true)}[s]||renderTitle)();
+  decoratePortraits();
+}
+function renderTop(){
+  const t=$('#top');
+  if(!S||S.screen==='gameover'||S.screen==='victory'){t.innerHTML='';return}
+  const lv=S.level,need=LVXP[lv+1],have=LVXP[lv],xpP=lv>=10?100:Math.round((S.xp-have)/(need-have)*100);
+  t.innerHTML=`<div class="logo">🎲 Dicey Pocket</div>
+  <span class="pill" data-tip="${esc(FL[S.floor-1].s)}">🏰 ${S.floor}F <small>${FL[S.floor-1].n}</small></span>
+  <span class="pill" data-tip="XP ${S.xp}${lv<10?' / Next level '+need:' (Maximum level)'}">${CL[S.cls].i} ${CL[S.cls].n} Lv${lv}<span class="bar xp"><i style="width:${xpP}%"></i></span></span>
+  <span class="pill">❤️<span class="bar"><i style="width:${S.hp/S.maxhp*100}%"></i><span>${S.hp}/${S.maxhp}</span></span></span>
+  <span class="pill">🪙 ${S.gold}</span>
+  <span class="pill" data-tip="Dice rolled each turn">🎲×${diceCount()}</span>
+  <span class="sp"></span>
+  <button class="btn alt sm" data-a="bag">🎒 BAG <small>${S.bag.length}</small></button>
+  <button class="btn alt sm" data-a="snd" data-tip="ENABLE SOUND/OFF">${SET.sound?'🔊':'🔇'}</button>
+  <button class="btn alt sm" data-a="spd" data-tip="Animation speed">⏩${SET.speed}x</button>
+  <button class="btn alt sm" data-a="menu" data-tip="MENU">☰</button>`;
+}
+
+// ---------- 타이틀 ----------
+const TitleFx={cv:null,dice:[],last:0,
+  init(cv){this.cv=cv;this.dice=[6,1,5].map((v,i)=>({q:faceQ(v),ax:randAxis(),w:.7+Math.random()*.6,x:.22+i*.28}))},
+  draw(now){
+    const cv=this.cv;if(!cv)return;if(!cv.isConnected){this.cv=null;return}
+    const r=cv.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);
+    if(cv.width!==Math.round(r.width*dpr)){cv.width=Math.round(r.width*dpr);cv.height=Math.round(r.height*dpr)}
+    const g=cv.getContext('2d'),dt=Math.min(.05,(now-(this.last||now))/1000);this.last=now;
+    g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,r.width,r.height);
+    const s=Math.min(r.height*.62,r.width*.2);
+    this.dice.forEach((d,i)=>{d.q=Q.norm(Q.mul(Q.axis(d.ax,d.w*dt),d.q));const y=r.height/2+Math.sin(now/600+i*2)*8;
+      g.fillStyle='rgba(0,0,0,.35)';g.beginPath();g.ellipse(d.x*r.width,r.height/2+s*.5,s*.4,s*.1,0,0,Math.PI*2);g.fill();
+      drawCube(g,d.x*r.width,y,s,d.q,i===1?'e':'p')});
+  }};
+function renderTitle(){
+  const sv=loadSave(),best=getBest();
+  $('#screen').innerHTML=`<div class="title">
+    <canvas id="titlecv"></canvas>
+    <div class="t-sub">✦ A dice-powered dungeon game show ✦</div>
+    <h1>DICEY<br><span>POCKET</span></h1>
+    <p class="t-desc">Six floors. Four challengers. One final showdown.<br>Roll your dice. Power your equipment. Make your own luck.</p>
+    <div class="t-btns">
+      ${sv?`<button class="btn glow" data-a="cont">▶ CONTINUE <small>${sv.floor}F · ${CL[sv.cls].n} Lv${sv.level} · ❤️${sv.hp}</small></button>`:''}
+      <button class="btn ${sv?'alt':'glow'}" data-a="new">🎲 NEW GAME</button>
+      <button class="btn alt" data-a="help">📜 HOW TO PLAY</button>
+      ${getLog().length?'<button class="btn alt" data-a="stats">📊 COMBAT LOG</button>':''}
+    </div>
+    ${!storageOK()?'<div class="warn" style="font-size:13px">⚠ Progress cannot be saved in this browser. (Private mode or restricted storage)</div>':''}
+    ${loadNote?`<div class="warn" style="font-size:13px">⚠ ${loadNote}</div>`:''}
+    ${best?`<div class="best">🏆 Best record: ${best.floor} floors reached${CL[best.cls]?' ('+CL[best.cls].n+')':''} · Host defeated ${best.wins||0} times</div>`:''}
+    <a class="t-src" href="https://github.com/jeiel85/fortuna-dice-show" target="_blank" rel="noopener noreferrer" aria-label="GitHub Source code (opens in a new tab)"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> GitHub</a>
+  </div>`;
+  TitleFx.init($('#titlecv'));
+  $('.t-btns').onclick=e=>{
+    const b=e.target.closest('[data-a]');if(!b)return;SFX.select();
+    if(b.dataset.a==='cont'){S=loadSave();if(S)resume();else render()}
+    else if(b.dataset.a==='new'){
+      if(sv)confirmBox('Starting a new game replaces the active expedition. Continue?',()=>{wipeSave();VIEW='cls';render()});
+      else{VIEW='cls';render()}
+    }else if(b.dataset.a==='stats')openStats();
+    else openHelp();
+  };
+}
+// Turn 흐름에서 YES외가 나면 UI가 '처리 중'에 멈추지 않도록, 알리고 마지막 Save 지점에서 이어가게 한다
+let fatalKey='',fatalCount=0;
+function onFatal(err){
+  if(!err||String(err.message||err)==='Script error.')return; // A script from another origin(such as browser extensions)errors are ignored
+  console.error(err);
+  // 이미 오류 안내가 떠 있으면 새  띄우지 않는다 (시간으  거르면 빠르게 이어진 '새' 오류  놓쳐 조작이 멈춘 채  left)
+  UI.busy=false;UI.drag=null;UI.mode=null;UI.sel=null;FX.ghost=null;
+  if($('#modal.show #fataldump'))return;
+  const inRun=!!(S&&!S.dead),saved=inRun?loadSave():null;
+  // matching 방(F·위치·Screen)에서 플레이어 Turn까지 가지 못하고 연달아 실패하면, Save 상태 Now체가 원인일 수 있다
+  const key=inRun?`${S.floor}:${S.pos?S.pos.r+','+S.pos.i:'-'}:${S.screen}`:'';
+  fatalCount=key&&key===fatalKey?fatalCount+1:1;fatalKey=key;
+  const again=fatalCount>=2&&!!saved;
+  const stuck=again&&saved.screen==='combat'&&!!saved.combat, stuckRoom=again&&ROOMS.includes(saved.screen);
+  const msg=String(err.message||err);
+  const report=JSON.stringify({error:String(err.stack||msg),at:new Date().toISOString(),ua:navigator.userAgent,saveVersion:SAVE_V,repeat:fatalCount,save:saved||S||null},null,1);
+  modal(`<h2>⚠ Something went wrong</h2>
+    <p>${stuck?'This fight has encountered a repeated error. Restart this combat or, You may skip without receiving a reward.':stuckRoom?'This room has encountered a repeated error. Leave this room and return to the map.':saved?'An unexpected error interrupted the expedition. Continue from the most recent saved position.':inRun?'An unexpected error interrupted the expedition. There is no saved progress to restore.':'An unexpected error occurred.'}</p>
+    <p style="font-size:12px;color:var(--dim)">${esc(msg).slice(0,200)}</p>
+    <div id="fataldump"></div>
+    <div class="row">
+      ${stuck?'<button class="btn" data-a="restart">🔁 RESTART THIS FIGHT</button><button class="btn alt" data-a="skip">⏭ SKIP TO MAP WITHOUT REWARD</button>'
+        :stuckRoom?'<button class="btn" data-a="leave">🚪 LEAVE ROOM AND RETURN TO MAP</button>'
+        :saved?'<button class="btn" data-a="reload">💾 CONTINUE FROM SAVE</button>':''}
+      <button class="btn alt" data-a="report">📋 COPY ERROR DETAILS</button>
+      <button class="btn alt" data-a="${inRun?'title':'close'}">${inRun?'🏠 TITLE SCREEN':'CLOSE'}</button>
+    </div>`,
+    box=>box.addEventListener('click',e=>{
+      const a=e.target.closest('[data-a]');if(!a)return;
+      const fresh=()=>{closeModal();$('#screen').innerHTML='';Tray.detach();UI.busy=false;UI.hideIntents=false};
+      switch(a.dataset.a){
+        case 'reload':{const s=loadSave();if(!s)return;fresh();S=s;resume();break}
+        case 'restart':{const s=loadSave();if(!s)return;fresh();S=s;const C=restartCombat();if(C)beginCombatUI(C);else render();toast('🔁 Restarting this fight.');break}
+        case 'skip':{const s=loadSave();if(!s)return;fresh();S=s;skipCombat();save();render();toast('⏭ Combat skipped.');break}
+        case 'leave':{const s=loadSave();if(!s)return;fresh();S=s;leaveRoom();save();render();toast('🚪 Returned to the map.');break}
+        case 'report':copyText(report,'#fataldump');break;
+        case 'title':closeModal();S=null;VIEW='title';Tray.detach();render();break;
+      }
+    }));
+}
+function resume(){
+  UI.busy=false;UI.hideIntents=false;UI.sel=null;UI.mode=null;
+  render();
+  const C=S.combat;
+  if(S.screen==='combat'&&C){
+    if(C.phase==='enemy')enemyTurn();
+    else if(C.phase==='start')startPlayerTurn();
+  }
+  toast('💾 Saved expedition restored.');
+}
+
+// ---------- Class SELECT ----------
+function renderClass(){
+  $('#screen').innerHTML=`<div class="page"><div class="panel"><h2>CHOOSE YOUR CHALLENGER</h2>
+    <div class="fortuna"><div class="face">👸</div><div class="say">Pick a challenger. Each has a different way to bend the dice.</div></div>
+    <div class="classes">${Object.entries(CL).map(([k,c])=>`<div class="cls" data-c="${k}" style="--cc:${c.c}">
+      <div class="ci">${c.i}</div><h3>${c.n}</h3><div class="d">${c.d}</div>
+      <div class="k">❤️ HP ${c.hp} · 🎲 Dice ${k==='gambler'?4:3} ${k==='mage'?' · Equipment 8 slots':''}<br><b>${c.ski} ${c.sk}</b> — ${c.skd}</div>
+      <div class="its">${c.it.map(id=>`<span data-item="${id}:0">${IT[id].icon}</span>`).join('')}</div>
+      <button class="btn">SELECT</button></div>`).join('')}</div>
+    <div class="row"><button class="btn alt" data-a="back">← BACK</button></div></div></div>`;
+  $('#screen .panel').onclick=e=>{
+    const c=e.target.closest('[data-c]');
+    if(c){SFX.fanfare();newRun(c.dataset.c);return}
+    if(e.target.closest('[data-a="back"]')){VIEW='title';render()}
+  };
+}
+function newRun(cls){S=createRun(cls,Date.now());save();render()}
+
+// ---------- F 소  ----------
+function renderFloor(){
+  const f=FL[S.floor-1],b=EN[f.boss];
+  $('#screen').innerHTML=`<div class="page"><div class="panel">
+    <div class="t-sub">STAGE ${S.floor} / ${FL.length}</div>
+    <h2 style="font-size:42px">${S.floor}F · ${f.n}</h2><p>${f.s}</p>
+    <div class="fortuna"><div class="face">👸</div><div class="say">${f.l}</div></div>
+    <p>FLOOR BOSS: <b style="font-size:20px">${b.i} ${b.n}</b></p>
+    <div class="row"><button class="btn glow" data-a="go">ENTER STAGE ▶</button></div></div></div>`;
+  $('[data-a="go"]').onclick=()=>{SFX.select();S.screen='map';save();render()};
+}
+
+// ---------- Dungeon 맵 ----------
+function eqRow(it){const d=IT[it.id];return`<div class="eqi t-${d.type}" data-item="${it.id}:${it.u}"><span>${d.icon}</span><b>${d.name}${it.u?'+':''}</b><small>${d.slots(it.u).map(condText).join(' + ')}</small></div>`}
+function renderMap(){
+  const rows=S.map,H=rows.length,av=new Set(availNodes().map(([r,i])=>r+':'+i));
+  const Y=r=>(H-1-r)*15+7,VH=(H-1)*15+14;
+  let lines='',nodes='';
+  rows.forEach((row,r)=>row.forEach((n,i)=>{
+    const cur=S.pos&&S.pos.r===r&&S.pos.i===i;
+    n.l.forEach(j=>{const m=rows[r+1][j];const cls=n.v&&m.v?'done':cur&&av.has((r+1)+':'+j)?'next':'';
+      lines+=`<line class="${cls}" x1="${n.x*100}" y1="${Y(r)}" x2="${m.x*100}" y2="${Y(r+1)}"/>`});
+    nodes+=`<g class="node ${av.has(r+':'+i)?'avail':''} ${n.v?'visited':''} ${cur?'cur':''} ${n.t==='boss'?'boss':''}" data-r="${r}" data-i="${i}" ${av.has(r+':'+i)?`tabindex="0" role="button" aria-label="${NODE[n.t].n} (Available)"`:''} transform="translate(${n.x*100} ${Y(r)})"><title>${NODE[n.t].n}</title>${av.has(r+':'+i)?'<circle class="hit-target" r="8.5"/>':''}<circle r="${n.t==='boss'?6.5:5}"/><text>${NODE[n.t].i}</text></g>`;
+  }));
+  $('#screen').innerHTML=`<div class="mapwrap">
+    <div class="mapbox"><h2>${S.floor}F · ${FL[S.floor-1].n}</h2><div class="sub">${S.pos?'Choose your next room':'Choose a starting room'} — Tap a glowing node</div>
+      <svg class="map" viewBox="0 0 100 ${VH}" preserveAspectRatio="xMidYMid meet">${lines}${nodes}</svg></div>
+    <div class="side">
+      <div class="box"><h4>⚔️ Equipped items (${S.eq.length}/${maxEq()})</h4><div class="eqlist">${S.eq.map(eqRow).join('')}</div>
+        <div class="row" style="margin-top:8px"><button class="btn alt sm" data-a="bag">🎒 EQUIPMENT (BAG ${S.bag.length})</button></div></div>
+      <div class="box"><h4>🗺️ LEGEND</h4><div class="legend">${Object.values(NODE).map(n=>`<span>${n.i} ${n.n}</span>`).join('')}</div></div>
+      <div class="box"><h4>👸 Fortune tip</h4><div style="font-size:13px;color:var(--gold2);line-height:1.55">${uiPick(TIPS)}</div></div>
+    </div></div>`;
+  $('svg.map').onclick=e=>{const g=e.target.closest('.node.avail');if(g)enterNode(+g.dataset.r,+g.dataset.i)};
+  const b=$('.side [data-a="bag"]');if(b)b.onclick=openBag;
+}
+function enterNode(r,i){
+  const n=visitNode(r,i);if(!n)return;SFX.select();
+  switch(n.t){
+    case 'fight':case 'elite':case 'boss':startCombat(n.t==='fight'?'normal':n.t,pickEnemy(n.t==='fight'?'normal':n.t));break;
+    case 'treasure':enterTreasure();break;
+    case 'apple':S.ctx={};S.screen='apple';save();render();break;
+    case 'shop':enterShop();break;
+    case 'forge':S.ctx={done:0};S.screen='forge';save();render();break;
+    case 'event':enterEvent();break;
+  }
+}
+function afterNode(){advanceNode();save();render()}
+
+// ---------- Fight Screen ----------
+function chipsHTML(block,st){
+  let h='';
+  if(block>0)h+=`<span class="chip blk" data-tip="&lt;b&gt;Block&lt;/b&gt;&lt;br&gt;Absorbs incoming damage first. Expires when your next turn begins.">🛡 ${block}</span>`;
+  for(const k in ST)if(st[k]>0)h+=`<span class="chip" style="border-color:${ST[k].c}" data-tip="${esc(`<b>${ST[k].i} ${ST[k].n} ${st[k]}</b><br>${ST[k].d}`)}">${ST[k].i} ${st[k]}</span>`;
+  return h;
+}
+function combatShell(){
+  return`<div id="combat" data-cid="${S.combat.cid}">
+    <div class="ez"><div class="fighter"><div class="por" id="e-por"></div><div class="fname" id="e-name"></div><div class="bar" id="e-hp"></div><div class="chips" id="e-chips"></div></div>
+      <div class="cards ecards" id="ecards"></div></div>
+    <div id="ann" role="status" aria-live="polite"></div>
+    <div class="sr-only" id="dicebtns" role="group" aria-label="YOUR DICE"></div>
+    <div class="pz"><div class="cards" id="pcards"></div></div>
+    <div class="tz">
+      <div class="pinfo fighter"><div class="por small" id="p-por"></div><div class="fname" id="p-name"></div><div class="bar" id="p-hp"></div><div class="chips" id="p-chips"></div><div class="warn" id="p-warn"></div></div>
+      <div class="traywrap"><canvas id="tray" role="img" aria-label="Dice tray"></canvas></div>
+      <div class="acts" id="acts"></div>
+    </div></div>`;
+}
+function renderCombat(){
+  const C=S.combat;if(!C)return;
+  if(!C.cid)C.cid=Date.now();
+  const root=$('#combat');
+  if(!root||root.dataset.cid!==String(C.cid)){
+    $('#screen').innerHTML=combatShell();
+    Tray.attach($('#tray'));bindCombat();
+    $('#e-por').textContent=C.E.i;$('#p-por').textContent=CL[S.cls].i;
+    if(C.phase==='player'&&!UI.busy)Tray.setRest(C.dice,'p');
+  }
+  updEnemy();updPCards();updPlayer();updActs();updDiceBtns();decoratePortraits();
+  UI.flashQ.splice(0).forEach(sel=>{const el=$(sel);if(el){el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash')}});
+}
+function intentText(c){
+  const conds=IT[c.id].slots(c.u);if(!c.intent)return '';
+  if(conds[0].t==='cd'){
+    const sum=c.intent[0].reduce((s,x)=>s+x.v,0),rem=c.cd-sum;
+    return rem>0?`⏳ ${c.cd}→${rem}`:`⏳ Activate! ${fmtFx(preview('e',c,[0]))}`;
+  }
+  const o={dmg:0,block:0,heal:0,st:{},gold:0,pierce:0};
+  c.intent.forEach(g=>{const p=preview('e',c,g.map(x=>x.v));o.dmg+=p.dmg;o.block+=p.block;o.heal+=p.heal;o.gold+=p.gold;o.pierce|=p.pierce;for(const k in p.st)o.st[k]=(o.st[k]||0)+p.st[k]});
+  const burned=c.intent.flat().filter(x=>x.burn).length;
+  return fmtFx(o)+(c.intent.length>1?` <small>(${c.intent.length} times)</small>`:'')+(burned?` <span class="burnt">🔥-${burned*2}</span>`:'');
+}
+function ecardHTML(c,ci){
+  const d=IT[c.id],conds=d.slots(c.u),show=!UI.hideIntents,cd=conds[0].t==='cd';
+  const groups=c.intent&&c.intent.length?c.intent:[null];
+  const rows=groups.map((g,gi)=>`<div class="srow" data-g="${gi}">`+(cd
+    ?`<div class="slot cd ${g&&show?'filled':''}" data-s="0">${g&&show?`<div class="mini">${g.map(x=>`<img src="${dieURL(x.v,x.fr?'f':'e')}">`).join('')}</div>`:''}<div class="cdn">${c.cd}</div><div class="cdbar"><i style="width:${100*(1-c.cd/conds[0].n)}%"></i></div></div>`
+    :conds.map((cc,si)=>{const x=g&&show?g[si]:null;return`<div class="slot ${x?'filled':''}" data-s="${si}">${x?dieImg(x,'e'):condLabel(cc)}</div>`}).join(''))+'</div>').join('');
+  const it=show&&c.intent&&!c.done?`<div class="intent">${intentText(c)}</div>`:'';
+  const idle=show&&!c.intent&&!c.off&&!c.stolen&&S.combat.phase==='player';
+  const cls=['card','t-'+d.type,c.done?'used':'',c.off?'off':'',c.stolen?'stolen':'',idle?'dim':''].join(' ');
+  const aria=`Enemy equipment ${d.name}. ${c.stolen?'Stolen':c.off?'Canceled by shock':c.done?'Complete':show&&c.intent?'Intent: '+plain(intentText(c)):'No intent'}`;
+  return`<div class="${cls}" data-eci="${ci}" data-item="${c.id}:${c.u}" data-off="${c.stolen?'🫳 Stolen':'⚡ Shock'}" tabindex="0" aria-label="${esc(aria)}"><div class="c-head"><span class="c-ico">${d.icon}</span><span class="c-name">${d.name}${c.u?'<b class="plus">+</b>':''}</span></div><div class="c-slots col">${rows}</div><div class="c-desc">${descHTML(d.desc(c.u))}</div>${it}</div>`;
+}
+function updEnemy(){
+  const C=S.combat,E=C.E;
+  $('#e-name').innerHTML=`${E.n}${C.kind==='boss'?' 👑':C.kind==='elite'?' ★':''} <small>🎲×${E.dice}</small>`;
+  $('#e-hp').innerHTML=`<i style="width:${E.hp/E.maxhp*100}%"></i><span>${E.hp}/${E.maxhp}</span>`;
+  $('#e-chips').innerHTML=chipsHTML(E.block,E.st);
+  $('#ecards').innerHTML=E.cards.map(ecardHTML).join('');
+}
+function pcardHTML(c,ci){
+  const C=S.combat;if(!visibleCard(ci))return '';
+  const d=IT[c.id],conds=d.slots(c.u),um=usesMax(c),cd=conds[0].t==='cd';
+  const sd=UI.sel!=null?C.dice.find(x=>x.id===UI.sel):null,can=!!sd&&canPlace(ci,sd.v)>=0;
+  const slots=cd?`<div class="slot cd" data-s="0"><div class="cdn">${c.cd}</div><small> left</small><div class="cdbar"><i style="width:${(1-c.cd/conds[0].n)*100}%"></i></div></div>`
+    :conds.map((cc,si)=>c.placed[si]?`<div class="slot filled" data-s="${si}" data-tip="Tap to take the die back">${dieImg(c.placed[si],'p')}</div>`:`<div class="slot" data-s="${si}">${condLabel(cc)}</div>`).join('');
+  const uses=d.perCombat?`<span class="c-uses">Fight ${c.uses}</span>`:um>1?`<span class="c-uses">${c.uses}/${um}</span>`:'';
+  const badge=c.temp?'<span class="badge g">Steal</span>':(c.sp&&C.chain>0?`<span class="badge">Chain +${C.chain}</span>`:'');
+  const cls=['card','t-'+d.type,c.uses<=0?'used':'',c.off?'off':'',can?'can':'',sd&&!can?'dim':'',c.temp?'temp':'',c.sp?'book':''].join(' ');
+  const state=c.off?'Sealed by shock':c.uses<=0?'Used this turn':can?'Accepts the selected die':'';
+  const aria=`${d.name}${c.u?' UPGRADE':''}, ${TYPEN[d.type]}. Requirement ${cd?`COUNTDOWN ${c.cd}  left`:conds.map(condText).join(' + ')}. Effect ${plain(d.desc(c.u))}.${um>1?` Uses left ${c.uses} times.`:''}${c.placed.some(Boolean)?` Assigned dice ${c.placed.filter(Boolean).map(p=>p.v).join(', ')}.`:''} ${state}`;
+  return`<div class="${cls}" data-ci="${ci}" data-item="${c.id}:${c.u}" data-off="⚡ Shock" tabindex="0" role="button" aria-label="${esc(aria)}"${c.uses<=0||c.off?' aria-disabled="true"':''}><div class="c-head"><span class="c-ico">${d.icon}</span><span class="c-name">${d.name}${c.u?'<b class="plus">+</b>':''}</span>${uses}</div><div class="c-slots">${slots}</div><div class="c-desc">${descHTML(d.desc(c.u))}</div>${badge}</div>`;
+}
+function updPCards(){
+  const a=document.activeElement,f=a&&a.closest&&a.closest('#pcards')?a.dataset.ci:null;
+  $('#pcards').innerHTML=S.combat.cards.map(pcardHTML).join('');
+  if(f!=null){const el=$(`#pcards [data-ci="${f}"]`);if(el)el.focus({preventScroll:true})}
+}
+function updPlayer(){
+  const C=S.combat;
+  $('#p-name').innerHTML=`${CL[S.cls].n} <small>Lv${S.level}</small>`;
+  $('#p-hp').innerHTML=`<i style="width:${S.hp/S.maxhp*100}%"></i><span>${S.hp}/${S.maxhp}</span>`;
+  $('#p-chips').innerHTML=chipsHTML(C.pb,C.pst);
+  const inc=C.phase==='player'&&!UI.hideIntents?incoming():0;
+  $('#p-warn').innerHTML=inc>0?`⚠ Expected damage ${inc}${C.pb?` · 🛡${C.pb}`:''}`:'';
+}
+// 캔버스 dice Keyboard·스크린리더  고  수 있게 하는 숨은 버튼 목록 (포커스는 트레이에 점선 고리  표시)
+function updDiceBtns(){
+  const C=S.combat,box=$('#dicebtns');if(!box)return;
+  const a=document.activeElement,f=a&&a.closest&&a.closest('#dicebtns')?a.dataset.did:null;
+  const dis=UI.busy||C.phase!=='player',pre=UI.mode==='reroll'?'REROLL — ':UI.mode==='allin'?'All In — ':'';
+  box.innerHTML=C.dice.map((d,i)=>`<button type="button" data-did="${d.id}" aria-pressed="${UI.sel===d.id}"${dis?' aria-disabled="true"':''}>${pre}Die ${i+1}, value ${d.v}${d.fr?' (Freeze)':''}${d.burn?' (Burn: using this die costs 2 HP)':''}</button>`).join('');
+  if(f!=null){const el=box.querySelector(`[data-did="${f}"]`)||box.querySelector('button');if(el)el.focus({preventScroll:true})}
+}
+function chooseDie(id){
+  const C=S&&S.combat;if(!C||UI.busy||C.phase!=='player'||!C.dice.some(d=>d.id===id))return;
+  if(UI.mode){skillOnDie(id);return}
+  UI.sel=UI.sel===id?null:id;SFX.select();render();
+}
+function updActs(){
+  const C=S.combat,dis=UI.busy||C.phase!=='player',cl=CL[S.cls];let sk='';
+  const sd=C.dice.find(d=>d.id===UI.sel);
+  $('#tray').setAttribute('aria-label',C.dice.length?`YOUR DICE: ${C.dice.map((d,i)=>`Die ${i+1}: ${d.v}${d.fr?'(Freeze)':''}${d.burn?'(Burn)':''}`).join(', ')}${sd?`. Selected: ${sd.v}`:''}. Use number keys or Tab to select a die. Press Enter on equipment to assign it.`:'No dice remain');
+  if(S.cls==='warrior'||S.cls==='gambler')
+    sk=`<button class="btn alt ${UI.mode?'on':''}" data-a="skill" data-tip="${esc(cl.skd)}" ${dis||C.sk<=0?'disabled':''}>${cl.ski} ${cl.sk} <small>(${C.sk})</small></button>`;
+  else if(S.cls==='mage'){const n=C.cards.filter(c=>c.sp).length;
+    sk=`<button class="btn alt" data-a="skill" data-tip="${esc(cl.skd)}" ${dis||C.sk<=0||n<=bookSize()?'disabled':''}>📖 Turn the Page <small>(${C.sk})</small></button><div class="hintline">Spellbook ${Math.min(n,bookSize())}/${n} Reveal · Chain +${C.chain}</div>`}
+  else sk=`<button class="btn alt ${!dis&&C.steal>=STEAL?'glow':''}" data-a="skill" data-tip="${esc(cl.skd)}" ${dis||C.steal<STEAL?'disabled':''}>🫳 Pickpocket <small>${C.steal}/${STEAL}</small></button><div class="chg"><i style="width:${C.steal/STEAL*100}%"></i></div>`;
+  $('#acts').innerHTML=sk+`<button class="btn ${!dis&&!C.dice.length?'glow':''}" data-a="end" ${dis?'disabled':''}>END TURN ⏎</button>
+    <div class="hintline">${C.phase==='enemy'?'ENEMY TURN…':UI.busy?'Rolling dice…':`Turn ${C.turn} · ${C.dice.length} dice left`}</div>`;
+}
+
+// ---------- Fight Input (클릭 / 드래그 앤 드롭) ----------
+function trayPt(e){const r=$('#tray').getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}
+function bindCombat(){
+  const cv=$('#tray');
+  cv.addEventListener('pointerdown',e=>{
+    const C=S&&S.combat;if(!C||UI.busy||C.phase!=='player')return;
+    SFX.unlock();const p=trayPt(e),d=Tray.hit(p.x,p.y);
+    if(!d){if(UI.sel!=null){UI.sel=null;render()}return}
+    if(UI.mode){skillOnDie(d.id);return}
+    UI.drag={id:d.id,x0:e.clientX,y0:e.clientY,moved:false};
+    try{cv.setPointerCapture(e.pointerId)}catch(_){}
+  });
+  cv.addEventListener('pointermove',e=>{
+    const dr=UI.drag;
+    if(!dr){const p=trayPt(e);cv.style.cursor=S&&S.combat&&!UI.busy&&Tray.hit(p.x,p.y)?'grab':'default';return}
+    if(!dr.moved&&Math.hypot(e.clientX-dr.x0,e.clientY-dr.y0)>6){
+      const d=Tray.get(dr.id);if(!d){UI.drag=null;return}
+      dr.moved=true;d.st='drag';UI.sel=dr.id;FX.ghost={v:d.v,col:d.fr?'f':'p',x:e.clientX,y:e.clientY};SFX.select();hideTip();render();
+    }
+    if(dr.moved&&FX.ghost){
+      FX.ghost.x=e.clientX;FX.ghost.y=e.clientY;
+      const el=document.elementFromPoint(e.clientX,e.clientY),card=el&&el.closest('#pcards .card[data-ci]');
+      $$('#pcards .card.hov').forEach(c=>c!==card&&c.classList.remove('hov'));
+      if(card&&card.classList.contains('can'))card.classList.add('hov');
+    }
+  });
+  const up=e=>{
+    const dr=UI.drag;if(!dr)return;UI.drag=null;
+    if(dr.moved){
+      FX.ghost=null;const d=Tray.get(dr.id);if(d)d.st='rest';
+      const el=e.type==='pointerup'?document.elementFromPoint(e.clientX,e.clientY):null;
+      const card=el&&el.closest('#pcards .card[data-ci]'),slot=el&&el.closest('.slot[data-s]');
+      if(!(card&&placeDie(+card.dataset.ci,dr.id,slot?+slot.dataset.s:null,true))){UI.sel=null;render()}
+    }else{UI.sel=UI.sel===dr.id?null:dr.id;SFX.select();render()}
+  };
+  cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+  $('#pcards').addEventListener('click',e=>{
+    const C=S&&S.combat;if(!C||UI.busy||C.phase!=='player')return;
+    const card=e.target.closest('.card[data-ci]');if(!card)return;
+    const ci=+card.dataset.ci,slot=e.target.closest('.slot[data-s]');
+    if(slot&&slot.classList.contains('filled')&&UI.sel==null){unplace(ci,+slot.dataset.s);return}
+    if(UI.sel!=null){placeDie(ci,UI.sel,slot?+slot.dataset.s:null);return}
+    // SELECT 없이 Equipment  클릭하면: 들어갈 수 있는 가장 높은 dice Now동 투입
+    const best=[...C.dice].sort((a,b)=>b.v-a.v).find(d=>canPlace(ci,d.v)>=0);
+    if(best)placeDie(ci,best.id,slot?+slot.dataset.s:null);else{SFX.error();announce('No remaining die fits this equipment.')}
+  });
+  const db=$('#dicebtns');
+  db.addEventListener('click',e=>{const b=e.target.closest('[data-did]');if(b)chooseDie(+b.dataset.did)});
+  $('#acts').addEventListener('click',e=>{
+    const b=e.target.closest('[data-a]');if(!b||b.disabled)return;
+    if(b.dataset.a==='end')endTurn();else if(b.dataset.a==='skill')useSkill();
+  });
+}
+
+// ---------- 보상 ----------
+function itemCardHTML(it,extra='',attrs=''){
+  const d=IT[it.id],conds=d.slots(it.u),um=d.uses?d.uses(it.u):1;
+  return`<div class="card t-${d.type} icard" data-item="${it.id}:${it.u}" ${attrs}><div class="c-head"><span class="c-ico">${d.icon}</span><span class="c-name">${d.name}${it.u?'<b class="plus">+</b>':''}</span>${um>1?`<span class="c-uses">${d.perCombat?'Fight ':''}×${um}</span>`:''}</div>
+    <div class="c-slots">${conds.map(c=>c.t==='cd'?`<div class="slot cd"><div class="cdn">${c.n}</div><small>Count</small></div>`:`<div class="slot">${condLabel(c)}</div>`).join('')}</div>
+    <div class="c-desc">${descHTML(d.desc(it.u))}</div>${d.rar?`<div class="rar">${'★'.repeat(d.rar)}</div>`:''}${extra}</div>`;
+}
+function addItem(it){gotToast({it,where:gainItem(it)})}
+function renderReward(){
+  const x=S.ctx,skip=10+S.floor*3;
+  $('#screen').innerHTML=`<div class="page"><div class="panel">
+    <div class="bigico">${x.enemy.i}</div><h2>${esc(x.enemy.n)} defeated!</h2>
+    <div class="gains"><span class="pill">🪙 +${x.gold}</span><span class="pill">⭐ XP +${x.xp}</span>${x.kind==='boss'?'<span class="pill">❤️ HP 40% Heal</span>':''}</div>
+    ${x.lvUp?`<div class="lvup">🎉 LEVEL UP! Lv ${S.level} — Maximum health +${5*x.lvUp}, HP +${10*x.lvUp}${diceCount()>x.dice0?' · 🎲 Dice +1 !':''}${S.level>=5&&S.level-x.lvUp<5?' · ✨ Skill upgrade!':''}</div>`:''}
+    <h3>Choose one equipment reward</h3>
+    <div class="cards">${x.items.map((it,k)=>itemCardHTML(it,`<button class="btn sm" data-pick="${k}">TAKE</button>`)).join('')}</div>
+    <div class="row"><button class="btn alt" data-a="skip">SKIP 🪙 +${skip}</button></div></div></div>`;
+  $('#screen .panel').onclick=e=>{
+    const p=e.target.closest('[data-pick]');
+    if(p){addItem(x.items[+p.dataset.pick]);afterNode();return}
+    if(e.target.closest('[data-a="skip"]')){S.gold+=skip;S.st.gold+=skip;SFX.coin();afterNode()}
+  };
+}
+
+// ---------- 모달 & Equipment SELECT ----------
+let modalReturn=null;
+function modal(html,bind){
+  const m=$('#modal');if(!m.classList.contains('show'))modalReturn=document.activeElement;
+  m.innerHTML=`<div class="mbox" role="dialog" aria-modal="true">${html}</div>`;m.classList.add('show');
+  const box=m.firstChild;box.addEventListener('click',e=>{if(e.target.closest('[data-a="close"]'))closeModal()});
+  if(bind)bind(box);
+  const f=box.querySelector('button:not([disabled]),[data-k]');if(f)f.focus({preventScroll:true});
+}
+function closeModal(){const m=$('#modal');m.classList.remove('show');m.innerHTML='';hideTip();if(modalReturn&&modalReturn.isConnected)modalReturn.focus({preventScroll:true});modalReturn=null}
+function confirmBox(msg,yes){
+  modal(`<h2>CONFIRM</h2><p>${msg}</p><div class="row"><button class="btn red" data-a="yes">YES</button><button class="btn alt" data-a="close">NO</button></div>`,
+    box=>box.querySelector('[data-a="yes"]').onclick=()=>{closeModal();yes()});
+}
+function pickItem(title,list,label,onPick){
+  modal(`<h2>${title}</h2>${list.length?`<div class="pickgrid">${list.map((r,k)=>itemCardHTML(r.it,`<div class="arrow">${label(r)}</div>`,`data-k="${k}" tabindex="0" role="button"`)).join('')}</div>`:'<p>No eligible equipment.</p>'}
+    <div class="row"><button class="btn alt" data-a="close">CANCEL</button></div>`,
+    box=>box.addEventListener('click',e=>{const c=e.target.closest('[data-k]');if(c){closeModal();onPick(list[+c.dataset.k])}}));
+}
+const upLabel=r=>`⬆ ${IT[r.it.id].slots(1).map(condText).join(' + ')}<br>${descHTML(IT[r.it.id].desc(1))}`;
+// act: 엔진의 UPGRADE 동작 (buyUpgrade·forgeUpgrade·wheelUpgrade) — 성공하면 true
+function doUpgrade(title,act){
+  pickItem(title,upgradable(),upLabel,r=>{if(!act(r))return;SFX.levelup();toast(`🔨 ${IT[r.it.id].name}+ Upgrade complete!`);save();render()});
+}
+function openBag(){
+  if(!S)return;
+  const lock=S.screen==='combat';
+  const eqH=S.eq.map((it,i)=>itemCardHTML(it,lock?'':`<button class="btn sm alt" data-un="${i}" ${S.eq.length<=1?'disabled':''}>TO BAG ↓</button>`)).join('');
+  const bagH=S.bag.map((it,i)=>itemCardHTML(it,lock?'':`<button class="btn sm" data-eq="${i}" ${S.eq.length>=maxEq()?'disabled':''}>EQUIP ↑</button>`)).join('')||'<p style="color:var(--dim)">Your bag is empty.</p>';
+  modal(`<h2>🎒 EQUIPMENT</h2>${lock?'<p>⚠ Equipment cannot be changed during combat. (View only)</p>':''}
+    <h3>Equipped (${S.eq.length}/${maxEq()})</h3><div class="cards">${eqH}</div>
+    <h3>BAG (${S.bag.length})</h3><div class="cards">${bagH}</div>
+    <p style="font-size:12px;color:var(--dim)">Move one equipped item into your bag to make room.${S.cls==='mage'?' The Mage opens only part of the spellbook each turn.':''}</p>
+    <div class="row"><button class="btn" data-a="close">CLOSE</button></div>`,
+    box=>box.addEventListener('click',e=>{
+      const u=e.target.closest('[data-un]'),q=e.target.closest('[data-eq]');
+      if(!((u&&!u.disabled&&unequip(+u.dataset.un))||(q&&!q.disabled&&equip(+q.dataset.eq))))return;
+      SFX.place();save();renderTop();if(S.screen==='map')renderMap();openBag();
+    }));
+}
+function openHelp(){
+  modal(`<h2>📜 HOW TO PLAY</h2>
+  <p>The fickle host of fortune <b>Fortuna</b> dungeon show awaits you. 6 floors and defeat the final host to win.</p>
+  <h3>🎲 Fight</h3><ul>
+   <li>At the start of a turn, dice 3~5 dice roll. dice <b>Drag onto an equipment card or</b>, Select a die, then tap an equipment card. Tap an equipment card to automatically use its highest valid die.</li>
+   <li>Each item has a dice requirement: <b>ODD / EVEN / MAX N / MIN N / exactly N / matching values 2  / COUNTDOWN</b>. Valid dice activate the effect immediately.</li>
+   <li>Tool equipment transforms dice(+1, Flip, Split, Merge, Reroll…). Newly created dice can be used again.</li>
+   <li><b>The enemy also rolls dice</b> into their own equipment slots(Red dice = Intent). Ending your turn executes the enemy intent.</li>
+   <li>Block absorbs incoming damage first and, Expires at the start of your next turn.</li></ul>
+  <h3>✨ STATUS EFFECTS</h3><ul>${Object.values(ST).map(s=>`<li>${s.i} <b>${s.n}</b> — ${s.d}</li>`).join('')}</ul>
+  <h3>🧙 Class</h3><ul>${Object.values(CL).map(c=>`<li>${c.i} <b>${c.n}</b> · ${c.ski} ${c.sk}: ${c.skd}</li>`).join('')}</ul>
+  <h3>🗺️ Dungeon</h3><ul><li>${Object.values(NODE).map(n=>n.i+' '+n.n).join(' · ')}</li>
+   <li>Victory awards gold·Earn experience and an equipment reward. Level 3 and  6 grant extra dice and, Forge·Equipment in the shop can be <b>UPGRADE(+)</b> to improve its effect or requirements.</li>
+   <li>Progress(F, Equipment, BAG, Gold, HP, Combat state) saves in this browser after every action.</li></ul>
+  <h3>⌨️ Keyboard</h3><p>1~9 SELECT A DIE (or Tabto focus a die button and Enter) · Tabinto an equipment card·After moving on the map Enter/Space to activate · E END TURN · R Skill · Esc DESELECT<br>Menu 📊 View boss win rates in the combat log·and average turns(Saved only in this browser).</p>
+  <div class="row"><button class="btn" data-a="close">GOT IT!</button></div>`);
+}
+// 클립보드에 COPY하고, 권한이 없으면 holder 안에 SELECT된 텍스트 상Now  보여 준다
+function copyText(txt,holder){
+  const show=()=>{const h=$(holder);if(!h)return;h.innerHTML='<p>Copy the details below manually.</p><textarea readonly style="width:100%;height:120px"></textarea>';const ta=h.querySelector('textarea');ta.value=txt;ta.select()};
+  if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>toast('📋 Copied to the clipboard.'),show);else show();
+}
+function openStats(){
+  const l=getLog(),pct=(a,b)=>b?Math.round(a/b*100)+'%':'-',avg=(r,f)=>r.length?r.reduce((s,x)=>s+f(x),0)/r.length:null;
+  const rows=FL.map((f,i)=>{
+    const r=l.filter(x=>x.en===f.boss),w=r.filter(x=>x.won).length,t=avg(r,x=>x.turns),h=avg(r,x=>(x.hp0-x.hp1)/x.maxhp);
+    return`<tr><td>${i+1}F</td><td>${EN[f.boss].i} ${EN[f.boss].n}</td><td>${r.length}</td><td>${r.length?`${w} (${pct(w,r.length)})`:'-'}</td><td>${t==null?'-':t.toFixed(1)}</td><td>${h==null?'-':Math.round(h*100)+'%'}</td></tr>`}).join('');
+  const recent=l.slice(-12).reverse().map(x=>`<tr><td>${new Date(x.t).toLocaleDateString()}</td><td>${CL[x.cls]?CL[x.cls].i:''} Lv${x.lv}</td><td>${x.floor}F</td><td>${EN[x.en]?EN[x.en].i+' '+EN[x.en].n:x.en}${x.kind==='boss'?' 👑':x.kind==='elite'?' ★':''}</td><td>${x.turns}Turn</td><td>❤️ ${x.hp0}→${x.hp1}</td><td>${x.won?'VICTORY':'DEFEAT'}</td></tr>`).join('');
+  modal(`<h2>📊 COMBAT LOG</h2><p>Recent fights saved only in this browser ${l.length} recorded fights(Never sent to a server). Used as a reference for boss difficulty.</p>
+    <h3>BOSS STATISTICS</h3><div class="tblwrap"><table class="tbl"><tr><th>F</th><th>Boss</th><th>CHALLENGE</th><th>VICTORY</th><th>Average turns</th><th>Average health lost</th></tr>${rows}</table></div>
+    <h3>Recent fights</h3>${recent?`<div class="tblwrap"><table class="tbl">${recent}</table></div>`:'<p>No records yet.</p>'}
+    <div id="logdump"></div>
+    <div class="row"><button class="btn alt" data-a="copy" ${l.length?'':'disabled'}>📋 JSON COPY</button><button class="btn red" data-a="wipe" ${l.length?'':'disabled'}>CLEAR RECORDS</button><button class="btn" data-a="close">CLOSE</button></div>`,
+    box=>box.addEventListener('click',e=>{
+      const a=e.target.closest('[data-a]');if(!a||a.disabled)return;
+      if(a.dataset.a==='copy')copyText(JSON.stringify(l),'#logdump');else if(a.dataset.a==='wipe')confirmBox('Clear all combat records?',()=>{try{localStorage.removeItem(LOGKEY)}catch(e){}toast('Records cleared.')});
+    }));
+}
+function openMenu(){
+  modal(`<h2>☰ MENU</h2><div class="t-btns" style="margin:0 auto;max-width:340px">
+    <button class="btn alt" data-a="help">📜 HOW TO PLAY</button>
+    <button class="btn alt" data-a="stats">📊 COMBAT LOG</button>
+    <button class="btn alt" data-a="title">🏠 TITLE SCREEN (Progress saves automatically)</button>
+    <button class="btn red" data-a="quit">🏳️ ABANDON RUN</button>
+    <button class="btn" data-a="close">CLOSE</button></div>`,
+    box=>box.addEventListener('click',e=>{
+      const a=(e.target.closest('[data-a]')||{}).dataset;if(!a)return;
+      if(a.a==='help')openHelp();
+      else if(a.a==='stats')openStats();
+      else if(a.a==='title'){closeModal();save();S=null;VIEW='title';UI.busy=false;FX.ghost=null;render()}
+      else if(a.a==='quit')confirmBox('Abandon this expedition? Saved progress will be removed.',()=>{S.combat=null;S.screen='gameover';S.dead=1;recordBest(false);wipeSave();UI.busy=false;SFX.defeat();render()});
+    }));
+}
+
+// ---------- Shop ----------
+const gotToast=r=>{const n=IT[r.it.id].name+(r.it.u?'+':'');toast(r.where==='eq'?`${IT[r.it.id].icon} ${n} EQUIP!`:`🎒 ${n} → STORE IN BAG (Equipment slots are full)`);SFX.buy()};
+function enterShop(){openShop();save();render()}
+function renderShop(){
+  const x=S.ctx;
+  $('#screen').innerHTML=`<div class="page"><div class="panel">
+    <div class="bigico">🛒</div><h2>Fortune Shop</h2>
+    <div class="fortuna"><div class="face">🐱</div><div class="say">Welcome to my shop~ Only the finest goods in this little shop. <br>Gold owned: <b>🪙 ${S.gold}</b></div></div>
+    <div class="shopgrid">${x.stock.map((it,k)=>`<div class="${it.sold?'sold':''}">${itemCardHTML(it,`<button class="btn sm" data-buy="${k}" ${canBuy(k)?'':'disabled'}>${it.sold?'Item sold':'🪙 '+price(it)}</button>`)}</div>`).join('')}</div>
+    <div class="svc">
+      <button class="btn alt" data-a="apple" ${canBuyApple()?'':'disabled'}>🍎 Apple (HP +${APPLE_HEAL}) 🪙${APPLE_COST} <small>Remaining ${x.apples}</small></button>
+      <button class="btn alt" data-a="upg" ${canBuyUpgrade()?'':'disabled'}>🔨 UPGRADE EQUIPMENT 🪙${upPrice()}</button>
+      <button class="btn alt" data-a="sell">💰 SELL EQUIPMENT</button>
+    </div>
+    <div class="row"><button class="btn" data-a="leave">LEAVE SHOP ▶</button></div></div></div>`;
+  $('#screen .panel').onclick=e=>{
+    const b=e.target.closest('[data-buy]');
+    if(b&&!b.disabled){const r=buyItem(+b.dataset.buy);if(r){gotToast(r);save();render()}return}
+    const a=e.target.closest('[data-a]');if(!a||a.disabled)return;
+    if(a.dataset.a==='apple'){if(buyApple()){SFX.heal();save();render()}}
+    else if(a.dataset.a==='upg')doUpgrade(`🔨 CHOOSE AN UPGRADE (🪙${upPrice()})`,buyUpgrade);
+    else if(a.dataset.a==='sell')pickItem('💰 CHOOSE AN ITEM TO SELL',sellable(),r=>`🪙 ${sellPrice(r.it)} to sell`,r=>{if(sellItem(r)){SFX.coin();save();render()}});
+    else if(a.dataset.a==='leave')afterNode();
+  };
+}
+
+// ---------- TREASURE ----------
+function enterTreasure(){
+  const r=openTreasure();
+  if(r.mimic){startCombat('normal','mimic',{hp:r.hp});setTimeout(()=>announce('The chest… moves?! It was a mimic! 🎁'),50);return}
+  save();render();
+}
+function renderTreasure(){
+  const x=S.ctx;
+  $('#screen').innerHTML=`<div class="page"><div class="panel">
+    <div class="bigico">${x.opened?'💰':'🧰'}</div><h2>TREASURE</h2>
+    ${x.opened?`<p>Something sparkles inside the chest! Choose one.</p>
+      <div class="cards">${x.items.map((it,k)=>itemCardHTML(it,`<button class="btn sm" data-pick="${k}">TAKE</button>`)).join('')}</div>
+      <div class="row"><button class="btn alt" data-a="gold">Take gold instead 🪙 ${x.gold}</button></div>`
+    :`<div class="fortuna"><div class="face">👸</div><div class="say">A chest at the center of the stage! Shall we open it? Surely it is not a trap… Heh.</div></div>
+      <div class="row"><button class="btn glow" data-a="open">OPEN CHEST</button></div>`}</div></div>`;
+  $('#screen .panel').onclick=e=>{
+    const p=e.target.closest('[data-pick]');
+    if(p){const r=treasurePick(+p.dataset.pick);if(r){gotToast(r);afterNode()}return}
+    const a=e.target.closest('[data-a]');if(!a)return;
+    if(a.dataset.a==='open'){treasureOpen();SFX.open();save();render()}
+    else if(a.dataset.a==='gold'){if(treasureGold()){SFX.coin();afterNode()}}
+  };
+}
+
+// ---------- Healing Apple ----------
+function renderApple(){
+  $('#screen').innerHTML=`<div class="page"><div class="panel">
+    <div class="bigico">🌳</div><h2>The Lucky Apple Tree</h2>
+    <div class="fortuna"><div class="face">👸</div><div class="say">Rest for a while. Only one apple per visitor!</div></div>
+    <div class="shopgrid">
+      <div class="card t-shield icard" style="width:230px"><div class="bigico" style="font-size:56px">🍎</div><b>Red Apple</b><div class="c-desc">HP ${appleHeal()} Heal (of maximum health 35%)</div><button class="btn" data-a="red">EAT</button></div>
+      <div class="card t-utility icard" style="width:230px"><div class="bigico" style="font-size:56px">🍏</div><b>Golden Apple</b><div class="c-desc">Maximum health +6, HP 6 Heal</div><button class="btn" data-a="gold">EAT</button></div>
+    </div></div></div>`;
+  $('#screen .panel').onclick=e=>{
+    const a=e.target.closest('[data-a]');if(!a)return;
+    const n=eatApple(a.dataset.a);
+    toast(a.dataset.a==='gold'?'🍏 Maximum health +6':`🍎 HP +${n}`);SFX.heal();afterNode();
+  };
+}
+
+// ---------- Forge ----------
+function renderForge(){
+  const x=S.ctx,can=upgradable().length>0;
+  $('#screen').innerHTML=`<div class="page"><div class="panel">
+    <div class="bigico">⚒️</div><h2>Dwarven Forge</h2>
+    <div class="fortuna"><div class="face">🧔</div><div class="say">${x.done?'A fine improvement! Put it to good use.':'One good hammer strike will do! One equipment upgrade, on the house. Or rest by the fire for a while.'}</div></div>
+    <div class="row">${x.done?'<button class="btn" data-a="leave">LEAVE ▶</button>'
+      :`<button class="btn glow" data-a="up" ${can?'':'disabled'}>🔨 UPGRADE EQUIPMENT (FREE)</button><button class="btn alt" data-a="rest">🔥 REST BY THE FIRE (HP +${FORGE_REST})</button>`}</div></div></div>`;
+  $('#screen .panel').onclick=e=>{
+    const a=e.target.closest('[data-a]');if(!a||a.disabled)return;
+    if(a.dataset.a==='up')doUpgrade('🔨 CHOOSE AN UPGRADE',forgeUpgrade);
+    else if(a.dataset.a==='rest'){const h=forgeRest();SFX.heal();toast(`🔥 HP +${h}`);afterNode()}
+    else afterNode();
+  };
+}
+
+// ---------- Fortune Event ----------
+function enterEvent(){openEvent();save();render()}
+function wheelFx(o){
+  if(!o)return;
+  if(o.it)gotToast(o);
+  if(o.fallback)toast(`Nothing here needs an upgrade 🪙${o.fallback} instead!`);
+  ['none','hurt','halve'].includes(o.k)?SFX.error():SFX.fanfare();
+}
+function renderEvent(){
+  const x=S.ctx;let body='';
+  if(x.type==='roulette'){
+    if(x.res!=null&&!x.applied&&!x.spinning){wheelFx(applyWheel());save()}
+    const rot=x.res!=null?360*6-(x.res*45+22.5):0;
+    body=`<h2>🎡 Fortune Wheel</h2>
+      <div class="fortuna"><div class="face">👸</div><div class="say">${x.res==null?'Care to take a spin? What will appear… Even I do not know♡':x.spinning?'BACK~ BACK~!':`the result… <b>${WHEEL[x.res].t}</b>!`}</div></div>
+      <div class="wheel"><div class="ptr">🔻</div><div class="disc" style="background:conic-gradient(${WHEEL.map((w,k)=>`${w.c} ${k*45}deg ${(k+1)*45}deg`).join(',')});transform:rotate(${x.spinning?0:rot}deg)">
+        ${WHEEL.map((w,k)=>`<div class="lbl" style="transform:rotate(${k*45+22.5}deg)"><span>${w.t}</span></div>`).join('')}</div><div class="hub">⭐</div></div>
+      <div class="row">${x.res==null?'<button class="btn glow" data-a="spin">SPIN THE WHEEL!</button><button class="btn alt" data-a="leave">PASS BY</button>'
+        :x.spinning?'':x.pendUp?'<button class="btn glow" data-a="up">🔨 CHOOSE AN ITEM TO UPGRADE</button>':'<button class="btn" data-a="leave">CONTINUE ▶</button>'}</div>`;
+  }else if(x.type==='duel'){
+    const du=x.duel;
+    body=`<h2>🐰 DICE DUEL</h2>
+      <div class="fortuna"><div class="face">🐰</div><div class="say">${du?(du.win>0?'Oh no, Defeated! Take the stake~':du.win<0?'Heh, I win! The stake is mine~':'Draw! Your stake is returned.'):'The host assistant challenges you to a dice duel! Dice 2 dice; the highest total wins the stake.'}</div></div>
+      ${du?`<div class="duel"><div class="side2"><b>Challenger</b><div>${du.p.map(v=>`<img src="${dieURL(v,'p')}" alt="${v}">`).join('')}</div><div class="tot">${du.p[0]+du.p[1]}</div></div><div class="tot">VS</div>
+        <div class="side2"><b>Rabbit</b><div>${du.h.map(v=>`<img src="${dieURL(v,'e')}" alt="${v}">`).join('')}</div><div class="tot">${du.h[0]+du.h[1]}</div></div></div>
+        <div class="row"><button class="btn" data-a="leave">CONTINUE ▶</button></div>`
+      :`<div class="row">${DUEL_BETS.map(b=>`<button class="btn" data-bet="${b}" ${S.gold<b?'disabled':''}>🪙 ${b} BET</button>`).join('')}<button class="btn alt" data-a="leave">DECLINE</button></div>`}`;
+  }else{
+    const msg=x.got?`Bargain sealed♡ ${IT[x.got.id].icon} ${IT[x.got.id].name}${x.got.u?'+':''} ( ) Received.`
+      :x.upId?`${IT[x.upId].icon} ${IT[x.upId].name} ( ) Upgrade complete. Sparkling~`
+      :x.done?'The trade is complete.':'Nothing comes for free. Offer something and, I will make it worth your while.';
+    body=`<h2>🌙 Fortune Bargain</h2>
+      <div class="fortuna"><div class="face">👸</div><div class="say">${msg}</div></div>
+      <div class="row">${x.done?'<button class="btn" data-a="leave">CONTINUE ▶</button>'
+        :`<button class="btn red" data-a="blood" ${canDealBlood()?'':'disabled'}>❤️ HP ${DEAL_HP} for a rare equipment item</button>
+          <button class="btn" data-a="coin" ${canDealCoin()?'':'disabled'}>🪙 ${DEAL_GOLD} for a random equipment upgrade</button>
+          <button class="btn alt" data-a="leave">DECLINE</button>`}</div>`;
+  }
+  $('#screen').innerHTML=`<div class="page"><div class="panel">${body}</div></div>`;
+  $('#screen .panel').onclick=e=>{
+    const bet=e.target.closest('[data-bet]');
+    if(bet&&!bet.disabled){
+      const du=duel(+bet.dataset.bet);if(!du)return;
+      SFX.rattle();setTimeout(()=>du.win>0?SFX.coin():du.win<0?SFX.error():0,500);save();render();return;
+    }
+    const a=e.target.closest('[data-a]');if(!a||a.disabled)return;
+    switch(a.dataset.a){
+      case 'spin':{
+        const res=spinWheel();save();x.spinning=1;render();SFX.select();
+        const disc=$('.wheel .disc');requestAnimationFrame(()=>requestAnimationFrame(()=>{disc.style.transform=`rotate(${360*6-(res*45+22.5)}deg)`}));
+        let t=0;const tk=()=>{if(t>4000)return;SFX.tick();t+=40+t*.12;setTimeout(tk,40+t*.12)};tk();
+        const s0=S;setTimeout(()=>{if(S!==s0||S.ctx!==x)return;delete x.spinning;wheelFx(applyWheel());save();render()},4400);
+        break;
+      }
+      case 'up':doUpgrade('🔨 CHOOSE AN UPGRADE',wheelUpgrade);break;
+      case 'blood':{const r=dealBlood();if(r){gotToast(r);SFX.spell();save();render()}break}
+      case 'coin':if(dealCoin()){SFX.levelup();save();render()}break;
+      case 'leave':afterNode();break;
+    }
+  };
+}
+
+// ---------- 게임 오버 / VICTORY ----------
+function renderEnd(win){
+  const m=Math.max(1,Math.round((Date.now()-S.st.start)/60000));
+  $('#screen').innerHTML=`<div class="page"><div class="panel">
+    <div class="bigico">${win?'👑':'💀'}</div><h2>${win?'Tonight you are the star!':'The show is over'}</h2>
+    <div class="fortuna"><div class="face">👸</div><div class="say">${win?'I cannot believe it… You beat me on my own stage! All the luck tonight is yours. Bravo!':'Heh, Fortune was not on your side. See you in the next show, Challenger~'}</div></div>
+    <div class="stats"><div><b>${S.floor}F</b>Reached</div><div><b>${CL[S.cls].i} Lv${S.level}</b>${CL[S.cls].n}</div><div><b>${S.st.kills}</b>Defeat</div><div><b>${S.st.dmg}</b>Total damage</div><div><b>${S.st.maxHit}</b>Largest hit</div><div><b>${S.st.turns}</b>Turn</div><div><b>${S.st.gold}</b>Gold earned</div><div><b>${m} min</b>Play time</div></div>
+    <h3>Final equipment</h3><div class="cards">${S.eq.map(it=>itemCardHTML(it)).join('')}</div>
+    <div class="row"><button class="btn glow" data-a="title">TITLE SCREEN</button></div></div></div>`;
+  $('[data-a="title"]').onclick=()=>{S=null;VIEW='title';render()};
+}
+
+// ---------- 툴팁 ----------
+function itemTip(id,u){
+  u=+u;const d=IT[id];if(!d)return '';const um=d.uses?d.uses(u):1,um1=d.uses?d.uses(1):1;
+  return`<div class="tt-h">${d.icon} ${d.name}${u?'+':''}<span class="rr r${d.rar}">${RARN[d.rar]}</span></div>
+    <div class="tt-t">${TYPEN[d.type]}${d.type==='spell'&&S&&S.cls==='mage'?' · Spellbook (Chain ready)':''}</div>
+    <div>🎲 Requirement: <b>${d.slots(u).map(condText).join(' + ')}</b></div>
+    <div>✨ Effect: ${descHTML(d.desc(u))}</div>
+    ${um>1?`<div>🔁 ${d.perCombat?'per combat':'per turn'} ${um} uses</div>`:''}
+    ${!u&&!d.mon?`<div class="tt-up">⬆ When upgraded: ${d.slots(1).map(condText).join(' + ')} · ${descHTML(d.desc(1))}${um1!==um?` · ${um1} times`:''}</div>`:''}`;
+}
+const tip=$('#tip');
+function hideTip(){tip.style.display='none'}
+function posTip(e){
+  if(tip.style.display!=='block')return;
+  const w=tip.offsetWidth,h=tip.offsetHeight;let x=e.clientX+16,y=e.clientY+16;
+  if(x+w>innerWidth-8)x=e.clientX-w-12;if(y+h>innerHeight-8)y=e.clientY-h-12;
+  tip.style.left=Math.max(4,x)+'px';tip.style.top=Math.max(4,y)+'px';
+}
+
+// =====================================================================
+//  초기화 & 메인 루프
+// =====================================================================
+let _last=performance.now();
+function loop(now){
+  const dt=Math.min(.05,(now-_last)/1000)*SET.speed;_last=now;
+  try{Tray.step(dt);Tray.draw(now);FX.step(dt);FX.draw(now);TitleFx.draw(now)}catch(e){console.error(e)}
+  requestAnimationFrame(loop);
+}
+function init(){
+  FX.init();
+  addEventListener('resize',()=>{FX.resize();Tray.resize()});
+  document.addEventListener('pointerdown',()=>SFX.unlock());
+  $('#top').addEventListener('click',e=>{
+    const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
+    if(a==='bag')openBag();
+    else if(a==='snd'){SET.sound=!SET.sound;saveSet();renderTop();SFX.select()}
+    else if(a==='spd'){SET.speed=SET.speed>=3?1:SET.speed+1;saveSet();renderTop()}
+    else if(a==='menu')openMenu();
+  });
+  $('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+  addEventListener('error',e=>onFatal(e.error||e.message));
+  addEventListener('unhandledrejection',e=>onFatal(e.reason));
+  document.addEventListener('mouseover',e=>{
+    const t=e.target.closest&&e.target.closest('[data-tip],[data-item]');
+    if(!t||(UI.drag&&UI.drag.moved)){hideTip();return}
+    tip.innerHTML=t.dataset.tip!=null?t.dataset.tip:itemTip(...t.dataset.item.split(':'));
+    tip.style.display='block';posTip(e);
+  });
+  document.addEventListener('mousemove',posTip);
+  document.addEventListener('keydown',e=>{
+    const k=e.key.toLowerCase(),a=document.activeElement;
+    if($('#modal').classList.contains('show')){
+      if(k==='escape')closeModal();
+      else if((k==='enter'||k===' ')&&a&&a.matches&&a.matches('#modal [data-k]')){e.preventDefault();a.click()}
+      return;
+    }
+    // 포커스된 Equipment 카드·맵 노드는 Enter/Space to activate (Keyboard 조작)
+    if((k==='enter'||k===' ')&&a&&a.matches&&a.matches('#pcards .card[data-ci],.node.avail')){
+      e.preventDefault();
+      if(a.classList.contains('node'))enterNode(+a.dataset.r,+a.dataset.i);else a.click();
+      return;
+    }
+    const C=S&&S.screen==='combat'&&S.combat;if(!C)return;
+    if(k==='e'||(k==='enter'&&(!a||a===document.body))){e.preventDefault();endTurn()}
+    else if(k==='escape'){UI.sel=null;UI.mode=null;render()}
+    else if(k==='r'||k==='q')useSkill();
+    else if(/^[1-9]$/.test(k)&&!UI.busy&&C.phase==='player'){
+      const d=C.dice[+k-1];if(d)chooseDie(d.id);
+    }
+  });
+  render();
+  requestAnimationFrame(loop);
+  // rAF가 멈춘 경우(비활성 탭, 가려진 창)에도 굴림 Effects이 끝나 Turn이 진행되도록 타이머 instead 진행
+  setInterval(()=>{
+    const now=performance.now(),gap=now-_last;if(gap<300)return;_last=now;
+    let t=Math.min(gap/1000,3)*SET.speed;
+    try{while(t>0){const dt=Math.min(.05,t);Tray.step(dt);FX.step(dt);t-=dt}}catch(e){console.error(e)}
+  },250);
+}
+init();
+</script>
+
+</body>
+</html>
