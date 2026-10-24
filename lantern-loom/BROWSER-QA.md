@@ -22,4 +22,6 @@ Separate assertions cover adapted bridge geometry, duplicate bus subscriptions a
 
 ## Scope
 
-Three themes, six mirrored route recipes, twelve collectible flowers, six finite gift families and three four-level permanent tools. Routes repeat; later chambers do not claim unlimited unique authored content. Reloading an active release returns to planning. Browser storage restrictions can prevent saving. Image loading has an 18-second bounded error and retry path.
+Three themes, six mirrored route recipes, twelve collectible flowers, six finite gift families and three four-level permanent tools. Routes repeat; later chambers do not claim unlimited unique authored content. Reloading an active release returns to planning. Browser storage restrictions can prevent saving. Image loading has an 45-second bounded error and retry path.
+
+Public first-load verification detected an overly short 18-second illustration timeout on the current network. The final build preloads that illustration at high priority and keeps a still-active request alive for up to 45 seconds, with a neutral progress notice after 12 seconds and a bounded retry state. The background remains lossless; no artwork was degraded to hide this network behavior.
