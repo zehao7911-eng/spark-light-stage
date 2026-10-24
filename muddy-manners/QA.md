@@ -8,3 +8,5 @@ Art/interaction repairs: corrected material color space; batched static interior
 Responsive checks include390x844 and320x667 (no horizontal overflow, main buttons46px+, free-romp button44px). Further final responsive/pause/public checks are recorded with the delivery evidence. These are browser viewport tests, not physical phone certification.
 
 Final checks:844x390 landscape inspected with no overflow, readable puppy and separate controls. 320x667 receipt and all main buttons checked; smallest secondary romp action44px. Pause snapshot was byte-identical across separated checks. Decoration collision and nearest reachable tap destination fallback added; all3 campaign/free-romp rules suites passed again. Low-detail foot/puff instances reduce geometry cost. Final public delivery evidence is saved separately.
+
+Public visual QA identified instance colors first allocated after material compilation, which could leave airborne mud white. Instance-color attributes now initialize before the first draw; local visual recheck performed before the final patch publication.
