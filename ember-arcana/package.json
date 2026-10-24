@@ -1,0 +1,1 @@
+{"name":"ember-arcana","version":"1.0.0","private":true,"type":"module","license":"AGPL-3.0-or-later","scripts":{"check":"biome format --write src tests build.mjs","test":"ava","build":"node build.mjs"},"dependencies":{"immer":"10.1.3"},"devDependencies":{"@biomejs/biome":"2.4.16","ava":"6.4.1","esbuild":"0.25.12"}}

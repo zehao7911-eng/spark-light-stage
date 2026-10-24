@@ -1,0 +1,122 @@
+
+  √ dungeon-complete-run › can complete entire dungeon from start to finish
+  √ dungeon-complete-run › validates path integrity at boss room
+  - [skip] dungeon-graph › can customize the type of rooms
+  √ dungeon-graph › graph is created with default options
+  √ dungeon-graph › can customize graph size with height and width
+  √ dungeon-graph › all height except first+last have between 2-5 rooms
+  √ dungeon-graph › can control room frequency
+  √ dungeon-graph › it respects the cols options
+  √ dungeon-graph › string graph works
+  √ dungeon-graph › can draw a path
+  - [todo] dungeon › we know when a campfire has been used
+  √ dungeon › can create rooms with many monsters
+  √ dungeon › can create a dungeon
+  √ dungeon › can set a dungeon
+  √ dungeon › we know when a monster room is won
+  √ dungeon › we know when a monster room with many monsters is completed
+  √ dungeon › we can navigate a dungeon
+  √ dungeon › paths persist independently of graph mutations
+  √ cards › can create an attack card
+  √ cards › can create a skill card
+  √ cards › card name must be exact
+  √ cards › can upgrade Strike card
+  √ cards › can upgrade all cards
+  √ cards › card names with plus always upgrade
+  √ cards › createCard handles already-upgraded card names
+  √ cards › upgrading is consistent
+  √ cards › all upgraded card names follow conventions
+  - [todo] actions › playing defend on an enemy ?
+  - [todo] actions › can apply a power to a specific monster
+  √ game › it all
+  √ game › game also contains actions
+  √ game › game has a createdAt timestamp
+  √ game › game has a endedAt timestamp if you are dead
+  √ ai › monster cycles through intents on its turn
+  √ ai › monster can do damage and gain block
+  √ ai › monsters can do several things at once
+  √ ai › monster can apply vulnerable and weak
+  √ ai › two monsters both do damage in same turn
+  √ ai › dead monsters dont play
+  √ ai › when multiple monsters attack in same turn, player block is removed between each
+  √ actions › new game state is ok (252ms)
+  √ actions › drawing a starter deck adds it to the draw pile (251ms)
+  √ actions › starter deck is shuffled (231ms)
+  √ actions › can add a card to hand (226ms)
+  √ actions › can upgrade a card (211ms)
+  √ actions › can draw cards from drawPile to hand (210ms)
+  √ actions › recycling the discard pile is shuffled (203ms)
+  √ actions › getTargets utility works (179ms)
+  √ actions › can manipulate player hp (176ms)
+  √ actions › can manipulate monster hp (174ms)
+  √ actions › can not play a card without enough energy (174ms)
+  √ actions › initial rooms monster hp is STILL as expected (173ms)
+  √ actions › can play a strike card from hand and see the effects on state (171ms)
+  √ actions › weak makes you deal 25% less damage (160ms)
+  √ actions › weak makes a monster deal 25% less damage (160ms)
+  √ actions › block on enemy actually blocks damage (150ms)
+  √ actions › block on player actually blocks damage (148ms)
+  √ actions › can play a defend card from hand and see the effects on state (132ms)
+  √ actions › when monster reaches 0 hp, you win! (132ms)
+  √ actions › can discard a single card from hand (132ms)
+  √ actions › can discard the entire hand (130ms)
+  √ actions › we can end an encounter with reshuffle and draw (128ms)
+  √ actions › ending a turn draws a new hand and recycles discard pile (117ms)
+  √ actions › ending a turn refreshes energy (110ms)
+  √ actions › ending a turn removes player's block (108ms)
+  √ actions › Vulnerable targets take 50% more damage
+  √ actions › Vulnerable damage is rounded down
+  √ actions › Vulnerable power stacks
+  √ actions › Regen power stacks
+  √ actions › Flourish card adds a healing "regen" buff
+  √ actions › target "allEnemies" works for damage as well as power
+  √ actions › add a reward card in the deck after winning a room
+  √ actions › can not play card if target doesnt match
+  √ actions › summer of sam card gains 1 life
+  √ actions › vulnerable is working
+  √ actions › Cleave targets all monsters
+  √ actions › Clash can only be played if it is the only attack
+  √ actions › Succube card applies regen
+  √ actions › upgraded cards are really upgraded
+  √ actions › "Deal damage equal to block" mechanic works
+  √ actions › setDeck sets a custom deck
+  - [skip] save-load › can serialize Set()
+  √ save-load › can save and load a game state
+  √ save-load › edges are stripped during encode
+  √ save-load › edges are reconstructed during decode
+  √ save-load › dungeon navigation works after save/load cycle
+  √ utils › random works
+  √ utils › setToArray converts Set to array
+  √ utils › setToArray leaves arrays unchanged
+  √ utils › setToArray converts empty object to empty array
+  √ utils › setToArray leaves non-empty objects unchanged
+  √ utils › setToArray leaves primitives unchanged
+  √ immer › normal produce
+  √ immer › curried produce
+  √ immer › nested produce?
+  √ powers › Type is either buff or debuff
+  √ queue › can add and run through queue
+  √ ember-run › all 27 cards and upgrades construct without mutating base definitions (686ms)
+  √ ember-run › playing custom actions never mutates frozen card parameters (683ms)
+  √ ember-run › upgrading a nested action never upgrades an unrelated unupgraded card (680ms)
+  √ ember-run › area vulnerability is evaluated independently per monster (680ms)
+  √ ember-run › Body Slam without block returns a valid state (679ms)
+  √ ember-run › explicit player-targeted cost on Soul Drain does not hurt the enemy instead (678ms)
+  √ ember-run › Strength persists while Weak and Vulnerable expire (677ms)
+  √ ember-run › death at exactly zero cannot start another turn (675ms)
+  √ ember-run › rewards pay once, cannot duplicate, and save with choices intact (674ms)
+  √ ember-run › rest and forge are exclusive choices with persistent upgrades (673ms)
+  √ ember-run › shop checks wallet, consumes stock, and never overspends (672ms)
+  √ ember-run › hero unlocks depend on completed encounters (671ms)
+  √ ember-run › invalid saves are rejected and active combat round-trips (670ms)
+  √ ember-run › relic start bonuses apply once per battle and do not duplicate on reload (668ms)
+  √ ember-run › Thorn Ring triggers on every third attack and Scholar Quill on fourth card (666ms)
+  √ ember-run › Night Blossom heals only on the first Skill each turn (665ms)
+  √ ember-run › event costs ignore block, reward once, and can cause defeat at zero health (664ms)
+  √ ember-run › new ascents scale real monster HP and attack but are capped at five (663ms)
+  √ ember-run › 24 full seeded campaigns terminate with valid state and reachable victory (663ms)
+  ─
+
+  111 tests passed
+  2 tests skipped
+  3 tests todo
