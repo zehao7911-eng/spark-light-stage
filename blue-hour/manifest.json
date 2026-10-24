@@ -1,0 +1,62 @@
+{
+  "ART-SOURCE.md": {
+    "bytes": 2916,
+    "sha256": "0a06a75a3ab5457c8153f6c14a5d89c8049d7176dd43f4101d071a7793ac041a"
+  },
+  "ASSET-QA.md": {
+    "bytes": 524,
+    "sha256": "79ce9572a706b9f15b1ff6bd7146e7caf7f6f72d4cb563c18d374e47d52c3ce2"
+  },
+  "BROWSER-QA.md": {
+    "bytes": 1767,
+    "sha256": "d0a46842bab09d1ec0845ab3181a95e13580eb68d0c1ac9253d81b21f7fed54b"
+  },
+  "desk.png": {
+    "bytes": 2088250,
+    "sha256": "22c80dac1bb30400ebd8ce2bdbc18f307fbe756666c5c3fe6ce898b217add5fc"
+  },
+  "desk.webp": {
+    "bytes": 1742536,
+    "sha256": "935512dc09ccda0e7fa26f97b17b1dd4bf1407be161d19f7665ea3c324ea7287"
+  },
+  "font.json": {
+    "bytes": 2173,
+    "sha256": "f14da71e8af0d2e457b43d6936dc0a15723a43575afacb501f1a806d3a1e5339"
+  },
+  "game.css": {
+    "bytes": 5730,
+    "sha256": "4caf38225fbf7953933b787104fde06cc91941e293f580244a624bf0af054ed4"
+  },
+  "game.js": {
+    "bytes": 19259,
+    "sha256": "36af82e0846f9d2fdab524c7f2784345507f6b6278787f4348546ee021c40ce0"
+  },
+  "index.html": {
+    "bytes": 1794,
+    "sha256": "f70a9918345b066458cf1ef1a3a6f0e52dbaeb8f34d62b5191310f7920b1a02f"
+  },
+  "items.png": {
+    "bytes": 1157136,
+    "sha256": "3c8c1ad3fb3dd6030eca52c0ff564fb234ee02f68d4aa81e7f40d16ef4deaa40"
+  },
+  "items.webp": {
+    "bytes": 937640,
+    "sha256": "880fd34f7d2c781ba8908b260557dad400c8247735b9bbac96eb220aa662a4e2"
+  },
+  "qa.py": {
+    "bytes": 1961,
+    "sha256": "8c3a37298e16658c24c4209f608904c335fab1aea9374bd52a85dd87046554d0"
+  },
+  "README.md": {
+    "bytes": 3359,
+    "sha256": "785a1de5a440f4f4878822e0b261f811af4f7b16dc92e17f29ac1c9dd3dd51db"
+  },
+  "rules.js": {
+    "bytes": 7236,
+    "sha256": "93eb871dad11a162dfa2330b7f1c9eac4d9d4c3bcd5f95ffbbfac609699eaa9a"
+  },
+  "test-rules.cjs": {
+    "bytes": 1801,
+    "sha256": "d2e2521602782ec40812b7ce481de50ae9dfc284df70271634830d0bd706f6cb"
+  }
+}

@@ -1,0 +1,36 @@
+(function(root,f){if(typeof module==='object'&&module.exports)module.exports=f();else root.BlueRules=f();})(typeof globalThis!=='undefined'?globalThis:this,function(){
+'use strict';
+const W=44,H=24,N=W*H;
+const ITEMS=['ORANGE','JUICE','PEACH TIN','CANDY','STAMP ROLL','THERMOS','MATCHBOX','BERRY JAM','PEARL SHELL','GOLD STAR','MOON CHARM','CLOVER'];
+const PACKS=[{name:'CORNER SHOP',at:0,pool:4,mult:1},{name:'POSTCARD PICNIC',at:3,pool:8,mult:1.3},{name:'SEASIDE NIGHT',at:8,pool:11,mult:1.7},{name:'MIDNIGHT MARKET',at:16,pool:12,mult:2.2}];
+const UP=[{name:'BRUSH',base:24,desc:'A wider scratch path at every level.'},{name:'LUCK',base:32,desc:'More matching tickets and a better chance of rare finds.'},{name:'SPEED',base:38,desc:'Unlock Sweep: reveal 1, 2, 3, then 6 panels per ticket.'},{name:'CHAIN',base:30,desc:'Each revealed panel adds a larger chain reward.'},{name:'CRATE',base:42,desc:'Extra ticket rewards. Level 2 adds a bonus souvenir.'},{name:'GLOW',base:48,desc:'More gold from every find. Level 2 doubles every fourth ticket bonus.'}];
+function rng(s){let a=s.seed>>>0;a^=a<<13;a^=a>>>17;a^=a<<5;s.seed=a>>>0;return s.seed/4294967296;}
+function pick(s,a){return a[Math.floor(rng(s)*a.length)];}
+function pool(s){return Array.from({length:PACKS[s.pack].pool},(_,i)=>i);}
+function order(s){const id=s.orders;return id===0?{kind:'item',item:0,goal:3,progress:0,reward:40}:id%3===1?{kind:'panels',item:0,goal:12+Math.min(12,id),progress:0,reward:45+Math.min(200,id*10)}:id%3===2?{kind:'matches',item:0,goal:2,progress:0,reward:60+Math.min(200,id*10)}:{kind:'item',item:pick(s,pool(s)),goal:4+Math.min(4,Math.floor(id/6)),progress:0,reward:60+Math.min(200,id*10)};}
+function fresh(seed){const s={v:1,seed:(seed===undefined?Date.now():seed)>>>0||1,coins:0,tickets:0,total:0,pack:0,up:[0,0,0,0,0,0],inventory:Array(12).fill(0),orders:0,order:null,badges:[false,false,false,false],sound:true,started:false,current:null,history:[]};s.order=order(s);next(s);return s;}
+function symbol(s,p){return s.up[1]&&rng(s)<s.up[1]*.1?pick(s,p.slice(Math.max(0,p.length-3))):pick(s,p);}
+function next(s){if(s.current&&!s.current.done)return false;const p=pool(s);let symbols=Array.from({length:6},()=>symbol(s,p));if(s.tickets===0)symbols=[0,0,3,0,1,2];else if(rng(s)<.32+s.up[1]*.09){const item=symbol(s,p);for(const i of [0,2,4])symbols[i]=item;}
+ s.current={id:s.tickets+1,pack:s.pack,symbols,mask:Array.from({length:6},()=>Array(N).fill(0)),revealed:Array(6).fill(false),earned:0,done:false,sweepUsed:false,result:null};return true;}
+function price(s,i){return Math.round(UP[i].base*Math.pow(1.8,s.up[i]));}
+function buy(s,i){if(!Number.isInteger(i)||i<0||i>=6||s.up[i]>=4)return false;const c=price(s,i);if(s.coins<c)return false;s.coins-=c;s.up[i]++;return true;}
+function availablePacks(s){return PACKS.map((p,i)=>p.at<=s.tickets?i:-1).filter(i=>i>=0);}
+function setPack(s,i){if(!availablePacks(s).includes(i))return false;s.pack=i;return true;}
+function advanceOrder(s,kind,item,count=1){if(s.order.kind===kind&&(kind!=='item'||s.order.item===item))s.order.progress=Math.min(s.order.goal,s.order.progress+count);}
+function finish(s){const t=s.current;const counts=Array(12).fill(0);t.symbols.forEach(i=>counts[i]++);const groups=counts.map((n,i)=>({n,i})).filter(x=>x.n>=3);let match=groups.reduce((a,g)=>a+24*(g.n-2),0);const moon=s.up[5]>=2&&t.id%4===0;let bonus=Math.round((match+s.up[4]*8)*PACKS[t.pack].mult*(moon?2:1));s.coins+=bonus;t.earned+=bonus;s.tickets++;s.total+=t.earned;advanceOrder(s,'matches',0,groups.length);t.done=true;
+ const newPacks=PACKS.filter(p=>p.at===s.tickets).map(p=>p.name);let badgeBonus=0;
+ for(let i=0;i<4;i++){if(!s.badges[i]&&s.inventory.slice(0,PACKS[i].pool).every(n=>n>0)&&s.tickets>=PACKS[i].at){s.badges[i]=true;badgeBonus+=50*(i+1);}}
+ s.coins+=badgeBonus;t.earned+=badgeBonus;s.total+=badgeBonus;
+ if(s.up[4]>=2){const souvenir=groups.length?groups[0].i:t.symbols[0];s.inventory[souvenir]++;}
+ const result={groups,bonus,badgeBonus,earned:t.earned,newPacks,moon,master:s.tickets===32};t.result=result;s.history.unshift({id:t.id,earned:t.earned,match:groups.length>0,pack:t.pack});s.history=s.history.slice(0,8);return result;}
+function reveal(s,slot){const t=s.current;if(!t||t.done||slot<0||slot>=6||t.revealed[slot])return null;t.mask[slot].fill(1);t.revealed[slot]=true;const id=t.symbols[slot],isNew=s.inventory[id]===0;s.inventory[id]++;const count=t.revealed.filter(Boolean).length;let gold=Math.round([3,4,4,3,5,5,6,7,8,9,10,10][id]*PACKS[t.pack].mult*(1+s.up[5]*.15))+Math.floor(s.up[3]*count/2);s.coins+=gold;t.earned+=gold;advanceOrder(s,'item',id);advanceOrder(s,'panels',0);const out={slot,id,isNew,gold,finished:null};if(t.revealed.every(Boolean))out.finished=finish(s);return out;}
+function scratch(s,slot,cx,cy,r){const t=s.current;if(!t||t.done||t.revealed[slot])return{changed:0,reveal:null};const m=t.mask[slot];let changed=0;for(let y=Math.max(0,Math.floor(cy-r));y<Math.min(H,Math.ceil(cy+r+1));y++)for(let x=Math.max(0,Math.floor(cx-r));x<Math.min(W,Math.ceil(cx+r+1));x++)if((x-cx)*(x-cx)+(y-cy)*(y-cy)<=r*r&&!m[y*W+x]){m[y*W+x]=1;changed++;}const cleared=m.reduce((a,b)=>a+b,0);return{changed,reveal:cleared>=N*.72?reveal(s,slot):null};}
+function sweepCount(s){return s.up[2]?[0,1,2,3,6][s.up[2]]:0;}
+function sweep(s){if(!s.current||s.current.done||s.current.sweepUsed||!sweepCount(s))return[];s.current.sweepUsed=true;return s.current.revealed.map((yes,i)=>yes?-1:i).filter(i=>i>=0).slice(0,sweepCount(s));}
+function claim(s){if(s.order.progress<s.order.goal)return 0;const gold=s.order.reward;s.coins+=gold;s.orders++;s.order=order(s);return gold;}
+function restore(raw){try{const s=typeof raw==='string'?JSON.parse(raw):raw;const num=(v,a,b)=>Number.isInteger(v)&&v>=a&&v<=b;if(!s||s.v!==1||!num(s.seed,0,4294967295)||!num(s.coins,0,9e12)||!num(s.tickets,0,1e8)||!num(s.total,0,9e12)||!num(s.pack,0,3)||!Array.isArray(s.up)||s.up.length!==6||!s.up.every(x=>num(x,0,4))||!Array.isArray(s.inventory)||s.inventory.length!==12||!s.inventory.every(x=>num(x,0,1e9))||!num(s.orders,0,1e8)||!Array.isArray(s.badges)||s.badges.length!==4||!s.badges.every(x=>typeof x==='boolean')||typeof s.sound!=='boolean'||typeof s.started!=='boolean'||!Array.isArray(s.history)||s.history.length>8)return null;
+ const o=s.order;if(!o||!['item','matches','panels'].includes(o.kind)||!num(o.item,0,11)||!num(o.goal,1,100)||!num(o.progress,0,o.goal)||!num(o.reward,0,1000))return null;
+ const t=s.current;if(!t||!num(t.id,1,1e8)||!num(t.pack,0,3)||!Array.isArray(t.symbols)||t.symbols.length!==6||!t.symbols.every(x=>num(x,0,PACKS[t.pack].pool-1))||!Array.isArray(t.mask)||t.mask.length!==6||!t.mask.every(x=>Array.isArray(x)&&x.length===N&&x.every(v=>v===0||v===1))||!Array.isArray(t.revealed)||t.revealed.length!==6||!t.revealed.every(x=>typeof x==='boolean')||!num(t.earned,0,1e9)||typeof t.done!=='boolean'||typeof t.sweepUsed!=='boolean'||t.done!==t.revealed.every(Boolean))return null;
+ if(t.revealed.some((v,i)=>v&&!t.mask[i].every(Boolean)))return null;return JSON.parse(JSON.stringify(s));}catch(_){return null;}}
+return{W,H,N,ITEMS,PACKS,UP,fresh,next,price,buy,availablePacks,setPack,reveal,scratch,sweep,sweepCount,claim,restore};
+});
