@@ -1,0 +1,31 @@
+✔ source beam grows while held and decays on release (4.4672ms)
+✔ source sine sweep and direct steering remain bounded (0.2767ms)
+✔ actual source attraction lifts fruit toward ship (0.3882ms)
+✔ release applies original vertical damping and lateral fling (0.099ms)
+✔ released burr touching edge becomes collectible starfruit exactly once (0.1177ms)
+✔ physical overlap separates bodies and never produces NaN (0.1399ms)
+✔ fruit contact catches once and burr contact damages once (0.076ms)
+✔ missed upper airlock fruit turns hazardous instead of silently collecting (0.0608ms)
+✔ ready/result games do not advance or accept active abilities (0.7655ms)
+✔ a whole piloted flight meets quota with finite bodies and visible rewards (15.6311ms)
+✔ event lists aggregate all fixed substeps in one tick (0.2703ms)
+✔ claim banks each completed flight once and new ready state cannot claim (5.3457ms)
+✔ replaying does not duplicate best medals but earns fresh flight coins (9.1156ms)
+✔ pulse unlock, conversion, cooldown and upgrade are physical (0.1737ms)
+✔ lens and coil change actual beam width and attraction (0.1319ms)
+✔ gear prices, cap, active-run restriction and hull are enforced (2.8838ms)
+✔ special fruits unlock at earned medal thresholds (0.2959ms)
+✔ bubble catch purifies one burr (0.2927ms)
+✔ reload restores exact active physics and RNG while releasing held input (12.6004ms)
+✔ completed save cannot bank twice after reload (2.4706ms)
+✔ eight successive flights unlock pulse, starfruit, bubbles and grove progression (43.7567ms)
+✔ a clustered burr collision removes one heart and grants recovery time (0.3568ms)
+✔ a low-frame-rate half-second batch matches thirty fixed physics frames (0.6836ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 249.4709
