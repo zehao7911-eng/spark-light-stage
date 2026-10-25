@@ -1,0 +1,4 @@
+import {build} from 'esbuild';const test=process.argv.includes('--test');
+let worker='';if(!test){const w=await build({entryPoints:['src/hint-worker.js'],bundle:true,format:'iife',platform:'browser',target:'es2020',write:false,minify:true});worker=w.outputFiles[0].text;}
+await build({entryPoints:[test?'tests/game.test.js':'src/app.js'],bundle:true,format:test?'cjs':'iife',platform:test?'node':'browser',target:test?'node22':'es2020',outfile:test?'.test-bundle.cjs':'game.js',minify:!test,define:{__HINT_WORKER_SOURCE__:JSON.stringify(worker)},banner:{js:'/*! Thimbleguard. Includes a port of Ending rules by Aaron Steed. GPL-2.0. Corresponding source, originals, license and changes are included. */'}});
+if(!test)await build({entryPoints:['src/hint-worker.js'],bundle:true,format:'iife',platform:'browser',target:'es2020',outfile:'hint-worker.js',minify:true,banner:{js:'/*! Ending rule port, Aaron Steed, GPL-2.0. See NOTICE.md and corresponding source. */'}});

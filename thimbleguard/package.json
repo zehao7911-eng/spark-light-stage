@@ -1,0 +1,1 @@
+{"name":"thimbleguard","version":"1.0.0","private":true,"type":"module","license":"GPL-2.0-only","scripts":{"build":"node build.mjs","test":"node build.mjs --test && node --test .test-bundle.cjs"},"devDependencies":{"esbuild":"0.25.12"}}

@@ -1,0 +1,46 @@
+First room solved in 12 actions
+Garden 1 cleared in 12 actions; hearts 4
+Garden 2 cleared in 13 actions; hearts 3
+Garden 3 cleared in 13 actions; hearts 3
+Garden 4 cleared in 11 actions; hearts 4
+Garden 5 cleared in 12 actions; hearts 4
+Garden 6 cleared in 11 actions; hearts 3
+Garden 7 cleared in 12 actions; hearts 4
+Garden 8 cleared in 14 actions; hearts 4
+Garden 9 cleared in 13 actions; hearts 4
+Garden 10 cleared in 12 actions; hearts 3
+Garden 11 cleared in 19 actions; hearts 3
+Garden 12 cleared in 17 actions; hearts 3
+✔ grid allocation has independent rows and fills exact rectangles (1.0496ms)
+✔ forge validates wallet, price and cap, persists outside turn undo (1.0334ms)
+✔ direction rotation preserves non-direction properties (0.0887ms)
+✔ blocked moves never consume turns or create undo states (0.5081ms)
+✔ direction threats distinguish turners, fixed movers and traps (0.2438ms)
+✔ beetle turns before stepping in a new direction (0.263ms)
+✔ bump strike defeats a sentry while keeping player in place (0.2928ms)
+✔ multiple adjacent enemies cause at most one scratch in a turn (0.1294ms)
+✔ per-room ward blocks a hit and is consumed exactly once (0.5867ms)
+✔ guard blocks the incoming strike without spending a ward (0.202ms)
+✔ seed chain resolves each seed once and respects stone walls (0.1556ms)
+✔ path propagation finds nearby entities without traversing walls (0.0926ms)
+✔ exact engine snapshot round trips directional/transient bits (0.1415ms)
+✔ undo restores the entire turn including earned room coins (0.4434ms)
+✔ Dash is locked until garden four and spends one charge for two steps (0.2345ms)
+✔ Pulse unlocks in garden seven and resolves adjacent foes (0.1155ms)
+✔ optional crystal rewards and healing happen once and undo correctly (0.202ms)
+✔ active save continuation matches uninterrupted legal actions (0.3341ms)
+✔ fallen state offers a free undo rather than deleting progress (0.1098ms)
+✔ claim is restricted to current offered gifts and banks reward once (3.8172ms)
+✔ a reloaded reward offers the same gifts and no duplicate coins (2.5651ms)
+✔ all gift levels have actual charge, health or reward effects (0.0888ms)
+✔ two full routes claim and retain growing unlocks without a free reward exploit (66.496ms)
+✔ authored first garden can be cleared with legal player actions (2.7709ms)
+✔ all twelve rooms clear from base equipment without illegal actions (36.1047ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 175.6607
