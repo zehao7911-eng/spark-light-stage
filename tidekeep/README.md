@@ -1,0 +1,10 @@
+# Tidekeep
+Mobile HTML5 miniature-island tower defense. Serve this folder via a static HTTP server and open index.html. No build, CDN, remote font, external runtime asset, backend or login needed. WebGL required. Bundled Three.js147 MIT license in vendor/.
+
+Actual source adaptation: Casmo/tower-defense https://github.com/Casmo/tower-defense at 784129a685627a18f3d3f8fa594208000d9313e8, Copyright2014 Mathieu, MIT. source-combat.js retains the inRange squared-distance method, adapts Tower.shoot target retention/reacquisition, Bullet.update L1 homing formula with delta-time conversion, and Enemy.removeHealth score/resource resolution. Upstream unmodified Tower/Bullet/Enemy snapshots in upstream/; LICENSE-TOWER-DEFENSE.txt retained. This is a completed new campaign built from that prototype's combat mechanics, not a wholesale port of its original renderer/assets.
+
+Original code-built Three3D island/lighthouse/boat/foliage/ceramic towers/enemies/coins/particles, three distinct road layouts/color settings, 18 waves/three bosses, three tower types, three tower levels, slowing/splash/fast-shot synergies, chargeable knockback bell, sell/refund, score/9-star bests, sequential island unlocks, active-wave save including projectiles/targets, optional2xspeed and sound. English sparse touch/keyboard UI; 44px projected pad controls. No image generation or commercial assets.
+
+Controls: select type then empty pad to build; existing pad opens range/upgrade/sell. First build starts wave1. Next Wave sends later waves. Bell activates when charged during a wave. Space=wave/bell; Escape=pause. Storage key tidekeep-v1; storage denial stays playable for the current session. Pausing/backgrounding stops game/sound. Rendering capped40FPS, DPR1.5, instanced creature parts/projectiles/particles; shared geometries and cached materials.
+
+Run node tests.mjs to test all three campaign clears, range math, in-flight restore continuation, duplicate/invalid building, charged-bell rules and loss. Responsive browser checks are not physical handset certification.
