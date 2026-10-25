@@ -1,0 +1,12 @@
+{
+  "frames": 24,
+  "fps": 24,
+  "duration": 1,
+  "columns": 8,
+  "rows": 3,
+  "frameWidth": 256,
+  "frameHeight": 384,
+  "source": "Desktop 2026.10.25 - 14.16.06.01.mp4",
+  "sourceStart": 5,
+  "method": "green-screen alpha key and despill; original frames, no reconstructed motion"
+}

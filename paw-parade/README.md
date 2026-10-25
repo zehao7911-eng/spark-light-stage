@@ -1,29 +1,29 @@
-# PAW PARADE
+# PAW PARADE — transparent cat animation edition
 
-A portrait-first HTML5 cat dance club and 12-level lineup puzzle. All libraries and textures are bundled. Open `index.html` or upload this folder to static hosting. No server, account, CDN, payment or analytics is required.
+This revision replaces the previous reconstructed 3D cat with the actual green-screen dance frames supplied by the user in `Desktop 2026.10.25 - 14.16.06.01.mp4`.
 
-## The cats
+## Cat animation
 
-The silver cat's facial appearance and front coat texture are derived from the single-cat view at 0.5 seconds in the user-provided reference video `ca2e7a87b2822fa944a64f6869ce79c2.mp4`. `cat-reference.png` is the authoring crop; `cat-albedo.webp` is the cleaned projection texture. The back/side fur texture is locally authored. These are not represented as a wholly original cat photograph or as an extracted original 3D model.
+A clean one-second section starting at 5 seconds was cropped away from the recording's browser controls, logos and on-screen toast. Green-screen keying and green-edge despill produce 24 transparent 256×384 frames. The supplied movement is retained; no limbs, face or body motion are reconstructed.
 
-The actual 3D geometry is locally authored: pear-shaped lathed torso, volumetric head, separate triangular ears, upper arms and wrist/paw pivots, two stepping feet, curved tail, collar and bell. Front-facing regions use the supplied cat appearance; sides and back use the shared fur. The body has real thickness and can be viewed from other angles, although the single photographic front reference limits side and rear fidelity. There is no simulated strand fur, imported commercial model, Tripo generation or motion-capture file.
+- `assets/cat-dance.gif`: actual transparent animated GIF, 24 frames, 1000ms loop.
+- `assets/cat-dance-atlas.webp`: the identical RGBA frames in an 8×3 sheet.
+- `assets/animation.json`: frame timing and source provenance.
+- `assets/textures.js`: embedded atlas for reliable offline opening.
+- `cat-animation.js`: camera-facing animated planes; no 3D cat mesh or skeleton.
 
-Dance animation is newly authored, with alternating forward paw swings, wrist motion, hip roll, head counter-motion, body bounce/compression, toe lifts and delayed tail sway. Sync, Wave and Shuffle change phase and movement. This aims to match the reference's recognizable silhouette and dance feeling; it is not a claim of identical source topology or frame-perfect choreography.
+The game plays the GIF's frames from a shared atlas so many cats can stay synchronized, have independent phase offsets, change speed, and pause exactly. Camera-facing planes keep the original appearance when the 3D stage rotates. The stage, floor, rings, beams and mirror ball remain 3D. Color labels belong to the numbered ground rings; the cat itself is not recolored.
 
 ## Play
 
-The top row shows the required color/shape at each numbered seat. Tap two cats, or their large numbered buttons, to swap them. Cats move to their new positions. Circle, triangle and diamond icons accompany the three colors. Complete all matches for a celebration and the next lineup. There are 12 finite lineups of 4–12 cats, not an endless campaign.
+Tap two cats, or their large numbered buttons, to swap positions. Match the top color/shape order. Twelve finite lineups contain 4–12 cats. One completion star, one for optimal swaps + 2 or fewer, one for using no hint; only the best result per lineup counts. Undo counts as an action. Hints highlight a suggested pair. Keyboard 1–9 selects the first nine seats; H hints, Z undoes, Escape pauses.
 
-One star is awarded for completion, another for at most optimal swaps + 2, and another for using no hint. Only the best result counts per lineup. Undo counts as an action. Hints highlight a legal next pair without making the move. Keyboard 1–9 selects the first nine seats; H hints, Z undoes, Escape pauses. Seats 10–12 use the touch/mouse buttons.
+FREE RAVE supports 1–24 cats. Stage Mix changes Arc / Grid / Heart / Circle / Wave formations, synchronized / wave / shuffled playback phases, palette, brightness, tempo, moving beams and disco floor. Drag to orbit; mouse wheel zooms; RESET VIEW restores the camera. The music button enables an original synthesized loop, not the recording's audio.
 
-FREE RAVE provides 1–24 cats. Open Stage Mix to change Arc / Grid / Heart / Circle / Wave formations, dance, palette, brightness, tempo, light beams and disco tiles. Drag the stage to orbit; mouse wheel zooms; RESET VIEW restores the camera. Enable music with the top music button. The original synthesized disco loop is not audio copied from the reference videos.
+## Offline, mobile and save
 
-## Mobile and save
+Open index.html or upload the whole folder to static HTML5 hosting. All dependencies and image data are included; no CDN or runtime download is needed. Touch buttons are at least 44px, including the 12-seat lineup at 320px width. DPR is capped at 1.5 and rendering is capped near 40 FPS. Actual physical-handset FPS is not certified.
 
-Both portrait and landscape are supported; numbered selection buttons remain at least 44 pixels, including the final 12-cat lineup at 320px width. Cat meshes share geometry and are rendered with instancing. The renderer caps DPR at 1.5 and targets 40 FPS; it does not guarantee that rate on every phone. Physical-handset testing has not been performed.
+Lineup state, best stars, music and stage settings, free-rave count/mode persist in browser storage. Reload resumes unfinished play paused with transient selection cleared. Blocked storage leaves the session playable. Pause / hidden tab / blur stop image-frame time and audio. Asset failure and graphics-context loss show Retry.
 
-The browser stores the lineup, logical arrangement, swap count, hints, best stars, music setting, free-rave mode/count and stage settings. Reloading an unfinished lineup resumes paused and clears the transient selection; cosmetic swap motion settles to the saved logical positions. Blocked storage leaves the current session usable. Pause, blur and hidden-tab events stop dancing and audio. A graphics-context loss displays Retry. Texture failure has a visible error/retry panel rather than an endless loading screen.
-
-Texture data is embedded in `assets/textures.js` so local-file WebGL does not depend on permissive file-access flags. Separate WebP files and the crop are included as source assets. Model and scene source are in `model.js` / `scene.js`.
-
-Three.js r147 is MIT licensed; see THREE-LICENSE.txt. Rights to the supplied reference imagery remain with their respective owners; the code/library license does not grant additional rights to that imagery.
+The game code and stage are locally authored. Cat imagery originates from the user's supplied recording; rights remain with the respective owners. Three.js r147 is MIT licensed, see THREE-LICENSE.txt. This revision does not claim an original cat model or original dance animation.
