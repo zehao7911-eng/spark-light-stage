@@ -1,6 +1,6 @@
 import {Point,closedLoop,contains} from './coil-core.js';
 import {GARDENS,fresh,tick,capture,medal,restore,settle} from './rules.js';
-import {THEMES,makeBackdrop,wisp,bramble,flower,lantern,guardian} from './art.js';
+import {THEMES,makeBackdrop,wisp,bramble,flower,lantern,guardian,ambience} from './art.js';
 const $=s=>document.querySelector(s),canvas=$('#garden'),g=canvas.getContext('2d',{alpha:false});
 let profile={stars:Array(9).fill(0),best:Array(9).fill(0),found:[0,0,0],ribbon:0,tap:false,sound:false,current:null};try{const p=JSON.parse(localStorage.getItem('wispweaver-v1'));if(p&&Array.isArray(p.stars)&&p.stars.length===9&&p.stars.every(x=>Number.isInteger(x)&&x>=0&&x<=3)&&Array.isArray(p.best)&&p.best.length===9&&p.best.every(x=>Number.isFinite(x)&&x>=0)&&Array.isArray(p.found)&&p.found.length===3&&p.found.every(x=>Number.isInteger(x)&&x>=0))profile={...profile,...p,ribbon:[0,1,2].includes(p.ribbon)?p.ribbon:0}}catch{}
 let r=restore(profile.current)||fresh(0),state='menu',returnState='menu',w=innerWidth,h=innerHeight,dpr=1,box={},backdrop,backTheme=-1,trail=[],drawing=false,activePointer=null,trailLength=0,fx=[],flights=[],rings=[],floating=[],callTime=0,bounce=0,shake=0,clock=0,last=performance.now(),acc=0,audio=null,ambient=null,sound=!!profile.sound,voiceCount=0,voices=new Set();
@@ -52,7 +52,7 @@ function update(dt){if(state!=='play'&&state!=='menu')return;clock+=dt;bounce=Ma
  for(const p of fx){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=20*dt;p.t-=dt}fx=fx.filter(p=>p.t>0);
  for(const f of flights){f.t+=dt;let q=Math.min(1,f.t/f.duration),ease=1-(1-q)**3;f.x=f.sx+(w*.5-f.sx)*ease;f.y=f.sy+((h-(w>h?65:142))-f.sy)*ease-Math.sin(q*Math.PI)*60;}flights=flights.filter(f=>f.t<f.duration);for(const ring of rings)ring.t-=dt;rings=rings.filter(x=>x.t>0);for(const f of floating){f.y-=dt*24;f.t-=dt}floating=floating.filter(f=>f.t>0);}
 function stroke(points){if(!points.length)return;g.beginPath();let p=screen(points[0]);g.moveTo(p.x,p.y);for(let i=1;i<points.length;i++){p=screen(points[i]);g.lineTo(p.x,p.y)}}
-function draw(){if(!w||!box.w)return;const theme=GARDENS[r.level].theme,t=THEMES[theme];if(backTheme!==theme){backdrop=makeBackdrop(Math.round(w),Math.round(h),theme);backTheme=theme;}g.setTransform(dpr,0,0,dpr,0,0);g.drawImage(backdrop,0,0,w,h);g.save();if(shake)g.translate((Math.random()-.5)*shake,(Math.random()-.5)*shake);
+function draw(){if(!w||!box.w)return;const theme=GARDENS[r.level].theme,t=THEMES[theme];if(backTheme!==theme){backdrop=makeBackdrop(Math.round(w),Math.round(h),theme);backTheme=theme;}g.setTransform(dpr,0,0,dpr,0,0);g.drawImage(backdrop,0,0,w,h);ambience(g,w,h,theme,clock);g.save();if(shake)g.translate((Math.random()-.5)*shake,(Math.random()-.5)*shake);
  // Quiet moving mist and a small number of drifting motes, separate from collectible wisps.
  for(let i=0;i<15;i++){let xx=(i*97+Math.sin(clock*.17+i)*27)%w,yy=h*.43+(i*37%(h*.39));g.globalAlpha=.12+.1*Math.sin(clock+i);g.fillStyle='#f3e4a4';g.beginPath();g.arc(xx,yy,.8,0,6.3);g.fill()}g.globalAlpha=1;
  const progress=r.caught/GARDENS[r.level].goal;for(let i=0;i<10;i++){const angle=i*Math.PI*2/10;let x=w*.5+Math.cos(angle)*Math.min(w*.37,240),y=h-(w>h?56:155)+Math.sin(angle)*20;flower(g,x,y,.65+progress*.25,i<progress*10?t.accent:'#466a66',i<progress*10)}
