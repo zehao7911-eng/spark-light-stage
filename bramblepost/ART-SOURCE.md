@@ -1,0 +1,17 @@
+# Bramblepost art source
+
+Mode: built-in image generation. Both selected images are saved inside the game directory and converted to lossless WebP without drawing or retouching in Python.
+
+## Unified direction
+Deep teal ink, sage midtones, parchment panels, amber brass and restrained coral; clustered hard-edged pixels, no mixed high-resolution photography. The supply atlas has six equal cells (3 columns × 2 rows); all values, layout and clue text remain real HTML. Character portraits are original 16×16 code sprites. Inventory, board and request icons share the exact same atlas. Far scenery is lower contrast; foreground objects use stronger silhouettes and concentrated highlights. Interface and particles use squared edges and the local VT323 pixel font.
+
+## scene.webp
+Original: exec-2c31de3f-c88e-4631-863c-f9ae7cdb4daf.png, 1672×941 RGB.
+
+Use case: stylized-concept. Asset type: original pixel-art game background, wide 16:9 illustration used as a 160-pixel-high scenic header. Create an exquisitely crafted crisp pixel-art scene for BRAMBLEPOST: a tiny moss-green brass-trimmed woodland postal locomotive with its parcel wagon, standing on a small stone viaduct in a whimsical deep teal forest at blue hour. Lantern-lit little brick post office on the far left, mushroom groves, fern beds, shallow stream below the bridge, staggered tree silhouettes and delicate fireflies; rich but organized clustered pixels and clear hard staircase edges, no smooth painted rendering. Train positioned center-right, side view, readable silhouette and ochre windows; red satchel hangs by the cab, little steam puff above. Small original mouse postmaster leaning out of window. Palette: darkest #182d34, teal #345659, sage #78927d, parchment #e9d4a2, brass #d7a550, coral #c67969. Background quieter and lower contrast, focal train lit with warm honey pixels. No words, numbers, typography, borders, UI, or logos. Not a copy of any existing commercial game. Landscape composition polished as premium indie pixel scenery.
+
+## items.webp
+Original: exec-c28122b5-29cc-41f1-bd57-b9cd9d8549a2.png, 1536×1024 RGBA. Preserve generated alpha.
+
+Use case: stylized-concept. Asset type: transparent pixel-art ingredient sprite atlas for an original cozy woodland postal puzzle game BRAMBLEPOST. Exactly 3 columns by 2 rows, evenly spaced equal cells on a truly transparent background. Each sprite centered with generous transparent margin and no cast shadow beyond its own cell. Row 1 left to right: a sage-green tin of tea with a tiny leaf emblem; a tied bundle of ripe coral-red berries with two little green leaves; a golden honey jar with amber lid and small honey dipper. Row 2 left to right: a parchment envelope tied with a coral ribbon and round brass wax seal; two plump dusky lavender plums with a sage leaf; a small pale blue luminous moonflower with golden center and green stem. Crisp high-quality clustered pixel art, visible squared staircase edges, about 32x32 logical pixels each enlarged with nearest-neighbor look, carefully limited 4-5 tone ramps per material; highlights upper-left, darkest teal outline, saturated readable silhouettes. Palette: ink #182d34, teal #345659, sage #78927d, parchment #e9d4a2, brass #d7a550, coral #c67969, lavender #8584b7. The six sprites must feel from the same premium indie pixel world, no smooth shading, no typography, no grid lines, no UI frames, no photographic elements. The 3x2 grid is only layout, never draw separators.
+
