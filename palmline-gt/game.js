@@ -14,7 +14,7 @@ $('#routes').addEventListener('click',e=>{const b=e.target.closest('[data-route]
 $('#paints').addEventListener('click',e=>{const b=e.target.closest('[data-paint]');if(!b)return;let i=+b.dataset.paint;if(!save.owned.includes(i)){if(save.credits<350){$('#wallet').textContent='350 CREDITS TO UNLOCK';tone(140,.12);return}save.credits-=350;save.owned.push(i)}save.paint=i;persist();updateMenu();tone(600,.08)});
 function start(){initAudio();race=newRace(selected);race.hitCount=0;particles=[];setState('race');notice('REACH THE FINISH',2);tone(440,.08);setTimeout(()=>{if(state==='race')tone(660,.12)},130);}
 $('#start').onclick=start;$('#retry').onclick=start;$('#home').onclick=menu;$('#brand').onclick=e=>{e.preventDefault();if(state==='race')pause();else menu()};
-function pause(){if(state!=='race')return;setState('pause');$('#resulttag').textContent='TAKE A BREATHER';$('#resulttitle').textContent='Paused';$('#resultcopy').textContent='Your road will wait.';$('#resultstats').innerHTML='';$('#resume').hidden=false;}
+function pause(){if(state!=='race')return;setState('pause');if(audio)audio.suspend();$('#resulttag').textContent='TAKE A BREATHER';$('#resulttitle').textContent='Paused';$('#resultcopy').textContent='Your road will wait.';$('#resultstats').innerHTML='';$('#resume').hidden=false;}
 $('#pause').onclick=()=>state==='race'?pause():state==='pause'?resume():null;
 function resume(){if(state==='pause'){setState('race');last=performance.now();accumulator=0;initAudio()}}$('#resume').onclick=resume;
 addEventListener('blur',pause);document.addEventListener('visibilitychange',()=>{if(document.hidden)pause()});

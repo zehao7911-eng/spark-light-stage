@@ -8,3 +8,5 @@ Upstream files inspected: common.js SHA256 f2e07bf70605e2f59792ccf18ffef51398371
 Controls: arrows/A/D steer, Space turbo, Down/S brake, Esc pause. Mobile has pointer-captured multi-touch buttons. Storage key palmline-gt-v1. Score improvement pays credits; repeated worse runs do not pay again. Three tracks, 3 medals, 5 paints, near misses, overtakes, slipstream and checkpoint time bonuses.
 
 Upstream HEAD verified 2026-10-25: 3e8a060b5900755db27f899612a74a77427c853e.
+
+Upstream HEAD verified 2026-10-25: 3e8a060b5900755db27f899612a74a77427c853e.
