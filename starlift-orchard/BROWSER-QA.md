@@ -12,3 +12,5 @@ Chromium/IAB, actual visible UI and input:
 - 23 automated tests passed: actual adapted attraction/release/collision/conversion, complete flights, exactly-once banking, replay medals, all gear effects, ability thresholds/cooldowns, bubble fruit, save/RNG continuation, clustered-hit grace and equivalent fixed steps under low frame rates.
 
 Public deployment and download integrity are verified separately after publication. This is browser viewport QA, not physical-device certification. Automated pilot tests are rule tests, not a claim that every run is effortless for every player.
+
+Release refinement: public background-tab testing revealed that browser wall-clock timer throttling could delay the result modal. The final release opens results directly on the finishing animation frame and no longer uses that timer. Public first-flight observed23 fruit,1270 points,chain11,two medals,54 coins.
