@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';import {World,restore} from './core.js';import {stepPillar,grow,breakPillar,stepCoin} from './source-balance.js';
+let checks=0;const ok=(v,m)=>{assert.ok(v,m);checks++;};const eq=(a,b)=>{assert.deepEqual(a,b);checks++;};
+{const p={x:50,vx:0,angle:0,length:20,angleVel:0};stepPillar(p,60,0,1);ok(Math.abs(p.x-50.0475)<1e-9,'Source acceleration and damping');ok(Math.abs(p.angle+.0000855)<1e-9,'Source inertial lean');}
+{const p={length:63,angle:1,angleVel:.2};eq(grow(p,true),191);eq(p.length,64);breakPillar(p);eq(p.length,32);eq(p.angle,.5);eq(p.angleVel,-.1);}
+{const c={x:50,y:0,vx:0,vy:0};for(let i=0;i<1000;i++)stepCoin(c,0);ok(c.vy>1.46&&c.vy<1.48,'Source falling terminal velocity');}
+function player(w){const c=w.coins.filter(c=>c.y<w.tip.y+3).sort((a,b)=>b.y-a.y)[0];if(c&&Math.abs(w.pillar.angle)<.35)w.aim(c.x);else w.release();}
+const campaign=[];
+for(const round of [1,2,3,8,50,999]){let w=new World(round);eq(w.step(),[]);ok(w.start(),'Start shift');ok(!w.start(),'Cannot start twice');let wins=0,catches=0;for(let t=0;t<12000&&w.status==='playing';t++){player(w);for(const e of w.step()){if(e.type==='win')wins++;if(e.type==='catch')catches++;}if(t%240===0&&w.status==='playing'){const snapshot=JSON.parse(JSON.stringify(w.save()));const copy=restore(snapshot);eq(copy.save(),w.save());w=copy;}}ok(w.status==='won',`Shift ${round} completes`);eq(wins,1);eq(catches,w.goal);eq(w.caught,w.goal);ok(w.perfect>=3&&w.falls===0,'Skilled play has three stars');eq(w.stars(),3);const saved=w.save();w.step();w.aim(20);w.start();eq(w.save(),saved);campaign.push({round,berries:w.caught,tipCatches:w.perfect,falls:w.falls,score:w.score,seconds:w.ticks/60});}
+{const w=new World(2);w.start();for(let i=0;i<150;i++){player(w);w.step();}const c=restore(JSON.parse(JSON.stringify(w.save())));for(let i=0;i<500&&w.status==='playing';i++){player(w);player(c);eq(w.step(),c.step());}eq(w.save(),c.save());}
+{const w=new World();w.start();w.aim(92);for(let i=0;i<6000&&w.status==='playing';i++)w.step();ok(w.status==='lost'&&w.falls===3,'Holding an extreme lean can lose');const s=w.save();eq(w.step(),[]);eq(w.save(),s);}
+{const w=new World();w.start();w.pillar.angle=.4;w.pillar.angleVel=0;w.release();for(let i=0;i<120;i++)w.step();ok(Math.abs(w.pillar.angle)<.15,'Releasing braces the tower');ok(!w.aim(NaN),'Reject invalid input');w.aim(1e9);eq(w.target,92);}
+{const w=new World();w.start();const snapshot=w.save();snapshot.goal=0;snapshot.step='bad';const c=restore(snapshot);eq(c.goal,10);ok(typeof c.step==='function','Unknown snapshot fields ignored');}
+for(const mutate of [s=>s.round=0,s=>s.pillar.angle=Infinity,s=>s.pillar.length=0,s=>s.falls=3,s=>s.target=NaN,s=>s.holding='yes',s=>s.nextId=0,s=>s.status='won']){const s=new World().save();mutate(s);assert.throws(()=>restore(s));checks++;}
+console.log(JSON.stringify({passed:true,checks,campaign},null,2));
