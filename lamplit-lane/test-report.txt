@@ -1,0 +1,25 @@
+✔ all 36 guaranteed routes complete using actual upstream reducers (4.7888ms)
+✔ first campaign routes and boards are deterministic and not empty (0.6093ms)
+✔ invalid, diagonal, same-cell and broken-roof input cannot consume a turn (0.1613ms)
+✔ upstream movement helpers and tile toggles drive runtime (0.1057ms)
+✔ undo restores tile, player and step count exactly (0.1075ms)
+✔ wrong route guide rewinds only divergence and points to valid next roof (0.1271ms)
+✔ guide prefix is retained and no dark tile is silently changed (0.0903ms)
+✔ unlimited extra moves are allowed but lower medals (0.1026ms)
+✔ win rewarded once; replay cannot farm first-clear coins (0.0852ms)
+✔ won state blocks moves and undo (0.1101ms)
+✔ save restores active route and profile exactly (0.9702ms)
+✔ saved completed game cannot duplicate rewards (0.2297ms)
+✔ keepsakes require district and funds, deduct once and persist (0.2935ms)
+✔ all six keepsakes become affordable through campaign without grinding (1.6588ms)
+✔ locked, negative and out-of-range levels are rejected (0.0849ms)
+✔ snapshot is detached and cannot mutate live board (0.0713ms)
+✔ all 36 starting layouts are different (0.0712ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 121.6405
