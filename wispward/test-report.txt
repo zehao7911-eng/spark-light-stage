@@ -1,0 +1,31 @@
+Generation audit {"boards":120,"totalCandidates":215,"lowerDensityFallbacks":0}
+Campaign audit: {"campaigns":3,"boards":45,"victories":3}
+✔ upstream engine rejects impossible boards and invalid coordinates (1.4457ms)
+✔ first-click 3 by 3 area is safe, mine counts and all eight-neighbour clues are exact (9.5739ms)
+✔ 120 generated boards across all 15 chambers are logically solvable and nontrivial (36.8358ms)
+✔ same seed and first action produce identical playable boards (0.7495ms)
+✔ flood rewards each safe stone and each treasure only once (0.2387ms)
+✔ flag neighbours update symmetrically and flags block accidental exploration (0.1996ms)
+✔ surviving a wisp reveals and marks just that wisp, not every hidden hazard (0.4325ms)
+✔ Ward blocks damage and is consumed once; death at exactly zero ends the journey (0.2319ms)
+✔ Banish safely resolves a marked wisp and keeps numeric clues intact (0.1815ms)
+✔ Guidelight reveals a real safe stone, never damages, and consumes a charge (0.3675ms)
+✔ potions never overheal and do not spend stock at full Health (0.2016ms)
+✔ reward is claimable once, correct profile rewards survive reload, and all item offers differ (0.5461ms)
+✔ market spends exact prices, caps potion stock, and never takes unaffordable gold (0.3458ms)
+✔ all relic definitions can be granted, duplicates do not stack, and maximum Health increases (0.2265ms)
+✔ profile investments have exact costs and apply on future journeys (0.1147ms)
+✔ role unlocks use real cleared chamber milestones (0.1335ms)
+✔ active board, revealed and marked state and random generator round-trip correctly (0.7192ms)
+✔ three full campaigns can be completed by visible-clue deduction without hints or damage cheats (17.6108ms)
+✔ relic tools apply their real start-of-chamber charges and free first Guidelight (0.2602ms)
+✔ Feather pays for correct flags once per board, not once per toggle (0.238ms)
+✔ Crown and Crystal add exact gate rewards and Hourglass reduces only the first hit (0.2211ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 129.5078
