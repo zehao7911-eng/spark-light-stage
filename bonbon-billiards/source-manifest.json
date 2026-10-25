@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/henshmi/Classic-8-Ball-Pool",
+  "commit": "ede58b77bb7d5b9d3a5d7ccf4c93df4e8437d3b9",
+  "license": "MIT, Chen Shmilovich 2019",
+  "files": {
+    "ball.ts": "8cb00ce8bb304b160e390f38d5046a166b5692323937b817f84e49ad96c52244",
+    "game-world.ts": "cae188e0d2db5e8cf9651756543f06a2d30a9636be18166230174df84b68e6c0",
+    "game.config.ts": "4cd2b57913d90c84194c2431fad2345fbcceb177ba3118fe56ed97ef14bd2bef",
+    "README.md": "5357ceff72533fbf6ad32bc2b735eea4a74a78bfbfc144940d3736fb5d775d80",
+    "vector2.ts": "dee80d80f0806499fdaa1d8da9b9f544b6cd2c42d9aa1eef624b960262a9fa0c"
+  },
+  "adaptation": "Actual Vector2, Ball shoot/update/show/hide and GameWorld normal/tangent equal-mass collision, cushion reflection and pocket-distance routines. TS to JS, per-second fixed-step units, zero-distance/separating guards, source rendering removed. New original challenge campaign/presentation/input/audio/progression."
+}
