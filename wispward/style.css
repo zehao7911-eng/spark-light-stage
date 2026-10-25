@@ -6,3 +6,8 @@
 .fallback-ghost,.flag-fallback{position:absolute;font-size:24px;color:#7f669b}.flag-fallback{color:#ecc36e}.art-ready .fallback-ghost,.art-ready .flag-fallback{display:none}.art-ready #hero .art{width:100%!important;height:100%!important}.health #hearts{flex-wrap:wrap}.hp-number small{font-size:16px}@media(max-width:800px){.vista{height:100px}.board-area{max-width:330px}.vista-title{top:14px}.vista-title h1{font-size:26px}.vista-title small{font-size:14px}#hero{height:140px;width:140px;bottom:-28px}}@media(max-width:350px){.vista{height:92px}.vista-title{top:12px}.vista-title h1{font-size:24px}.vista-title small{font-size:13px}#hero{height:125px;width:125px;bottom:-28px}}
 
 @media(max-width:350px){.board-shell{padding:3px}}
+
+#app[data-region="1"] .cell.closed:not(.marked){background:#7c788d;border-top-color:#b7aec1;border-left-color:#a69bb5;border-bottom-color:#504b64;border-right-color:#57506b;box-shadow:inset 2px 2px #9990aa,inset -2px -2px #676278}
+#app[data-region="1"] .cell.open:not(.wisp){background:#d8d4cf;border-color:#b7adc1;box-shadow:inset 1px 1px #eeeadf,inset -1px -1px #c2bacb}
+#app[data-region="2"] .cell.closed:not(.marked){background:#8b7b61;border-top-color:#c8b183;border-left-color:#b8a17b;border-bottom-color:#5d554a;border-right-color:#665949;box-shadow:inset 2px 2px #ae9871,inset -2px -2px #77674f}
+#app[data-region="2"] .cell.open:not(.wisp){background:#e1d2ad;border-color:#b9a780;box-shadow:inset 1px 1px #f6e8c5,inset -1px -1px #ccba95}
