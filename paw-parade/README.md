@@ -18,7 +18,7 @@ The game plays the GIF's frames from a shared atlas so many cats can stay synchr
 
 Tap two cats, or their large numbered buttons, to swap positions. Match the top color/shape order. Twelve finite lineups contain 4–12 cats. One completion star, one for optimal swaps + 2 or fewer, one for using no hint; only the best result per lineup counts. Undo counts as an action. Hints highlight a suggested pair. Keyboard 1–9 selects the first nine seats; H hints, Z undoes, Escape pauses.
 
-FREE RAVE supports 1–24 cats. Stage Mix changes Arc / Grid / Heart / Circle / Wave formations, synchronized / wave / shuffled playback phases, palette, brightness, tempo, moving beams and disco floor. Drag to orbit; mouse wheel zooms; RESET VIEW restores the camera. The music button enables an original synthesized loop, not the recording's audio.
+FREE RAVE supports 1–24 cats. Stage Mix changes Arc / Grid / Heart / Circle / Wave formations, synchronized / wave / shuffled playback phases, palette, brightness, tempo, moving beams and disco floor. Drag to orbit; mouse wheel zooms; RESET VIEW restores the camera. The music button plays audio extracted from the user's latest recording (1.5–15.5 seconds, 14 seconds total). It loops with short edge fades; pause/mute stop it, resume continues, and the tempo control changes playback speed while preserving pitch. Synthesized background music has been removed; small interface confirmation sounds remain. The embedded MP3 also works offline.
 
 ## Offline, mobile and save
 
@@ -27,3 +27,4 @@ Open index.html or upload the whole folder to static HTML5 hosting. All dependen
 Lineup state, best stars, music and stage settings, free-rave count/mode persist in browser storage. Reload resumes unfinished play paused with transient selection cleared. Blocked storage leaves the session playable. Pause / hidden tab / blur stop image-frame time and audio. Asset failure and graphics-context loss show Retry.
 
 The game code and stage are locally authored. Cat imagery originates from the user's supplied recording; rights remain with the respective owners. Three.js r147 is MIT licensed, see THREE-LICENSE.txt. This revision does not claim an original cat model or original dance animation.
+
