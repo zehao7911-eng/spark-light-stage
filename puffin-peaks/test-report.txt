@@ -1,0 +1,39 @@
+Hill 1 steps 1043 flags 6/6 bumps 0
+Hill 2 steps 1043 flags 6/6 bumps 0
+Hill 3 steps 1132 flags 7/7 bumps 0
+Hill 4 steps 1361 flags 8/8 bumps 0
+Hill 5 steps 1498 flags 9/9 bumps 0
+Hill 6 steps 1564 flags 10/10 bumps 0
+Hill 7 steps 1556 flags 10/10 bumps 0
+Hill 8 steps 1627 flags 11/11 bumps 0
+✔ eight generated hills can be completed by steering toward visible gates (33.2941ms)
+✔ identical course seeds preserve exact layout and unique IDs (1.0267ms)
+✔ natural tall pines are reachable hazards rather than decorative off-course sprites (3.659ms)
+✔ upstream Sprite collision includes full containment and zero positions (0.3072ms)
+✔ upstream skier discrete steering changes physical lateral and downhill speed (0.342ms)
+✔ no simulation time elapses before starting or for zero-dt/paused state (0.5415ms)
+✔ aim is finite and bounded (0.0978ms)
+✔ base altitude collision hits tall pines but jumping clears a low stump (0.106ms)
+✔ crash recovery uses simulation time and cannot outlive a restored save (2.3029ms)
+✔ one obstacle cannot trigger repeated recovery or hit callbacks (0.1882ms)
+✔ jump, spin and boost are locked until earned stars (0.2348ms)
+✔ a completed spin scores once and returns to ground altitude (1.6292ms)
+✔ boost and cooldown survive exact snapshot and advance only with simulation (5.403ms)
+✔ gate line crossing is counted once, not on every frame (0.1613ms)
+✔ a missed gate breaks chain and records an honest miss (0.0787ms)
+✔ token pickup and cocoa reward are finite and idempotent (0.0743ms)
+✔ actual model collision increments one bump and grants a recovery grace (0.1197ms)
+✔ gear price, cap and active-run purchase restriction (0.1005ms)
+✔ carve, wax, magnet and mittens have physical effects (0.1843ms)
+✔ result reload and claim bank coins and medals only once (5.952ms)
+✔ replaying the same hill only improves best medals, while coins are earned each full run (5.6704ms)
+✔ full active snapshot preserves exact object flags, timers and future movement (2.8811ms)
+✔ ten claimed runs continually unlock routes, Hop, Boost and workshop funding (23.6867ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 168.946
