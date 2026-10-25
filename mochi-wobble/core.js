@@ -7,7 +7,7 @@ export class World {
  random(){this.rng=(Math.imul(this.rng,1664525)+1013904223)>>>0;return this.rng/4294967296;}
  start(){if(this.status!=='ready')return false;this.status='playing';return true;}
  aim(x){if(this.status!=='playing'||!Number.isFinite(x))return false;this.target=clamp(x,8,92);this.holding=true;return true;}
- release(){this.holding=false;this.target=this.pillar.x;}
+ release(){if(this.status!=='playing')return false;this.holding=false;this.target=this.pillar.x;return true;}
  step(){if(this.status!=='playing')return [];const ev=[];this.ticks++;if(this.cooldown>0)this.cooldown--;
   // Source seeded random wind/decay and coupled cart/pole equations.
   this.wind+=(this.random()*2-1)*.005;this.wind*=.98;
