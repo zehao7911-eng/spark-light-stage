@@ -1,0 +1,8 @@
+# UNDERRUN — Pocket Relay
+A mobile HTML5 adaptation of the complete MIT-licensed UNDERRUN source game by Dominic Szablewski / Phoboslab (2018). Upstream https://github.com/phoboslab/underrun at f933e29152d7fc1ca61d4b3eaa8b29551d7d7a62. Preserve LICENSE-UNDERRUN.md in distributions. Original level maps and pixel atlas are reused, with one atlas navigation marker added. Original renderer, entity physics, world parser, seeded population and enemies retained/modified in source/. The original terminal UI, music and Sonant-X library are not included, so the original Sonant-X zlib library is not redistributed. Audio here is new lightweight synthesis.
+
+Serve this folder using any static HTTP server. No build, CDN, fonts, backend or external runtime dependency is required. A WebGL-capable modern browser is required. Entry index.html, fixed60Hz physics, capped45FPS drawing, responsive low-resolution pixel framebuffer, 12 dynamic light slots, bounded particles/projectile lifetimes.
+
+Three original map regions adapted to 3 active relays each. Single joystick/direction buttons, tap-floor movement and radar waypoints; automatic aim/fire with wall line-of-sight. Dash (Space), EMP (E), pause (Esc), checkpoint recovery, persistent cleared threats / armor pickups / cooldowns, medals, two perk selections between sectors and replay. Nine best stars total. Tap relays on the radar or follow cyan floor markers. Manual movement overrides queued movement.
+
+Local storage key underrun-pocket-v1. Failed redeployment preserves relay/cleared-threat progress; no silent restart loop. Blocked storage leaves the current session playable. Viewport / integration tests are not a certification on every physical handset.
