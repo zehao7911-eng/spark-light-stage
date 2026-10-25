@@ -1,0 +1,11 @@
+{
+  "repository": "https://github.com/kamilkurach/reversi-web",
+  "commit": "a9f245aed48a4037d0c0cb5da6cf3f246724f629",
+  "license": "MIT",
+  "files": {
+    "Board.js": "d646e6f16cbcb80bb9795f7286eabbdd8381b191b850444bbbe78db4cef4f338",
+    "Controller.js": "710faf1796caf59007ee0ee3300cbcf3a9b0a685b9a58430971b42358bb78201",
+    "README.md": "6e2a19030f802dd2013d670ecd1ed38ddf8d4bc77e5f67809a7af56cb4241573"
+  },
+  "reuse": "Actual Board class: four directional scans, move/pair collection and scoring. Controller flip-pair aggregation adapted in core.js. Original rendering/assets/dependencies not included."
+}
