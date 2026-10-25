@@ -1,0 +1,8 @@
+# Validation — 2026-10-25
+- `node tests.mjs`: fixed-step collisions, charge/ability, wall/goal/reset, ended-match score guard, defeat/medals, spin/boost, bounded fluid force coupling, deterministic pure-physics continuation, malformed snapshot rejection and all four full matches with a separate test player.
+- Numerical fluid: 1200 updates with finite/bounded field arrays. Display bridge checks visible injected dye, finite sampled velocity and transient field reset. All source/API checks run without third-party packages.
+- Actual browser: Neon Reef won3–2 (1star), Amber Arcade won3–0 (3stars), white trail unlocked/equipped and preserved after reload. Velvet Garden played to3–4 loss; charged Flow Surge activated and charge changed READY to0 with visible pulse/widening. Touch drag, quick swipes, sound toggle, menu and replay tested.
+- 390x844 and320x568 portrait,844x390 landscape tested. Compact menu/cards/44px touch targets checked. Landscape rotates the actual court and uses vertical drag; keyboard Up also moved the paddle.
+- Fixed a resume fairness issue found during testing: Continue now restores paused before any simulation tick. Actual displayed1–1 and50% charge restored unchanged. Pure physics snapshot continuation tested separately; fluid appearance intentionally resets on load.
+- Paused fluid/court screenshot was byte-identical across a1.2second interval after the pause panel had painted. No browser JavaScript errors or warnings observed in local play.
+- Viewport/browser input tests are not a claim of physical-device testing. Audio was checked by UI/state and error-free operation, not by an asserted listening evaluation.
