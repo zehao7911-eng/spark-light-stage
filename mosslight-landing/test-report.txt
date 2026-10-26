@@ -1,0 +1,22 @@
+✔ all twelve authored routes are reachable with physical input (23.1795ms)
+✔ locked routes cannot be loaded (0.1192ms)
+✔ thrust opposes gravity and wind changes horizontal speed (0.1116ms)
+✔ landing requires both feet, crossing and safe velocity (0.0947ms)
+✔ docking cancels motion and caps refuel (0.0713ms)
+✔ fixed steps are invariant across frame batches (0.61ms)
+✔ checkpoint retry preserves collected seeds and route progress (0.2026ms)
+✔ save restores exact position but releases input (0.1951ms)
+✔ shield unlock, cooldown and event (0.0849ms)
+✔ upgrades charge once and cannot be bought during flight (0.1357ms)
+✔ replay cannot reduce medals or grade or mint duplicate rewards (0.0849ms)
+✔ moving docks and shutter states change over time (0.1055ms)
+✔ paused and invalid ticks do not advance simulation (0.0541ms)
+✔ all routes have unique names and three optional seeds (0.0691ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 91.5639

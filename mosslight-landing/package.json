@@ -1,0 +1,1 @@
+{"name":"mosslight-landing","version":"1.0.0","private":true,"type":"module","license":"GPL-3.0-or-later","scripts":{"build":"node build.mjs","test":"node build.mjs --test && node --test .test-bundle.cjs"},"devDependencies":{"esbuild":"0.25.12"}}
