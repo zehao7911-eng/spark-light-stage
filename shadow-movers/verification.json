@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "checks": 3350,
+  "reports": [
+    {
+      "chapter": 1,
+      "walked": 173,
+      "seconds": 2.9
+    },
+    {
+      "chapter": 2,
+      "walked": 333,
+      "seconds": 5.57
+    },
+    {
+      "chapter": 3,
+      "walked": 1007,
+      "seconds": 18.1
+    },
+    {
+      "chapter": 4,
+      "walked": 345,
+      "seconds": 5.77
+    },
+    {
+      "chapter": 5,
+      "walked": 333,
+      "seconds": 5.57
+    },
+    {
+      "chapter": 6,
+      "walked": 1044,
+      "seconds": 18.72
+    }
+  ]
+}
