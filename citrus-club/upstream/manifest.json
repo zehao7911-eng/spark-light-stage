@@ -1,0 +1,12 @@
+{
+  "repository": "https://github.com/pctroll/webninja",
+  "revision": "d47b22d0a9872f69a806b5d3587f9723a765a6d6",
+  "original_files_sha256": {
+    "fruit.js": "0fdebe84069d124e1145564a72d6180405e715df01c00b94f412935aad2b97d7",
+    "bomb.js": "55963e7b9a5c83d9de76c45d3cdb1a1450b7e17629a3c2cb6e5bbd0af3383610",
+    "splash.js": "ef53ea0bfe92b6190206f18f5bb7be19c33d86a954acc701fdf1ebf0ccb384dc",
+    "scene_main.js": "48e8b9ec5b5fe28f70736b130fb9fdf6102b3f084ea972366e7810e0bd1f83b5",
+    "scene_gameover.js": "dc3be9209781ce674db365b29b84deb68617c337e6b2d37bc1919261626e88d0"
+  },
+  "excluded": "All upstream image, sound, SWF, analytics and web-font assets; Enchant runtime replaced by a responsive Canvas renderer. Complete gameplay classes are adapted in core.js."
+}
