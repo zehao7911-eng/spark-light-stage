@@ -1,0 +1,25 @@
+{
+  "source": "https://github.com/basicallydan/skifree.js",
+  "revision": "a812f944f7420ab53374b6b983ef3eb54f8a26ce",
+  "license": "MIT Daniel Hough2013; original ripped sprites excluded",
+  "reuse": "Actual Game/Camera/Skier/Sprite/SpriteArray and NPC classes execute at runtime. Original movement/steering/position/ground-air collision/callback/world cycle retained. New simulation-clock subclass replaces real-time jump/boost/crash timers; generated atlas/custom renderer replace original sprite drawing; authored courses/gates/rewards/input/save are new. Source main.js boot/analytics and original sprite art excluded from runtime. Constants tuned for phone and deleted-object array compacted.",
+  "upstream_sha256": {
+    "license.md": "0bf6ef67360b7192157a3844445eac87285eb89822ccb342951e8b0201ebd0c9",
+    "README.md": "1f0e717aa60fb77d5e8111b6c47e44cb4c36bcd88db80e86731608e488cca6c9",
+    "js/main.js": "332cee1a25b7c8b7d97d380db29d7447142d09b704501ca0b1a074f7e57de9c1",
+    "js/spriteInfo.js": "6b9e68dea2f8e67d6431a175433868b4a598c3e6d01a7b5afc678efa19ecbb97",
+    "js/lib/camera.js": "aed0e71e8ac68ac0223817908d0844f2fb1e116124ca276c30cea9badaa432bc",
+    "js/lib/constants.js": "169b9fd9deebe5de3ff76cfe8134f16b43d6f89099fa265ea03dcdf1b87ad614",
+    "js/lib/game.js": "419d2866aaac6767e6f9bbcca191541e7c18406c704c20e9e4beeb1d101c8652",
+    "js/lib/guid.js": "ef251f7050aa91e06ca5cc9e9f996a72e64ee6c411e567b940ba455b849b4d16",
+    "js/lib/infoBox.js": "fb654d91f82de6342e3061605a162e8b685ba2412e11f01c1ac83645ff0fd849",
+    "js/lib/input.js": "61cf71086f6457fd68ea2f5187b2e73b0574abfca40918cc411a03cbfa7970cc",
+    "js/lib/isMobileDevice.js": "5066b68f49b1254cbfc29b6fcf64b6a501c12c47600226cdb49c25a80b9b427f",
+    "js/lib/monster.js": "059500bc5eefba37494f4f0b1bd2dfb9794241fe5ad0ccb008d8ff22b5ffc3d4",
+    "js/lib/skier.js": "9a12ac0a2547adbaaee42c0d1c49c11b98b60d654f3bf96fe49d439b12b52049",
+    "js/lib/skiLift.js": "5a5f8570a54c228775f0b784779dd2ea62d8d98eb16571bf36c26ccac0447279",
+    "js/lib/snowboarder.js": "576b4c016020f78c03cb9c8b81e2218497a7331ba2a0081e93065ee9b6c8be32",
+    "js/lib/sprite.js": "c8e21d2db54d1bdfdba3c5bd03ced2428d09c78f7dea0f80a8f0f92936495fde",
+    "js/lib/spriteArray.js": "bdc789f31e4374cc3688e84fe55a835b7e2ada62bdd5fbc903358b4de0a06d2b"
+  }
+}
