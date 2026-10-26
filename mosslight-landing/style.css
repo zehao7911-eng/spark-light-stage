@@ -3,3 +3,5 @@
 .selected-route{position:sticky;bottom:0;z-index:2;box-shadow:0 -4px 0 #193842}.selected-route button{flex-shrink:0}@media(max-width:350px){.world-top h3{font-size:23px}.selected-route{padding:8px;gap:5px}.selected-route h3{font-size:20px}.selected-route p{font-size:12px}.selected-route button{padding:7px;font-size:17px}}
 
 @media(min-width:600px) and (max-height:500px){.layout{grid-template-columns:220px 1fr}.scene{width:calc((100dvh - 110px)*.6923 + 6px)}.touch,.abilities{left:max(260px,calc((100vw - 900px)/2 + 260px))}.hud{gap:2px;left:3px;right:3px}.hud>div{min-width:0;padding:3px 4px}.hud small{font-size:7px}.hud b{font-size:16px}.objective{font-size:10px;padding:4px;left:3px;right:3px}.ship-meter{left:5px;right:5px;gap:4px}.ship-meter>span{font-size:16px}.ship-meter small{font-size:10px}}
+
+@media(min-width:721px) and (min-height:501px){#app{max-width:calc(65dvh*.6923 + 353px)}canvas{height:auto;min-height:0;aspect-ratio:360/520}}@media(min-width:600px) and (max-height:500px){.title-buttons .album{display:none}}
