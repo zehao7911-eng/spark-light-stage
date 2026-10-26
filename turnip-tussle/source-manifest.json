@@ -1,0 +1,22 @@
+{
+  "source": "https://github.com/kenamick/game-off-2012",
+  "commit": "25ee1691752bb110f09a5f2256d477a67a0671ad",
+  "license": "MIT Copyright2012 Petar Petrov; original art excluded",
+  "sha256": {
+    "index.html": "fd0317a3ab8e2a242f572b0fb3b6a16a663621f57eefd4290709318889c896bf",
+    "manifest.json": "4e0fd8a045dd56092d8a96674984aede0a0e19c0d8e3a51bbac17c1abbbeac90",
+    "README.md": "dc43038e551f5a7ce4ac35c66389a70a086c923e735a3da3ec904fe5ceea7edd",
+    "src/actor_object.js": "944b02f0a315f1baed221e00995753565650c6d40324c298f5fe67ad498c3106",
+    "src/bootstrap.js": "267eb5fd7ce48494e5ade9716d5cc295374ecc6055b510f8185871525917c8ff",
+    "src/config.js": "80e20e2bc25846d4eaac459aac8a820436aca44f9616d08e3916761af3005582",
+    "src/enemy.js": "a25037cadd0ed84f8837d765e2e6bc2471adef8e12f5512dfc963e0f5f002eee",
+    "src/gfx.js": "63fb4cda48963eb97cc6988c498ad1f002c6a5bba13b22170a119119698efd30",
+    "src/hiscore.js": "5577bec06e1d4aaf92dcabc1ed1d10cb95bef3283de324e236edc1a6f990987c",
+    "src/player.js": "59704a8dfbd26ae7d2480f31e4ce1af2b6e194fed530dbd87d66d9cc3a9654b0",
+    "src/scene.game.js": "8cad82f954c1326fdfcb3607ba61d5e552cac0ff96ae53ec6e4ea2ce81da8ad8",
+    "src/scene.splash.js": "aa9f0337848d403a9d85c7caacf81afe85e319406b223eff848970b446440940",
+    "src/tilemap.js": "88fd3bafb6e205edd82d83bcfea2a6bc68b70eb89031299b3e31c49b9af2c6e4",
+    "src/traps.js": "7c5d457fc087717b22c6f64d95970d5a29ed536d2ec05f6489d309b596cbe01d"
+  },
+  "adaptation": "Complete gameplay-loop port: player movement and timed carrot pulling, carrot health/occupancy/spawn caps, nearest unoccupied rival targets and extraction, push/stun/reacquire, decoy target redirection, staged spawn limits and timed round results. New renderer, authored shifts, progression, input, audio and effects. No claim to retain Crafty/Backbone engine. Original art/audio/remote score code are excluded."
+}
