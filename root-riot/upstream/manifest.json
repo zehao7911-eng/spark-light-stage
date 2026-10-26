@@ -1,0 +1,18 @@
+{
+  "repository": "https://github.com/kenamick/game-off-2012",
+  "commit": "25ee1691752bb110f09a5f2256d477a67a0671ad",
+  "files": {
+    "actor_object.js": "944b02f0a315f1baed221e00995753565650c6d40324c298f5fe67ad498c3106",
+    "bootstrap.js": "267eb5fd7ce48494e5ade9716d5cc295374ecc6055b510f8185871525917c8ff",
+    "config.js": "80e20e2bc25846d4eaac459aac8a820436aca44f9616d08e3916761af3005582",
+    "enemy.js": "a25037cadd0ed84f8837d765e2e6bc2471adef8e12f5512dfc963e0f5f002eee",
+    "gfx.js": "63fb4cda48963eb97cc6988c498ad1f002c6a5bba13b22170a119119698efd30",
+    "hiscore.js": "5577bec06e1d4aaf92dcabc1ed1d10cb95bef3283de324e236edc1a6f990987c",
+    "player.js": "59704a8dfbd26ae7d2480f31e4ce1af2b6e194fed530dbd87d66d9cc3a9654b0",
+    "README.md": "dc43038e551f5a7ce4ac35c66389a70a086c923e735a3da3ec904fe5ceea7edd",
+    "scene.game.js": "8cad82f954c1326fdfcb3607ba61d5e552cac0ff96ae53ec6e4ea2ce81da8ad8",
+    "scene.splash.js": "aa9f0337848d403a9d85c7caacf81afe85e319406b223eff848970b446440940",
+    "tilemap.js": "88fd3bafb6e205edd82d83bcfea2a6bc68b70eb89031299b3e31c49b9af2c6e4",
+    "traps.js": "7c5d457fc087717b22c6f64d95970d5a29ed536d2ec05f6489d309b596cbe01d"
+  }
+}

@@ -1,0 +1,6 @@
+/* Source engine presentation bridge. Original Crafty physics/entities remain active. */
+window.Modernizr={touch:false};window._Globals={};
+_Globals.conf=new Config({'screen-width':384,'screen-height':576,renderType:'RR',sfx:false,music:false,defaultCarrots:1,carrotsCollect:2});
+Crafty.c('RR',{init:function(){this.requires('2D');}});
+for(let [name,w,h] of [['grass',64,64],['stone_small',64,64],['stone_big',64,64],['tree',64,64],['barrel',64,64],['bush',64,64],['heysack',64,64],['player',32,48],['enemy',32,48],['carrot',32,32],['fork',48,48],['explosion1',64,64]])Crafty.c(name,{init:function(){this.requires('2D');this.attr({w,h});this.rootVisual=name;}});
+Crafty.c('SpriteAnimation',{init:function(){this._rootReel=null;this._rootRepeat=-1;this.bind('EnterFrame',function(f){if(this._rootRepeat!==-1&&this._rootReel&&f.frame-this._rootStart>=this._rootDuration){this._rootReel=null;this.trigger('AnimationEnd')}})},reel:function(name,duration){if(arguments.length>1)this._rootDuration=Math.ceil(duration/1000*60);return this},animate:function(name,repeat){this._rootReel=name;this._rootRepeat=repeat===-1?-1:1;this._rootStart=Crafty.frame();return this},pauseAnimation:function(){this._rootReel=null;return this},isPlaying:function(name){return this._rootReel===name}});
