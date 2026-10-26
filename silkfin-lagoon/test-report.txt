@@ -1,0 +1,16 @@
+✔ six campaign waterways complete through actual Fish/Spawner movement and collision (3752.488ms)
+✔ starts frozen until the first swim input (2.5168ms)
+✔ surge unlock, invulnerability and cooldown (2.8608ms)
+✔ gear prices, medals and repeat rewards are bounded (6.8522ms)
+✔ round snapshot retains real fish positions and releases input on restore (50.9817ms)
+✔ original collision distinguishes separated and overlapping six-circle bodies (14.6571ms)
+✔ normalised keyboard input no longer throws on original undefined valid flag (9.0711ms)
+✔ tutorial has no dangerous fish and later waterways cap their number (8.5014ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4117.2093
