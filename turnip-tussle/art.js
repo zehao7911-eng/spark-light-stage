@@ -1,4 +1,4 @@
-import {config,BOUNDS,distance} from './source-game.js';
+import {config,BOUNDS,distance} from './source-game.js?v=20261026-final4';
 export class Art{
  constructor(canvas,images,frames){this.g=canvas.getContext('2d');this.images=images;this.frames=frames;this.t=0;this.fx=[];this.rings=[];this.words=[];this.shake=0;this.celebrate=0}
  sprite(i,x,y,h,flip=false,angle=0){let g=this.g,f=this.frames[i],r=f.r,k=h/r[3],ax=i<14?f.ax:r[0]+r[2]/2;g.save();g.translate(x,y);g.rotate(angle);if(flip)g.scale(-1,1);g.drawImage(this.images.sprites,...r,-(ax-r[0])*k,-h,r[2]*k,h);g.restore()}

@@ -9,3 +9,5 @@ Artwork: three coherent background paintings and a transparent20-cell atlas; eig
 Responsive: actual browser layouts at390×844,320×568 and844×390. Main buttons44pxminimum, BOOP85–94px, joystick88–100px; canvas/input preserve2:3 ratio. No horizontal overflow. Modal fits small portrait and landscape with internal scroll if required. Physical Android/iOS performance certification was not available.
 
 Public cold-load found a slow image request. First entry now waits only for the current background and a downscaled atlas (~580KB total), displays an embedded tiny garden preview, defers other backgrounds, and has35second timeout/retry. A requested new scene waits explicitly for its own artwork with retry/back instead of drawing missing images.
+
+A warm public browser combined cached atlas coordinates with a resized image. Final release versions the HTML script/style entry, module imports, sprite/background URLs and frame JSON together to prevent mixed revisions.
