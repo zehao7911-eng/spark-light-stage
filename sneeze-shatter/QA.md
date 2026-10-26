@@ -6,3 +6,5 @@
 - Desktop rendering inspected at 1280 x 720. Browser viewport testing is not physical iOS/Android hardware testing.
 - Cover, icon and mural artwork inspected. All runtime dependencies local. No service worker cache, no remote module CDN, no required account or analytics.
 - Rezona reference visually played: Bull In a China Shop, https://rezona.ai/game/pgcserver/pv/yAvUQpTy/v21/dist/index.html . Observed damage $5125 and chain x8. Used only for public visual/interaction inspiration. New source, characters, pottery, rooms and no-timer progression are original.
+
+Public native first-action smoke: 3 pottery, one bell and 310 points. Fixed gold-bell FX to retain its original small nonuniform scale while fading; ceramic fragment scale remains independent.
