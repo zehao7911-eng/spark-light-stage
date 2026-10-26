@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "checks": 130,
+  "firstBloomSeconds": 0.6,
+  "chapters": [
+    {
+      "pond": 1,
+      "seconds": 11.77,
+      "flowers": 3
+    },
+    {
+      "pond": 2,
+      "seconds": 15.2,
+      "flowers": 3
+    },
+    {
+      "pond": 3,
+      "seconds": 15.35,
+      "flowers": 3
+    },
+    {
+      "pond": 4,
+      "seconds": 18.52,
+      "flowers": 4
+    },
+    {
+      "pond": 5,
+      "seconds": 20.67,
+      "flowers": 4
+    },
+    {
+      "pond": 6,
+      "seconds": 19.53,
+      "flowers": 4
+    },
+    {
+      "pond": 7,
+      "seconds": 20.95,
+      "flowers": 5
+    },
+    {
+      "pond": 8,
+      "seconds": 23.85,
+      "flowers": 5
+    }
+  ]
+}

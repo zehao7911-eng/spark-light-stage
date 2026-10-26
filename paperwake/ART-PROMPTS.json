@@ -1,0 +1,12 @@
+{
+  "reference": "https://rezona.ai/game/pgcserver/pv/kOlgnleV/v7/dist/index.html",
+  "reference_use": "Observed 3D paper boats and sea presentation. Code/assets not reused.",
+  "cover_prompt": "Create a polished square original game cover for PAPERWAKE, using the attached REAL GAME SCREENSHOT as identity and visual palette reference, not as an edit target. Keep its exact modest toy-like visual language: a warm walnut rectangular miniature pond tray with rounded cream rim, turquoise water, one small cream origami boat with coral-red central folded triangular sail, pink six-petal floating lotus lights with golden centres, soft rounded green leaf clusters and tiny coral mushroom caps around the rim. Close elevated three-quarter camera so boat, water ripples, wood thickness and lotus petals are clear. The hero origami boat floats foreground, a gentle curved ripple trail links it to three glowing lotus lights. Original calm crafted tabletop aesthetic, continuous rounded volumes for the tray and plants, actual crisp geometric folds for paper boat, subtle fine paper and wood grain, soft warm shadows. Restrained sage, turquoise, cream and coral colour groups. Match existing models and scene; no additional creatures, buildings, hands, monsters, special large ships or unrelated decorations. Beautiful but honest to the supplied live scene. Large elegant cream serif title PAPERWAKE at top, no other words, generous 10% safe margin. No copied logos or commercial characters.",
+  "reference_image": "work/paperwake-art-reference.png (native actual project screenshot)",
+  "generated_source": "exec-fd47efa8-93af-4c07-a070-350a6e164838.png",
+  "outputs": [
+    "assets/cover.webp",
+    "assets/icon.png"
+  ],
+  "gameplay": "Procedural Three.js geometry, textures and custom shader, no generated gameplay background."
+}
