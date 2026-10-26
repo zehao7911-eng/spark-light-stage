@@ -132,7 +132,7 @@ p.v=clamp(Util.accelerate(p.v,accel,dt),input.brake?-2:0,p.boost>0?11.2:8.5);if(
 if(r.assist)p.s=Math.max(0,p.s+p.v*dt);else{
 if(p.x===undefined){p.x=geo.x+geo.tz*p.d;p.z=geo.z-geo.tx*p.d;p.y=geo.y;p.yaw=Math.atan2(geo.tx,geo.tz);}
 p.yaw+=steer*dt*(drift?1.8:1.34)*Math.min(1,Math.abs(p.v)/3)*(p.v<0?-1:1);p.x+=Math.sin(p.yaw-p.slip*.35)*p.v*dt;p.z+=Math.cos(p.yaw-p.slip*.35)*p.v*dt;
-const projected=reproject(p),a=projected.a;if(Math.abs(p.d)<1.48&&projected.distance<3){p.y=a.y;p.offAge=0;}else{
+const projected=reproject(p),a=projected.a;if(Math.abs(p.d)<1.48&&projected.distance<3&&Math.abs(p.y-a.y)<.36){p.y=a.y;p.offAge=0;}else{
 const oldY=p.y;p.offAge=(p.offAge||0)+dt;p.y=Math.max(.055,oldY-dt*3);for(const b of obstacles)if(p.x>b.minX-.25&&p.x<b.maxX+.25&&p.z>b.minZ-.25&&p.z<b.maxZ+.25&&oldY>=b.maxY-.025&&p.y<=b.maxY)p.y=Math.max(p.y,b.maxY+.015);
 if(p.offAge>2.4){reset(r);emit(r,'offroad',0);}}
 }
@@ -144,9 +144,9 @@ if(a.s>=length*3+finishS){a.finishTime=r.time-dt*(a.s-length*3-finishS)/Math.max
 collide(r);
 if(!p.offAge&&Math.abs(p.d)<1.1&&!obstacles.some(b=>solidContact(p,b)))p.safeS=p.s;
 for(const o of r.pickups){const d=Util.increase(p.s-o.s,0,length);if(d<.85&&Math.abs(p.d)<1.05&&o.cool<=0){o.cool=8;p.boost=Math.max(p.boost,.65);emit(r,'pickup',o);}}
-const lap=Math.max(0,Math.floor((p.s-finishS)/length));if(lap>r.completedLaps){r.lapTimes.push(r.time-r.lapStart);r.lapStart=r.time;r.completedLaps=lap;emit(r,'lap',lap);}
+const lap=Math.max(0,Math.floor((p.s-finishS)/length));if(lap>r.completedLaps&&!p.offAge&&Math.abs(p.d)<1.47){r.lapTimes.push(r.time-r.lapStart);r.lapStart=r.time;r.completedLaps=lap;emit(r,'lap',lap);}
 r.rank=r.mode==='race'?1+r.ai.filter(a=>a.finished||a.s>p.s).length:1;
-if(lap>=3){p.v=0;r.finished=true;r.state='finish';r.finishRank=r.rank;emit(r,'finish',r.rank);}
+if(r.completedLaps>=3){p.v=0;r.finished=true;r.state='finish';r.finishRank=r.rank;emit(r,'finish',r.rank);}
 }
 root.LapRules={setup,at,body,contact,solidContact,lane,newRace,tick,reset,finishS,get length(){return length;},get obstacles(){return obstacles;}};
 })(typeof module!=='undefined'?module.exports:window);
