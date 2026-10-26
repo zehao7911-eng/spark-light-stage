@@ -5,3 +5,5 @@
 .dialog-mode #warning,.dialog-mode #toast{visibility:hidden}
 
 header{z-index:12}
+
+@font-face{font-family:Baloo2;src:url('assets/baloo2.ttf') format('truetype');font-weight:400 800;font-display:swap}.gold,.panel h1,.panel h2,#cash,#summary b,#shops button,.store-title,.shop-item .name{font-family:Baloo2,Nunito,Arial,sans-serif;font-weight:800}

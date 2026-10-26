@@ -1,0 +1,57 @@
+{
+  "referencePage": "https://rezona.ai/game/pgcserver/pv/JLrmuPsw/v3/dist/index.html",
+  "publicScript": "https://rezona.ai/game/pgcserver/pv/JLrmuPsw/v3/dist/assets/index-DYoFRjAE.js",
+  "scriptSha256": "f6df76e79b5ca65b4e01f901e10daf583a1445a6ea6f221656061d820d42d706",
+  "note": "Facts and parameters inspected for independently written implementation; reference script is not redistributed.",
+  "growthMeals": [
+    3,
+    9
+  ],
+  "foodQualityCosts": [
+    200,
+    500
+  ],
+  "foodQualityMax": 3,
+  "foodDropCost": "150 * current tier",
+  "foodDropMax": 5,
+  "laserCost": "750 * current tier",
+  "laserDamage": "34 + 26 * (tier - 1)",
+  "eggCost": "500 * level",
+  "piecesPerLevel": 3,
+  "guppyCost": 100,
+  "carnivoreCost": 1500,
+  "coinValues": {
+    "medium": 15,
+    "large": 35,
+    "carnivore": 200
+  },
+  "coinIntervalsSeconds": {
+    "medium": 9,
+    "large": 7,
+    "carnivore": 12
+  },
+  "hungerSeconds": {
+    "seek": 6,
+    "starving": 22,
+    "death": 32,
+    "predatorSeek": 14,
+    "predatorDeath": 34
+  },
+  "firstInvasionSimulationSeconds": 92.6,
+  "invasionInterval": "max(18, 42 * 0.93 ** (level - 1)) + 2.6 warning",
+  "greenHealth": "100 + 70 * (level - 1)",
+  "purpleFromLevel": 3,
+  "purpleChance": 0.45,
+  "purpleHealthMultiplier": 1.9,
+  "killReward": "75 + 25 * level",
+  "petCosts": [
+    750,
+    2000,
+    3000
+  ],
+  "motherIntervalSeconds": 24,
+  "swordDamage": 12,
+  "swordCooldownSeconds": 2.6,
+  "automaticLevelAdvance": true,
+  "inventoryPersistsAcrossLevels": true
+}

@@ -23,4 +23,4 @@ SOFTWARE.
 This notice covers the newly authored implementation code. It does not grant
 rights in the referenced Rezona game or branding. No reference-site game code
 or original image files are distributed. Generated art production is recorded
-in ART-PROMPTS.json. Nunito has its separate SIL OFL notice in assets/.
+in ART-PROMPTS.json. Nunito and Baloo 2 have separate SIL OFL notices in assets/.
