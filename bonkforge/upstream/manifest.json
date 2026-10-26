@@ -1,0 +1,10 @@
+{
+  "repository": "https://github.com/christopherscott/whackamole",
+  "source_url": "https://raw.githubusercontent.com/christopherscott/whackamole/master/whackamole.js",
+  "retrieved": "2026-10-26",
+  "license": "MIT, Christopher Scott Hernandez 2010",
+  "revision_note": "Retrieved master file; source fingerprint below is the reproducibility identifier. No commit hash was inferred.",
+  "files": {
+    "whackamole.js": "0a11aa281ae7659ebb017e42d365447f88a4662d89d7b77853779ab78ba26600"
+  }
+}
