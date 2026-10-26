@@ -1,0 +1,4 @@
+const{createGecko}=require('./source-game.js');
+function plan(snapshot,depth=6){let beam=[{snap:snapshot,first:null,value:0}],chapter=snapshot.chapter;for(let d=0;d<depth;d++){let cand=[];for(let b of beam)for(let held of [true,false]){let g=createGecko(chapter,b.snap),s=g.view();for(let k=0;k<20&&s.state==='play';k++)s=g.step(held);let value=(s.state==='won'?1e6:s.state==='lost'?-1e6:0)+s.height*3+s.captures*4+s.hearts*80-Math.max(0,s.cord.pin.y-132)*4;let snap=g.snapshot();cand.push({snap,first:b.first??held,value})}cand.sort((a,b)=>b.value-a.value);beam=cand.slice(0,10)}return beam[0].first}
+if(require.main===module){for(let l=0;l<8;l++){let g=createGecko(l),s=g.view(),ticks=0;while(s.state==='play'&&ticks<6500){let held=plan(g.snapshot());for(let n=0;n<20&&s.state==='play';n++){s=g.step(held);ticks++}}console.log(l+1,s.state,s.height.toFixed(1),s.hearts,s.ticks/60)}}module.exports={plan};
+
