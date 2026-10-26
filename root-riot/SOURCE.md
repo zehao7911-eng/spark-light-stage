@@ -12,4 +12,4 @@ The old online scoreboard, GameJolt, RequireJS bootstrap and legacy splash/scene
 
 Direct engine changes: deterministic obstacle restoration; carrot-history FIFO correction; cleanup of the old temporary MagicPush controller. The wrapper additionally clears destroyed carrot references, avoiding stale targets after reload. Existing movement, AI and action classes remain the gameplay foundation.
 
-Original source copies and SHA-256 provenance are retained in upstream/. tools/build-source.py recreates engine/ from them. tools/pack-art.py mechanically encodes the generated PNG assets and metadata; it requires Pillow. Run either script with the game directory as working directory.
+Original source copies and SHA-256 provenance are retained in upstream/. tools/build-source.py recreates engine/ from them. tools/pack-art.py mechanically encodes the generated PNG assets and metadata; it requires Pillow. tools/bundle.py rebuilds the single classic runtime script to reduce first-load requests. Run these scripts with the game directory as working directory.

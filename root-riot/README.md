@@ -6,7 +6,7 @@ Six short campaign patches, 18 best stars, three cosmetic puff styles and an esc
 
 ## Run
 
-Open index.html directly, or serve this directory with any static server. No npm, external CDN, accounts, remote art or online scoreboard required. All runtime art is embedded in assets/data.js. The full-resolution PNG originals are included separately for production use. No service worker is installed: a browser's first visit needs the site; the downloaded ZIP runs offline.
+Open index.html directly, or serve this directory with any static server. No npm, external CDN, accounts, remote art or online scoreboard required. Runtime code is bundled into app.js to reduce cold mobile network requests; editable modules remain included. All runtime art is embedded in assets/data.js. The full-resolution PNG originals are included separately for production use. No service worker is installed: a browser's first visit needs the site; the downloaded ZIP runs offline.
 
 ## Controls
 
