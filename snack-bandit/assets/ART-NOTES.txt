@@ -1,0 +1,1 @@
+Original code-authored SVG illustration. Separate 4-frame walking and carrying raccoon poses, four baker duck poses, three market scenes and stalls, food, bushes, bell and cookie. No third-party game art, source-video frames or AI-generated images used. SVG source is embedded in art.js for reliable offline use.

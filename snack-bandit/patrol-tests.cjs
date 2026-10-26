@@ -1,0 +1,2 @@
+const{SnackRun}=require('./core.js');const assert=require('assert/strict');for(let l=0;l<9;l++){let g=new SnackRun(l);g.player={x:g.def.bushes[0][0],y:g.def.bushes[0][1],face:1};let visits=g.guards.map(()=>new Set);for(let n=0;n<7200;n++){g.step(1/60);g.guards.forEach((t,i)=>visits[i].add(t.index))}g.guards.forEach((t,i)=>assert(visits[i].size===t.path.length,`Patrol stuck L${l+1} G${i}: ${[...visits[i]]}`))}console.log('All guards in all nine authored levels completed their full patrol paths over two simulated minutes.');
+
