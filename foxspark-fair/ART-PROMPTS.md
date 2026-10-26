@@ -1,0 +1,10 @@
+# Artwork generation record
+
+Mode: built-in image_gen, no external image-generation CLI. Assets copied to this game directory and compressed as WebP without creative paint edits. Transparent atlas has actual alpha; no color-key background removal.
+
+1. Lantern market: portrait 2:3 original detailed storybook game environment, high orthographic view with shallow visible fronts. Rich clean dark outlines, warm amber lanterns contrasted with plum/teal cobbles, rounded timber stalls and striped awnings, copper apparatus, autumn foliage. Busy framing at top and edges, broad empty central courtyard from x8–92%, y20–91%. No text, UI, characters or playfield obstacles. Readable mobile composition, no copied game characters.
+2. Glasshouse: reference the market's camera, illustration treatment, light/materials and courtyard composition. Replace architecture with ornate moonlit glass greenhouse, hanging violet blossoms, copper watering apparatus, cyan windows, lush foliage and warm lanterns. Keep central floor clear.
+3. Observatory: preserve the same visual family and empty court. Brass astronomical observatory, blue/lavender masonry, gold star instruments, amber lamps and moonlit sky, ornate but readable edge framing.
+4. Atlas: transparent 6-column by 4-row sprite sheet, 256px cells, exact 24 assets. Orange fox with cream muzzle/tail, green cap/feather, teal coat, burgundy scarf, boots and satchel. Six distinct front/three-quarter walking poses, six back walking poses, idle, arms-up victory, recoiling hurt, copper star bomb, plum soot sprite, wooden crate, blue carved pillar, brass bird cage, freed blue bird, red/gold canister, teal/brass springboard, golden key. Match background outlines and lighting. Refinement edit: generous cell gutters, all ears/tails entirely inside cells, consistent foot placement and identity, preserve actual transparent background.
+
+Background runtime files are 800×1200. Sprite atlas 1536×1024. See source-manifest.json for original generation filenames. Original large PNG working files are retained locally outside the published game package.

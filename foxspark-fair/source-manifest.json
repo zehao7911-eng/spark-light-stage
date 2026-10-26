@@ -1,0 +1,14 @@
+{
+  "repository": "https://github.com/MattSkala/html5-bombergirl",
+  "commit": "0044a17d794bbfe05841a04328ccfd07146cb1b7",
+  "license": "MIT, Matous Skala2018",
+  "upstream_sha256": {
+    "Bomb.js": "81430251d7c91e55b0af870280f9f8ba374a82f7d7ec0dc245f84209a50c54cf",
+    "Bot.js": "9f0cf91b2f9f620d79ddbc4e7a2c254a86671bfe1681e0f4a13af941ba35d44d",
+    "Fire.js": "2575ff4dbc75538a62633371ee45e63feb93f8f971295f8a02068b3cdf09ce1e",
+    "Player.js": "b41e0b84fd34dfbf3ebaeb0fca58432784c7ca8f7cfe116805dd518f3ccc8c0d",
+    "README.md": "5b3267dfdbc073873815c5429707f3b2fa7196fccaaaf77bf2ae1455e6041c71"
+  },
+  "reuse": "Actual Bomb.getDangerPositions/explode chain and material-block logic, Player escapeBomb collision, Bot cardinal-neighbor filtering adapted to graphics-independent ES modules. No upstream art/audio/EaselJS included.",
+  "art": "Three original backgrounds and a24cell character/prop atlas generated with built-in image_gen, unified reference style. Runtime WebP and frame bounds are ordinary asset preprocessing; original PNGs retained locally in outputs/foxspark-art-sources."
+}
