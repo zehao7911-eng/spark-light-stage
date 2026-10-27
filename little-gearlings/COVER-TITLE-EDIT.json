@@ -1,0 +1,8 @@
+{
+  "tool": "OpenAI built-in image generator",
+  "source": "exec-bcdfa6a2-2be0-478c-b043-2f57b09d1f99.png",
+  "finalSource": "exec-d68215df-af17-4e1d-a52a-8cda6b3ec0a2.png",
+  "asset": "assets/cover.webp",
+  "prompt": "Edit only the title lettering of this original game cover. Replace 'BRASS BLOSSOM' with exactly 'LITTLE GEARLINGS', in the same elegant cream serif capital style across the same top title area. Fit all the letters cleanly with balanced margins. Preserve the entire flower mascot, ladybird, gears, workbench, lighting, palette, composition and all other details. No extra text. This is our original cover title update.",
+  "note": "Original cover was generated under a working title. Title updated to Little Gearlings to distinguish the project. Icon contains no text and is unchanged."
+}
