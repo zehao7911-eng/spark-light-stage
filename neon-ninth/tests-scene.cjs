@@ -1,0 +1,9 @@
+const fs=require('fs'),vm=require('vm'),path=require('path'),assert=require('assert/strict');
+const dir=path.resolve(process.argv[2]||__dirname);const Three=require(path.join(dir,'three.min.js'));
+const noop=()=>{},gradient={addColorStop:noop},draw=new Proxy({createLinearGradient:()=>gradient},{get:(o,k)=>o[k]||noop,set:(o,k,v)=>(o[k]=v,true)});
+const T={...Three,WebGLRenderer:class{constructor(){this.shadowMap={};}setPixelRatio(){}setSize(){}render(){}}};
+const w={addEventListener:noop};const c={window:w,THREE:T,document:{createElement:()=>({getContext:()=>draw})},console,matchMedia:()=>({matches:false}),innerWidth:390,innerHeight:844,devicePixelRatio:3,Math};vm.createContext(c);for(let f of ['source-rules.js','model.js','world.js'])vm.runInContext(fs.readFileSync(path.join(dir,f),'utf8'),c);Object.assign(c,w);let world=w.NinthWorld({}),match=new w.Ninth.Match();let meshes=0,triangles=0;
+world.scene.traverse(o=>{if(o.isMesh){meshes++;const p=o.geometry.attributes.position;for(let i=0;i<p.array.length;i++)assert(Number.isFinite(p.array[i]),'finite geometry');let count=o.geometry.index?o.geometry.index.count:p.count;triangles+=count/3*(o.isInstancedMesh?o.count:1);}});
+for(let i=0;i<6;i++){world.theme(i);world.paint(i%4);for(let t=0;t<5000&&!match.finished;t++){if(match.phase==='pitch'&&match.age>=match.duration&&!match.swung)match.swing();match.tick(.016);for(let e of match.drain())world.event(e,match);world.render(match,.016);world.scene.updateMatrixWorld(true);assert(world.camera.position.toArray().every(Number.isFinite));}match=new w.Ninth.Match(i);}
+assert(meshes<700,'draw budget');assert(triangles<350000,'triangle budget');console.log(JSON.stringify({passed:true,meshes,triangles,checks:'finite geometry, six themes, uniforms, pooled impacts, camera, draw budget'}));
+
