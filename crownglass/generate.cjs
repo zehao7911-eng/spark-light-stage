@@ -1,0 +1,5 @@
+const fs=require('node:fs'),path=require('node:path');require('./model.js');const G=globalThis.CG;
+const titles=['First Light','A Change of Heart','The Ivory Fork','Tower Echoes','The Quiet Crown','Beyond the Seal','Knights of Glass','The Mirror Court','A Royal Detour','The Long Diagonal','Velvet Eclipse','The Last Transformation'];
+let levels=[{name:titles[0],player:{kind:'N',x:1,y:0},enemies:[{id:0,kind:'B',x:2,y:2},{id:1,kind:'R',x:4,y:4}],blocks:[]},{name:titles[1],player:{kind:'R',x:0,y:1},enemies:[{id:0,kind:'N',x:3,y:1},{id:1,kind:'B',x:4,y:3},{id:2,kind:'Q',x:1,y:0}],blocks:[]}];
+for(let i=2;i<12;i++){let l=G.generate(9271+i*181,[2,3,4,4,5,5,6,6,7,7,8,8][i],G.TYPES[i%5],i>=5?i>=9?3:2:0);levels.push({...l,name:titles[i]});}
+fs.writeFileSync(path.join(__dirname,'levels.js'),'/* Original curated solvable layouts. Rebuild with node generate.cjs. */\n(typeof window==="undefined"?globalThis:window).CG_LEVELS='+JSON.stringify(levels,null,2)+';\n');console.log(JSON.stringify({levels:levels.length,counts:levels.map(l=>l.enemies.length)}));
