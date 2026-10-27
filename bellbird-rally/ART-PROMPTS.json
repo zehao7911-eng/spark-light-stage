@@ -1,0 +1,21 @@
+{
+  "tool": "OpenAI built-in image generator",
+  "reference": "https://rezona.ai/game/pgcserver/pv/gabSFeBe/v9/dist/index.html",
+  "referenceUse": "Anticipation, aim and contact feedback inspected; no scored hit verified, no source or art reused.",
+  "assets": [
+    {
+      "asset": "assets/cover.webp",
+      "source": "exec-959a7151-1dd5-4081-a37c-d22afbf1b5a5.png",
+      "prompt": "Create a polished square original mobile game cover illustration for BELLBIRD RALLY. Use the attached actual gameplay screenshot as strict design reference for the warm rounded apricot bellbird: plump pale apricot little bird, cream chest, tiny black shiny eyes and small beak, blush cheeks, coral short rounded wings and three coral tuft feathers, feet, friendly expression. Same mint green rounded rectangular water garden set into a honey wood miniature platform, cream ceramic rim, small lotus flowers and gold hanging wind chimes along both sides, slim wooden rear fence with small paper lanterns. A tiny glowing cream feather shuttle arcs in foreground toward an oval wood rim cream woven paddle. Scene is a refined rounded toy diorama in warm evening lighting, soft shadows, warm blush background, eucalyptus greens, honey brass, apricot. Frame one big adorable bird upper central and paddle plus glowing shuttle lower central, small water ripples and fairy motes, calm elegant handcrafted visual richness. Faithful proportions and colours to the supplied screenshot, no different character, no fur. Top title exactly 'BELLBIRD RALLY' in elegant cream readable serif capitals. Clean rich game store cover, no other text, no UI bars or icons, no realistic human, no borrowed IP. Original promotional artwork, not a screenshot.",
+      "reference": "Actual gameplay screenshot work/bellbird-art-reference.png",
+      "kind": "Original promotional illustration, not gameplay screenshot"
+    },
+    {
+      "asset": "assets/icon.png",
+      "source": "exec-5cb8c290-e247-44ec-af2e-1b6d7e26846e.png",
+      "prompt": "Create a square premium mobile game app icon, NO TEXT. Original Bellbird Rally mascot based faithfully on attached cover: adorable round pale apricot bird with cream heart chest, tiny black glossy eyes, coral short wings, small yellow beak and three coral tuft feathers, blush cheeks. Big bird fills 75% of frame, holding a tiny glowing cream feather shuttle; one little gold wind chime beside it. Mint teal water garden background, warm sunset rim lighting, rounded toy-like polished 3D illustration, rich soft detail but crisp small silhouette, no border, no existing IP, no extra characters. Same palette and design as supplied cover. Do not include title or letters.",
+      "reference": "Generated cover illustration",
+      "kind": "Original icon"
+    }
+  ]
+}

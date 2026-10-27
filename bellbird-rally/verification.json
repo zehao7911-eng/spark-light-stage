@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "checks": 20385,
+  "courts": [
+    {
+      "court": "Apricot Hour",
+      "hits": 5,
+      "misses": 0,
+      "seconds": 20,
+      "choruses": 1
+    },
+    {
+      "court": "Bluebell Pool",
+      "hits": 7,
+      "misses": 0,
+      "seconds": 27.21,
+      "choruses": 1
+    },
+    {
+      "court": "Peach Orchard",
+      "hits": 8,
+      "misses": 0,
+      "seconds": 28.35,
+      "choruses": 2
+    },
+    {
+      "court": "Jade Afterglow",
+      "hits": 8,
+      "misses": 0,
+      "seconds": 27.39,
+      "choruses": 2
+    },
+    {
+      "court": "Plum Moon",
+      "hits": 10,
+      "misses": 0,
+      "seconds": 31.69,
+      "choruses": 2
+    },
+    {
+      "court": "Golden Hush",
+      "hits": 11,
+      "misses": 0,
+      "seconds": 34.82,
+      "choruses": 2
+    }
+  ]
+}
