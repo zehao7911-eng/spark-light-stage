@@ -1,0 +1,15 @@
+{
+  "reference": "https://rezona.ai/game/pgcserver/pv/DKkkOgxz/v5/dist/index.html",
+  "reference_use": "Observed fibre pile and tool presentation. Game code, artwork and audio not reused.",
+  "background_prompt": "Create an original cozy premium casual-game environment background plate, wide landscape 3:2. A tiny woodland felt-and-wood grooming studio, warm cream and sage walls, softly rounded wooden shelves with pastel wool spools and small corked bottles along far left and right edges, an arched softly glowing window to blurred green forest high in the background, a tiny amber lamp far left, folded peach towels far right. The central 65 percent and lower middle MUST stay completely empty and quiet for a large live 3D creature and a barber chair. No creature, no chair in centre, no bowl, no hands, no tools in centre, no text, no logo, no UI. Slightly low front-facing camera, shallow depth of field, centre is softly lit warm walnut tabletop merging into beige floor. Tactile miniature toy studio: rounded sculpted forms, clean felt, fine wood grain, physically soft daylight and contact shadows, crafted animation-film product render, not a flat illustration, not low-poly. Harmonious sage, peach, cream, lavender details. Restrained detail and low contrast behind the future character.",
+  "background_source": "exec-5ed1e52c-9626-4a6c-bd85-9038b899d6b9.png",
+  "cover_prompt": "Create a square original premium casual-game cover for FUZZ CLUB. Reference 1 is an actual playable screenshot: match the exact original lavender bean-shaped forest plush guest Mallow, cream-peach oval face, small shiny black oval eyes, rosy cheeks, tiny brown nose, soft white paws and feet, two rounded upright ears, short rounded layered lavender wool locks on top, a small dusty-rose bow with cream centre above its right temple. Open happy eyes for the cover. Keep the visible cozy toy proportions and rounded wool-lock texture, not long realistic fur and not spiky needles. The guest sits in the same little sage cushion wooden salon chair, with a small golden wooden comb angled beside the head. Reference 2 is the game's actual background plate; use the same warm woodland grooming studio, walnut shelves, folded peach towels, pastel wool spools and arched forest window, softly blurred behind the hero. Art-directed tactile 3D toy product render, soft warm daylight, gentle rounded surfaces, natural felt/plush and wood materials, coherent cream sage lavender dusty-rose palette. Large elegant friendly cream serif title FUZZ CLUB at top, generous safe margins. No UI, no progress bars, no human hands, no other characters, no copied logos, no other words. Keep entire ears and feet visible with a balanced hero composition.",
+  "cover_reference": "work/fuzz-club-art-reference.png, actual native game screenshot",
+  "cover_source": "exec-48001d94-e450-4296-9f65-7ab37d78b3b7.png",
+  "outputs": [
+    "assets/studio.webp",
+    "assets/cover.webp",
+    "assets/icon.png"
+  ],
+  "gameplay": "All characters, wool tufts, chair, comb and feedback are original live procedural 3D geometry."
+}

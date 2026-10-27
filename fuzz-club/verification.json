@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "checks": 194,
+  "clients": [
+    {
+      "client": "Mallow",
+      "strokes": 9,
+      "tufts": 841,
+      "knots": 3
+    },
+    {
+      "client": "Clover",
+      "strokes": 7,
+      "tufts": 840,
+      "knots": 3
+    },
+    {
+      "client": "Peaches",
+      "strokes": 8,
+      "tufts": 841,
+      "knots": 4
+    },
+    {
+      "client": "Toast",
+      "strokes": 8,
+      "tufts": 842,
+      "knots": 4
+    },
+    {
+      "client": "Berry",
+      "strokes": 10,
+      "tufts": 840,
+      "knots": 5
+    },
+    {
+      "client": "Nimbus",
+      "strokes": 10,
+      "tufts": 839,
+      "knots": 5
+    }
+  ]
+}
