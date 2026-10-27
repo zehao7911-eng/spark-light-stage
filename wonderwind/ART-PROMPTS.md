@@ -1,0 +1,17 @@
+# Original visual assets
+
+Mode: built-in image generation (two calls). No CLI/API path used. Original source PNGs remain under C:/Users/Gigabyte/.codex/generated_images/01a171ed-dda8-7140-bbfe-f67507f0ee79/.
+
+## Cover
+Saved project asset: assets/cover.webp. Source PNG: exec-b8c8826e-836c-47a9-a99d-0fecbd87636c.png. Reference: actual game screenshot outputs/wonderwind-art-reference.jpg. Promotional composition, not a gameplay screenshot.
+
+Create a polished original landscape promotional game cover for WONDERWIND WORKSHOP. Use this actual game screenshot as strict reference for the toy and palette. Hero: an elegant mint-green cylindrical enamel clockwork music box with thick pale-gold base/top rings, small gold studs, an infinity-shaped double-loop winding key on the front, three little visible brass gears on its ivory top. From the center grows a long gently curved sage stem with two round leaves and one smiling golden-yellow daisy face, two dark small bead eyes, tiny blush and simple smile, surrounded by EIGHT large smooth ivory oval petals in a frontal flower shape. A tiny golden bee with simple ivory wings hovers nearby. Keep this exact friendly original toy identity, proportions and geometric vocabulary; do not invent a furry creature, doll or branded character. A small wood-handled brush gently dusts a smudge from the enamel base, little golden sparkles and a couple of screws on the honey wood workbench show restoration. Softly detailed cozy workshop with little pastel ceramic plant pots and brass tools. High-end rounded 3D toy diorama, satin enamel and brushed brass, restrained sage/ivory/honey/rose palette, warm directional light, fine contact shadows, polished coherent craft detail. Three-quarter close view with a clearly readable silhouette. Leave tasteful cream upper-left negative space for large dark warm title 'WONDERWIND' and smaller 'WORKSHOP'. No other text, no numbers, no interface, no watermarks or existing logos. This is an illustrative composition matching the actual screenshot, not a screenshot itself.
+
+## Icon
+Saved project asset: assets/icon.png (512 square). Source PNG: exec-0e4ab508-8a24-46cf-9a1a-8bde4904c85e.png. Reference: generated cover above.
+
+Create a single square original app icon for Wonderwind Workshop using this cover as strict visual reference. Show the exact same friendly smiling daisy clockwork toy: eight ivory oval petals around a honey-yellow round face with tiny dark bead eyes, blush and simple smile, sage curved stem and two leaves, attached to the top of a mint enamel cylindrical music box with pale gold rings and the infinity-shaped double-loop winding key. A tiny brass gear and one small sparkle suggest restoration. Crop/composition should keep the flower face dominant while retaining enough of the mint base/key to communicate a wind-up toy. Warm cream/sage/honey palette, smooth tactile satin enamel and brushed gold, soft rich studio lighting, premium rounded 3D diorama. Simple quiet warm background, all key elements inside center80percent for icon safe area. No human hand, text, title, letters, numbers, logos, interface, border or watermark. Do not change the original flower into another creature.
+
+## Runtime visuals
+All six toy models, enamel bases, mechanisms, gears, screws, dust, brush, workshop, shadows, particles and tool UI are original procedural Three.js geometry or native HTML/CSS. No reference game assets copied. The promotional illustration is more detailed than the real-time renderer, preserving the toy design and palette.
+
