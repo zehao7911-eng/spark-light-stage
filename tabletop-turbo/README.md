@@ -19,7 +19,7 @@ Opening index.html directly with file:// can block JavaScript modules: use HTTP 
 ## Technical verification
 `node tools/test.mjs` runs natural three-lap controllers, drift boost, jump/landing, bounded states, exact save/continuation, reset, finished-state freeze and corrupt-save checks.
 Touch layout verified in browser at 320x568, 390x844 and 844x390; this is browser emulation, not physical-device certification.
-Low quality disables shadows and caps render scale at 1.0. High quality uses a 1024px shadow map and caps render scale at 1.5. Static models are batched by material. No rendering behind the opaque title or pause overlay.
+Low quality disables shadows and caps render scale at 1.0. High quality uses a 1024px shadow map and caps render scale at 1.5. Static models are batched by material. An overhead camera fallback keeps the car visible when giant furniture blocks the chase view. Stalled cars automatically recover after a short delay. No rendering behind the opaque title or pause overlay.
 Save data stays on the player's device; unavailable storage does not prevent play.
 
 ## Reference and scope
