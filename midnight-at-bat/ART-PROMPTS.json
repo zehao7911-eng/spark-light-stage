@@ -1,0 +1,22 @@
+{
+  "mode": "built-in image_gen",
+  "runtimeCity": {
+    "prompt": "Create a wide 3:2 original hand-painted stylized 3D-game matte background of a Japanese-inspired midnight city skyline seen from a rooftop batting cage. Absolutely no cage, no baseball player, no field, no foreground objects, no interface, no logos, no legible words. Rich deep midnight navy sky in upper half, clusters of beautiful teal and magenta illuminated windows in lower half, a distant warm orange lattice communications tower right of center, atmospheric blue haze, small warm neon shop panels between buildings. Large architectural shapes, tasteful simplified painted detail, premium animated family sports game art with crisp silhouettes, no photography. Intended as a background plane behind real 3D geometry. Horizon at 55 percent; center lower area darker so foreground baseball and batting target remain readable. No text.",
+    "source": "exec-8cdf0403-2ca7-4786-8548-ff527314787f.png",
+    "output": "assets/city.webp"
+  },
+  "cover": {
+    "prompt": "Create a premium portrait 2:3 mobile baseball game cover for NEON KNOCKOUT, based on the supplied actual-game screenshot as character and environment reference. It is a marketing illustration, not a screenshot. The main original hero is a friendly compact chibi baseball player, rounded teal batting helmet with brim ABOVE the expressive large dark eyes, warm tan skin, small rounded nose and smile, navy blue buttoned baseball jacket with cream central placket and teal vertical side accents, cream pants, navy-and-cream sneakers, pale batting gloves, maple bat with black grip. Keep this exact outfit and friendly proportions. Show an exciting full-body twisting bat swing in the middle/lower part of the image, feet grounded, a cream baseball with red stitches flying toward upper right with a bright golden arc, little sparks, teal rim light. Scene: rooftop batting cage at midnight, teal turf and clay home plate, fine dark cage wires, beautiful deep-blue city skyline with teal/magenta windows and distant orange lattice tower, three golden star target hoops. Crisp stylized 3D animated sports game art with rich painted finishing, warm skin and gold against cool navy and teal, readable silhouette, excellent material polish. TOP 24% quiet dark navy sky for separate HTML title, BOTTOM 18% calmer dark teal turf for separate HTML play button. NO text, NO letters, NO logos, NO interface, NO watermark. Do not introduce realistic adult athletes or licensed teams.",
+    "source": "exec-2a76d06d-cf11-48c0-b83d-67d34906d224.png",
+    "reference": "actual gameplay screenshot work/neon-batting-reference/art-reference.png",
+    "output": "assets/cover.webp"
+  },
+  "icon": {
+    "prompt": "Create a square 1:1 premium mobile sports game icon matching the supplied cover. Close-up of the same original friendly chibi baseball player in a rounded glossy teal batting helmet, tan face, expressive large dark eyes and a confident happy smile, navy jacket with teal accents and cream trim. He holds a maple bat with black grip diagonally over one shoulder; a large cream baseball with red stitching and a golden swoosh fills the lower-right foreground. Midnight navy and teal rooftop batting-cage lights as simplified background, subtle magenta city glow. Rich warm-cool lighting, clean high-quality stylized 3D animated game illustration, very readable at small size, hero face and helmet fill most of frame. No text, no letters, no logos, no watermark, no border. Marketing icon, not screenshot.",
+    "source": "exec-c47a9a5e-845c-40f8-adf1-fed7e152c820.png",
+    "reference": "generated cover",
+    "output": "assets/icon.png"
+  },
+  "note": "Cover and icon are promotional illustrations, not screenshots. Runtime character models, props and animation are original procedural Three.js geometry. City image is actually used as the stadium backdrop.",
+  "titleNote": "Working title changed from Neon Knockout to Midnight at Bat. Exact generation prompts retained; generated artwork contains no title text."
+}
