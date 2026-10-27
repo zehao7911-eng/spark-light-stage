@@ -1,0 +1,21 @@
+{
+  "mode": "built-in image_gen",
+  "wall": {
+    "prompt": "Create a wide 3:2 original stylized hand-painted 3D casual-game kitchen BACK WALL matte illustration. Straight-on frontal view, no foreground floor, no counters, no characters, no food orders, no text, no logos, no interface. Warm cream plaster wall; centered generous arched window looking onto a softly glowing sunlit herb garden; soft coral gingham curtains; muted sage trim; short wood shelf of ceramic spice jars to left; a hanging rail of three polished copper pots and a small potted basil plant to right. A few charming cream tiles at bottom, warm honey window light, very refined rounded shapes and gentle painterly material detail, friendly miniature-cafe atmosphere. Palette cream, sage, terracotta and warm copper. Lower contrast and quieter center so real interactive 3D objects placed in front read clearly. Not photographic. This will be used as actual background artwork behind original procedural 3D cooking game geometry.",
+    "source": "exec-6e12b357-837a-4220-ae21-e041e73a04be.png",
+    "output": "assets/wall.webp"
+  },
+  "cover": {
+    "prompt": "Create a premium portrait 2:3 mobile cooking game cover for COPPERWHISK KITCHEN, using the supplied actual game screenshot only as palette, character and miniature kitchen design reference. Marketing illustration, not a screenshot. Main original character: an adorable smooth sculptural ginger-tan HAMSTER chef (not human), large round head, small round ears, big dark eyes with glints, cream cheek pouches, tiny pink-brown nose and happy smile. Tall soft cream three-lobed chef hat, cream chef coat, sage green apron with tiny copper buttons, tiny brown paws. Show a joyful three-quarter FRONT view of this hamster carrying a cream plate with a steaming orange garden soup bowl; a little carrot and herb garnish visible. The chef is large and clearly readable in the central/lower area, feet grounded. Behind him a refined miniature sunny kitchen: cream and peach checker tiles, sage cabinets, honey wood worktops, two COPPER pots simmering on separate dark hob stations, chopping board and carrot, arched garden window with coral gingham curtains, spice shelf, small basil plant. Two smaller hamster guests smile at a serving bell counter. Rich warm/cool color separation, beautiful rounded crafted shapes, soft contact shadows, polished animated casual-game 3D illustration with gentle painterly finishing, no photographic fur. TOP 24 percent quieter cream wall for separate HTML title; BOTTOM 18 percent calmer sage/wood area for separate HTML button. NO text, no letters, no logos, no interface, no watermark. Preserve the original hamster look; no real brands or licensed characters.",
+    "source": "exec-74234005-eca8-44a7-85e5-4574335ace68.png",
+    "reference": "work/copperwhisk-art-reference.png (actual independently implemented gameplay)",
+    "output": "assets/cover.webp"
+  },
+  "icon": {
+    "prompt": "Create a square 1:1 premium mobile cooking game app icon matching the supplied Copperwhisk Kitchen cover reference. Close-up of the SAME adorable original ginger-tan hamster chef, cream cheek pouches, tiny pink-brown nose, large dark happy eyes, tall soft cream three-lobed chef hat, sage green apron and copper button. He proudly holds a small cream plate with a copper-orange bowl of steaming carrot soup; the bowl fills the lower foreground and his smiling face fills most of the icon. Warm cream arched-window kitchen and a hint of sage/copper behind, softly simplified. Refined sculptural animated casual-game 3D illustration, charming clear silhouette, rich warm color separation, soft light, no photographic fur detail, readable at tiny size. No text, no letters, no logos, no watermark, no border. Marketing illustration, not a screenshot.",
+    "source": "exec-30ea31b7-238e-49a2-bcee-138dfc3eaaf9.png",
+    "reference": "generated cover",
+    "output": "assets/icon.png"
+  },
+  "note": "Cover and icon are promotional illustrations, not screenshots. Real gameplay uses independently authored procedural 3D hamster/food/room geometry; the generated wall is used in the real scene."
+}
