@@ -1,0 +1,16 @@
+{
+  "mode": "built-in image_gen",
+  "cover": {
+    "prompt": "Create a polished portrait 2:3 mobile racing game cover illustration for TABLETOP TURBO. Use the supplied actual gameplay screenshot ONLY as design reference: the lead car is a tiny red rounded toy sports coupe with black rubber wheels, silver hubs, two narrow cream racing stripes, teal windows, simple warm plastic forms; green, gold and purple toy rival cars. A huge warm living room contains honey parquet floor, cream masking-tape racetrack, coral orange sofa, oversized cream cup with coral rim and teal polka dots, yellow rubber duck, books creating a small ramp to a wooden coffee table. Draw an exciting low camera three-quarter FRONT view of the red car drifting around a tape-road bend, smoke puffs, cyan turbo streaks. The four cars occupy the middle-lower area; the oversized duck and sofa frame them. High craft stylized 3D toy illustration, coherent charming material shapes, crisp readable large shapes, warm sunlight, rich coral/teal/gold palette, no photorealism. Keep TOP 25 percent as relatively quiet warm wall for separate HTML title, and BOTTOM 18 percent calmer darker floor for separate HTML button. NO TEXT, NO LOGO, NO UI, NO WATERMARK. Not a screenshot. Match the real car's simple proportions; do not replace it with an exotic realistic supercar.",
+    "source": "exec-096bbb91-1c12-408b-923c-ed2979415b58.png",
+    "reference": "work/tabletop-reference/gameplay.png",
+    "output": "assets/cover.webp"
+  },
+  "icon": {
+    "prompt": "Create a square 1:1 polished mobile game app icon matching the supplied TABLETOP TURBO cover reference. Single tiny bright red rounded toy coupe, two narrow cream racing stripes, teal windows, chunky black rubber tires, silver hubs and rectangular headlights. Front three-quarter view pointing lower right, joyful speed and cyan turbo arc curling behind it; simplified honey wooden floor and cream masking-tape road; tiny out-of-focus yellow rubber duck in upper left. Strong large car silhouette fills 80% of frame. Warm handcrafted plastic 3D illustration, rich colors, crisp shapes, premium casual racing game art. No text, no logo, no letters, no watermark, no icon border. This is a marketing icon, not a game screenshot.",
+    "source": "exec-f2dc8a6c-30df-43d4-87e6-cfb8902985c1.png",
+    "reference": "generated cover",
+    "output": "assets/icon.png"
+  },
+  "note": "Generated promotional illustrations, not gameplay screenshots. Runtime models and materials are independently authored procedural Three.js geometry."
+}
