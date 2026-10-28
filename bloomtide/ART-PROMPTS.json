@@ -1,0 +1,26 @@
+{
+  "tool": "OpenAI built-in image generator",
+  "reference": "https://rezona.ai/game/pgcserver/pv/XonoJKzl/v5/dist/index.html",
+  "assets": [
+    {
+      "files": [
+        "assets/hero.webp",
+        "assets/hunter.webp",
+        "assets/prey.webp",
+        "assets/food.webp",
+        "assets/icon.png"
+      ],
+      "source": "exec-594dfbc4-0bb5-4461-b4c8-7411b4689719.png",
+      "prompt": "Create an original premium game sprite atlas with TRANSPARENT background, exact 2 by 2 grid, equal 512px square cells in a 1024x1024 square. Each subject fully inside its own cell with generous transparent padding on all sides, no overlap, no text, no borders. Cohesive cute polished 3D-rendered microscopic water-creature art, glossy translucent jelly membrane, tiny internal organelles, soft pale highlights, readable adorable expressive eyes, three-quarter TOP view, light from upper left. TOP LEFT: friendly round lime/teal cell with two big dark teal shiny eyes and tiny happy mouth, small nucleus, delicate little fin tabs, no long tail. TOP RIGHT: ruby coral predator cell, softly spiky membrane, two narrowed expressive eyes, little fierce mouth, charming not scary. BOTTOM LEFT: small honey-gold gentle oval cell with two small eyes, translucent golden organelles and tiny short fins, no spikes. BOTTOM RIGHT: a loose little cluster of five cyan and pink nutrient pearls, glassy luminous, no face. Four separate isolated game assets, not scenes, consistent camera/material/light, no floor, no baked opaque shadow, genuinely transparent alpha. Rich detailed volume at small mobile scale, original designs, not existing IP.",
+      "pipeline": "Exact2x2 atlas cells; trim transparent borders; resize, preserve alpha; icon resized player"
+    },
+    {
+      "files": [
+        "assets/water.webp"
+      ],
+      "source": "exec-186e5383-8c40-4836-8e1b-9c701647b323.png",
+      "prompt": "Original premium mobile game runtime environment background, square 1536x1536, top-down microscopic underwater lagoon. Rich deep turquoise and muted teal water, subtle luminous caustic ribbons, beautiful soft-focus translucent plant fronds and tiny mineral grains concentrated near the four edges, scattered faint circular bokeh and soft aqua light shafts. Large central 70% stays open and calm, mid-dark teal so bright lime, coral and golden jelly cell characters will be readable. Detailed painterly-rendered macro 3D material, dreamy miniature underwater science-fantasy, not photoreal ocean, no horizon, no fish, no eyes, no creatures, no food pellets, no UI, no text, no logo. Coherent glossy translucent micro world palette, elegant restrained light, enough fine detail to look crafted without competing with moving actors.",
+      "pipeline": "Resize1200square/WebP"
+    }
+  ]
+}

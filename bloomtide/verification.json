@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "checks": 12,
+  "controllerTicks": 2308,
+  "total": 108,
+  "tiers": 6,
+  "coverage": "six stages via normal movement, upgrade gating, idle no score, dash cooldown, deterministic restore, invalid save"
+}
