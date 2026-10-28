@@ -4,7 +4,7 @@ A small, tactile hydraulic-press collection game for browser, touch and keyboard
 
 ## Play
 
-Open `index.html` or `standalone.html` in a modern WebGL-capable browser. Hold the large button (or Space) to lower the press. Release while the pressure needle is inside the green band. A complete press records the specimen; an early release is free to retry. The main button loads the next uncollected object after each result. Swipe the specimen to rotate it before or after pressing.
+Open `index.html` or `standalone.html` in a modern WebGL-capable browser. Hold the large button (or Space) to lower the press. Release while the pressure needle is inside the green band. A complete press records the specimen; an early release is free to retry. The main button loads the next uncollected object after each result.
 
 24 specimens across metal, foam, glass, paper, gummy, chalk, bubble and spring families. Each new specimen unlocks another object. At 6 records, precision mode halves pressure speed; at 12, three machine finishes become available; at 18, Auto Press can complete the archive. Automatic specimens receive at most two quality marks; three marks require manual timing. Revisit any specimen through the archive to improve its score. No timer, lives or currency. Local progress is saved on the same browser and origin.
 
