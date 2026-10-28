@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#233944"><meta name="description" content="Three moving ribbons. One wonderfully odd friend. An original illustrated creature-making game for one finger.">
+  <meta property="og:title" content="Oddling Parade"><meta property="og:description" content="Pin a head, a coat, and tiny feet. Bring a little oddling to life."><meta property="og:image" content="https://zehao7911-eng.github.io/spark-light-stage/oddling-parade/assets/cover.webp">
+  <title>Oddling Parade</title><link rel="icon" href="assets/icon.svg?v=2e3969158be0"><link rel="stylesheet" href="style.css?v=2e3969158be0">
+  <script defer src="core.js?v=2e3969158be0"></script><script defer src="art.js?v=2e3969158be0"></script><script defer src="view.js?v=2e3969158be0"></script><script defer src="app.js?v=2e3969158be0"></script>
+</head>
+<body>
+  <div id="shell">
+    <header id="hud">
+      <div class="brand"><img src="assets/icon.svg?v=2e3969158be0" width="43" height="43" alt=""><div><strong>ODDLING PARADE</strong><span id="chapter">REQUEST 01 / 12</span></div></div>
+      <div class="tools"><button id="book" aria-label="Open field guide"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM8 4v16M11 8h6M11 12h6M11 16h4"/></svg></button><button id="sound" aria-label="Mute sound" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zM16 8q5 4 0 8"/></svg></button><button id="pause" aria-label="Pause"><svg viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></svg></button></div>
+    </header>
+    <main id="scene"><canvas id="world" role="img" tabindex="0" aria-label="Three illustrated ribbons. Tap Pin head, then Pin coat, then Pin feet to make a creature."></canvas><div id="toast" role="status" aria-live="polite"></div></main>
+    <footer id="footer">
+      <div id="playControls"><div id="hint">Pin three parts. Make a friend.</div><div class="actionRow"><button id="slow" aria-label="Hold to slow the ribbons"><svg viewBox="0 0 24 24"><path d="M5 14q0-8 8-8t7 8H5ZM8 14v3m9-3v3M5 11H2v5h3m5-10V3m4 3V3"/></svg><small>HOLD</small></button><button id="pin"><span id="pinLabel">PIN HEAD</span><small id="pinFine">1 / 3</small></button><button id="undo" aria-label="Unpin the last part" disabled><svg viewBox="0 0 24 24"><path d="m8 5-5 5 5 5M3 10h10q7 0 7 7v2"/></svg><small>UNDO</small></button></div></div>
+      <div id="resultControls" hidden><div id="rname"></div><div id="reward"></div><div class="resultButtons"><button id="retry" aria-label="Remix this request">REMIX</button><button id="next">NEXT GUEST →</button></div></div>
+      <div id="paradeControls" hidden><div class="paradeTitle">Your odd little troupe.</div><div class="resultButtons"><button id="paradeBook">FIELD GUIDE</button><button id="freeplay">FREESTYLE →</button></div></div>
+    </footer>
+  </div>
+  <div id="modal" role="dialog" aria-modal="true" aria-labelledby="mtitle" hidden><article><header class="modalHead"><div><span id="eyebrow">THE FIELD GUIDE</span><h1 id="mtitle">Little oddities.</h1></div><button id="close" aria-label="Close menu">✕</button></header><div id="modalBody"></div></article></div>
+  <p id="assist" class="sr" aria-live="polite"></p>
+</body></html>

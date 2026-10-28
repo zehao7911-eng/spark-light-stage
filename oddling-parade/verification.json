@@ -1,0 +1,116 @@
+{
+  "passed": true,
+  "checks": 1383,
+  "request_routes": [
+    {
+      "request": 1,
+      "parts": [
+        0,
+        0,
+        0
+      ],
+      "score": 1050
+    },
+    {
+      "request": 2,
+      "parts": [
+        1,
+        1,
+        1
+      ],
+      "score": 1050
+    },
+    {
+      "request": 3,
+      "parts": [
+        2,
+        2,
+        2
+      ],
+      "score": 1050
+    },
+    {
+      "request": 4,
+      "parts": [
+        3,
+        3,
+        3
+      ],
+      "score": 1050
+    },
+    {
+      "request": 5,
+      "parts": [
+        0,
+        3,
+        0
+      ],
+      "score": 975
+    },
+    {
+      "request": 6,
+      "parts": [
+        2,
+        1,
+        2
+      ],
+      "score": 975
+    },
+    {
+      "request": 7,
+      "parts": [
+        4,
+        4,
+        4
+      ],
+      "score": 1050
+    },
+    {
+      "request": 8,
+      "parts": [
+        1,
+        4,
+        3
+      ],
+      "score": 1020
+    },
+    {
+      "request": 9,
+      "parts": [
+        3,
+        2,
+        1
+      ],
+      "score": 1020
+    },
+    {
+      "request": 10,
+      "parts": [
+        4,
+        0,
+        2
+      ],
+      "score": 1020
+    },
+    {
+      "request": 11,
+      "parts": [
+        2,
+        3,
+        4
+      ],
+      "score": 1020
+    },
+    {
+      "request": 12,
+      "parts": [
+        4,
+        3,
+        0
+      ],
+      "score": 1020
+    }
+  ],
+  "combinations": 125,
+  "coverage": "12 requested perfect assemblies and all125 free combinations through ordinary step/pin/undo controls; idempotent awards, unlocks, slower ribbons, exact partial/sewing/result restore, invalid snapshots. Controller routes are not human play evidence."
+}
