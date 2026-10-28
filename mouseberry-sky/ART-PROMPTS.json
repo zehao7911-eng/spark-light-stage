@@ -1,0 +1,15 @@
+{
+  "mode": "built-in image_gen",
+  "cover": {
+    "prompt": "Create a premium portrait 2:3 original mobile game cover for MOUSEBERRY SKY. Use the supplied actual independently implemented game screenshot as character/palette/world reference, not as an image to copy. No text, no letters, no logos, no UI. An adorable original blue-gray mouse explorer, giant rounded ears with soft pink inner ear pads, cream oval belly and cream muzzle, huge kind glossy dark eyes, tiny pink nose, fine whiskers and one tiny front tooth, small pink paws/toes, slim pink curling tail, mustard-gold neckerchief, little tan acorn-shaped backpack with brass buckle. Anatomically coherent rounded sculpted soft shapes. Full body in a joyful mid-leap FRONT three-quarter pose, ears bouncing, forepaws open, feet tucked, tail forming a graceful follow-through arc. Below and behind, a winding route of floating thick slices of orange, kiwi, watermelon and pink dragonfruit; fruit cuts have radial citrus segments and clear seeds, substantial glossy rind, tiny golden checkpoint flags and a few warm golden star collectibles. Puffy cream clouds at several depths in a bright turquoise sky with gentle sunlight. A refined hand-crafted stylized 3D casual game illustration, tactile mouse and fruit, soft contact shading, vibrant but harmonious colors, expressive silhouette, charming cinematic composition, no photographic fur. Mouse fills central50percent and is readable at small size. Top22percent calmer bright sky for HTML title, bottom18percent quieter turquoise clouds for HTML play button. Promotional illustration, more detailed than real-time gameplay. Do not introduce existing characters or brands.",
+    "reference": "work/mouseberry-art-reference.png (actual independent gameplay)",
+    "source": "exec-f2e3f0c3-b15e-4477-911b-bed7f8494d09.png",
+    "output": "assets/cover.webp"
+  },
+  "icon": {
+    "prompt": "Create a square polished mobile game icon, no letters, no text, no logo, no border. Use the supplied original mouse cover as the exact design reference: adorable blue-gray mouse explorer with huge round pink inner ears, cream muzzle and belly, kind large dark glossy eyes, tiny pink nose, fine whiskers, one small front tooth, golden mustard scarf, acorn tan backpack. Close-up three-quarter FRONT joyful face with a tiny pink paw holding a golden star. A small curved kiwi rind and orange slice frame lower corners, bright turquoise sky and soft ivory clouds behind. Refined sculpted stylized3D casual-game illustration, warm/cool separation, crisp strong silhouette readable at64px, no photographic fur or unrelated characters. Promotional art, not a gameplay screenshot.",
+    "reference": "generated cover above",
+    "source": "exec-f2a7897c-867d-48d2-84eb-9559937abbc0.png",
+    "output": "assets/icon.png"
+  }
+}
