@@ -1,0 +1,14 @@
+{
+  "mode": "built-in image_gen",
+  "cover": {
+    "prompt": "Create an original premium portrait 2:3 mobile 3D paint-arena game cover. No text, no logo, no letters, no UI. A lively original stylized young ink runner centered, full body three-quarter front, cream warm skin, dark navy sporty cap with tiny cream rectangular patch, large dark goggles with expressive visible eyes, hot pink chunky shoulder-length rounded hair ribbons, navy sport jersey with hot pink chest stripe, compact pink paint tank on back, huge cream sneakers with pink toe strips. Holds a chunky navy-and-pink toy paint blaster pointing slightly down. Hero jumps forward laughing; a giant glossy hot pink splash curls around shoes, lime green paint splashes on opposite side. Set in a sunny rooftop skate park arena: cream square concrete floor covered in competing pink/lime ink puddles, teal and mustard rectangular cover blocks with black hazard stripes, perimeter teal rails, distant soft pastel city skyline, warm bright sky. Polished stylized 3D casual action game art, strong silhouette, beautiful sculpted soft bevels, tactile glossy paint versus matte clothing, vibrant warm/cool separation, crisp readable composition. Keep top22 percent uncluttered pale sky for separate HTML title and bottom18 percent quieter dark teal for separate play button. Independently designed character; no existing game characters or brands. Not photorealistic.",
+    "source": "exec-31f73f77-59aa-4272-8b9c-ab2838ada97e.png",
+    "output": "assets/cover.webp"
+  },
+  "icon": {
+    "prompt": "Create a square premium mobile game icon, no text, no logo, no border. Use reference as original character/palette reference: joyful young cartoon ink runner with hot pink chunky hair ribbons, navy cap with small cream rectangle patch, large dark sporty goggles and visible bright eyes, navy/pink jersey, cream warm skin. Close-up face and large pink/navy toy paint-blaster nozzle in foreground, three-quarter angle. Glossy pink and lime paint droplets frame the silhouette against deep teal. Very clear at64px, beautiful stylized sculpted3D illustration, tactile polished shapes, crisp lighting, charming playful expression. No existing licensed game character. Promotional artwork, not a screenshot.",
+    "source": "exec-034d3e63-a9b2-47b9-b0d7-d215e4eabb9b.png",
+    "reference": "cover generated above",
+    "output": "assets/icon.png"
+  }
+}
