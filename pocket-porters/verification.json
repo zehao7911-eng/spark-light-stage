@@ -1,0 +1,103 @@
+{
+  "passed": true,
+  "checks": 1207,
+  "rounds": [
+    {
+      "level": 0,
+      "loaded": 1,
+      "time": 2.13,
+      "bumps": 0,
+      "turns": 0,
+      "stars": 3
+    },
+    {
+      "level": 1,
+      "loaded": 1,
+      "time": 2.32,
+      "bumps": 0,
+      "turns": 1,
+      "stars": 3
+    },
+    {
+      "level": 2,
+      "loaded": 2,
+      "time": 6.4,
+      "bumps": 0,
+      "turns": 1,
+      "stars": 3
+    },
+    {
+      "level": 3,
+      "loaded": 2,
+      "time": 7.22,
+      "bumps": 0,
+      "turns": 1,
+      "stars": 3
+    },
+    {
+      "level": 4,
+      "loaded": 2,
+      "time": 6.3,
+      "bumps": 0,
+      "turns": 0,
+      "stars": 3
+    },
+    {
+      "level": 5,
+      "loaded": 3,
+      "time": 10.27,
+      "bumps": 0,
+      "turns": 1,
+      "stars": 3
+    },
+    {
+      "level": 6,
+      "loaded": 2,
+      "time": 7.25,
+      "bumps": 0,
+      "turns": 3,
+      "stars": 3
+    },
+    {
+      "level": 7,
+      "loaded": 3,
+      "time": 9.61,
+      "bumps": 0,
+      "turns": 2,
+      "stars": 3
+    },
+    {
+      "level": 8,
+      "loaded": 3,
+      "time": 10.23,
+      "bumps": 0,
+      "turns": 0,
+      "stars": 3
+    },
+    {
+      "level": 9,
+      "loaded": 3,
+      "time": 10.1,
+      "bumps": 0,
+      "turns": 2,
+      "stars": 3
+    },
+    {
+      "level": 10,
+      "loaded": 3,
+      "time": 11.72,
+      "bumps": 0,
+      "turns": 3,
+      "stars": 3
+    },
+    {
+      "level": 11,
+      "loaded": 3,
+      "time": 9.96,
+      "bumps": 0,
+      "turns": 1,
+      "stars": 3
+    }
+  ],
+  "coverage": "all twelve jobs by normal select/point/rotate/step; real narrow-door block and turn; ramp alignment; stopped-drag no repeated bumps; finite collisions; partial flight restoration; invalid save; idle; terminal immutability"
+}
