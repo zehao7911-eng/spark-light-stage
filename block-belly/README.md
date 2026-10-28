@@ -1,0 +1,21 @@
+# Block Belly
+
+Original 3D toy-city demolition for touch phones and desktop. Hold a window to approach, climb and punch. Slide to another window to redirect. SMASH is an assisted hold button;1/2/3 select buildings on desktop, Space holds smash, R roars, Escape pauses.
+
+Gold windows add score and extra roar energy. Five gold crunches earn the third star, so selecting targets matters; holding assisted smash alone need not collect every gold window before the building falls. Destroying a full row weakens the row above. At64% broken windows the toy tower collapses with a short camera hold before moving to the next. Fill ROAR through destruction and snacks, then break a cluster. Orange rings warn of confetti-copter attacks; change target to move away. Food restores health. Losing all health gives a short snack-break rescue, retains damage/score and costs a reward star. No timer failure and no currency purchases.
+
+Three towers per block. Further blocks vary facade colors, signs, window patterns, food/gold placements, height and alarm pace; height/pace cap for stable play. Stars: clear all towers, no snack-break rescues, five gold windows. Best stars per distinct block are stored, so replaying cannot farm new district unlocks. Coral/Blue paints unlock after2/4different cleared blocks. Active simulation, partial building damage, health and selected target save locally. Pausing/background clears held input and stops simulation/drawing/new audio. Storage unavailable is nonfatal.
+
+## Run
+Serve the extracted directory via a static HTTP server (`python -m http.server 8000`) and open index.html over HTTP/HTTPS. Direct file:// can block JavaScript modules. All assets/dependencies local; no CDN, API key, account, ads, tracking, external fonts or paid systems. WebGL is required. A low quality toggle uses1x render scale/no shadows; high caps1.5x and1024px shadows. Static street/skyline meshes are batched by material; tiny window/eye pieces do not cast shadows. Debris capped150pieces. Hidden/paused pages do not render game frames. Graphics-loss and slow-start retry states provided. Physical handset performance is not certified.
+
+## Reference
+Actually visited and played Rumble — City Smash on Rezona: https://rezona.ai/game/pgcserver/pv/pyWJxSVP/v10/dist/index.html . Native move/smash achieved857chaos and21%razed, hull100. Reference is a2D illustrated/sprite city rampage with climb/smash/eat and keyboard/touch controls. No reference completion claimed. This is an independently authored3D adaptation with direct target selection, toy-city art, gold-window reward, roar and soft rescue. It is not an identical code, asset, pixel or sound recreation. No reference source/media redistributed. The Dollhouse loaded too slowly to inspect its gameplay; Slagyard proved to be a first-person wave shooter and was skipped to avoid recent repetition.
+
+## Art and audio
+No image-generation tools used. All actual game art is original code-built geometry, materials, vector UI and small code-rendered sign textures. Monster has separate jaws/tongue/teeth, eye sockets/pupils/highlights/brows, horns, belly, fingers/claws, legs/toes, back fins and curved tail. Animation includes walk/climb, alternating punches, jaw opening/roar, blinking, impacts and rescue. Windows have independent damage, dark holes, weak gold glass, snacks, shakes and row cascades. Rooftop details, toy cars, lamps, curb, road dashes and layered skyline share a consistent matte miniature palette. Title is the actual3D scene with a front-facing pose. assets/cover.webp is a genuine browser title screenshot, not generated illustration. assets/icon.svg is original matching vector art. Audio is original synthesized WebAudio thumps, crunches, chirps, roar and reward notes; starts on interaction.
+
+Three.js r147 Copyright2010–2022 Three.js Authors, MIT; full license in vendor/THREE-LICENSE.txt. https://github.com/mrdoob/three.js/tree/r147
+
+## Validation
+`node tools/test.mjs`: seven complete normal hold/roar routes, a manual-select gold-first route, cooldown, no passive destruction, exact save/continue, bounds, corrupt-save rejection, rescue and terminal freeze. Final ZIP is extracted and tested again. Native browser mobile-layout, hold, window selection, roar, full clear and reward checks recorded separately.
