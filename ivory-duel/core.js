@@ -1,0 +1,7 @@
+import {Chess} from './assets/chess.js?v=126b756e5d42';
+export {Chess};
+export const LESSONS=['4k3/8/8/p7/8/8/8/R3K3 w Q - 0 1','4k3/8/8/3p4/8/2N5/8/4K3 w - - 0 1','4k3/8/5p2/8/3B4/8/8/4K3 w - - 0 1','4k3/8/8/8/3p4/8/3Q4/4K3 w - - 0 1'];
+const val={p:100,n:320,b:330,r:500,q:900,k:20000};
+export function choose(chess){let nodes=0;const score=()=>{let s=0;for(const row of chess.board())for(const p of row)if(p){const center=3.5-Math.abs(p.square.charCodeAt(0)-97-3.5);s+=(p.color==='w'?1:-1)*(val[p.type]+center*3)}return s};function search(depth,a,b){if(chess.isCheckmate())return chess.turn()==='w'?-100000:100000;if(chess.isDraw())return 0;if(!depth||nodes++>1300)return score();let best=chess.turn()==='w'?-Infinity:Infinity;const white=chess.turn()==='w',moves=chess.moves({verbose:true}).sort((x,y)=>(val[y.captured]||0)-(val[x.captured]||0));for(const m of moves){chess.move(m);const s=search(depth-1,a,b);chess.undo();if(white){best=Math.max(best,s);a=Math.max(a,best)}else{best=Math.min(best,s);b=Math.min(b,best)}if(b<=a)break}return best}
+ let best=Infinity,selected=null;for(const m of chess.moves({verbose:true}).sort((a,b)=>(val[b.captured]||0)-(val[a.captured]||0))){chess.move(m);const s=search(1,-Infinity,Infinity);chess.undo();if(s<best){best=s;selected=m}}return selected}
+export function restore(s){const c=new Chess(s.initial);if(!Array.isArray(s.moves)||s.moves.length>1000)throw Error('Invalid saved game');for(const m of s.moves)c.move(m);return c}

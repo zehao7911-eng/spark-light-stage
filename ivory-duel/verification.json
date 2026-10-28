@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "checks": 21,
+  "library": "chess.js1.4.0 BSD-2-Clause",
+  "coverage": "legal start, AI preserves board, saved history, checkmate, castling, en passant, all promotions, four capture lessons"
+}
