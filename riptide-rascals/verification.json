@@ -1,0 +1,133 @@
+{
+  "passed": true,
+  "checks": 492,
+  "runs": [
+    {
+      "seed": 265,
+      "stages": [
+        {
+          "stage": 0,
+          "fish": 10,
+          "kills": 6,
+          "time": 4.68
+        },
+        {
+          "stage": 1,
+          "fish": 13,
+          "kills": 9,
+          "time": 13.63
+        },
+        {
+          "stage": 2,
+          "fish": 17,
+          "kills": 11,
+          "time": 13.77
+        },
+        {
+          "stage": 3,
+          "fish": 18,
+          "kills": 10,
+          "time": 9.38
+        },
+        {
+          "stage": 4,
+          "fish": 18,
+          "kills": 12,
+          "time": 12.27
+        },
+        {
+          "stage": 5,
+          "fish": 18,
+          "kills": 1,
+          "time": 8.23
+        }
+      ],
+      "score": 4995
+    },
+    {
+      "seed": 1771,
+      "stages": [
+        {
+          "stage": 0,
+          "fish": 10,
+          "kills": 6,
+          "time": 4.62
+        },
+        {
+          "stage": 1,
+          "fish": 14,
+          "kills": 9,
+          "time": 11.03
+        },
+        {
+          "stage": 2,
+          "fish": 18,
+          "kills": 11,
+          "time": 13.63
+        },
+        {
+          "stage": 3,
+          "fish": 18,
+          "kills": 10,
+          "time": 15.12
+        },
+        {
+          "stage": 4,
+          "fish": 18,
+          "kills": 12,
+          "time": 16.98
+        },
+        {
+          "stage": 5,
+          "fish": 18,
+          "kills": 1,
+          "time": 17
+        }
+      ],
+      "score": 5100
+    },
+    {
+      "seed": 8921,
+      "stages": [
+        {
+          "stage": 0,
+          "fish": 10,
+          "kills": 6,
+          "time": 4.6
+        },
+        {
+          "stage": 1,
+          "fish": 14,
+          "kills": 9,
+          "time": 12.12
+        },
+        {
+          "stage": 2,
+          "fish": 18,
+          "kills": 11,
+          "time": 12.18
+        },
+        {
+          "stage": 3,
+          "fish": 18,
+          "kills": 10,
+          "time": 9.8
+        },
+        {
+          "stage": 4,
+          "fish": 18,
+          "kills": 12,
+          "time": 17.87
+        },
+        {
+          "stage": 5,
+          "fish": 18,
+          "kills": 1,
+          "time": 11.2
+        }
+      ],
+      "score": 5120
+    }
+  ],
+  "coverage": "18 reefs via ordinary point/step/evolve controls; actual first3sec bite/recruit; exact released-input continuation; invalid snapshots/input; terminal win/loss. Controller timings are not human difficulty measurements."
+}
