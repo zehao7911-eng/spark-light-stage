@@ -1,0 +1,26 @@
+(function(root){'use strict';
+const SHAPES=[[[0,1],[1,1],[2,1],[3,1]],[[1,0],[2,0],[1,1],[2,1]],[[1,0],[0,1],[1,1],[2,1]],[[1,0],[2,0],[0,1],[1,1]],[[0,0],[1,0],[1,1],[2,1]],[[0,0],[0,1],[1,1],[2,1]],[[2,0],[0,1],[1,1],[2,1]]];
+const NAMES=['Moss Sentinel','Velvet Oracle','Ember Oni','Tidal Warden','Astral Moth','Glass Sovereign'];
+class Game{
+ constructor(level=0,seed=12837){this.level=Math.max(0,Math.min(5,level));this.seed=seed>>>0;this.board=Array.from({length:18},()=>Array(10).fill(0));this.queue=[];this.bag=[];this.hp=12+this.level*4;this.maxHp=this.hp;this.shield=6;this.lines=0;this.score=0;this.combo=-1;this.charge=0;this.locks=0;this.fall=0;this.lockAge=0;this.hold=null;this.held=false;this.over=false;this.won=false;this.events=[];this.fill();if(!level){for(let y=16;y<18;y++)for(let x=0;x<10;x++)if(x<3||x>6)this.board[y][x]=1+(x+y)%7;this.queue[0]=0;}this.spawn();}
+ random(){this.seed=(Math.imul(this.seed,1664525)+1013904223)>>>0;return this.seed/4294967296;}
+ fill(){while(this.queue.length<5){if(!this.bag.length){this.bag=[0,1,2,3,4,5,6];for(let i=6;i;i--){let j=Math.floor(this.random()*(i+1));[this.bag[i],this.bag[j]]=[this.bag[j],this.bag[i]];}}this.queue.push(this.bag.pop());}}
+ spawn(type){this.type=type===undefined?this.queue.shift():type;this.fill();this.cells=SHAPES[this.type].map(p=>p.slice());this.x=3;this.y=0;this.fall=0;this.lockAge=0;if(!this.fits(this.x,this.y,this.cells)){this.over=true;this.events.push({type:'loss'});}}
+ fits(x,y,c=this.cells){return c.every(([a,b])=>x+a>=0&&x+a<10&&y+b<18&&(y+b<0||!this.board[y+b][x+a]));}
+ move(dx){if(this.over)return false;if(this.fits(this.x+dx,this.y)){this.x+=dx;this.events.push({type:'step'});return true;}return false;}
+ rotate(){if(this.over||this.type===1)return false;let n=this.type===0?4:3,c=this.cells.map(([x,y])=>[n-1-y,x]);for(let dx of [0,-1,1,-2,2])if(this.fits(this.x+dx,this.y,c)){this.cells=c;this.x+=dx;this.events.push({type:'rotate'});return true;}return false;}
+ ghost(){let y=this.y;while(this.fits(this.x,y+1))y++;return y;}
+ down(){if(this.over)return false;if(this.fits(this.x,this.y+1)){this.y++;this.lockAge=0;return true;}return false;}
+ drop(){if(this.over)return;let old=this.y;this.y=this.ghost();this.score+=(this.y-old)*2;this.events.push({type:'drop',distance:this.y-old});this.lock();}
+ swap(){if(this.over||this.held)return false;let t=this.hold;this.hold=this.type;this.held=true;this.spawn(t===null?undefined:t);this.events.push({type:'hold'});return true;}
+ lock(){for(let [x,y]of this.cells){let yy=this.y+y;if(yy<0){this.over=true;this.events.push({type:'loss'});return;}this.board[yy][this.x+x]=this.type+1;}this.locks++;this.held=false;this.charge=Math.min(5,this.charge+1);this.clear(false);if(this.over)return;if(this.locks%(9-this.level%3)===0){this.pressure();if(this.over)return;}this.spawn();}
+ clear(skill){let rows=[];for(let y=0;y<18;y++)if(this.board[y].every(Boolean))rows.push(y);if(rows.length){this.combo++;let damage=([0,2,5,8,12][Math.min(4,rows.length)]||12)+Math.max(0,this.combo);this.hp=Math.max(0,this.hp-damage);this.lines+=rows.length;this.score+=damage*100;this.events.push({type:'clear',rows,damage,combo:this.combo,skill});this.board=this.board.filter((_,i)=>!rows.includes(i));while(this.board.length<18)this.board.unshift(Array(10).fill(0));if(!this.hp){this.over=true;this.won=true;this.events.push({type:'win'});}}else this.combo=-1;}
+ pressure(){this.shield--;if(this.shield<=0){this.over=true;this.events.push({type:'loss'});return;}if(this.board[0].some(Boolean)){this.over=true;this.events.push({type:'loss'});return;}this.board.shift();let gap=Math.floor(this.random()*10);this.board.push(Array.from({length:10},(_,i)=>i===gap?0:8));this.events.push({type:'pressure'});}
+ skill(){if(this.over||this.charge<5)return false;this.charge=0;let y=17;while(y>=0&&!this.board[y].some(Boolean))y--;if(y>=0){this.board[y].fill(8);this.clear(true);if(!this.over&&!this.fits(this.x,this.y)){while(this.y>0&&!this.fits(this.x,this.y))this.y--;if(!this.fits(this.x,this.y)){this.over=true;this.events.push({type:'loss'});}}}this.events.push({type:'skill'});return true;}
+ tick(dt){if(this.over)return;dt=Math.min(.05,Math.max(0,dt));this.fall+=dt;if(this.fall>Math.max(.65,2.7-this.level*.28)){this.fall=0;this.down();}if(!this.fits(this.x,this.y+1)){this.lockAge+=dt;if(this.lockAge>.65)this.lock();}else this.lockAge=0;}
+ drain(){let a=this.events;this.events=[];return a;}
+ snapshot(){let o={};for(let k of Object.keys(this))if(k!=='events')o[k]=this[k];return JSON.parse(JSON.stringify(o));}
+ static restore(s){try{if(!s||s.over||!Number.isInteger(s.level)||s.level<0||s.level>5||s.board.length!==18||s.board.some(r=>r.length!==10||r.some(v=>!Number.isInteger(v)||v<0||v>8))||!Array.isArray(s.cells)||s.cells.length!==4||s.cells.some(p=>p.length!==2||p.some(n=>!Number.isInteger(n)||n<0||n>3))||!Number.isInteger(s.type)||s.type<0||s.type>6||!Number.isInteger(s.x)||!Number.isInteger(s.y)||s.y<0||s.hp<=0||s.hp>s.maxHp||s.queue.some(n=>!Number.isInteger(n)||n<0||n>6))return null;let g=Object.assign(new Game(s.level),s,{events:[]});return g.fits(g.x,g.y)?g:null;}catch(e){return null;}}
+}
+root.PR={Game,SHAPES,NAMES};
+})(typeof window==='undefined'?globalThis:window);
