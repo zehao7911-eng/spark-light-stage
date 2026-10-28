@@ -2,7 +2,7 @@
 let world;try{world=SunWorld($('scene'));}catch(e){$('modal').hidden=true;$('error').hidden=false;return;}
 let g=new SS.Game(),history=[],service=null,mode='home',paused=true,last=0,acc=0,renderAge=0,saveAge=0,toastAge=0,drag=null,audio=null,voices=0;
 const txt=(id,t)=>{if($(id).textContent!==t)$(id).textContent=t;};
-function persist(){try{localStorage.setItem(key,JSON.stringify(profile));}catch(e){}}
+function persist(){try{let old=JSON.parse(localStorage.getItem(key));if(old&&Array.isArray(old.best)&&old.best.length===12){profile.best=profile.best.map((n,i)=>Math.max(n,Math.max(0,Math.min(3,Math.floor(Number(old.best[i])||0)))));profile.record=Math.max(profile.record,Math.max(0,Math.min(1e9,Math.floor(Number(old.record)||0))));}localStorage.setItem(key,JSON.stringify(profile));}catch(e){}}
 function save(){if(mode==='play'){profile.active={state:g.snapshot(),history:history.slice(-12),service:service?.snapshot()||null};persist();}}
 function wake(){if(!profile.sound)return;try{audio=audio||new (window.AudioContext||window.webkitAudioContext)();audio.resume();}catch(e){}}
 function sound(f=400,len=.15){if(!profile.sound||!audio||audio.state!=='running'||voices>12)return;let o=audio.createOscillator(),a=audio.createGain();o.type='triangle';o.frequency.setValueAtTime(f,audio.currentTime);o.frequency.exponentialRampToValueAtTime(Math.max(70,f*.7),audio.currentTime+len);a.gain.setValueAtTime(.045,audio.currentTime);a.gain.exponentialRampToValueAtTime(.001,audio.currentTime+len);o.connect(a).connect(audio.destination);voices++;o.onended=()=>voices--;o.start();o.stop(audio.currentTime+len);}
