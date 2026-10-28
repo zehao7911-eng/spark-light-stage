@@ -1,0 +1,6 @@
+{
+  "mode": "Built-in image_gen edit",
+  "source": "assets/fossils.png",
+  "output": "assets/fossils-alpha.png",
+  "prompt": "EDIT THIS EXACT 2x2 fossil asset atlas. Remove ONLY the dark teal background OUTSIDE each of the FOUR fossil stone slabs and replace those areas with genuinely transparent alpha. Preserve all four fossil slabs, all fossil bones, slate stone, shape, texture detail, lighting, colors, original exact positions and scale, and the exact 2x2 equal-cell layout. Keep the slate stone behind each fossil opaque: ONLY outside slab silhouettes should become transparent. Do not crop, do not zoom, do not change arrangement. No added border, checkerboard, glow, text or shadow beyond the existing subtle edge. Production sprite atlas with clean natural alpha edges. Return a transparent PNG."
+}
