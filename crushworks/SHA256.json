@@ -3,14 +3,14 @@
   "game.js": "deb4ac9b4e2492a3ba33cbecf4bc3c73730a1a79c13e73a2bf6ba3047c99feaa",
   "icon.svg": "4fb2300a97297f7b92388377bce3b75155295bd05a08b2a47659e1b914086a5d",
   "index-source.html": "725ff84d5d7b63afd8e89f3125e146233c7f7de0e186cd3b70c7589c06139cec",
-  "index.html": "88a9c1dd02e48041a8b971a553973c3bea7ffe0d5b4dd37b4479e9322e354ed4",
+  "index.html": "81771ed5e0ceddc4af124fde1d23571a823bcf4eb229cde18eefd352c8c8c6ec",
   "LICENSE-THREE.txt": "23e4a3427a3fd20d3ff43389942b45dcbfe54136f908b842cb615d86a790e82e",
   "LICENSE.txt": "77eb923fbd253eb5d7b8358cf38e9bed5be80ad7fa4763f55201659041e1191a",
   "model.js": "a2046dbfc8108b9d9ce9a7a521d7b4e1eea241f872c22964c387fbf828e13d90",
   "qa-model.cjs": "5058e5ff140fb9ad462e2d18c2c1398e8a309afc01fccd9124834f30dd8b52eb",
   "README.md": "ba03efe384dbe9d260604f6b2ad3829a1393fa55ed7e2782b34059bfc0bc628a",
-  "standalone.html": "88a9c1dd02e48041a8b971a553973c3bea7ffe0d5b4dd37b4479e9322e354ed4",
-  "style.css": "ca1fb85041cf6cacdd36994f69c0359d99e54bb828788d0b0d44c0f030b527b9",
+  "standalone.html": "81771ed5e0ceddc4af124fde1d23571a823bcf4eb229cde18eefd352c8c8c6ec",
+  "style.css": "aa274abf5333523ee45e1f2d61c5e5c7f12cc8b2c37271a1a600a1b11f0dc0bc",
   "three.min.js": "f34446bf875b5fb0dcd93819ffe1d9e182d46634ee855f5d904c6c4ac7cdbc95",
-  "world.js": "8343fad33f8fbf8a477459a30bf4ea1303065402e4facc979823d7c778ee29f2"
+  "world.js": "403037f9491c779aad52fcea74cd2d75a63cfa8ad5014a19eeabd5bf1cc7f781"
 }
