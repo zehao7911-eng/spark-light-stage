@@ -1,0 +1,84 @@
+{
+  "passed": true,
+  "checks": 182,
+  "routes": [
+    {
+      "level": 0,
+      "shots": 1,
+      "stars": 3,
+      "angles": [
+        -0.245
+      ]
+    },
+    {
+      "level": 1,
+      "shots": 1,
+      "stars": 3,
+      "angles": [
+        -0.105
+      ]
+    },
+    {
+      "level": 2,
+      "shots": 1,
+      "stars": 2,
+      "angles": [
+        -0.735
+      ]
+    },
+    {
+      "level": 3,
+      "shots": 1,
+      "stars": 3,
+      "angles": [
+        -0.07
+      ]
+    },
+    {
+      "level": 4,
+      "shots": 2,
+      "stars": 3,
+      "angles": [
+        -0.42,
+        0.245
+      ]
+    },
+    {
+      "level": 5,
+      "shots": 1,
+      "stars": 2,
+      "angles": [
+        -0.91
+      ]
+    },
+    {
+      "level": 6,
+      "shots": 2,
+      "stars": 3,
+      "angles": [
+        -0.665,
+        0.455
+      ]
+    },
+    {
+      "level": 7,
+      "shots": 2,
+      "stars": 2,
+      "angles": [
+        -0.77,
+        0.735
+      ]
+    },
+    {
+      "level": 8,
+      "shots": 3,
+      "stars": 3,
+      "angles": [
+        -0.245,
+        0.21,
+        -0.245
+      ]
+    }
+  ],
+  "scope": "Nine authored layouts through ordinary launch/step controls. Physics outcomes are planar approximations; model-controller timing is not a human difficulty claim."
+}
