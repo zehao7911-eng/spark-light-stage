@@ -1,0 +1,9 @@
+const assert=require('node:assert/strict');require('./model.js');let checks=0;
+function step(g,n,slow=false){for(let i=0;i<n;i++){g.tick(1/120,slow);assert.ok(Number.isFinite(g.platen()));assert.ok(g.deformation()>=0&&g.deformation()<1);for(let f of g.fragments){assert.ok(Math.abs(f.x)<=1.38&&Math.abs(f.z)<=1.03&&f.y>=0);}checks++;}}
+for(let i=0;i<24;i++){
+ let g=new CW.Game(i);g.hold(true);while(g.pressure<(g.item.low+g.item.high)/2)step(g,1);g.release();step(g,75);assert.equal(g.phase,'done');assert.equal(g.stars,3);assert.equal(g.drain().filter(e=>e.type==='complete').length,1);step(g,200);assert.equal(g.drain().filter(e=>e.type==='complete').length,0);assert.equal(CW.Game.restore(g.snapshot()).phase,'done');if([2,5].includes(g.item.family)){assert.equal(g.fragments.length,42);assert.equal(g.fractured,true);}if(g.item.family===6)assert.ok(g.popCount>=32);if(g.item.elastic)assert.equal(g.deformation(),0);
+ g=new CW.Game(i);g.hold(true);step(g,90);g.suspend();let p=g.pressure,phase=g.phase;step(g,120);assert.equal(g.pressure,p);assert.equal(g.phase,phase);g=CW.Game.restore(g.snapshot());assert.equal(g.held,false);g.hold(true);g.release();step(g,70);assert.equal(g.phase,'ready');assert.equal(g.stars,0);g.hold(true);while(g.pressure<.82)step(g,1);assert.ok(g.platen()>=g.item.height*(1-g.deformation())-1e-6);g.release();step(g,75);assert.equal(g.phase,'done');
+ g=new CW.Game(i);g.hold(true);step(g,650);assert.equal(g.phase,'done');assert.equal(g.stars,1);
+ g=new CW.Game(i);g.assisted=true;g.hold(true);while(g.pressure<.86)step(g,1,true);g.release();step(g,75);assert.equal(g.stars,2);
+}
+assert.equal(CW.Game.restore({id:900}),null);let bad=new CW.Game().snapshot();bad.pressure=NaN;assert.equal(CW.Game.restore(bad),null);console.log(JSON.stringify({passed:true,objects:24,steps:checks,paths:['perfect','early retry','suspend restore','overpress','assisted','bounded fragments','single award']}));
