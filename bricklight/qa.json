@@ -26,5 +26,8 @@
   "cosmetics": "Both earned glass styles selected through Street Book.",
   "render_repair": "Initial local art-helper shadowing of window was fixed before full-campaign play. Historical local errors are not a final runtime result.",
   "physical_handset_tested": false,
-  "image_generation_used": false
+  "image_generation_used": false,
+  "low_frame_rate_fix": "Foreground frame catch-up is capped at0.5s instead of0.06s; fixed-step row resolution now advances during low-FPS frames. Background still pauses.",
+  "package_native": "Fresh extracted package: keyboard4 turns/left/right/Enter and ordinary touch remainder finished700/3stars, no console errors or warnings.",
+  "harness_correction": "The apparent pending wait was a test helper retaining the old Actions tab; explicit tab arguments resolved it. No application hang was observed."
 }

@@ -45,7 +45,7 @@ and Rose Quartz window palettes. The Street Book holds all nine little buildings
 Progress, active board/queue, pending row clears, undo history, records and
 settings save on this browser and origin under `bricklight-v1`. Reload starts
 paused. Background tabs and focus loss release input, freeze play and hush audio.
-Cancelling a touch never drops a block. Portrait and landscape layouts include
+Cancelling a touch never drops a block. A bounded half-second foreground catch-up keeps row resolution responsive when rendering is slow. Portrait and landscape layouts include
 44 px or larger controls. Tests use browser viewport sizes, not physical phones.
 
 ## Run / package
