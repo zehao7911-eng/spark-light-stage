@@ -1,0 +1,90 @@
+{
+  "checks": 352,
+  "routes": [
+    {
+      "room": 1,
+      "name": "A Little Nudge",
+      "pushes": 1,
+      "stars": 3,
+      "states": 5
+    },
+    {
+      "room": 2,
+      "name": "Roll Along",
+      "pushes": 2,
+      "stars": 3,
+      "states": 15
+    },
+    {
+      "room": 3,
+      "name": "Two Little Suns",
+      "pushes": 2,
+      "stars": 3,
+      "states": 9
+    },
+    {
+      "room": 4,
+      "name": "Around the Corner",
+      "pushes": 3,
+      "stars": 3,
+      "states": 10
+    },
+    {
+      "room": 5,
+      "name": "Room for Two",
+      "pushes": 5,
+      "stars": 3,
+      "states": 179
+    },
+    {
+      "room": 6,
+      "name": "The Long Way Home",
+      "pushes": 6,
+      "stars": 3,
+      "states": 393
+    },
+    {
+      "room": 7,
+      "name": "Sunbeam Trio",
+      "pushes": 6,
+      "stars": 3,
+      "states": 3283
+    },
+    {
+      "room": 8,
+      "name": "The Split Nursery",
+      "pushes": 10,
+      "stars": 3,
+      "states": 4692
+    },
+    {
+      "room": 9,
+      "name": "Copper Corridors",
+      "pushes": 10,
+      "stars": 3,
+      "states": 574
+    },
+    {
+      "room": 10,
+      "name": "A Place for Everyone",
+      "pushes": 9,
+      "stars": 3,
+      "states": 7400
+    },
+    {
+      "room": 11,
+      "name": "The Quiet Crossing",
+      "pushes": 9,
+      "stars": 3,
+      "states": 4202
+    },
+    {
+      "room": 12,
+      "name": "One Last Bloom",
+      "pushes": 11,
+      "stars": 3,
+      "states": 9340
+    }
+  ],
+  "scope": "Pure model routes; native browser play recorded separately."
+}
