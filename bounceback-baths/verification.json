@@ -1,0 +1,223 @@
+{
+  "checks": 941,
+  "routes": [
+    {
+      "room": 1,
+      "seed": 1,
+      "seconds": 4.78,
+      "score": 2250,
+      "stars": 3,
+      "bursts": 4,
+      "rescues": 0
+    },
+    {
+      "room": 2,
+      "seed": 1,
+      "seconds": 6.33,
+      "score": 3150,
+      "stars": 3,
+      "bursts": 5,
+      "rescues": 0
+    },
+    {
+      "room": 3,
+      "seed": 1,
+      "seconds": 8.63,
+      "score": 4050,
+      "stars": 3,
+      "bursts": 7,
+      "rescues": 0
+    },
+    {
+      "room": 4,
+      "seed": 1,
+      "seconds": 9.72,
+      "score": 4650,
+      "stars": 3,
+      "bursts": 8,
+      "rescues": 0
+    },
+    {
+      "room": 5,
+      "seed": 1,
+      "seconds": 11.23,
+      "score": 5250,
+      "stars": 3,
+      "bursts": 9,
+      "rescues": 0
+    },
+    {
+      "room": 6,
+      "seed": 1,
+      "seconds": 13.4,
+      "score": 5850,
+      "stars": 3,
+      "bursts": 10,
+      "rescues": 0
+    },
+    {
+      "room": 7,
+      "seed": 1,
+      "seconds": 14.43,
+      "score": 6450,
+      "stars": 3,
+      "bursts": 12,
+      "rescues": 0
+    },
+    {
+      "room": 8,
+      "seed": 1,
+      "seconds": 17.98,
+      "score": 7750,
+      "stars": 3,
+      "bursts": 15,
+      "rescues": 0
+    },
+    {
+      "room": 1,
+      "seed": 2,
+      "seconds": 4.83,
+      "score": 2250,
+      "stars": 3,
+      "bursts": 4,
+      "rescues": 0
+    },
+    {
+      "room": 2,
+      "seed": 2,
+      "seconds": 6.58,
+      "score": 3150,
+      "stars": 3,
+      "bursts": 5,
+      "rescues": 0
+    },
+    {
+      "room": 3,
+      "seed": 2,
+      "seconds": 8.03,
+      "score": 4050,
+      "stars": 3,
+      "bursts": 6,
+      "rescues": 0
+    },
+    {
+      "room": 4,
+      "seed": 2,
+      "seconds": 10.93,
+      "score": 4650,
+      "stars": 3,
+      "bursts": 9,
+      "rescues": 0
+    },
+    {
+      "room": 5,
+      "seed": 2,
+      "seconds": 11.55,
+      "score": 5250,
+      "stars": 3,
+      "bursts": 9,
+      "rescues": 0
+    },
+    {
+      "room": 6,
+      "seed": 2,
+      "seconds": 12.92,
+      "score": 5850,
+      "stars": 3,
+      "bursts": 10,
+      "rescues": 0
+    },
+    {
+      "room": 7,
+      "seed": 2,
+      "seconds": 15.52,
+      "score": 6450,
+      "stars": 3,
+      "bursts": 12,
+      "rescues": 0
+    },
+    {
+      "room": 8,
+      "seed": 2,
+      "seconds": 18.75,
+      "score": 7550,
+      "stars": 3,
+      "bursts": 15,
+      "rescues": 0
+    },
+    {
+      "room": 1,
+      "seed": 3,
+      "seconds": 5.03,
+      "score": 2250,
+      "stars": 3,
+      "bursts": 4,
+      "rescues": 0
+    },
+    {
+      "room": 2,
+      "seed": 3,
+      "seconds": 6.65,
+      "score": 3150,
+      "stars": 3,
+      "bursts": 5,
+      "rescues": 0
+    },
+    {
+      "room": 3,
+      "seed": 3,
+      "seconds": 8.65,
+      "score": 4050,
+      "stars": 3,
+      "bursts": 7,
+      "rescues": 0
+    },
+    {
+      "room": 4,
+      "seed": 3,
+      "seconds": 9.65,
+      "score": 4650,
+      "stars": 3,
+      "bursts": 8,
+      "rescues": 0
+    },
+    {
+      "room": 5,
+      "seed": 3,
+      "seconds": 11.23,
+      "score": 5250,
+      "stars": 3,
+      "bursts": 9,
+      "rescues": 0
+    },
+    {
+      "room": 6,
+      "seed": 3,
+      "seconds": 13.98,
+      "score": 5475,
+      "stars": 3,
+      "bursts": 11,
+      "rescues": 0
+    },
+    {
+      "room": 7,
+      "seed": 3,
+      "seconds": 15.38,
+      "score": 6450,
+      "stars": 3,
+      "bursts": 12,
+      "rescues": 0
+    },
+    {
+      "room": 8,
+      "seed": 3,
+      "seconds": 18.62,
+      "score": 7550,
+      "stars": 3,
+      "bursts": 15,
+      "rescues": 0
+    }
+  ],
+  "reference": "Regen Pool VdJutbhM/v5; native score100 wave2 only",
+  "scope": "Model tests; browser gameplay checked separately"
+}
