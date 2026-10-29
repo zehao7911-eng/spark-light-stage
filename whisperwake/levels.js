@@ -1,0 +1,17 @@
+export const W=440;
+export const JOURNEYS=[
+ {name:'A Thread of Light',place:'ROSEWATER TERRACES',theme:0,length:1300,speed:76,path:[[0,220],[180,220],[340,105],[570,310],[820,135],[1050,280],[1300,320]],ink:[620,970],kind:0},
+ {name:'Between the Boughs',place:'ROSEWATER TERRACES',theme:0,length:1600,speed:80,path:[[0,220],[240,110],[490,320],[790,120],[1050,310],[1310,150],[1600,100]],ink:[370,680,980,1240],kind:1},
+ {name:'The Sleeping Aqueduct',place:'ROSEWATER TERRACES',theme:0,length:1800,speed:82,path:[[0,220],[280,310],[550,130],[840,305],[1150,115],[1430,310],[1800,300]],ink:[430,740,1060,1370,1610],kind:2},
+ {name:'Letters on the Wind',place:'THE BLUE ARCHIVE',theme:1,length:1700,speed:82,path:[[0,220],[270,140],[550,300],[850,140],[1130,300],[1420,140],[1700,100]],ink:[400,700,1000,1300,1520],kind:3,wind:110},
+ {name:'A Rain Written Sky',place:'THE BLUE ARCHIVE',theme:1,length:1900,speed:84,path:[[0,220],[300,310],[600,120],[930,305],[1240,120],[1560,310],[1900,320]],ink:[450,780,1100,1400,1710],kind:4},
+ {name:'Turning Pages',place:'THE BLUE ARCHIVE',theme:1,length:2100,speed:85,path:[[0,220],[320,120],[650,310],[990,125],[1330,310],[1700,120],[2100,220]],ink:[480,820,1160,1510,1890],kind:5,wind:85},
+ {name:'Gold Beneath the Leaves',place:'THE SAFFRON CANOPY',theme:2,length:1900,speed:84,path:[[0,220],[280,310],[570,130],[900,310],[1250,120],[1550,310],[1900,100]],ink:[410,740,1080,1410,1710],kind:2},
+ {name:'The Long Exhale',place:'THE SAFFRON CANOPY',theme:2,length:2200,speed:87,path:[[0,220],[320,120],[670,310],[1050,130],[1430,310],[1800,120],[2200,320]],ink:[470,860,1240,1620,1970],kind:4,wind:135},
+ {name:'Where the Colours Meet',place:'THE SAFFRON CANOPY',theme:2,length:2500,speed:90,path:[[0,220],[380,310],[800,120],[1220,310],[1640,120],[2050,310],[2500,220]],ink:[570,1010,1430,1860,2260],kind:5,wind:130}
+];
+export function pathX(path,d){for(let i=1;i<path.length;i++){let a=path[i-1],b=path[i];if(d<=b[0]){let t=Math.max(0,(d-a[0])/(b[0]-a[0]));t=t*t*(3-2*t);return a[1]+(b[1]-a[1])*t;}}return path.at(-1)[1];}
+export function makeWorld(def,offset=0,prefix='j',mirror=false){let flip=x=>mirror?W-x:x,motes=[],glyphs=[],ink=[],winds=[];for(let d=135,n=0;d<def.length-100;d+=52,n++){motes.push({id:prefix+'m'+n,x:flip(pathX(def.path,d)),d:d+offset,taken:false});}for(let i=0;i<3;i++){let d=def.path[[2,3,4][i]][0];glyphs.push({id:prefix+'g'+i,x:flip(pathX(def.path,d)),d:d+offset,taken:false,kind:i});}for(let i=0;i<def.ink.length;i++){let d=def.ink[i],safe=flip(pathX(def.path,d)),far=safe<220?355:85,kind=def.kind;let add=(x,r,amp=0,motion='sway')=>ink.push({id:prefix+'i'+ink.length,x,d:d+offset,r,amp,motion,phase:i*1.8,cleared:false});if(kind===2){for(let x=50;x<=390;x+=68)if(Math.abs(x-safe)>83)add(x,21);}else if(kind===5){add(far,25,48,'orbit');add(far,18,48,'orbit2');}else if(kind===4){add(far,29,30,'rain');add(far<220?far+45:far-45,19,20,'rain');}else add(far,27+i%2*7,kind===1?20:0);}
+ if(def.wind)for(let i=0;i<2;i++)winds.push({d:offset+def.length*(i?.61:.22),length:230,force:def.wind*(i?-1:1)*(mirror?-1:1)});
+ return{motes,glyphs,ink,winds};}
+export function inkAt(h,t){if(h.motion==='orbit'||h.motion==='orbit2'){let a=t*.85+h.phase+(h.motion==='orbit2'?Math.PI:0);return{x:h.x+Math.cos(a)*h.amp,d:h.d+Math.sin(a)*h.amp};}if(h.motion==='rain')return{x:h.x+Math.sin(t*.6+h.phase)*12,d:h.d+Math.sin(t*1.2+h.phase)*h.amp};return{x:h.x+Math.sin(t*.85+h.phase)*h.amp,d:h.d};}
