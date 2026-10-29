@@ -1,0 +1,79 @@
+{
+  "checks": 335,
+  "groves": [
+    {
+      "id": 1,
+      "truffles": 3,
+      "score": 780,
+      "stars": 3
+    },
+    {
+      "id": 2,
+      "truffles": 3,
+      "score": 780,
+      "stars": 3
+    },
+    {
+      "id": 3,
+      "truffles": 3,
+      "score": 780,
+      "stars": 3
+    },
+    {
+      "id": 4,
+      "truffles": 4,
+      "score": 980,
+      "stars": 3
+    },
+    {
+      "id": 5,
+      "truffles": 3,
+      "score": 780,
+      "stars": 3
+    },
+    {
+      "id": 6,
+      "truffles": 4,
+      "score": 980,
+      "stars": 3
+    },
+    {
+      "id": 7,
+      "truffles": 4,
+      "score": 980,
+      "stars": 3
+    },
+    {
+      "id": 8,
+      "truffles": 4,
+      "score": 980,
+      "stars": 3
+    },
+    {
+      "id": 9,
+      "truffles": 4,
+      "score": 980,
+      "stars": 3
+    },
+    {
+      "id": 10,
+      "truffles": 4,
+      "score": 980,
+      "stars": 3
+    },
+    {
+      "id": 11,
+      "truffles": 4,
+      "score": 980,
+      "stars": 3
+    },
+    {
+      "id": 12,
+      "truffles": 5,
+      "score": 1200,
+      "stars": 3
+    }
+  ],
+  "firstRewardSeconds": 0.8,
+  "allTargetsReachable": true
+}

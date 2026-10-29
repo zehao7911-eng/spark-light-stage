@@ -1,0 +1,29 @@
+{
+  "native_campaign": "All 12 groves completed through pointer holds and releases; 36 stars earned.",
+  "viewport_tests": [
+    [
+      320,
+      568
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      844,
+      390
+    ]
+  ],
+  "min_control_css_pixels": [
+    44,
+    46
+  ],
+  "small_phone_overflow": false,
+  "frozen_pause_screenshot_pair_equal": true,
+  "reload": "paused with the same grove, collected count, Scout use and unlocked coats",
+  "cosmetics": "Sage and Berry selected through earned journal controls",
+  "console_errors": [],
+  "physical_handset_tested": false,
+  "image_generation_used": false,
+  "note": "The first grove native completion was observed at 740 points. Later native rewards are recorded in native-campaign.json."
+}
