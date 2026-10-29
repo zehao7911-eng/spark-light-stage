@@ -1,0 +1,30 @@
+{
+  "native_campaign": "All nine streets completed through ordinary pointer releases and rotate buttons; 27 stars earned.",
+  "native_recovery": "Guide, clear roof, Undo and first-street replay finished at600/2stars; old700/3stars and27 total retained.",
+  "viewport_tests": [
+    [
+      320,
+      568
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      844,
+      390
+    ]
+  ],
+  "final_min_control_css_pixels": [
+    44,
+    44
+  ],
+  "small_phone_overflow": false,
+  "landscape_overflow": false,
+  "frozen_pause_screenshot_pair_equal": true,
+  "reload": "1 of3 rows and200 points retained with Undo; SoundOFF/GentleON restored, then defaults returned.",
+  "cosmetics": "Both earned glass styles selected through Street Book.",
+  "render_repair": "Initial local art-helper shadowing of window was fixed before full-campaign play. Historical local errors are not a final runtime result.",
+  "physical_handset_tested": false,
+  "image_generation_used": false
+}
