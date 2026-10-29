@@ -1,0 +1,7 @@
+export class Sound{
+ constructor(){this.enabled=true;this.voices=new Set();}
+ init(){if(!this.ctx){this.ctx=new(window.AudioContext||window.webkitAudioContext)();this.bus=this.ctx.createGain();this.bus.gain.value=.2;this.bus.connect(this.ctx.destination);}if(this.ctx.state==='suspended')this.ctx.resume().catch(()=>{});}
+ tone(freq,delay=0,length=.18,type='sine',vol=.2){if(!this.enabled||!this.ctx||this.voices.size>24)return;let c=this.ctx,o=c.createOscillator(),g=c.createGain(),at=c.currentTime+delay;o.type=type;o.frequency.setValueAtTime(freq,at);g.gain.setValueAtTime(.0001,at);g.gain.exponentialRampToValueAtTime(vol,at+.01);g.gain.exponentialRampToValueAtTime(.0001,at+length);o.connect(g);g.connect(this.bus);o.start(at);o.stop(at+length+.02);this.voices.add(o);o.onended=()=>{this.voices.delete(o);o.disconnect();g.disconnect();};}
+ event(e){if(!this.enabled)return;this.init();if(e.type==='bloom'){let n=Math.min(8,e.indices.length);for(let i=0;i<n;i++)this.tone(330*2**([0,2,4,7,9,12,14,16][i]/12),i*.035,.2,'sine',.14);this.tone(165,0,.11,'triangle',.15);}if(e.type==='rescue'){this.tone(175,0,.16,'triangle',.15);this.tone(220,.12,.18,'sine',.15);this.tone(330,.25,.2,'sine',.14);}if(e.type==='mark')this.tone(e.on?392:294,0,.08,'triangle',.18);if(e.type==='hint')this.tone(660,0,.25,'sine',.18);if(e.type==='undo')this.tone(247,0,.1,'triangle',.12);if(e.type==='win')for(let i=0;i<5;i++)this.tone(440*2**([0,4,7,12,16][i]/12),i*.085,.6,'sine',.16);}
+ stop(){for(let o of this.voices)try{o.stop();}catch{}this.voices.clear();}
+}
