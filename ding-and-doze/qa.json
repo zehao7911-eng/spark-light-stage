@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-30",
+  "nativeBrowser": "ChatGPT in-app Chromium",
+  "viewports": [
+    {
+      "width": 320,
+      "height": 568,
+      "overflow": false,
+      "floorButton": [
+        72.5,
+        48
+      ]
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "overflow": false,
+      "floorButton": [
+        104.7,
+        53
+      ]
+    }
+  ],
+  "nativeCampaign": "All nine shifts completed using visible floor controls; 27 stars and nine keys verified in the key rack. See native-campaign.json.",
+  "nativeAdditional": [
+    "320px wide canvas drag 0 to 1 delivered first guest and awarded 120 points",
+    "Reload paused in transit preserved visible lift floor, 1/4 home, two riders and selected floor; resumed and completed shift",
+    "Numeric shortcuts worked while Next Call button had focus",
+    "Deliberate empty stop at floor 3, hint bell, and full first-shift recovery completed without losing guests",
+    "Mint and Rose finishes selected after unlocking",
+    "Final shift completed at 844x390 with 1680 points and 6/6 stops",
+    "Gentle effects ON and Sound OFF persisted after refresh; restored default settings afterwards",
+    "No captured console warnings or errors during local native play"
+  ],
+  "limitations": [
+    "Phone layouts and native browser pointer controls tested on desktop Chromium. No physical iOS or Android handset test performed.",
+    "Browser sound depends on gesture activation and device settings.",
+    "No measured low-end handset FPS claim."
+  ]
+}
