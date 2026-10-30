@@ -34,7 +34,7 @@ Extract the ZIP and serve its root index.html with all adjacent files on any sta
 
 `node tests.cjs` verifies all minimum routes, collision-free intermediate cells, strict move counts, off-route hints, free Undo, exact pending-motion save/restore, terminal behavior, best-record idempotency, preview nonmutation, release interpolation and malformed saves. `python build.py /path/to/node` runs checks, adds content-derived asset versions and produces a reproducible FOXTAIL-GARAGE.zip one directory above the source.
 
-All twelve yards were additionally completed through actual visible pointer drags to 36 stars and 12 keepsakes. The last two were completed at 320x568 and 844x390. Local portrait/landscape layouts were checked for overflow and 44-pixel minimum buttons/chooser. See native-campaign.json and qa.json. No physical Android/iOS handset was available, and no device performance certification is claimed.
+All twelve yards were additionally completed through actual visible pointer drags to 36 stars and 12 keepsakes. The last two were completed at 320x568 and 844x390. Local portrait/landscape layouts at 320x568, 390x844, 844x390 and 568x320 were checked for overflow and 44-pixel minimum buttons/chooser. A compact landscape layout fixes an initially oversized right control area; the opening was completed through the direction buttons at 568x320. See native-campaign.json and qa.json. No physical Android/iOS handset was available, and no device performance certification is claimed.
 
 ## License
 

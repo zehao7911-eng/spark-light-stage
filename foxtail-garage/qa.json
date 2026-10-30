@@ -35,6 +35,24 @@
         390
       ],
       "actualCompletion": "yard 12, 10 moves, 3 stars"
+    },
+    {
+      "width": 568,
+      "height": 320,
+      "page": [
+        568,
+        320
+      ],
+      "buttonsMinimum": [
+        44,
+        44
+      ],
+      "select": [
+        163,
+        49
+      ],
+      "actualCompletion": "first yard, direction buttons, 2 moves, 3 stars",
+      "fix": "Added compact landscape columns after discovering prior 633px content width at a 568px viewport."
     }
   ],
   "additionalNative": [
