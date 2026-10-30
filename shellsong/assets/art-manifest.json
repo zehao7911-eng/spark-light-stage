@@ -1,0 +1,150 @@
+{
+  "mode": "Built-in image_gen, delivery WebP encoding/nearest scaling only; unchanged originals retained separately",
+  "assets": [
+    {
+      "file": "day.webp",
+      "width": 720,
+      "height": 960,
+      "bytes": 219182
+    },
+    {
+      "file": "dusk.webp",
+      "width": 720,
+      "height": 960,
+      "bytes": 271900
+    },
+    {
+      "file": "night.webp",
+      "width": 720,
+      "height": 960,
+      "bytes": 248266
+    },
+    {
+      "file": "props.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 448990
+    },
+    {
+      "file": "keepsakes.webp",
+      "width": 1086,
+      "height": 1448,
+      "bytes": 678186
+    },
+    {
+      "file": "cover.webp",
+      "width": 960,
+      "height": 1280,
+      "bytes": 473302
+    },
+    {
+      "file": "icon.webp",
+      "width": 192,
+      "height": 192,
+      "bytes": 21592
+    }
+  ],
+  "boxes": {
+    "props": [
+      {
+        "x": 37,
+        "y": 79,
+        "w": 639,
+        "h": 487
+      },
+      {
+        "x": 721,
+        "y": 106,
+        "w": 489,
+        "h": 477
+      },
+      {
+        "x": 137,
+        "y": 758,
+        "w": 376,
+        "h": 372
+      },
+      {
+        "x": 695,
+        "y": 652,
+        "w": 527,
+        "h": 560
+      }
+    ],
+    "keepsakes": [
+      {
+        "x": 37,
+        "y": 34,
+        "w": 318,
+        "h": 293
+      },
+      {
+        "x": 397,
+        "y": 43,
+        "w": 324,
+        "h": 286
+      },
+      {
+        "x": 778,
+        "y": 9,
+        "w": 284,
+        "h": 349
+      },
+      {
+        "x": 22,
+        "y": 369,
+        "w": 334,
+        "h": 346
+      },
+      {
+        "x": 403,
+        "y": 381,
+        "w": 311,
+        "h": 335
+      },
+      {
+        "x": 765,
+        "y": 386,
+        "w": 302,
+        "h": 354
+      },
+      {
+        "x": 87,
+        "y": 746,
+        "w": 206,
+        "h": 329
+      },
+      {
+        "x": 378,
+        "y": 769,
+        "w": 346,
+        "h": 295
+      },
+      {
+        "x": 777,
+        "y": 750,
+        "w": 276,
+        "h": 330
+      },
+      {
+        "x": 37,
+        "y": 1103,
+        "w": 317,
+        "h": 293
+      },
+      {
+        "x": 394,
+        "y": 1124,
+        "w": 320,
+        "h": 271
+      },
+      {
+        "x": 761,
+        "y": 1095,
+        "w": 296,
+        "h": 301
+      }
+    ]
+  },
+  "totalBytes": 2361418
+}
