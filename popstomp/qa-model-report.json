@@ -1,0 +1,1182 @@
+{
+  "passed": true,
+  "checks": 879,
+  "campaigns": [
+    [
+      {
+        "level": 1,
+        "moves": [
+          {
+            "x": 128,
+            "y": 344,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 268,
+            "y": 415,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 170,
+            "y": 477,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 3,
+        "par": 5,
+        "stars": 3,
+        "chain": 5
+      },
+      {
+        "level": 2,
+        "moves": [
+          {
+            "x": 205,
+            "y": 463,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 113,
+            "y": 351,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 292,
+            "y": 354,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 3,
+        "par": 5,
+        "stars": 3,
+        "chain": 7
+      },
+      {
+        "level": 3,
+        "moves": [
+          {
+            "x": 126,
+            "y": 350,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 286,
+            "y": 382,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 157,
+            "y": 482,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 3,
+        "par": 6,
+        "stars": 3,
+        "chain": 7
+      },
+      {
+        "level": 4,
+        "moves": [
+          {
+            "x": 108,
+            "y": 346,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 280,
+            "y": 349,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 210,
+            "y": 467,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 264.9936852123156,
+            "y": 491.6220656398719,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 4,
+        "par": 6,
+        "stars": 3,
+        "chain": 7
+      },
+      {
+        "level": 5,
+        "moves": [
+          {
+            "x": 120,
+            "y": 351,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 287,
+            "y": 381,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 160,
+            "y": 479,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 287,
+            "y": 381,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 160,
+            "y": 479,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 5,
+        "par": 7,
+        "stars": 3,
+        "chain": 7
+      },
+      {
+        "level": 6,
+        "moves": [
+          {
+            "x": 104,
+            "y": 344,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 108,
+            "y": 464,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 278,
+            "y": 345,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 278,
+            "y": 345,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 5,
+        "par": 8,
+        "stars": 3,
+        "chain": 14
+      },
+      {
+        "level": 7,
+        "moves": [
+          {
+            "x": 113,
+            "y": 351,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 202,
+            "y": 469,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 202,
+            "y": 469,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 256.9936852123156,
+            "y": 493.6220656398719,
+            "power": 1,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 6,
+        "par": 7,
+        "stars": 3,
+        "chain": 16
+      },
+      {
+        "level": 8,
+        "moves": [
+          {
+            "x": 107,
+            "y": 346,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 110,
+            "y": 468,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 331.6119552067355,
+            "y": 501.1583907095189,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 5,
+        "par": 9,
+        "stars": 3,
+        "chain": 16
+      },
+      {
+        "level": 9,
+        "moves": [
+          {
+            "x": 108,
+            "y": 345,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 108,
+            "y": 469,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 333.6119552067355,
+            "y": 503,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 5,
+        "par": 8,
+        "stars": 3,
+        "chain": 16
+      },
+      {
+        "level": 10,
+        "moves": [
+          {
+            "x": 281,
+            "y": 470,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 113,
+            "y": 347,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 124,
+            "y": 471,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 124,
+            "y": 471,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 178.99368521231563,
+            "y": 495.6220656398719,
+            "power": 0,
+            "mode": "sweep"
+          }
+        ],
+        "stomps": 7,
+        "par": 9,
+        "stars": 3,
+        "chain": 17
+      },
+      {
+        "level": 11,
+        "moves": [
+          {
+            "x": 287,
+            "y": 469,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 290,
+            "y": 350,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 115,
+            "y": 470,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 115,
+            "y": 470,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 169.99368521231563,
+            "y": 494.6220656398719,
+            "power": 0,
+            "mode": "sweep"
+          }
+        ],
+        "stomps": 7,
+        "par": 9,
+        "stars": 3,
+        "chain": 17
+      },
+      {
+        "level": 12,
+        "moves": [
+          {
+            "x": 254.90991731090276,
+            "y": 478.95025062802335,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 324.96816709467305,
+            "y": 355.35927331418407,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 77.00000000000006,
+            "y": 392.1764745297863,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 279.92675092182196,
+            "y": 318.27670725902925,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 111.43094128044494,
+            "y": 439.06942054726903,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 7,
+        "par": 10,
+        "stars": 3,
+        "chain": 20
+      }
+    ],
+    [
+      {
+        "level": 1,
+        "moves": [
+          {
+            "x": 128,
+            "y": 344,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 268,
+            "y": 415,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 170,
+            "y": 477,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 3,
+        "par": 5,
+        "stars": 3,
+        "chain": 5
+      },
+      {
+        "level": 2,
+        "moves": [
+          {
+            "x": 205,
+            "y": 463,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 113,
+            "y": 351,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 292,
+            "y": 354,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 3,
+        "par": 5,
+        "stars": 3,
+        "chain": 7
+      },
+      {
+        "level": 3,
+        "moves": [
+          {
+            "x": 126,
+            "y": 350,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 286,
+            "y": 382,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 157,
+            "y": 482,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 3,
+        "par": 6,
+        "stars": 3,
+        "chain": 7
+      },
+      {
+        "level": 4,
+        "moves": [
+          {
+            "x": 108,
+            "y": 346,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 280,
+            "y": 349,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 210,
+            "y": 467,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 264.9936852123156,
+            "y": 491.6220656398719,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 4,
+        "par": 6,
+        "stars": 3,
+        "chain": 7
+      },
+      {
+        "level": 5,
+        "moves": [
+          {
+            "x": 120,
+            "y": 351,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 287,
+            "y": 381,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 160,
+            "y": 479,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 287,
+            "y": 381,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 160,
+            "y": 479,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 5,
+        "par": 7,
+        "stars": 3,
+        "chain": 7
+      },
+      {
+        "level": 6,
+        "moves": [
+          {
+            "x": 104,
+            "y": 344,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 108,
+            "y": 464,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 278,
+            "y": 345,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 278,
+            "y": 345,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 5,
+        "par": 8,
+        "stars": 3,
+        "chain": 14
+      },
+      {
+        "level": 7,
+        "moves": [
+          {
+            "x": 113,
+            "y": 351,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 202,
+            "y": 469,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 202,
+            "y": 469,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 256.9936852123156,
+            "y": 493.6220656398719,
+            "power": 1,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 6,
+        "par": 7,
+        "stars": 3,
+        "chain": 16
+      },
+      {
+        "level": 8,
+        "moves": [
+          {
+            "x": 107,
+            "y": 346,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 110,
+            "y": 468,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 331.6119552067355,
+            "y": 501.1583907095189,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 5,
+        "par": 9,
+        "stars": 3,
+        "chain": 16
+      },
+      {
+        "level": 9,
+        "moves": [
+          {
+            "x": 108,
+            "y": 345,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 108,
+            "y": 469,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 333.6119552067355,
+            "y": 503,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 5,
+        "par": 8,
+        "stars": 3,
+        "chain": 16
+      },
+      {
+        "level": 10,
+        "moves": [
+          {
+            "x": 281,
+            "y": 470,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 113,
+            "y": 347,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 124,
+            "y": 471,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 124,
+            "y": 471,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 178.99368521231563,
+            "y": 495.6220656398719,
+            "power": 0,
+            "mode": "sweep"
+          }
+        ],
+        "stomps": 7,
+        "par": 9,
+        "stars": 3,
+        "chain": 17
+      },
+      {
+        "level": 11,
+        "moves": [
+          {
+            "x": 287,
+            "y": 469,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 290,
+            "y": 350,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 115,
+            "y": 470,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 115,
+            "y": 470,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 169.99368521231563,
+            "y": 494.6220656398719,
+            "power": 0,
+            "mode": "sweep"
+          }
+        ],
+        "stomps": 7,
+        "par": 9,
+        "stars": 3,
+        "chain": 17
+      },
+      {
+        "level": 12,
+        "moves": [
+          {
+            "x": 254.90991731090276,
+            "y": 478.95025062802335,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 324.96816709467305,
+            "y": 355.35927331418407,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 77.00000000000006,
+            "y": 392.1764745297863,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 279.92675092182196,
+            "y": 318.27670725902925,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 111.43094128044494,
+            "y": 439.06942054726903,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 7,
+        "par": 10,
+        "stars": 3,
+        "chain": 20
+      }
+    ],
+    [
+      {
+        "level": 1,
+        "moves": [
+          {
+            "x": 128,
+            "y": 344,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 268,
+            "y": 415,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 170,
+            "y": 477,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 3,
+        "par": 5,
+        "stars": 3,
+        "chain": 5
+      },
+      {
+        "level": 2,
+        "moves": [
+          {
+            "x": 205,
+            "y": 463,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 113,
+            "y": 351,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 292,
+            "y": 354,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 3,
+        "par": 5,
+        "stars": 3,
+        "chain": 7
+      },
+      {
+        "level": 3,
+        "moves": [
+          {
+            "x": 126,
+            "y": 350,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 286,
+            "y": 382,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 157,
+            "y": 482,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 3,
+        "par": 6,
+        "stars": 3,
+        "chain": 7
+      },
+      {
+        "level": 4,
+        "moves": [
+          {
+            "x": 108,
+            "y": 346,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 280,
+            "y": 349,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 210,
+            "y": 467,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 264.9936852123156,
+            "y": 491.6220656398719,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 4,
+        "par": 6,
+        "stars": 3,
+        "chain": 7
+      },
+      {
+        "level": 5,
+        "moves": [
+          {
+            "x": 120,
+            "y": 351,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 287,
+            "y": 381,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 160,
+            "y": 479,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 287,
+            "y": 381,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 160,
+            "y": 479,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 5,
+        "par": 7,
+        "stars": 3,
+        "chain": 7
+      },
+      {
+        "level": 6,
+        "moves": [
+          {
+            "x": 104,
+            "y": 344,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 108,
+            "y": 464,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 278,
+            "y": 345,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 278,
+            "y": 345,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 5,
+        "par": 8,
+        "stars": 3,
+        "chain": 14
+      },
+      {
+        "level": 7,
+        "moves": [
+          {
+            "x": 113,
+            "y": 351,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 202,
+            "y": 469,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 202,
+            "y": 469,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 256.9936852123156,
+            "y": 493.6220656398719,
+            "power": 1,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 6,
+        "par": 7,
+        "stars": 3,
+        "chain": 16
+      },
+      {
+        "level": 8,
+        "moves": [
+          {
+            "x": 107,
+            "y": 346,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 110,
+            "y": 468,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 331.6119552067355,
+            "y": 501.1583907095189,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 5,
+        "par": 9,
+        "stars": 3,
+        "chain": 16
+      },
+      {
+        "level": 9,
+        "moves": [
+          {
+            "x": 108,
+            "y": 345,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 108,
+            "y": 469,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 333.6119552067355,
+            "y": 503,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 5,
+        "par": 8,
+        "stars": 3,
+        "chain": 16
+      },
+      {
+        "level": 10,
+        "moves": [
+          {
+            "x": 281,
+            "y": 470,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 113,
+            "y": 347,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 124,
+            "y": 471,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 124,
+            "y": 471,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 178.99368521231563,
+            "y": 495.6220656398719,
+            "power": 0,
+            "mode": "sweep"
+          }
+        ],
+        "stomps": 7,
+        "par": 9,
+        "stars": 3,
+        "chain": 17
+      },
+      {
+        "level": 11,
+        "moves": [
+          {
+            "x": 287,
+            "y": 469,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 290,
+            "y": 350,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 115,
+            "y": 470,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 115,
+            "y": 470,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 169.99368521231563,
+            "y": 494.6220656398719,
+            "power": 0,
+            "mode": "sweep"
+          }
+        ],
+        "stomps": 7,
+        "par": 9,
+        "stars": 3,
+        "chain": 17
+      },
+      {
+        "level": 12,
+        "moves": [
+          {
+            "x": 254.90991731090276,
+            "y": 478.95025062802335,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 324.96816709467305,
+            "y": 355.35927331418407,
+            "power": 0,
+            "mode": "sweep"
+          },
+          {
+            "x": 77.00000000000006,
+            "y": 392.1764745297863,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 279.92675092182196,
+            "y": 318.27670725902925,
+            "power": 0,
+            "mode": "stomp"
+          },
+          {
+            "x": 111.43094128044494,
+            "y": 439.06942054726903,
+            "power": 0,
+            "mode": "stomp"
+          }
+        ],
+        "stomps": 7,
+        "par": 10,
+        "stars": 3,
+        "chain": 20
+      }
+    ]
+  ]
+}
