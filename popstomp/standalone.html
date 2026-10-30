@@ -62,7 +62,8 @@ function stomp(s,x,y,power=0,mode='stomp'){
  let n=0;
  for(const f of s.fruits){if(f.dead)continue;
   const distance=Math.hypot(f.x-x,(f.y-y)*1.05);
-  if(sweep?Math.abs(f.y-y)<32:distance<radius+11){hit(s,f,damage,.12+(sweep?f.x/900:distance/700));n++;}
+  // Count the fruit's body where it overlaps the footprint, for both tools.
+  if(sweep?Math.abs(f.y-y)<43:distance<radius+11){hit(s,f,damage,.12+(sweep?f.x/900:distance/700));n++;}
  }
  if(!n){s.empty++;event(s,'miss',{x,y});}
  event(s,'stomp',{x,y,charged,sweep,radius});

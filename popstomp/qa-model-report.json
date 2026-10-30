@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "checks": 987,
+  "checks": 773,
   "campaigns": [
     [
       {
@@ -236,15 +236,9 @@
             "y": 468,
             "power": 0,
             "mode": "sweep"
-          },
-          {
-            "x": 331.6119552067355,
-            "y": 501.1583907095189,
-            "power": 0,
-            "mode": "stomp"
           }
         ],
-        "stomps": 5,
+        "stomps": 4,
         "par": 9,
         "stars": 3,
         "chain": 16
@@ -263,15 +257,9 @@
             "y": 469,
             "power": 0,
             "mode": "sweep"
-          },
-          {
-            "x": 333.6119552067355,
-            "y": 503,
-            "power": 0,
-            "mode": "stomp"
           }
         ],
-        "stomps": 5,
+        "stomps": 4,
         "par": 8,
         "stars": 3,
         "chain": 16
@@ -280,86 +268,50 @@
         "level": 10,
         "moves": [
           {
-            "x": 281,
-            "y": 470,
+            "x": 124,
+            "y": 471,
             "power": 0,
-            "mode": "stomp"
+            "mode": "sweep"
           },
           {
             "x": 113,
             "y": 347,
             "power": 0,
             "mode": "sweep"
-          },
-          {
-            "x": 124,
-            "y": 471,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 124,
-            "y": 471,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 178.99368521231563,
-            "y": 495.6220656398719,
-            "power": 0,
-            "mode": "sweep"
           }
         ],
-        "stomps": 7,
+        "stomps": 4,
         "par": 9,
         "stars": 3,
-        "chain": 17
+        "chain": 19
       },
       {
         "level": 11,
         "moves": [
           {
-            "x": 287,
-            "y": 469,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 290,
-            "y": 350,
+            "x": 115,
+            "y": 470,
             "power": 0,
             "mode": "sweep"
           },
           {
-            "x": 115,
-            "y": 470,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 115,
-            "y": 470,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 169.99368521231563,
-            "y": 494.6220656398719,
+            "x": 110,
+            "y": 347,
             "power": 0,
             "mode": "sweep"
           }
         ],
-        "stomps": 7,
+        "stomps": 4,
         "par": 9,
         "stars": 3,
-        "chain": 17
+        "chain": 19
       },
       {
         "level": 12,
         "moves": [
           {
-            "x": 254.90991731090276,
-            "y": 478.95025062802335,
+            "x": 113,
+            "y": 470,
             "power": 0,
             "mode": "sweep"
           },
@@ -368,30 +320,12 @@
             "y": 355.35927331418407,
             "power": 0,
             "mode": "sweep"
-          },
-          {
-            "x": 77.00000000000006,
-            "y": 392.1764745297863,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 279.92675092182196,
-            "y": 318.27670725902925,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 111.43094128044494,
-            "y": 439.06942054726903,
-            "power": 0,
-            "mode": "stomp"
           }
         ],
-        "stomps": 7,
+        "stomps": 4,
         "par": 10,
         "stars": 3,
-        "chain": 20
+        "chain": 21
       }
     ],
     [
@@ -628,15 +562,9 @@
             "y": 468,
             "power": 0,
             "mode": "sweep"
-          },
-          {
-            "x": 331.6119552067355,
-            "y": 501.1583907095189,
-            "power": 0,
-            "mode": "stomp"
           }
         ],
-        "stomps": 5,
+        "stomps": 4,
         "par": 9,
         "stars": 3,
         "chain": 16
@@ -655,15 +583,9 @@
             "y": 469,
             "power": 0,
             "mode": "sweep"
-          },
-          {
-            "x": 333.6119552067355,
-            "y": 503,
-            "power": 0,
-            "mode": "stomp"
           }
         ],
-        "stomps": 5,
+        "stomps": 4,
         "par": 8,
         "stars": 3,
         "chain": 16
@@ -672,86 +594,50 @@
         "level": 10,
         "moves": [
           {
-            "x": 281,
-            "y": 470,
+            "x": 124,
+            "y": 471,
             "power": 0,
-            "mode": "stomp"
+            "mode": "sweep"
           },
           {
             "x": 113,
             "y": 347,
             "power": 0,
             "mode": "sweep"
-          },
-          {
-            "x": 124,
-            "y": 471,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 124,
-            "y": 471,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 178.99368521231563,
-            "y": 495.6220656398719,
-            "power": 0,
-            "mode": "sweep"
           }
         ],
-        "stomps": 7,
+        "stomps": 4,
         "par": 9,
         "stars": 3,
-        "chain": 17
+        "chain": 19
       },
       {
         "level": 11,
         "moves": [
           {
-            "x": 287,
-            "y": 469,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 290,
-            "y": 350,
+            "x": 115,
+            "y": 470,
             "power": 0,
             "mode": "sweep"
           },
           {
-            "x": 115,
-            "y": 470,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 115,
-            "y": 470,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 169.99368521231563,
-            "y": 494.6220656398719,
+            "x": 110,
+            "y": 347,
             "power": 0,
             "mode": "sweep"
           }
         ],
-        "stomps": 7,
+        "stomps": 4,
         "par": 9,
         "stars": 3,
-        "chain": 17
+        "chain": 19
       },
       {
         "level": 12,
         "moves": [
           {
-            "x": 254.90991731090276,
-            "y": 478.95025062802335,
+            "x": 113,
+            "y": 470,
             "power": 0,
             "mode": "sweep"
           },
@@ -760,30 +646,12 @@
             "y": 355.35927331418407,
             "power": 0,
             "mode": "sweep"
-          },
-          {
-            "x": 77.00000000000006,
-            "y": 392.1764745297863,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 279.92675092182196,
-            "y": 318.27670725902925,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 111.43094128044494,
-            "y": 439.06942054726903,
-            "power": 0,
-            "mode": "stomp"
           }
         ],
-        "stomps": 7,
+        "stomps": 4,
         "par": 10,
         "stars": 3,
-        "chain": 20
+        "chain": 21
       }
     ],
     [
@@ -1020,15 +888,9 @@
             "y": 468,
             "power": 0,
             "mode": "sweep"
-          },
-          {
-            "x": 331.6119552067355,
-            "y": 501.1583907095189,
-            "power": 0,
-            "mode": "stomp"
           }
         ],
-        "stomps": 5,
+        "stomps": 4,
         "par": 9,
         "stars": 3,
         "chain": 16
@@ -1047,15 +909,9 @@
             "y": 469,
             "power": 0,
             "mode": "sweep"
-          },
-          {
-            "x": 333.6119552067355,
-            "y": 503,
-            "power": 0,
-            "mode": "stomp"
           }
         ],
-        "stomps": 5,
+        "stomps": 4,
         "par": 8,
         "stars": 3,
         "chain": 16
@@ -1064,86 +920,50 @@
         "level": 10,
         "moves": [
           {
-            "x": 281,
-            "y": 470,
+            "x": 124,
+            "y": 471,
             "power": 0,
-            "mode": "stomp"
+            "mode": "sweep"
           },
           {
             "x": 113,
             "y": 347,
             "power": 0,
             "mode": "sweep"
-          },
-          {
-            "x": 124,
-            "y": 471,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 124,
-            "y": 471,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 178.99368521231563,
-            "y": 495.6220656398719,
-            "power": 0,
-            "mode": "sweep"
           }
         ],
-        "stomps": 7,
+        "stomps": 4,
         "par": 9,
         "stars": 3,
-        "chain": 17
+        "chain": 19
       },
       {
         "level": 11,
         "moves": [
           {
-            "x": 287,
-            "y": 469,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 290,
-            "y": 350,
+            "x": 115,
+            "y": 470,
             "power": 0,
             "mode": "sweep"
           },
           {
-            "x": 115,
-            "y": 470,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 115,
-            "y": 470,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 169.99368521231563,
-            "y": 494.6220656398719,
+            "x": 110,
+            "y": 347,
             "power": 0,
             "mode": "sweep"
           }
         ],
-        "stomps": 7,
+        "stomps": 4,
         "par": 9,
         "stars": 3,
-        "chain": 17
+        "chain": 19
       },
       {
         "level": 12,
         "moves": [
           {
-            "x": 254.90991731090276,
-            "y": 478.95025062802335,
+            "x": 113,
+            "y": 470,
             "power": 0,
             "mode": "sweep"
           },
@@ -1152,30 +972,12 @@
             "y": 355.35927331418407,
             "power": 0,
             "mode": "sweep"
-          },
-          {
-            "x": 77.00000000000006,
-            "y": 392.1764745297863,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 279.92675092182196,
-            "y": 318.27670725902925,
-            "power": 0,
-            "mode": "stomp"
-          },
-          {
-            "x": 111.43094128044494,
-            "y": 439.06942054726903,
-            "power": 0,
-            "mode": "stomp"
           }
         ],
-        "stomps": 7,
+        "stomps": 4,
         "par": 10,
         "stars": 3,
-        "chain": 20
+        "chain": 21
       }
     ]
   ]
