@@ -1,0 +1,397 @@
+{
+  "checks": 1506,
+  "firstRoadOpeningSeconds": 0.35,
+  "departureSeconds": 0.65,
+  "yards": [
+    {
+      "yard": 1,
+      "vehicles": 5,
+      "moves": 2,
+      "stars": 3,
+      "points": 1000
+    },
+    {
+      "yard": 2,
+      "vehicles": 6,
+      "moves": 3,
+      "stars": 3,
+      "points": 1000
+    },
+    {
+      "yard": 3,
+      "vehicles": 7,
+      "moves": 4,
+      "stars": 3,
+      "points": 1000
+    },
+    {
+      "yard": 4,
+      "vehicles": 7,
+      "moves": 4,
+      "stars": 3,
+      "points": 1000
+    },
+    {
+      "yard": 5,
+      "vehicles": 8,
+      "moves": 5,
+      "stars": 3,
+      "points": 1000
+    },
+    {
+      "yard": 6,
+      "vehicles": 8,
+      "moves": 5,
+      "stars": 3,
+      "points": 1000
+    },
+    {
+      "yard": 7,
+      "vehicles": 9,
+      "moves": 6,
+      "stars": 3,
+      "points": 1000
+    },
+    {
+      "yard": 8,
+      "vehicles": 9,
+      "moves": 7,
+      "stars": 3,
+      "points": 1000
+    },
+    {
+      "yard": 9,
+      "vehicles": 10,
+      "moves": 7,
+      "stars": 3,
+      "points": 1000
+    },
+    {
+      "yard": 10,
+      "vehicles": 10,
+      "moves": 8,
+      "stars": 3,
+      "points": 1000
+    },
+    {
+      "yard": 11,
+      "vehicles": 11,
+      "moves": 9,
+      "stars": 3,
+      "points": 1000
+    },
+    {
+      "yard": 12,
+      "vehicles": 11,
+      "moves": 10,
+      "stars": 3,
+      "points": 1000
+    }
+  ],
+  "routes": [
+    [
+      {
+        "car": 1,
+        "to": 3
+      },
+      {
+        "car": 0,
+        "to": 6
+      }
+    ],
+    [
+      {
+        "car": 1,
+        "to": 0
+      },
+      {
+        "car": 5,
+        "to": 0
+      },
+      {
+        "car": 0,
+        "to": 6
+      }
+    ],
+    [
+      {
+        "car": 1,
+        "to": 3
+      },
+      {
+        "car": 3,
+        "to": 0
+      },
+      {
+        "car": 6,
+        "to": 0
+      },
+      {
+        "car": 0,
+        "to": 6
+      }
+    ],
+    [
+      {
+        "car": 1,
+        "to": 3
+      },
+      {
+        "car": 2,
+        "to": 0
+      },
+      {
+        "car": 6,
+        "to": 0
+      },
+      {
+        "car": 0,
+        "to": 6
+      }
+    ],
+    [
+      {
+        "car": 1,
+        "to": 0
+      },
+      {
+        "car": 3,
+        "to": 3
+      },
+      {
+        "car": 6,
+        "to": 3
+      },
+      {
+        "car": 7,
+        "to": 3
+      },
+      {
+        "car": 0,
+        "to": 6
+      }
+    ],
+    [
+      {
+        "car": 4,
+        "to": 0
+      },
+      {
+        "car": 1,
+        "to": 3
+      },
+      {
+        "car": 3,
+        "to": 3
+      },
+      {
+        "car": 6,
+        "to": 3
+      },
+      {
+        "car": 0,
+        "to": 6
+      }
+    ],
+    [
+      {
+        "car": 2,
+        "to": 0
+      },
+      {
+        "car": 3,
+        "to": 0
+      },
+      {
+        "car": 7,
+        "to": 0
+      },
+      {
+        "car": 8,
+        "to": 3
+      },
+      {
+        "car": 5,
+        "to": 3
+      },
+      {
+        "car": 0,
+        "to": 6
+      }
+    ],
+    [
+      {
+        "car": 2,
+        "to": 1
+      },
+      {
+        "car": 3,
+        "to": 3
+      },
+      {
+        "car": 4,
+        "to": 3
+      },
+      {
+        "car": 8,
+        "to": 0
+      },
+      {
+        "car": 2,
+        "to": 3
+      },
+      {
+        "car": 6,
+        "to": 3
+      },
+      {
+        "car": 0,
+        "to": 6
+      }
+    ],
+    [
+      {
+        "car": 0,
+        "to": 0
+      },
+      {
+        "car": 3,
+        "to": 0
+      },
+      {
+        "car": 5,
+        "to": 0
+      },
+      {
+        "car": 6,
+        "to": 0
+      },
+      {
+        "car": 8,
+        "to": 1
+      },
+      {
+        "car": 2,
+        "to": 3
+      },
+      {
+        "car": 0,
+        "to": 6
+      }
+    ],
+    [
+      {
+        "car": 2,
+        "to": 1
+      },
+      {
+        "car": 3,
+        "to": 2
+      },
+      {
+        "car": 4,
+        "to": 3
+      },
+      {
+        "car": 5,
+        "to": 3
+      },
+      {
+        "car": 6,
+        "to": 0
+      },
+      {
+        "car": 1,
+        "to": 0
+      },
+      {
+        "car": 9,
+        "to": 3
+      },
+      {
+        "car": 0,
+        "to": 6
+      }
+    ],
+    [
+      {
+        "car": 0,
+        "to": 0
+      },
+      {
+        "car": 3,
+        "to": 0
+      },
+      {
+        "car": 2,
+        "to": 0
+      },
+      {
+        "car": 0,
+        "to": 2
+      },
+      {
+        "car": 7,
+        "to": 2
+      },
+      {
+        "car": 8,
+        "to": 0
+      },
+      {
+        "car": 9,
+        "to": 1
+      },
+      {
+        "car": 10,
+        "to": 3
+      },
+      {
+        "car": 0,
+        "to": 6
+      }
+    ],
+    [
+      {
+        "car": 4,
+        "to": 2
+      },
+      {
+        "car": 8,
+        "to": 4
+      },
+      {
+        "car": 9,
+        "to": 4
+      },
+      {
+        "car": 6,
+        "to": 3
+      },
+      {
+        "car": 7,
+        "to": 4
+      },
+      {
+        "car": 2,
+        "to": 2
+      },
+      {
+        "car": 1,
+        "to": 0
+      },
+      {
+        "car": 2,
+        "to": 0
+      },
+      {
+        "car": 4,
+        "to": 0
+      },
+      {
+        "car": 0,
+        "to": 6
+      }
+    ]
+  ]
+}

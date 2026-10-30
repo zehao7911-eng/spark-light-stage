@@ -1,0 +1,1 @@
+importScripts('levels.js','geometry.js');onmessage=e=>{let {id,pos,token}=e.data;try{postMessage({token,id,key:pos.join(','),route:GarageGeometry.solve(GarageLevels[id],pos)?.route||null});}catch{postMessage({token,id,key:pos.join(','),route:null});}};

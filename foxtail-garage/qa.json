@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-30",
+  "nativeCampaign": "All twelve yards completed with native pointer drags through visible cars at minimum par; 36 stars and twelve keepsakes verified in glovebox. See native-campaign.json.",
+  "phoneLayouts": [
+    {
+      "width": 320,
+      "height": 568,
+      "page": [
+        320,
+        568
+      ],
+      "buttonsMinimum": [
+        44,
+        44
+      ],
+      "select": [
+        168.59,
+        49
+      ],
+      "actualCompletion": "yard 11, 9 moves, 3 stars"
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "page": [
+        390,
+        844
+      ]
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "page": [
+        844,
+        390
+      ],
+      "actualCompletion": "yard 12, 10 moves, 3 stars"
+    }
+  ],
+  "additionalNative": [
+    "Tap on Honey van changed no move count",
+    "First yard completed by two actual drags, second by three",
+    "Attempted to drag camper through blocker: clamped before vehicle, did not escape; Undo restored zero moves",
+    "Sage and Lilac unlocked paints selected in glovebox",
+    "Actual Worker hint selected Honey van; direction button slid it down; paused during movement and refreshed with same visible one move, settling phase and selected van",
+    "Paused screenshot pair byte-identical",
+    "Resumed, Undo returned to zero; keyboard 2 / ArrowDown / ArrowRight finished hinted first yard at 2 moves, 1 star, 900 points; best remained 1000, 36 stars and 12 keepsakes",
+    "Off-route yard 5 used vehicle chooser and backward arrow for cars 2 and 3; current-state Worker correctly suggested car 4 Blue (same result as independent model run)",
+    "Sound OFF / Gentle effects ON survived refresh; restored defaults afterwards",
+    "No captured local browser warning or error logs"
+  ],
+  "limits": [
+    "Desktop Chromium native controls and phone-size layouts were tested; no physical Android or iOS handset was available.",
+    "No low-end-device frame-rate guarantee.",
+    "Logical positions and pending motion resume; transient particles and ambient phase restart after reload."
+  ]
+}
