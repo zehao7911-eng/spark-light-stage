@@ -70,15 +70,15 @@ class PomArt{constructor(canvas){this.c=canvas;this.ctx=canvas.getContext('2d');
  for(let side of [-1,1]){let x=gx+side*210,fy=gy-93;this.line([[x,fy-40],[x,fy+87]],p.deep,3);let wave=Math.sin(t*1.5+side)*6;this.poly([[x,fy-35],[x+side*43,fy-27+wave],[x+side*38,fy+20+wave],[x,fy+11]],p.accent);this.line([[x+side*12,fy-29],[x+side*10,fy+9]],p.light,1)}
  for(let i=0;i<5;i++){let x=(t*9+i*117)%(W+180)-90,y=72+i%2*14+Math.sin(t*.8+i)*5;this.line([[x-4,y],[x,y-2-Math.sin(t*4+i)*2],[x+4,y]],p.green,1.2)}
  }
- gate(g,p,pass,bonk){let c=this.ctx,{gx:x,gy:y}=this.layout;let w=310,h=282,top=y-154,bottom=y+144;
+ gate(g,p,pass,bonk){let c=this.ctx,{gx:x,gy:y}=this.layout;let w=360,h=360,top=y-200,bottom=y+185;
  // Multiple hard planes, narrow seams, rosette, and restrained ceramic inlays.
  this.poly([[x-w/2-12,bottom],[x-w/2-12,top+24],[x+w/2+15,top+3],[x+w/2+15,bottom]],p.shade);
- this.arch(x,y-33,w,260,p.stone);this.rect(x-w/2,y-32,w,bottom-y+32,p.stone);
- this.arch(x,y-33,w-23,237,p.light);this.rect(x-w/2+11.5,y-32,w-23,bottom-y+32,p.light);
- this.arch(x,y-28,w-43,220,p.stone);this.rect(x-w/2+21.5,y-28,w-43,bottom-y+28,p.stone);
- for(let side of [-1,1]){this.rect(x+side*133-10,y-55,20,190,p.shade);this.rect(x+side*133-8,y-55,11,190,p.light);this.rect(x+side*133-15,y-59,30,9,p.deep);this.rect(x+side*133-15,bottom-13,30,9,p.deep);for(let j=0;j<6;j++)this.rect(x+side*133-9,y-23+j*22,18,1,p.shade)}
- for(let i=0;i<9;i++){let a=Math.PI+(i+.5)*Math.PI/9,xx=x+Math.cos(a)*137,yy=y-30+Math.sin(a)*121;c.save();c.translate(xx,yy);c.rotate(a+Math.PI/2);this.rect(-1,-9,2,18,p.shade);c.restore()}
- this.ellipse(x,top+18,14,14,p.shade);this.poly([[x,top+7],[x+7,top+18],[x,top+29],[x-7,top+18]],p.light);
+ this.arch(x,y-33,w,330,p.stone);this.rect(x-w/2,y-32,w,bottom-y+32,p.stone);
+ this.arch(x,y-33,w-23,307,p.light);this.rect(x-w/2+11.5,y-32,w-23,bottom-y+32,p.light);
+ this.arch(x,y-28,w-43,290,p.stone);this.rect(x-w/2+21.5,y-28,w-43,bottom-y+28,p.stone);
+ for(let side of [-1,1]){this.rect(x+side*157-10,y-55,20,240,p.shade);this.rect(x+side*157-8,y-55,11,240,p.light);this.rect(x+side*157-15,y-59,30,9,p.deep);this.rect(x+side*157-15,bottom-13,30,9,p.deep);for(let j=0;j<6;j++)this.rect(x+side*157-9,y-23+j*22,18,1,p.shade)}
+ for(let i=0;i<9;i++){let a=Math.PI+(i+.5)*Math.PI/9,xx=x+Math.cos(a)*167,yy=y-30+Math.sin(a)*155;c.save();c.translate(xx,yy);c.rotate(a+Math.PI/2);this.rect(-1,-9,2,18,p.shade);c.restore()}
+ for(let side of [-1,1]){let rx=x+side*92,ry=y-105;this.ellipse(rx,ry,10,10,p.shade);this.poly([[rx,ry-7],[rx+5,ry],[rx,ry+7],[rx-5,ry]],p.light)}
  let a=g.frames[0],inner={...a,w:Math.max(...g.frames.map(f=>f.w)),h:Math.max(...g.frames.map(f=>f.h))};
  c.save();c.beginPath();this.opening(inner,x,y,1.08);c.fillStyle=p.deep;c.fill();c.clip();this.rect(x-150,y-150,300,300,p.deep);for(let i=0;i<5;i++){this.arch(x,y-22+i*10,100-i*11,120-i*14,i%2?p.green:p.shade)}this.ellipse(x,y+34,29,5,p.light);this.poly([[x-13,y+19],[x+13,y+19],[x+13,y+35],[x-13,y+35]],p.cream);this.line([[x-13,y+19],[x,y+28],[x+13,y+19]],p.shade,1.5);c.restore();
  for(let i=g.frames.length-1;i>=0;i--){let f=g.frames[i];c.beginPath();this.opening(f,x,y,1.04+i*.05);c.strokeStyle=i?p.water:(bonk?'#a43d40':pass?'#327861':p.shade);c.lineWidth=i?5:5;c.stroke();c.beginPath();this.opening(f,x,y,1);c.strokeStyle=pass?'#d9ecc3':p.light;c.lineWidth=2;c.stroke()}
