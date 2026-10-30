@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {masks,solver,route,HOUSES,Round,profile,record,unlocked} from '../core.mjs';
+// Independent GF(2) basis oracle. Verifies reachable differences without BFS.
+function reachable(n,value){let basis=new Int32Array(n*n);for(let col=0;col<n*n;col++){let v=0;for(let row=0;row<n*n;row++)if(Math.abs(row%n-col%n)+Math.abs(Math.floor(row/n)-Math.floor(col/n))<=1)v^=1<<row;for(let k=n*n-1;k>=0;k--)if(v&(1<<k)){if(basis[k])v^=basis[k];else{basis[k]=v;break}}}for(let k=n*n-1;k>=0;k--)if(value&(1<<k)){if(!basis[k])return false;value^=basis[k]}return value===0}
+for(let n of [3,4]){let s=solver(n),count=0;for(let d=0;d<s.dist.length;d++){assert.equal(s.dist[d]>=0,reachable(n,d));if(s.dist[d]<0){assert.equal(route(n,d^s.goal),null);continue}count++;let path=route(n,d^s.goal),board=d^s.goal;assert.equal(path.length,s.dist[d]);for(let i of path)board^=s.cross[i];assert.equal(board,s.goal);for(let m of s.cross)assert.ok(Math.abs(s.dist[d]-s.dist[d^m])<=1)}assert.equal(count,n===3?512:4096)}
+let p=profile();assert.equal(unlocked(p),0);let seen=new Set();
+for(let h of HOUSES){assert.ok(!seen.has(h.n+':'+h.start));seen.add(h.n+':'+h.start);assert.equal(route(h.n,h.start).length,h.par);let r=new Round(h.index),initial=r.save();assert.equal(r.won,false);assert.equal(r.step(-1),false);assert.equal(r.step(.5),false);assert.equal(r.step(100),false);assert.equal(r.step(NaN),false);assert.deepEqual(r.save(),initial);
+ let move=route(h.n,r.board)[0];r.step(move);if(!r.won){assert.equal(r.undo(),true);assert.deepEqual(r.save(),initial)}r.restart();assert.equal(r.hint(),route(h.n,r.board)[0]);assert.equal(r.hints,1);r.restart();
+ for(let j=0;j<60;j++){let i=(j*7+h.index*3)%(h.n*h.n);if(r.won)break;r.step(i);let restored=new Round(h.index,r.save());assert.deepEqual(restored.save(),r.save())}r.restart();
+ for(let i of route(h.n,r.board))assert.equal(r.step(i),true);assert.equal(r.won,true);assert.equal(r.stars,3);assert.equal(r.step(0),false);assert.equal(r.undo(),false);assert.equal(r.hint(),null);record(p,r);let total=p.total;record(p,r);assert.equal(p.total,total);assert.equal(p.records[h.index].moves,h.par);let saved=new Round(h.index,r.save());assert.equal(saved.won,true);
+ let guided=new Round(h.index);guided.hint();for(let i of route(h.n,guided.board))guided.step(i);assert.equal(guided.stars,2);record(p,guided);assert.equal(p.total,total);assert.equal(unlocked(p),Math.min(h.index+1,11));
+ let extra=new Round(h.index);extra.step(0);if(!extra.won)extra.step(0);if(!extra.won){for(let i of route(h.n,extra.board))extra.step(i);assert.ok(extra.stars>=1)}
+ assert.equal(new Round(h.index,{index:h.index,board:0,history:[999]}).board,h.start);
+}
+assert.equal(p.total,36);assert.equal(profile({...p,glow:'starlight'}).glow,'starlight');assert.equal(profile({glow:'starlight'}).glow,'honey');assert.equal(profile(null).total,0);assert.equal(profile({records:[{stars:99,moves:-1}]}).total,0);assert.equal(new Round(99).index,0);assert.equal(new Round(0,{index:0,board:0,history:[4,2]}).board,HOUSES[0].start);
+console.log('PASS: all 66,048 differences checked against independent GF(2) oracle; all 4,608 reachable shortest routes and transitions; 12 campaign clears; save/undo/hints/rewards/idempotence/corrupt data.');

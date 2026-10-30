@@ -1,0 +1,37 @@
+[
+  {
+    "asset": "cottage",
+    "file": "exec-ab6651af-ed69-4f4c-b7ce-1d86643a96ab.png",
+    "prompt": "Use case: illustration-story. Asset type: production background for an original mobile game Firefly Row, no UI and no text. Portrait 4:5 illustration. A charming frontal hollow-stump woodland cottage at blue hour, gently irregular shingle roof, tiny copper chimney, moss, climbing nasturtiums, warm hand-painted gouache and coloured-pencil storybook finish, restrained thin brown ink contours, sage green, cornflower blue, ochre and terracotta. CRITICAL playable composition: a broad nearly rectangular uninterrupted LIGHT OCHRE plaster facade occupies x=15% to85%, y=27% to83%, flat front view and EMPTY, no windows, no panels, no doors inside this area. Runtime will place 3x3 or4x4 windows here. The house fills almost the whole image. Roof above y25%, leafy margins outside x15..85. An empty little doorway centered below y85%, a short curved stone path and tiny mushrooms at bottom. Distant soft blue forest only at margins. Lovely illustrated details concentrated in roof and borders; central facade subtle plaster texture only. Soft dusk lighting, all window lighting added by game. No characters, no letters, no logo, no frames or interface. Flat painting, no photorealism, no 3D toy, no shiny plastic.",
+    "tool": "built-in image_gen",
+    "generated": "2026-10-31"
+  },
+  {
+    "asset": "residents",
+    "file": "exec-c93b10db-d978-456d-91b9-4964cecb0ff1.png",
+    "prompt": "Use case: illustration-story. Production transparent sprite atlas for original cozy puzzle Firefly Row. Match reference image1's hand-painted gouache/coloured pencil, fine brown contours, soft woodland colours, no plastic3D. Transparent RGBA background. Exactly 4 rows x4 columns uniform separated cells, each item entirely within its cell with generous transparent padding; no touching, no shadows crossing cells. Rows1-3: twelve original friendly full-body woodland residents, each looking slightly toward viewer, soft rounded proportions, distinct outfits and props. Row1: mouse baker in flour apron with loaf; hedgehog gardener with watering can; badger carpenter in overalls; small green frog wearing yellow raincoat. Row2: chestnut dormouse holding teacup; fox seamstress with blue scarf; tawny owl librarian with glasses/book; white rabbit with red wool scarf. Row3: squirrel postie with satchel; mole astronomer with round spectacles; raccoon painter with brush; teal salamander musician with tiny lute. Each single still standing pose, visible feet. Row4: a moth lamplighter wearing olive waistcoat holding a slender lantern staff, wings at rest; SAME moth stepping with lifted lantern; a FRONT-VIEW SQUARE wooden window frame with sage curtain edges, cross muntins, four dark blue panes, NO light; SAME EXACT WINDOW with four bright amber lit panes. Window frames fill their own cells similar size. No letters no numbers no ground no cell grid no extra items. True transparent cutout background, clean separate sprites.",
+    "tool": "built-in image_gen",
+    "generated": "2026-10-31"
+  },
+  {
+    "asset": "canal",
+    "file": "exec-0d8e3500-5cde-4f55-ad74-34a7757065d9.png",
+    "prompt": "Use case: illustration-story. Asset type: production portrait 4:5 background for original cozy window-light puzzle Firefly Row. Reference image1 is the style and playable composition anchor, NOT edit target. Create a DIFFERENT house: a canal-side blue timber boathouse with gentle curved red tile roof, miniature weather vane, reed banks, lily pads, a little moored rowboat low at right and soft reflections only at bottom. Gently rainy early evening. Hand-painted gouache/coloured pencil, fine brown contours, soft dusty blue/teal/pale apricot palette, beautiful quiet illustrated craft. Match playable composition precisely: house fills frame, frontal broad flat PALE CREAM wooden facade x15..85%, y27..83% left EMPTY for runtime windows, no windows no doors no props within this central wall. Roof and beautiful details above25%, reeds and timber edges outside15..85%, small central blue doorway below85%, canal path at bottom. Distant violet willows at edges. No characters, words, UI or logos. No paper panel or abstract decorative frame; this is an actual building facade. Thin ink lines, no photorealism or glossy3D.",
+    "tool": "built-in image_gen",
+    "generated": "2026-10-31"
+  },
+  {
+    "asset": "windmill",
+    "file": "exec-74dab10f-1df4-4737-8199-9f6abe26ac5d.png",
+    "prompt": "Use case: illustration-story. Production portrait4:5 background original mobile puzzle Firefly Row. Reference image1 only style/playable layout anchor. New scene: an old moonlit WINDMILL observatory cottage, slender striped fabric sails extend behind the steep indigo roof high above, copper telescope on roof, hanging star charms, lavender pots at edges, little crescent moon in misty blue sky. Hand-painted gouache and coloured pencil with fine brown outlines, dusk violet and dusty blue with pale warm limestone wall. Front view, cottage fills frame. Central broad flat pale limestone FACADE x15..85%,y27..83% must be uninterrupted EMPTY wall, no windows no tools no props no circular frame within that region, game overlays window grid. Roof above25%, small central doorway below85%, stone path and lavender bottom. Beautiful roof and foliage details confined to margins. This is actual house architecture, not sheet of paper. No characters, lettering, UI, logos. Match gentle storybook illustration craft of reference, no3Dplastic or photographic materials.",
+    "tool": "built-in image_gen",
+    "generated": "2026-10-31"
+  },
+  {
+    "asset": "icon",
+    "file": "exec-0aa7c0fd-97e5-4b41-a7cf-8cb3cf26cf17.png",
+    "prompt": "Use case: illustration-story. Asset type: square app icon for original mobile game Firefly Row. Reference image1 sets artwork style. A delightful original round-eyed moth lamplighter in tiny olive waistcoat, cream fuzzy face and patterned tan wings, holding a bright amber lantern beside one small illuminated wooden cottage window. Close-up iconic composition with big expressive face at left and lantern/window at right, deep cornflower blue dusk background, delicate leaf accents only at corners. Fine brown ink contours, hand-painted gouache and coloured pencil texture, soft honey amber light, gentle original woodland storybook craft. High readability at64pixels, face occupies nearly half image, no lettering no logos no border no UI no photorealism no glossy3D. Full square image opaque.",
+    "tool": "built-in image_gen",
+    "generated": "2026-10-31"
+  }
+]
