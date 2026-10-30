@@ -1,0 +1,19 @@
+import{LEVELS}from'./levels.js';export{LEVELS};
+const clone=x=>JSON.parse(JSON.stringify(x));
+export const adjacent=(a,b)=>Number.isInteger(a)&&Number.isInteger(b)&&a>=0&&a<25&&b>=0&&b<25&&Math.abs(a%5-b%5)+Math.abs(Math.floor(a/5)-Math.floor(b/5))===1;
+export const ends=l=>l.routes.map(r=>[r[0],r[r.length-1]]);
+export function fresh(i=0){i=Number.isInteger(i)?Math.max(0,Math.min(11,i)):0;return{i,paths:LEVELS[i].routes.map(()=>[]),moves:0,hints:0,won:false,history:[],txn:null,active:-1,events:[]};}
+export function snapshot(s){return{i:s.i,paths:clone(s.paths),moves:s.moves,hints:s.hints,won:s.won};}
+export function connected(s,k){let p=s.paths[k],e=ends(LEVELS[s.i])[k];return p.length>=2&&((p[0]===e[0]&&p.at(-1)===e[1])||(p[0]===e[1]&&p.at(-1)===e[0]));}
+export function delivered(s){return s.paths.reduce((n,_,k)=>n+Number(connected(s,k)),0);}
+export function sprinkles(s){let cells=new Set(s.paths.filter((_,k)=>connected(s,k)).flat());return LEVELS[s.i].gold.filter(c=>cells.has(c)).length;}
+export function start(s,c){if(s.won||s.txn)return false;const k=ends(LEVELS[s.i]).findIndex(e=>e.includes(c));if(k<0)return false;s.txn=snapshot(s);s.active=k;s.paths[k]=[c];s.events=[];return true;}
+export function resume(s,k){if(s.won||s.txn||!Number.isInteger(k)||!s.paths[k]?.length||connected(s,k))return false;s.txn=snapshot(s);s.active=k;s.events=[];return true;}
+export function extend(s,c){if(!s.txn||s.active<0||!Number.isInteger(c)||c<0||c>=25)return false;let p=s.paths[s.active],last=p.at(-1);if(last===c)return false;let j=p.indexOf(c);if(j>=0){s.paths[s.active]=p.slice(0,j+1);return true;}if(!adjacent(last,c)||LEVELS[s.i].holes.includes(c))return false;const es=ends(LEVELS[s.i]);if(connected(s,s.active))return false;if(es.some((e,k)=>k!==s.active&&e.includes(c))||s.paths.some((r,k)=>k!==s.active&&r.includes(c)))return false;p.push(c);return true;}
+export function commit(s){if(!s.txn)return false;let before=s.txn,k=s.active;s.txn=null;s.active=-1;let changed=JSON.stringify(before.paths)!==JSON.stringify(s.paths);if(!changed)return false;s.history.push(before);if(s.history.length>60)s.history.shift();s.moves++;if(connected(s,k))s.events.push({type:'delivery',k,route:[...s.paths[k]]});s.won=delivered(s)===s.paths.length;if(s.won)s.events.push({type:'win'});return true;}
+export function cancel(s){if(!s.txn)return false;const old=s.txn;Object.assign(s,old);s.txn=null;s.active=-1;s.events=[];return true;}
+export function undo(s){if(s.won||s.txn||!s.history.length)return false;const hints=s.hints,p=s.history.pop(),h=s.history;Object.assign(s,p);s.hints=Math.max(hints,p.hints);s.history=h;s.events=[{type:'undo'}];return true;}
+export function guide(s){if(s.won||s.txn)return false;s.hints=Math.min(999,s.hints+1);s.events.push({type:'guide'});return true;}
+export function stars(s){return s.won?1+Number(sprinkles(s)===2)+Number(s.hints===0):0;}
+export function score(s){return delivered(s)*200+sprinkles(s)*100+(s.won?300+(s.hints===0?100:0):0);}
+export function restore(v){try{if(!v||!Number.isInteger(v.i)||v.i<0||v.i>11)return fresh();let s=fresh(v.i),l=LEVELS[s.i],es=ends(l);if(!Array.isArray(v.paths)||v.paths.length!==l.routes.length||!Number.isInteger(v.moves)||v.moves<0||v.moves>100000||!Number.isInteger(v.hints)||v.hints<0||v.hints>999)return s;let used=new Set();for(let k=0;k<v.paths.length;k++){let p=v.paths[k];if(!Array.isArray(p)||p.length>25||p.length&&!es[k].includes(p[0]))return fresh(s.i);for(let j=0;j<p.length;j++){let c=p[j];if(!Number.isInteger(c)||c<0||c>=25||l.holes.includes(c)||used.has(c)||j&&!adjacent(c,p[j-1])||j<p.length-1&&es[k].includes(c)&&j>0||es.some((e,n)=>n!==k&&e.includes(c)))return fresh(s.i);used.add(c);}}s.paths=clone(v.paths);s.moves=v.moves;s.hints=v.hints;s.won=delivered(s)===s.paths.length;return s;}catch{return fresh();}}
