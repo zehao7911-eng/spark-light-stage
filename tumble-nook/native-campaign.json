@@ -1,0 +1,72 @@
+[
+  {
+    "room": 1,
+    "turns": 1,
+    "stars": 3,
+    "method": "Actual TURN RIGHT button, all 3 seeds, native reward observed"
+  },
+  {
+    "room": 2,
+    "start": "The Quilt Corner. 0 turns, par 2. Turn left or right to roll Peanut into the bed. Collect the three optional seeds.",
+    "result": "Peanut is tucked in.\nTHE QUILT CORNER · SWEET DREAMS\n★★★\n2 / 2 TURNS · 3 / 3 SEEDS\n\nTucked in · All seeds · All seeds, no guide, within par + 2\n\nNEXT LITTLE NOOK →\nREPLAY"
+  },
+  {
+    "room": 3,
+    "start": "Seed by Seed. 0 turns, par 3. Turn left or right to roll Clover into the bed. Collect the three optional seeds.",
+    "result": "Clover is tucked in.\nSEED BY SEED · SWEET DREAMS\n★★★\n3 / 3 TURNS · 3 / 3 SEEDS\n\nTucked in · All seeds · All seeds, no guide, within par + 2\n\nNEXT LITTLE NOOK →\nREPLAY"
+  },
+  {
+    "room": 4,
+    "start": "Bookshelf Bend. 0 turns, par 4. Turn left or right to roll Maple into the bed. Collect the three optional seeds.",
+    "result": "Maple is tucked in.\nBOOKSHELF BEND · SWEET DREAMS\n★★★\n4 / 4 TURNS · 3 / 3 SEEDS\n\nTucked in · All seeds · All seeds, no guide, within par + 2\n\nNEXT LITTLE NOOK →\nREPLAY"
+  },
+  {
+    "room": 5,
+    "start": "Fern and Feather. 0 turns, par 4. Turn left or right to roll Fern into the bed. Collect the three optional seeds.",
+    "result": "Fern is tucked in.\nFERN AND FEATHER · SWEET DREAMS\n★★★\n4 / 4 TURNS · 3 / 3 SEEDS\n\nTucked in · All seeds · All seeds, no guide, within par + 2\n\nNEXT LITTLE NOOK →\nREPLAY"
+  },
+  {
+    "room": 6,
+    "start": "The Watering Nook. 0 turns, par 5. Turn left or right to roll Pebble into the bed. Collect the three optional seeds.",
+    "result": "Pebble is tucked in.\nTHE WATERING NOOK · SWEET DREAMS\n★★★\n5 / 5 TURNS · 3 / 3 SEEDS\n\nTucked in · All seeds · All seeds, no guide, within par + 2\n\nNEXT LITTLE NOOK →\nREPLAY"
+  },
+  {
+    "room": 7,
+    "start": "Afternoon Sun. 0 turns, par 5. Turn left or right to roll Miso into the bed. Collect the three optional seeds.",
+    "result": "Miso is tucked in.\nAFTERNOON SUN · SWEET DREAMS\n★★★\n5 / 5 TURNS · 3 / 3 SEEDS\n\nTucked in · All seeds · All seeds, no guide, within par + 2\n\nNEXT LITTLE NOOK →\nREPLAY"
+  },
+  {
+    "room": 8,
+    "start": "Between the Pots. 0 turns, par 6. Turn left or right to roll Hazel into the bed. Collect the three optional seeds.",
+    "result": "Hazel is tucked in.\nBETWEEN THE POTS · SWEET DREAMS\n★★★\n6 / 6 TURNS · 3 / 3 SEEDS\n\nTucked in · All seeds · All seeds, no guide, within par + 2\n\nNEXT LITTLE NOOK →\nREPLAY"
+  },
+  {
+    "room": 9,
+    "start": "Moonlight Landing. 0 turns, par 6. Turn left or right to roll Luna into the bed. Collect the three optional seeds.",
+    "result": "Luna is tucked in.\nMOONLIGHT LANDING · SWEET DREAMS\n★★★\n6 / 6 TURNS · 3 / 3 SEEDS\n\nTucked in · All seeds · All seeds, no guide, within par + 2\n\nNEXT LITTLE NOOK →\nREPLAY"
+  },
+  {
+    "room": 10,
+    "viewport": [
+      568,
+      320
+    ],
+    "result": "Button is tucked in.\nA QUIET ORBIT · SWEET DREAMS\n★★★\n7 / 7 TURNS · 3 / 3 SEEDS\n\nTucked in · All seeds · All seeds, no guide, within par + 2\n\nNEXT LITTLE NOOK →\nREPLAY"
+  },
+  {
+    "room": 11,
+    "viewport": [
+      320,
+      568
+    ],
+    "result": "Tilly is tucked in.\nSTARS IN THE RAFTERS · SWEET DREAMS\n★★★\n8 / 8 TURNS · 3 / 3 SEEDS\n\nTucked in · All seeds · All seeds, no guide, within par + 2\n\nNEXT LITTLE NOOK →\nREPLAY"
+  },
+  {
+    "room": 12,
+    "viewport": [
+      844,
+      390
+    ],
+    "result": "Mochi is tucked in.\nONE LAST GOODNIGHT · SWEET DREAMS\n★★★\n9 / 9 TURNS · 3 / 3 SEEDS\n\nTucked in · All seeds · All seeds, no guide, within par + 2\n\nA NEW GOOD MORNING →\nREPLAY"
+  }
+]

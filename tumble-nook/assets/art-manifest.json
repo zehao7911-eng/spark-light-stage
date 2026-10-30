@@ -1,0 +1,102 @@
+{
+  "mode": "Built-in image_gen; delivery encoding and nearest-neighbour scaling only",
+  "assets": [
+    {
+      "file": "maple.webp",
+      "width": 720,
+      "height": 960,
+      "bytes": 155186
+    },
+    {
+      "file": "fern.webp",
+      "width": 720,
+      "height": 960,
+      "bytes": 182644
+    },
+    {
+      "file": "moon.webp",
+      "width": 720,
+      "height": 960,
+      "bytes": 141034
+    },
+    {
+      "file": "pip.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 256650
+    },
+    {
+      "file": "props.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 261880
+    },
+    {
+      "file": "cover.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 193918
+    },
+    {
+      "file": "icon.webp",
+      "width": 192,
+      "height": 192,
+      "bytes": 13318
+    }
+  ],
+  "boxes": {
+    "pip": [
+      {
+        "x": 119,
+        "y": 115,
+        "w": 468,
+        "h": 463
+      },
+      {
+        "x": 689,
+        "y": 115,
+        "w": 470,
+        "h": 463
+      },
+      {
+        "x": 108,
+        "y": 672,
+        "w": 478,
+        "h": 466
+      },
+      {
+        "x": 686,
+        "y": 694,
+        "w": 476,
+        "h": 444
+      }
+    ],
+    "props": [
+      {
+        "x": 70,
+        "y": 108,
+        "w": 558,
+        "h": 476
+      },
+      {
+        "x": 732,
+        "y": 116,
+        "w": 439,
+        "h": 456
+      },
+      {
+        "x": 83,
+        "y": 695,
+        "w": 506,
+        "h": 463
+      },
+      {
+        "x": 682,
+        "y": 663,
+        "w": 512,
+        "h": 503
+      }
+    ]
+  },
+  "totalBytes": 1204630
+}

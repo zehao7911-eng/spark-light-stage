@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-30",
+  "modelChecks": 3790,
+  "nativeCampaign": "All twelve rooms completed through actual visible turn buttons at par: 60 turns, 36 stars, 36 optional seeds, 12 nook book entries. See native-campaign.json.",
+  "nativeExtras": [
+    "Opening completed by one actual TURN RIGHT button in the rendered game, all seeds and three-star sleep reward observed",
+    "Tap on picture spent zero turns; actual horizontal native drag then completed the guided opening at one turn, all seeds and two stars",
+    "Guided replay kept prior three-star best; book still showed 12 / 12 friends and 36 / 36 stars",
+    "Sky and Plum scarves unlocked and selected via the actual book; final default Sage restored",
+    "Room six paused during pending turn at one move, zero committed seeds; refresh restored the same visible pending state behind pause",
+    "Resume completed pending motion and Undo restored zero turns and zero seeds",
+    "Stable pause screenshots byte-identical SHA256 c011c1e0d8e100cc46532a27fee5397454e57e684287f363e167fda544e3b376",
+    "Sound OFF and Gentle effects ON persisted through refresh; defaults restored afterwards",
+    "ArrowRight on focusable canvas completed the first room with three stars",
+    "All five gameplay images loaded, generated icon visible, generated cover loaded in the book; no captured browser warnings or errors"
+  ],
+  "layouts": [
+    {"width":390,"height":844,"page":[390,844],"play":"Opening button and native swipe completions, collection and pause"},
+    {"width":568,"height":320,"page":[568,320],"buttonsMinimum":[44,44],"play":"Room ten completed at par7, three stars; stable full reward shown inside viewport"},
+    {"width":320,"height":568,"page":[320,568],"buttonsMinimum":[44,44],"play":"Room eleven completed at par8, three stars; reward panel internally scrollable, Next/Replay visible"},
+    {"width":844,"height":390,"page":[844,390],"buttonsMinimum":[44,44],"play":"Room twelve completed at par9, three stars; final reward bottom382 within390"}
+  ],
+  "timingObservation": "An immediate viewport-resize read once saw transient previous-layout overflow and the screenshot stream occasionally showed the previous animation frame; stable next-frame DOM measurements and screenshots were verified. No persistent overflow was present.",
+  "art": {"mode":"Built-in image_gen","assets":7,"deliveryBytes":1204630,"promptSet":"ART-PROMPTS.json","actualRuntime":"Three portrait backgrounds, four hamster poses and four prop sprites; cover in book, icon in header/browser","alphaBounds":"All eight sprite rectangles measured inside actual transparent gaps, including the bed rim that extends one pixel beyond nominal half-width; no source-frame truncation","originalPngs":"../tumble-nook-art-sources"},
+  "limits": ["No physical Android or iOS handset was available; these are desktop-browser phone-size and native-input tests.","No low-end-device FPS or platform rating claim.","Finite twelve-board campaign; same original four-pose hamster design is shared across twelve named friends.","Logical active state and pending motion restore; transient particles and ambient phase restart after reload."]
+}

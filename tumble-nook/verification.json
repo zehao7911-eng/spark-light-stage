@@ -1,0 +1,92 @@
+{
+  "checks": 3790,
+  "rooms": [
+    {
+      "room": 1,
+      "name": "A Little Turn",
+      "turns": 1,
+      "stars": 3,
+      "seeds": 3
+    },
+    {
+      "room": 2,
+      "name": "The Quilt Corner",
+      "turns": 2,
+      "stars": 3,
+      "seeds": 3
+    },
+    {
+      "room": 3,
+      "name": "Seed by Seed",
+      "turns": 3,
+      "stars": 3,
+      "seeds": 3
+    },
+    {
+      "room": 4,
+      "name": "Bookshelf Bend",
+      "turns": 4,
+      "stars": 3,
+      "seeds": 3
+    },
+    {
+      "room": 5,
+      "name": "Fern and Feather",
+      "turns": 4,
+      "stars": 3,
+      "seeds": 3
+    },
+    {
+      "room": 6,
+      "name": "The Watering Nook",
+      "turns": 5,
+      "stars": 3,
+      "seeds": 3
+    },
+    {
+      "room": 7,
+      "name": "Afternoon Sun",
+      "turns": 5,
+      "stars": 3,
+      "seeds": 3
+    },
+    {
+      "room": 8,
+      "name": "Between the Pots",
+      "turns": 6,
+      "stars": 3,
+      "seeds": 3
+    },
+    {
+      "room": 9,
+      "name": "Moonlight Landing",
+      "turns": 6,
+      "stars": 3,
+      "seeds": 3
+    },
+    {
+      "room": 10,
+      "name": "A Quiet Orbit",
+      "turns": 7,
+      "stars": 3,
+      "seeds": 3
+    },
+    {
+      "room": 11,
+      "name": "Stars in the Rafters",
+      "turns": 8,
+      "stars": 3,
+      "seeds": 3
+    },
+    {
+      "room": 12,
+      "name": "One Last Goodnight",
+      "turns": 9,
+      "stars": 3,
+      "seeds": 3
+    }
+  ],
+  "randomRoutes": 144,
+  "firstTurnSeconds": 0.8,
+  "physicalHandsetTested": false
+}
