@@ -1,0 +1,69 @@
+{
+  "edition": "image-art-v2",
+  "mode": "Built-in image_gen",
+  "assets": [
+    {
+      "name": "vehicles",
+      "path": "assets/vehicles-v2.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 628380
+    },
+    {
+      "name": "maple",
+      "path": "assets/maple-v2.webp",
+      "width": 864,
+      "height": 288,
+      "bytes": 125784
+    },
+    {
+      "name": "amber",
+      "path": "assets/amber-v2.webp",
+      "width": 864,
+      "height": 288,
+      "bytes": 160826
+    },
+    {
+      "name": "moon",
+      "path": "assets/moon-v2.webp",
+      "width": 864,
+      "height": 290,
+      "bytes": 151650
+    },
+    {
+      "name": "cover",
+      "path": "assets/cover-v2.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 368210
+    },
+    {
+      "name": "icon",
+      "path": "assets/icon-v2.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 28098
+    }
+  ],
+  "totalBytes": 1462948,
+  "boxes": [
+    {
+      "x": 272,
+      "y": 102,
+      "w": 714,
+      "h": 329
+    },
+    {
+      "x": 313,
+      "y": 505,
+      "w": 630,
+      "h": 309
+    },
+    {
+      "x": 174,
+      "y": 877,
+      "w": 916,
+      "h": 305
+    }
+  ]
+}

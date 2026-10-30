@@ -2,7 +2,7 @@
 
 Slide the little cars. Let the camper out.
 
-A complete original pixel vehicle-unblocking puzzle. Move parked cars along their own lanes, then drive the starred camper through the exit on the right. The first yard needs one blocker moved down and one camper departure.
+A complete original pixel vehicle-unblocking puzzle, now with a unified image-generated art edition. Move parked cars along their own lanes, then drive the starred camper through the exit on the right. The first yard needs one blocker moved down and one camper departure.
 
 ## Controls and rules
 
@@ -26,7 +26,13 @@ One continuous slide counts as one move, regardless of distance. No countdown an
 
 This independently implemented lane-constrained traffic puzzle is in the established Rush Hour family; the [official ThinkFun / Ravensburger product](https://www.ravensburger.co.uk/en-GB/products/games/logic-games/rush-hour-76598) was reviewed for genre context. No commercial source, vehicles, branding, challenge layouts or audio were imported; this is not a full commercial-game recreation or a claim of an invented genre.
 
-The user's [detailed pixel gallery](https://mygamesartstyle.jupiterthewarlock.com/styles/detailed-pixel/) and its enlarged [NobodyNowhere street scene](https://mygamesartstyle.jupiterthewarlock.com/media/2440890/scene-1.jpg) were inspected for grouped wheel/window details, controlled surface highlights and warm-window/cool-wall contrast. All vehicle, fox, scene, keepsake and icon art here is original code-created work. The cover is an actual gameplay capture. No Imagegen or commercial pixels were used.
+The user's [detailed pixel gallery](https://mygamesartstyle.jupiterthewarlock.com/styles/detailed-pixel/) and its enlarged [NobodyNowhere street scene](https://mygamesartstyle.jupiterthewarlock.com/media/2440890/scene-1.jpg) were inspected for grouped wheel/window details, controlled surface highlights and warm-window/cool-wall contrast. The image-art edition uses six newly generated assets made with the built-in image_gen tool: one transparent overhead three-vehicle atlas, three environment banners, a title cover and a fox mechanic icon. See ART-PROMPTS.json for the complete prompt set. Original PNG source files are retained locally in the sibling foxtail-art-sources folder; the game ships small WebP delivery assets. No commercial game pixels were imported. The board, opening gate, mechanic animation, effects, typography, outlines and keepsakes remain code-drawn. The marketing cover is an illustration; it is not a gameplay screenshot.
+
+## Image-art edition
+
+The three scenery banners share teal shadows, warm window light and cream/coral/honey accents. Atlas source rectangles were measured against actual alpha, keeping wheels and mirrors inside each rotated vehicle. Runtime body recolouring preserves neutral highlights, tyres, glass and luggage; body colours still match the vehicle chooser. Transparent sprites render to a 576x672 internal world using the existing 288x336 logical coordinates, preserving all collision and input rules. Selection, numbers, first-step arrows, gate, dust and exit animation remain dynamic. The generated cover appears in the glovebox and social preview; the generated icon is used in the header and browser icon.
+
+Images load without blocking play. Each loaded scene replaces its procedural fallback independently; a failed asset leaves a playable code-drawn fallback. All six delivery images together are 1,462,948 bytes; the cover is requested only when the glovebox is opened (or by preview crawlers). There are no remote runtime dependencies.
 
 ## Run / import / build
 
@@ -38,4 +44,4 @@ All twelve yards were additionally completed through actual visible pointer drag
 
 ## License
 
-Original code and artwork are MIT licensed. See LICENSE.txt.
+Original code and included artwork are distributed under MIT; the six image-generated assets are identified above and in ART-PROMPTS.json. See LICENSE.txt.

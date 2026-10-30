@@ -71,5 +71,30 @@
     "Desktop Chromium native controls and phone-size layouts were tested; no physical Android or iOS handset was available.",
     "No low-end-device frame-rate guarantee.",
     "Logical positions and pending motion resume; transient particles and ambient phase restart after reload."
-  ]
+  ],
+  "imageArtEdition": {
+    "date": "2026-10-30",
+    "status": "Passed local visual and input regression checks",
+    "assets": 6,
+    "totalImageBytes": 1462948,
+    "originalPngs": "../foxtail-art-sources",
+    "mode": "Built-in image_gen",
+    "promptSet": "ART-PROMPTS.json",
+    "logicChanges": "None",
+    "notes": [
+      "Transparent atlas alpha-bound source rectangles; no wheel or mirror cropping",
+      "576x672 render world with unchanged 288x336 input coordinates",
+      "Non-blocking image loader with code-art fallback"
+    ],
+    "native": [
+      "390x844 actual pointer drag: Honey van down, then camper right; 2 moves, 3 stars, 1000 points",
+      "568x320 page exactly 568x320; 44px or larger footer buttons and 163x49 chooser, reward modal fits",
+      "320x568 page exactly 320x568, generated 1200px cover loads in scrollable glovebox",
+      "All 3 banners and all 3 camper paint variants visually inspected on actual campaign states in a private review page; no wheel or mirror cropping, vehicle numbers readable",
+      "All four in-game generated assets loaded (4/4), generated header icon visible, no captured warning or error logs",
+      "Private visual review page removed before packaging"
+    ],
+    "fallback": "VM exercised pre-decode procedural scene/vehicle fallback and all four image failures: 4/4 settled, four errors recorded, no blocking load promise",
+    "scope": "Cosmetic update only; original twelve-board model/campaign rules and saved progress format retained"
+  }
 }

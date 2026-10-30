@@ -2,7 +2,7 @@ from pathlib import Path
 import hashlib,json,re,zipfile,subprocess,sys
 root=Path(__file__).resolve().parent
 normalize=lambda b:re.sub(rb'\?v=[a-f0-9]{12}',b'',b).replace(b'\r\n',b'\n').removeprefix(b'\xef\xbb\xbf')
-names=['index.html', 'style.css', 'levels.js', 'geometry.js', 'core.js', 'art.js', 'app.js', 'hint-worker.js']
+names=['index.html', 'style.css', 'levels.js', 'geometry.js', 'core.js', 'image-art.js', 'art.js', 'app.js', 'hint-worker.js']
 version=hashlib.sha256(b''.join(normalize((root/n).read_bytes()) for n in names)+b''.join(p.read_bytes() for p in sorted((root/'assets').iterdir()))).hexdigest()[:12]
 for name in names:
  p=root/name;s=normalize(p.read_bytes()).decode('utf8')
