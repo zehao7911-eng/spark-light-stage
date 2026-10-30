@@ -1,0 +1,264 @@
+{
+  "passed": true,
+  "checks": 31093,
+  "normalCampaignClears": 12,
+  "allStars": 36,
+  "allLayoutsDistinct": true,
+  "allReachableStatesRecoverable": true,
+  "reachableStates": 805,
+  "serializedPendingTurns": 36,
+  "animatedWallClearancePassed": true,
+  "routes": [
+    {
+      "level": 1,
+      "name": "The First Orbit",
+      "turns": [
+        1,
+        -1,
+        -1,
+        1,
+        1
+      ],
+      "par": 5,
+      "reachableStates": 31,
+      "gate": false,
+      "portals": 0,
+      "stars": 3
+    },
+    {
+      "level": 2,
+      "name": "Amber Switchback",
+      "turns": [
+        1,
+        -1,
+        -1,
+        -1,
+        -1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "par": 9,
+      "reachableStates": 35,
+      "gate": false,
+      "portals": 0,
+      "stars": 3
+    },
+    {
+      "level": 3,
+      "name": "The Copper Loop",
+      "turns": [
+        1,
+        -1,
+        -1,
+        -1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "par": 8,
+      "reachableStates": 29,
+      "gate": false,
+      "portals": 0,
+      "stars": 3
+    },
+    {
+      "level": 4,
+      "name": "Sunwheel Circuit",
+      "turns": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        -1
+      ],
+      "par": 8,
+      "reachableStates": 58,
+      "gate": false,
+      "portals": 0,
+      "stars": 3
+    },
+    {
+      "level": 5,
+      "name": "A Key to the Engine",
+      "turns": [
+        1,
+        -1,
+        -1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "par": 7,
+      "reachableStates": 30,
+      "gate": true,
+      "portals": 0,
+      "stars": 3
+    },
+    {
+      "level": 6,
+      "name": "Brass Locksmith",
+      "turns": [
+        1,
+        -1,
+        -1,
+        1,
+        1,
+        1,
+        1,
+        -1,
+        1,
+        1
+      ],
+      "par": 10,
+      "reachableStates": 33,
+      "gate": true,
+      "portals": 0,
+      "stars": 3
+    },
+    {
+      "level": 7,
+      "name": "The Split Turbine",
+      "turns": [
+        1,
+        -1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        -1,
+        -1,
+        1,
+        1,
+        1
+      ],
+      "par": 12,
+      "reachableStates": 44,
+      "gate": true,
+      "portals": 0,
+      "stars": 3
+    },
+    {
+      "level": 8,
+      "name": "The Gilded Relay",
+      "turns": [
+        1,
+        -1,
+        1,
+        -1,
+        -1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "par": 11,
+      "reachableStates": 45,
+      "gate": true,
+      "portals": 0,
+      "stars": 3
+    },
+    {
+      "level": 9,
+      "name": "A Fold in Space",
+      "turns": [
+        1,
+        -1,
+        1,
+        1,
+        1,
+        1,
+        -1,
+        1,
+        1
+      ],
+      "par": 9,
+      "reachableStates": 174,
+      "gate": true,
+      "portals": 2,
+      "stars": 3
+    },
+    {
+      "level": 10,
+      "name": "Twin Moon Conduit",
+      "turns": [
+        1,
+        -1,
+        -1,
+        1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        1,
+        1
+      ],
+      "par": 12,
+      "reachableStates": 45,
+      "gate": true,
+      "portals": 2,
+      "stars": 3
+    },
+    {
+      "level": 11,
+      "name": "The Orbital Exchange",
+      "turns": [
+        1,
+        -1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        -1,
+        -1,
+        1,
+        -1,
+        -1,
+        1
+      ],
+      "par": 13,
+      "reachableStates": 158,
+      "gate": true,
+      "portals": 2,
+      "stars": 3
+    },
+    {
+      "level": 12,
+      "name": "The Final Alignment",
+      "turns": [
+        1,
+        -1,
+        -1,
+        1,
+        1,
+        -1,
+        -1,
+        -1,
+        1,
+        -1,
+        1,
+        1,
+        1,
+        1,
+        -1
+      ],
+      "par": 15,
+      "reachableStates": 123,
+      "gate": true,
+      "portals": 2,
+      "stars": 3
+    }
+  ]
+}
