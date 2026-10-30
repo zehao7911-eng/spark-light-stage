@@ -21,14 +21,14 @@ function updateHUD(){
  if(s.stamps<2)s.selected='stomp';
  const stamp=[s.level,s.stamps,s.juice,s.selected,s.phase,s.chargeUnlocked,s.sweepUnlocked,M.total(p),p.sound,paused,view].join('|');if(stamp===lastHUD)return;lastHUD=stamp;
  $('act').textContent='ACT '+String(s.level+1).padStart(2,'0');$('name').textContent=M.names[s.level];$('stars').textContent='☆ '+M.total(p);
- $('stamps').textContent='◉ '+s.stamps;$('juice').textContent=s.juice+' / '+s.fruits.length;
+ $('stamps').textContent='◉ '+s.stamps;$('juice').textContent=s.juice+'/'+s.fruits.length;
  $('mode').querySelector('b').innerHTML=s.selected==='sweep'?'↔ SWEEP':'<svg aria-hidden="true" viewBox="0 0 32 26" style="width:23px;height:19px;vertical-align:middle"><path d="M5 2H16V14Q28 10 29 19Q28 24 16 24H5Q0 21 4 16Z" fill="currentColor" stroke="#292c2a" stroke-width="1.5"/><path d="M4 21H28M9 11H16M9 7H16" fill="none" stroke="#467971" stroke-width="1.5"/></svg> STOMP';
  $('modehint').textContent=s.stamps<2?'ONE STOMP LEFT':s.sweepUnlocked?'TAP TO SWITCH':s.chargeUnlocked?'HOLD TO CHARGE':'TAP THE FRUIT';
  $('sound').setAttribute('aria-label',p.sound?'Mute sound':'Enable sound');$('sound').textContent=p.sound?'♪':'♩';
  $('mode').disabled=paused||s.phase!=='play';$('retry').disabled=view==='intro'||view==='book'||view==='bottle';
  $('hint').textContent=s.sweepUnlocked&&s.selected==='sweep'?'One sweep. Two stomps. A whole row.':s.chargeUnlocked?'Tap to stomp · hold, then release for a big stomp':'Tap a bunch. Make a splash.';
 }
-function panel(html){overlay.innerHTML='<div class="panel">'+html+'</div>';overlay.hidden=false;clearPress();audio.stop();updateHUD();}
+function panel(html){overlay.dataset.view=view;overlay.innerHTML='<div class="panel">'+html+'</div>';overlay.hidden=false;clearPress();audio.stop();updateHUD();}
 function action(id,fn){$(id)?.addEventListener('click',()=>{audio.unlock();fn()})}
 function hide(){overlay.hidden=true;overlay.innerHTML='';view='play';paused=false;last=0;updateHUD();}
 function intro(){view='intro';paused=true;panel('<span class="eyebrow">A HAND-INKED LITTLE JOY</span><h2>Put your<br>foot in it.</h2><p>Tap a bunch of fruit.<br>Pop them all. Bottle the fizz.</p><div class="bottle-art">'+bottleSVG(s.level,true)+'</div><button id="start" class="primary full">'+(raw.run?'CONTINUE THE SHOW':'LET’S POP')+'</button><div class="note">No timer. Free retries. Big silly shoes.</div>');action('start',()=>{hide();toast(s.chargeUnlocked?'HOLD • RELEASE • POP!':'TAP THE FRUIT!')});}
