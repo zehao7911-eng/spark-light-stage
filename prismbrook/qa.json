@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-30",
+  "nativeCampaign": "All 12 bays completed through visible colour buttons at minimum par; 36 stars and 12 postcards verified in album. Bay 11 completed at 320x568; bay 12 at 844x390.",
+  "viewports": [
+    {
+      "width": 320,
+      "height": 568,
+      "page": [
+        320,
+        568
+      ],
+      "colourButton": [
+        57.18,
+        54
+      ],
+      "toolsMinimum": [
+        44,
+        44
+      ]
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "page": [
+        390,
+        844
+      ]
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "page": [
+        844,
+        390
+      ],
+      "colourButton": [
+        69.48,
+        54
+      ]
+    }
+  ],
+  "nativeChecks": [
+    "First Honey action changed 4/16 to 8/16 and displayed +4 pools",
+    "Free Undo returned first bay to 4/16 and zero moves",
+    "Sage and Lilac cosmetics selected after unlocking",
+    "Real Worker hint returned Honey; selected it, paused with ripple in flight, reloaded with identical visible 8/16, Honey and one move; resumed once",
+    "Pause screenshot pair byte-identical",
+    "Undo after hint then keyboard 2,3,4 finished first bay with one star and 560 points, retaining original best 660, 36 stars and 12 cards",
+    "Off-route bay 8 actions Rose then Mint left 14/34 in two moves; Worker hint correctly returned Honey from current state",
+    "Sound OFF and Gentle effects ON persisted after reload; default sound/effects restored afterwards",
+    "No local captured console warnings/errors"
+  ],
+  "limitations": [
+    "Phone-size layouts and native desktop Chromium controls tested. No physical Android/iOS handset was available.",
+    "No low-end device frame-rate guarantee.",
+    "Cosmetic particles and ambient animation phase restart after reload; logical state and pending ripple resume."
+  ]
+}

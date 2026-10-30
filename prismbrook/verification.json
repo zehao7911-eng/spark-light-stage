@@ -1,0 +1,182 @@
+{
+  "checks": 6220,
+  "firstRippleSeconds": 0.517,
+  "bays": [
+    {
+      "bay": 1,
+      "regions": 4,
+      "moves": 3,
+      "stars": 3,
+      "points": 660
+    },
+    {
+      "bay": 2,
+      "regions": 7,
+      "moves": 4,
+      "stars": 3,
+      "points": 840
+    },
+    {
+      "bay": 3,
+      "regions": 5,
+      "moves": 4,
+      "stars": 3,
+      "points": 840
+    },
+    {
+      "bay": 4,
+      "regions": 7,
+      "moves": 5,
+      "stars": 3,
+      "points": 800
+    },
+    {
+      "bay": 5,
+      "regions": 10,
+      "moves": 6,
+      "stars": 3,
+      "points": 1020
+    },
+    {
+      "bay": 6,
+      "regions": 11,
+      "moves": 5,
+      "stars": 3,
+      "points": 1020
+    },
+    {
+      "bay": 7,
+      "regions": 11,
+      "moves": 6,
+      "stars": 3,
+      "points": 1020
+    },
+    {
+      "bay": 8,
+      "regions": 8,
+      "moves": 6,
+      "stars": 3,
+      "points": 1020
+    },
+    {
+      "bay": 9,
+      "regions": 11,
+      "moves": 6,
+      "stars": 3,
+      "points": 1280
+    },
+    {
+      "bay": 10,
+      "regions": 13,
+      "moves": 7,
+      "stars": 3,
+      "points": 1280
+    },
+    {
+      "bay": 11,
+      "regions": 15,
+      "moves": 7,
+      "stars": 3,
+      "points": 1280
+    },
+    {
+      "bay": 12,
+      "regions": 14,
+      "moves": 7,
+      "stars": 3,
+      "points": 1280
+    }
+  ],
+  "routes": [
+    [
+      1,
+      2,
+      3
+    ],
+    [
+      1,
+      0,
+      2,
+      3
+    ],
+    [
+      1,
+      0,
+      2,
+      3
+    ],
+    [
+      2,
+      0,
+      1,
+      3,
+      4
+    ],
+    [
+      1,
+      3,
+      0,
+      2,
+      3,
+      4
+    ],
+    [
+      0,
+      2,
+      0,
+      1,
+      3
+    ],
+    [
+      4,
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      0,
+      1,
+      0,
+      2,
+      3,
+      4
+    ],
+    [
+      3,
+      1,
+      0,
+      1,
+      2,
+      3
+    ],
+    [
+      1,
+      2,
+      3,
+      0,
+      2,
+      3,
+      4
+    ],
+    [
+      0,
+      1,
+      2,
+      3,
+      0,
+      1,
+      4
+    ],
+    [
+      1,
+      0,
+      4,
+      1,
+      2,
+      0,
+      3
+    ]
+  ]
+}
