@@ -1,3 +1,4 @@
+import {imageActor,imageHost,loadImageArt} from './image-art.mjs?v=image-v2';
 import {SHOWS,starts} from './core.mjs';
 const INK='#332832',CREAM='#fff0ca';
 export const INKS={coral:'#b4484e',jade:'#247c74',violet:'#745283'};
@@ -9,7 +10,7 @@ function star(c,x,y,r,col){let p=[];for(let i=0;i<10;i++){let a=-Math.PI/2+i*Mat
 function eye(c,x,y,t,sc=1){c.save();c.translate(x,y);c.scale(sc,sc);if(Math.sin(t*.7)> .985){path(c,[['M',-8,0],['Q',0,7,8,0]],null,INK,3)}else{oval(c,0,0,8,13,CREAM,INK,1.5);oval(c,2,2,4,8,INK,null);path(c,[['M',1,-4],['L',6,-6],['L',6,0],['Z']],CREAM,null)}c.restore()}
 function face(c,y,t,scale=1){eye(c,-15*scale,y,t,scale);eye(c,15*scale,y,t,scale);oval(c,0,y+19*scale,6*scale,4*scale,INK,null);path(c,[['M',-17*scale,y+28*scale],['Q',0,y+43*scale,18*scale,y+27*scale]],null,INK,2.5)}
 function glove(c,x,y,rot=0){c.save();c.translate(x,y);c.rotate(rot);path(c,[['M',-9,7],['Q',-15,0,-9,-3],['Q',-14,-14,-8,-15],['L',-3,-6],['Q',-8,-23,-1,-23],['L',4,-8],['Q',2,-25,9,-21],['L',11,-7],['Q',18,-17,21,-11],['L',17,5],['Q',11,17,-2,15],['Z']],CREAM,INK,2.5);line(c,[[-3,0],[0,7]],'#b09a80',1);line(c,[[5,-2],[7,6]],'#b09a80',1);c.restore()}
-export function actor(c,kind,x,y,s=1,t=0,dance=true){c.save();c.translate(x,y);let b=dance?Math.sin(t*4)*3:0;c.rotate(dance?Math.sin(t*2)*.045:0);c.scale(s*(1+(dance?Math.sin(t*4)*.018:0)),s);c.lineCap='round';c.lineJoin='round';
+export function actor(c,kind,x,y,s=1,t=0,dance=true){if(imageActor(c,kind,x,y,s,t,dance))return;c.save();c.translate(x,y);let b=dance?Math.sin(t*4)*3:0;c.rotate(dance?Math.sin(t*2)*.045:0);c.scale(s*(1+(dance?Math.sin(t*4)*.018:0)),s);c.lineCap='round';c.lineJoin='round';
  // rubber-hose legs, oversized two-tone shoes and swinging glove hands
  for(let side of [-1,1]){let k=dance?Math.sin(t*4+side)*7:0;path(c,[['M',side*24,42],['C',side*30,58,side*(38+k*.3),65,side*(34+k),80]],null,INK,7);oval(c,side*(36+k),83,20,8,INK,null);oval(c,side*(36+k)+4,81,11,3,'#706171',null);path(c,[['M',side*48,-2],['C',side*82,9+b,side*75,-30+b,side*87,-28+b]],null,INK,6);glove(c,side*88,-32+b,side*.28)}
  c.translate(0,b);
@@ -40,7 +41,9 @@ function scenery(scene){let ca=document.createElement('canvas');ca.width=720;ca.
  text(c,['THE LITTLE BIJOU','PIER PICTURE PALACE','THE MIDNIGHT CLUB'][scene],180,23,8,'#f4dab1');grain(c);return ca;
 }
 export class Artist{
- constructor(canvas){this.canvas=canvas;this.c=canvas.getContext('2d',{alpha:false});this.scenes=[0,1,2].map(scenery);this.icons=SHOWS.map(g=>{let c=document.createElement('canvas');c.width=240;c.height=240;actor(c.getContext('2d'),g.kind,120,100,.9,0,false);return c.toDataURL()});this.fx=[];this.t=0;this.time=0;this.gentle=false;this.hit=null;this.pen=null;this.ink='coral'}
+ constructor(canvas){this.canvas=canvas;this.c=canvas.getContext('2d',{alpha:false});this.scenes=[0,1,2].map(scenery);this.icons=this.makeIcons();this.fx=[];this.t=0;this.time=0;this.gentle=false;this.hit=null;this.pen=null;this.ink='coral';this.artErrors=[];this.ready=this.loadArt()}
+ makeIcons(){return SHOWS.map(g=>{let ca=document.createElement('canvas');ca.width=300;ca.height=300;actor(ca.getContext('2d'),g.kind,150,140,.95,0,false);return ca.toDataURL()})}
+ async loadArt(){try{let result=await loadImageArt();this.artErrors=result.errors;result.backgrounds.forEach((ca,i)=>{if(ca)this.scenes[i]=ca});this.icons=this.makeIcons();this.canvas.dataset.art=result.spritesReady?'image-v2':'fallback';this.canvas.dataset.scenes=result.backgrounds.filter(Boolean).length;return result}catch(e){this.artErrors=[e.message];this.canvas.dataset.art='fallback';return {errors:this.artErrors}}}
  resize(w,h){let d=Math.min(devicePixelRatio||1,1.5);this.canvas.width=Math.round(w*d);this.canvas.height=Math.round(h*d);this.c.setTransform(this.canvas.width/360,0,0,this.canvas.height/440,0,0)}
  burst(x,y,kind='ink'){for(let i=0;i<12;i++)this.fx.push({x,y,vx:Math.cos(i*2.4)*20*(i%3+1),vy:Math.sin(i*2.4)*30-20,life:0,max:.6,kind});this.fx=this.fx.slice(-72);this.hit={x,y,age:0}}
  update(dt){this.t+=dt;this.time+=dt;for(let p of this.fx){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=90*dt;p.life+=dt}this.fx=this.fx.filter(p=>p.life<p.max);if(this.hit)this.hit.age+=dt}
@@ -54,7 +57,8 @@ export class Artist{
  if(this.pen&&r.path.length){let a=g.points[r.path.at(-1)];line(c,[a,this.pen],INKS[p.ink]+'99',3)}
  }
  // Quill the inkwell host, taking a bow beside the miniature earned troupe.
- c.save();c.translate(42,411);let bop=p.gentle?0:Math.sin(t*3)*2;c.rotate(Math.sin(t*2)*.025);path(c,[['M',-7,4],['Q',-18,8,-15,18],['M',7,4],['Q',15,10,20,16]],null,INK,4);oval(c,-17,18,10,4,INK,null);oval(c,22,16,10,4,INK,null);path(c,[['M',-19,-20+bop],['L',17,-20+bop],['L',21,5],['Q',0,14,-21,5],['Z']],'#4c7177');oval(c,-1,-23+bop,22,7,'#354853');oval(c,-1,-26+bop,17,5,'#78918b');eye(c,-7,-9+bop,t,.4);eye(c,7,-9+bop,t,.4);path(c,[['M',-6,2],['Q',0,7,7,1]],null,CREAM,1.5);path(c,[['M',16,-7],['Q',27,-3,32,-22]],null,INK,3);line(c,[[32,-22],[43,-43]],'#be8a50',4);path(c,[['M',41,-39],['Q',40,-53,53,-57],['Q',54,-44,45,-39]],INK,INK,1);c.restore();
+ if(!imageHost(c,t,p.gentle,r.progress)){c.save();c.translate(42,411);let bop=p.gentle?0:Math.sin(t*3)*2;c.rotate(Math.sin(t*2)*.025);path(c,[['M',-7,4],['Q',-18,8,-15,18],['M',7,4],['Q',15,10,20,16]],null,INK,4);oval(c,-17,18,10,4,INK,null);oval(c,22,16,10,4,INK,null);path(c,[['M',-19,-20+bop],['L',17,-20+bop],['L',21,5],['Q',0,14,-21,5],['Z']],'#4c7177');oval(c,-1,-23+bop,22,7,'#354853');oval(c,-1,-26+bop,17,5,'#78918b');eye(c,-7,-9+bop,t,.4);eye(c,7,-9+bop,t,.4);path(c,[['M',-6,2],['Q',0,7,7,1]],null,CREAM,1.5);path(c,[['M',16,-7],['Q',27,-3,32,-22]],null,INK,3);line(c,[[32,-22],[43,-43]],'#be8a50',4);path(c,[['M',41,-39],['Q',40,-53,53,-57],['Q',54,-44,45,-39]],INK,INK,1);c.restore();}
+
  let collected=p.records.map((v,i)=>v.stars?i:-1).filter(i=>i>=0).slice(-5);for(let i=0;i<collected.length;i++){actor(c,SHOWS[collected[i]].kind,110+i*48,414,.17,t+i,true)}if(!collected.length){text(c,'A tiny cast. A grand entrance.',219,416,10,'#f0d5ae','italic')}
  for(let f of this.fx){c.globalAlpha=1-f.life/f.max;oval(c,f.x,f.y,2+(f.vx%2),2+(f.vx%2),f.kind==='gold'?'#d19c4d':INKS[p.ink],null)}c.globalAlpha=1;
  if(this.hit&&this.hit.age<.3&&!p.gentle){let q=this.hit.age/.3;for(let i=0;i<6;i++){let a=i*Math.PI/3;line(c,[[this.hit.x+Math.cos(a)*(20+q*12),this.hit.y+Math.sin(a)*(20+q*12)],[this.hit.x+Math.cos(a)*(30+q*15),this.hit.y+Math.sin(a)*(30+q*15)]],INKS[p.ink]+Math.round((1-q)*200).toString(16).padStart(2,'0'),2)}}
