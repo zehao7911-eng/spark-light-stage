@@ -63,7 +63,7 @@ function draw(){art.draw(s,p,aim,paused)}
 let lastDraw=0;
 function frame(now){requestAnimationFrame(frame);if(!last){last=now;return;}let dt=Math.min(.05,(now-last)/1000);last=now;
  if(!paused){acc+=dt;while(acc>=1/60){M.update(s,1/60);acc-=1/60;}
-  for(const e of s.events.splice(0)){art.consume(e);audio.hit(e);if(e.type==='spark')toast('FIZZ CHAIN!');if(e.type==='refill')toast('+1 STOMP!');if(e.type==='win'){rewardBefore=p.cleared;M.award(p,s);save();resultTime=.9;toast('BOTTLED!')}if(e.type==='lost')resultTime=.45;}
+  for(const e of s.events.splice(0)){art.consume(e);audio.hit(e);if(e.type==='spark')toast('FIZZ CHAIN!');if(e.type==='refill')toast('+'+(e.count||1)+' STOMP'+(e.count>1?'S':'')+'!');if(e.type==='win'){rewardBefore=p.cleared;M.award(p,s);save();resultTime=.9;toast('BOTTLED!')}if(e.type==='lost')resultTime=.45;}
   art.update(dt);audio.update(dt);
   if(pressed&&aim)aim.power=Math.min(1,(now-pressed.start)/650);
   if(toastLife>0){toastLife-=dt;if(toastLife<=0)$('callout').classList.remove('on');}

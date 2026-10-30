@@ -10,7 +10,7 @@ for(let run=0;run<3;run++){
   let s=M.create(level,p);let moves=[];
   for(let i=0;i<40&&s.phase==='play';i++){
    let b=best(s);ok(b,'a legal input exists');ok(M.stomp(s,b.x,b.y,b.power,b.mode),'stomp accepted');settle(s);moves.push({x:b.x,y:b.y,power:b.power,mode:b.mode});
-   ok(s.fruits.every(f=>Number.isFinite(f.x+f.y+f.hp)&&f.hp>=0),'finite fruit');ok(s.stamps>=0,'no negative stomps');
+   ok(s.fruits.every(f=>Number.isFinite(f.x+f.y+f.hp)&&f.hp>=0),'finite fruit');ok(s.stamps>=0,'no negative stomps');if(s.refillUnlocked){ok(s.refills===Math.floor(s.juice/12),'every refill threshold counted');ok(s.stamps+s.used===s.initial+s.refills,'refill resource conservation');}
    // Save/reload through real serialization, preserving frozen damage and queue state.
    if(s.phase==='play'&&run===1){let r=M.restore(JSON.parse(JSON.stringify(s)),p);ok(r,'valid restore');ok(r.juice===s.juice,'restored juice');s=r;}
   }

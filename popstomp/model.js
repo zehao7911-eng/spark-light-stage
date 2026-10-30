@@ -71,7 +71,7 @@ function update(s,dt){
   event(s,'pop',{x:f.x,y:f.y,kind:f.type,cap:f.cap,spark:f.spark,chain:s.chain});
   if(f.spark){event(s,'spark',{x:f.x,y:f.y});for(const other of s.fruits)if(!other.dead&&other.id!==f.id&&Math.hypot(other.x-f.x,other.y-f.y)<92)hit(s,other,1,.12+Math.hypot(other.x-f.x,other.y-f.y)/850);}
  }
- if(s.refillUnlocked&&Math.floor(s.juice/12)>s.refills){s.refills=Math.floor(s.juice/12);s.stamps++;event(s,'refill');}
+ if(s.refillUnlocked&&Math.floor(s.juice/12)>s.refills){const count=Math.floor(s.juice/12)-s.refills;s.refills+=count;s.stamps+=count;event(s,'refill',{count});}
  if(s.wait===0&&s.queue.length===0){
   if(s.fruits.every(f=>f.dead)){s.phase='won';event(s,'win');}
   else if(s.stamps<=0){s.phase='lost';event(s,'lost');}
