@@ -1,0 +1,19 @@
+{
+  "ART-DIRECTION.md": "3305f48657ef97750370648b030138f41ba761d2de8c2d21b1c294c2a5f28646",
+  "art.js": "6b7b96191250d49ecba04c7ea366fcd5f7522bd20a53344a9e3a37183c3b9d88",
+  "build.py": "4e1b6d845c84665b6103cb5ed3cae9cfda0d9cdfcff06dabc6556b367eb2e3e7",
+  "DUST-AND-THUNDER-OFFLINE.html": "f697d0965adb92594e2369eab82c921efb732234858c0db920b9ad22a8a70677",
+  "game.js": "6d9fe37062282369e161366dea92c175fbef108f64577bad4cbdec5f08254218",
+  "icon.svg": "5c3edf83cba9c53024ef3420f342443db0a87856f283c462b3761befaf0be3f4",
+  "index-source.html": "6bbbdfacd6ab6d0d598135ae563416674db6d3794eb254863fff7a61c2becee9",
+  "index.html": "f697d0965adb92594e2369eab82c921efb732234858c0db920b9ad22a8a70677",
+  "LICENSE.txt": "56db9752cfebdb9582e98b852b8e89e883b2f2adad4ad4571e27ee03bcddc200",
+  "model.js": "28fdb9ec35764feb774193b5001b42304d608836f665e7dc83478442501dec0b",
+  "qa-browser-report.json": "6633303a3af723d5c421afdeb124f013e77d1d8e982b781c3c6dd6791ea2ec9b",
+  "qa-model-report.json": "af7688c38052b4bd0ec8c49363d4934b312773d8ae06e48b25a259ed1cc934b5",
+  "README.md": "28314c1cfc82ddae5ee076295e88efd96aa604e0976196a900744add9c4f0c1f",
+  "style.css": "4b7a54ffa8cca86acac91ce59fab10019d40724e054a3d8b0dd16d1733a2f2fb",
+  "test-model.cjs": "275187ace4092605dfeb0f9356b1e4445c09a8c04dd9677dcfe0f0b7c8869e52",
+  "vendor/THREE-LICENSE.txt": "df2a91696186fe58c92518a25d48bc59c8ee2edc7cac9ca6d19a5a0d599a2a05",
+  "vendor/three.min.js": "f34446bf875b5fb0dcd93819ffe1d9e182d46634ee855f5d904c6c4ac7cdbc95"
+}

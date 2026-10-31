@@ -1,0 +1,77 @@
+{
+  "nativeCompletedCampaignMap": "01 · SUNWASHED\n✦✦✦\n02 · HARBOUR\n✦✦✦\n03 · MARKET\n✦✦✦\n04 · ROSEWATER\n✦✦✦\n05 · OLD TOWN\n✦✦✦\n06 · GOLDEN MILE\n✦✦✦",
+  "observedResultScreens": [
+    {
+      "district": 2,
+      "result": "DISTRICT 03 UNLOCKED\nWhat a beautiful\nmess.\n✦✦✦\n2,190\nSCORE\n+135\nSCRAP\n×24\nBEST CHAIN\n\nPerfect fieldwork. Fancy a louder tank?\n\nNEXT DISTRICT\nREPLAY\nMAP"
+    },
+    {
+      "district": 3,
+      "result": "DISTRICT 04 UNLOCKED\nWhat a beautiful\nmess.\n✦✦✦\n2,805\nSCORE\n+147\nSCRAP\n×27\nBEST CHAIN\n\nPerfect fieldwork. Fancy a louder tank?\n\nNEXT DISTRICT\nREPLAY\nMAP"
+    },
+    {
+      "district": 4,
+      "result": "DISTRICT 05 UNLOCKED\nWhat a beautiful\nmess.\n✦✦✦\n2,905\nSCORE\n+154\nSCRAP\n×28\nBEST CHAIN\n\nPerfect fieldwork. Fancy a louder tank?\n\nNEXT DISTRICT\nREPLAY\nMAP"
+    },
+    {
+      "district": 5,
+      "result": "DISTRICT 06 UNLOCKED\nWhat a beautiful\nmess.\n✦✦✦\n2,905\nSCORE\n+157\nSCRAP\n×28\nBEST CHAIN\n\nPerfect fieldwork. Fancy a louder tank?\n\nNEXT DISTRICT\nREPLAY\nMAP"
+    },
+    {
+      "district": 6,
+      "result": "ALL SIX DISTRICTS SECURED\nThe boulevard\nis yours.\n✦✦✦\n2,905\nSCORE\n+160\nSCRAP\n×28\nBEST CHAIN\n\nPerfect fieldwork. Fancy a louder tank?\n\nDISTRICT MAP\nREPLAY\nMAP"
+    }
+  ],
+  "firstShotChain": {
+    "kills": 3,
+    "score": 110,
+    "scrap": 11
+  },
+  "manualTargetTapKills": 1,
+  "upgradesPurchased": [
+    "power",
+    "reload",
+    "splash",
+    "twin"
+  ],
+  "pausePixelExact": true,
+  "saveBefore": {
+    "coins": "605",
+    "kills": "2",
+    "wave": "BLOCK 1 / 5"
+  },
+  "saveAfter": {
+    "coins": "605",
+    "kills": "2",
+    "wave": "BLOCK 1 / 5"
+  },
+  "layout320": {
+    "bad": [],
+    "scroll": [
+      320,
+      568
+    ],
+    "viewport": [
+      320,
+      568
+    ]
+  },
+  "landscape": {
+    "bad": [],
+    "scroll": [
+      844,
+      390
+    ],
+    "viewport": [
+      844,
+      390
+    ]
+  },
+  "portrait": [
+    390,
+    844
+  ],
+  "consoleErrors": [],
+  "physicalHandsetTested": false,
+  "notes": "Native campaign uses ordinary AUTO FIRE, target taps and upgrade buttons; no progress injection or hidden browser-state access."
+}

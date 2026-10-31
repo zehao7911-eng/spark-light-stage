@@ -1,0 +1,55 @@
+{
+  "passed": true,
+  "checks": 87,
+  "baseRuns": [
+    {
+      "district": 1,
+      "seconds": 21.5,
+      "kills": 25,
+      "repairs": 0,
+      "stars": 3,
+      "score": 2190
+    },
+    {
+      "district": 2,
+      "seconds": 24.3,
+      "kills": 25,
+      "repairs": 0,
+      "stars": 3,
+      "score": 2190
+    },
+    {
+      "district": 3,
+      "seconds": 40,
+      "kills": 27,
+      "repairs": 1,
+      "stars": 3,
+      "score": 2430
+    },
+    {
+      "district": 4,
+      "seconds": 46.3,
+      "kills": 28,
+      "repairs": 1,
+      "stars": 3,
+      "score": 2530
+    },
+    {
+      "district": 5,
+      "seconds": 50.4,
+      "kills": 28,
+      "repairs": 1,
+      "stars": 3,
+      "score": 2530
+    },
+    {
+      "district": 6,
+      "seconds": 54.5,
+      "kills": 28,
+      "repairs": 2,
+      "stars": 2,
+      "score": 2530
+    }
+  ],
+  "semantics": "No-input repair recovery, six ordinary auto-aim runs, alternate target order, exact save continuation, chain rewards and real upgrade rules."
+}
