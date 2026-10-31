@@ -1,0 +1,133 @@
+{
+  "mode": "Built-in image_gen; original PNGs retained unchanged; smooth WebP resizing/encoding, measured atlas rectangles; alpha preserved",
+  "assets": [
+    {
+      "file": "white.webp",
+      "width": 720,
+      "height": 960,
+      "bytes": 91326,
+      "hasAlpha": false
+    },
+    {
+      "file": "forge.webp",
+      "width": 720,
+      "height": 960,
+      "bytes": 158012,
+      "hasAlpha": false
+    },
+    {
+      "file": "orbit.webp",
+      "width": 720,
+      "height": 960,
+      "bytes": 83514,
+      "hasAlpha": false
+    },
+    {
+      "file": "targets.webp",
+      "width": 1774,
+      "height": 887,
+      "bytes": 543058,
+      "hasAlpha": true
+    },
+    {
+      "file": "cores.webp",
+      "width": 1266,
+      "height": 1243,
+      "bytes": 499402,
+      "hasAlpha": true
+    },
+    {
+      "file": "cover.webp",
+      "width": 960,
+      "height": 1280,
+      "bytes": 343246,
+      "hasAlpha": false
+    },
+    {
+      "file": "icon.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 27106,
+      "hasAlpha": false
+    }
+  ],
+  "boxes": {
+    "targets": [
+      {
+        "x": 126,
+        "y": 18,
+        "w": 264,
+        "h": 413
+      },
+      {
+        "x": 546,
+        "y": 17,
+        "w": 264,
+        "h": 414
+      },
+      {
+        "x": 964,
+        "y": 17,
+        "w": 264,
+        "h": 414
+      },
+      {
+        "x": 1383,
+        "y": 17,
+        "w": 264,
+        "h": 414
+      },
+      {
+        "x": 93,
+        "y": 448,
+        "w": 328,
+        "h": 415
+      },
+      {
+        "x": 504,
+        "y": 448,
+        "w": 339,
+        "h": 415
+      },
+      {
+        "x": 932,
+        "y": 448,
+        "w": 337,
+        "h": 415
+      },
+      {
+        "x": 1359,
+        "y": 448,
+        "w": 325,
+        "h": 415
+      }
+    ],
+    "cores": [
+      {
+        "x": 32,
+        "y": 31,
+        "w": 570,
+        "h": 556
+      },
+      {
+        "x": 665,
+        "y": 31,
+        "w": 570,
+        "h": 556
+      },
+      {
+        "x": 32,
+        "y": 653,
+        "w": 570,
+        "h": 555
+      },
+      {
+        "x": 665,
+        "y": 653,
+        "w": 570,
+        "h": 555
+      }
+    ]
+  },
+  "totalBytes": 1745664
+}
