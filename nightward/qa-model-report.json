@@ -1,0 +1,66 @@
+{
+  "passed": true,
+  "checks": 915,
+  "campaigns": [
+    {
+      "shift": 1,
+      "stars": 3,
+      "catches": 0,
+      "seconds": 7.999999999999977,
+      "actions": 6
+    },
+    {
+      "shift": 2,
+      "stars": 3,
+      "catches": 0,
+      "seconds": 15.666666666667025,
+      "actions": 7
+    },
+    {
+      "shift": 3,
+      "stars": 3,
+      "catches": 0,
+      "seconds": 14.266666666666955,
+      "actions": 7
+    },
+    {
+      "shift": 4,
+      "stars": 3,
+      "catches": 0,
+      "seconds": 17.633333333333614,
+      "actions": 8
+    },
+    {
+      "shift": 5,
+      "stars": 3,
+      "catches": 0,
+      "seconds": 20.933333333333426,
+      "actions": 9
+    },
+    {
+      "shift": 6,
+      "stars": 3,
+      "catches": 0,
+      "seconds": 22.816666666666652,
+      "actions": 10
+    },
+    {
+      "shift": 7,
+      "stars": 3,
+      "catches": 0,
+      "seconds": 19.78333333333349,
+      "actions": 8
+    },
+    {
+      "shift": 8,
+      "stars": 3,
+      "catches": 0,
+      "seconds": 23.283333333333292,
+      "actions": 11
+    }
+  ],
+  "workRelease": true,
+  "carrySave": true,
+  "wallPaths": true,
+  "ordinaryActionSolverOnly": true
+}
