@@ -1,0 +1,3 @@
+BLOOM BARRAGE — THIRD-PARTY ART
+
+Selected publicly served artwork originates from Crush Plant Battle Undead on Rezona (LMfXptZecQ/v9), reused at the project owner’s explicit request to use reference artwork. See ART-SOURCES.md and assets/PROVENANCE.json for source URLs and hashes. All third-party rights remain with their respective owners. Those images, compressed/embedded versions, cover and icon are excluded from the original-code MIT license. No reference executable game code, audio, title logo or trademark branding is bundled.
