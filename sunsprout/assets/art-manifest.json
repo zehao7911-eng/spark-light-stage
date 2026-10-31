@@ -1,0 +1,169 @@
+{
+  "mode": "Built-in image_gen; unchanged PNG originals retained; WebP delivery encoding and nearest resizing only; atlas crop boxes measured from original alpha",
+  "assets": [
+    {
+      "file": "day.webp",
+      "width": 720,
+      "height": 960,
+      "bytes": 291786,
+      "hasAlpha": false
+    },
+    {
+      "file": "dusk.webp",
+      "width": 720,
+      "height": 960,
+      "bytes": 207940,
+      "hasAlpha": false
+    },
+    {
+      "file": "night.webp",
+      "width": 720,
+      "height": 960,
+      "bytes": 218582,
+      "hasAlpha": false
+    },
+    {
+      "file": "textures.webp",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 395838,
+      "hasAlpha": true
+    },
+    {
+      "file": "blooms.webp",
+      "width": 1448,
+      "height": 1086,
+      "bytes": 802246,
+      "hasAlpha": true
+    },
+    {
+      "file": "cover.webp",
+      "width": 960,
+      "height": 1280,
+      "bytes": 383488,
+      "hasAlpha": false
+    },
+    {
+      "file": "icon.webp",
+      "width": 192,
+      "height": 192,
+      "bytes": 19396,
+      "hasAlpha": false
+    }
+  ],
+  "boxes": {
+    "textures": [
+      {
+        "x": 87,
+        "y": 98,
+        "w": 385,
+        "h": 378
+      },
+      {
+        "x": 562,
+        "y": 98,
+        "w": 385,
+        "h": 379
+      },
+      {
+        "x": 91,
+        "y": 558,
+        "w": 384,
+        "h": 377
+      },
+      {
+        "x": 564,
+        "y": 558,
+        "w": 384,
+        "h": 377
+      },
+      {
+        "x": 83,
+        "y": 1011,
+        "w": 403,
+        "h": 393
+      },
+      {
+        "x": 558,
+        "y": 1008,
+        "w": 395,
+        "h": 390
+      }
+    ],
+    "blooms": [
+      {
+        "x": 30,
+        "y": 17,
+        "w": 314,
+        "h": 341
+      },
+      {
+        "x": 433,
+        "y": 17,
+        "w": 247,
+        "h": 341
+      },
+      {
+        "x": 746,
+        "y": 9,
+        "w": 293,
+        "h": 349
+      },
+      {
+        "x": 1119,
+        "y": 17,
+        "w": 299,
+        "h": 341
+      },
+      {
+        "x": 50,
+        "y": 363,
+        "w": 305,
+        "h": 341
+      },
+      {
+        "x": 405,
+        "y": 363,
+        "w": 265,
+        "h": 341
+      },
+      {
+        "x": 731,
+        "y": 374,
+        "w": 351,
+        "h": 330
+      },
+      {
+        "x": 1114,
+        "y": 372,
+        "w": 322,
+        "h": 332
+      },
+      {
+        "x": 20,
+        "y": 728,
+        "w": 347,
+        "h": 342
+      },
+      {
+        "x": 385,
+        "y": 716,
+        "w": 327,
+        "h": 355
+      },
+      {
+        "x": 734,
+        "y": 705,
+        "w": 336,
+        "h": 368
+      },
+      {
+        "x": 1109,
+        "y": 717,
+        "w": 322,
+        "h": 349
+      }
+    ]
+  },
+  "totalBytes": 2319276
+}
