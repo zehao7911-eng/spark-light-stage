@@ -1,0 +1,3 @@
+# Artwork production
+
+Generated using the built-in image tool on 2026-10-31. Every asset was inspected before use. The environment was prompted as a portrait seaside fairground tug-of-war court with no characters or interface, in a consistent hand-painted 2.5D mobile game style. Character prompts requested isolated transparent full-body Doge, confused cat, sneaker shark, cappuccino dancer, banana cat and wooden internet-meme characters with a shared cartoon palette, bold outlines and readable silhouettes. The dog and cat effort frames were edits of their respective character images, preserving pose and changing their expressions. Original PNGs are retained in the adjacent `meme-tug-club-art-sources` folder; the game uses resized WebP versions.
