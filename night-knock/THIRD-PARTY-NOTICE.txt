@@ -1,0 +1,3 @@
+NIGHT KNOCK — THIRD-PARTY ART NOTICE
+
+Selected images originate from Peephole on Rezona (xXCcKjnP/v21). Reused at the project owner’s explicit request to use reference artwork. Refer to ART-SOURCES.md and assets/PROVENANCE.json for source URLs and hashes. These third-party images, their compressed/embedded versions, the cover and icon are excluded from the original-code MIT license. All third-party rights remain with their respective owners. No reference executable source code, music, sound recording, logo or title mark is bundled.

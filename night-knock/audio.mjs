@@ -1,0 +1,9 @@
+export class AudioDesk{
+ constructor(){this.on=true;this.context=null;this.active=false}
+ async start(){if(!this.on)return;try{if(!this.context){let C=window.AudioContext||window.webkitAudioContext;if(!C)return;this.context=new C();let ctx=this.context;this.master=ctx.createGain();this.master.gain.value=.18;this.master.connect(ctx.destination);let osc=ctx.createOscillator(),g=ctx.createGain();osc.frequency.value=52;g.gain.value=.055;osc.connect(g).connect(this.master);osc.start();let buffer=ctx.createBuffer(1,ctx.sampleRate*2,ctx.sampleRate),b=buffer.getChannelData(0);let n=0;for(let i=0;i<b.length;i++){n=(n+(Math.random()*2-1)*.02)/1.02;b[i]=n*3}let noise=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();noise.buffer=buffer;noise.loop=true;filter.type='lowpass';filter.frequency.value=800;gain.gain.value=.11;noise.connect(filter).connect(gain).connect(this.master);noise.start()};await this.context.resume();this.active=true}catch{}}
+ stop(){this.active=false;this.context?.suspend().catch(()=>{})}
+ tone(freq,duration=.12,type='sine',vol=.18,delay=0,end=freq){if(!this.on||!this.active||!this.context)return;let ctx=this.context,t=ctx.currentTime+delay,o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.setValueAtTime(freq,t);o.frequency.exponentialRampToValueAtTime(Math.max(20,end),t+duration);g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(vol,t+.008);g.gain.exponentialRampToValueAtTime(.001,t+duration);o.connect(g).connect(this.master);o.start(t);o.stop(t+duration+.05)}
+ knock(){for(let i=0;i<3;i++)this.tone(130,.085,'triangle',.8,i*.15,50)}
+ verdict(correct,admit){if(correct){this.tone(admit?330:160,.18,'triangle',.4,0,admit?440:70);this.tone(660,.16,'sine',.18,.12)}else{this.tone(95,.4,'sawtooth',.2,0,43);this.tone(60,.4,'sine',.4,.12)}}
+ reward(){[330,440,550,660].forEach((f,i)=>this.tone(f,.25,'triangle',.25,i*.09))}
+}

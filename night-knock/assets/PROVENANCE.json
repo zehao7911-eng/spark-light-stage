@@ -1,0 +1,181 @@
+{
+  "reference": "https://rezona.ai/game/pgcserver/pv/xXCcKjnP/v21/dist/index.html",
+  "assets": [
+    {
+      "key": "city_night",
+      "url": "https://rezona.ai/game/pgcserver/pv/xXCcKjnP/v21/dist/assets/city_night-_JgXfJZz.jpg",
+      "originalSha256": "e6c3038e17a2c53528bbe9a9ec0b2e94909c44ced8b4ca5ff226aa7e782bb213",
+      "sourceSize": [
+        1024,
+        765
+      ],
+      "runtime": "city_night.webp",
+      "runtimeSha256": "b7990ae28176175e224d2af41fc09ba79125fda02113ca2fcb82ee9e966ab840"
+    },
+    {
+      "key": "portrait_denny",
+      "url": "https://rezona.ai/game/pgcserver/pv/xXCcKjnP/v21/dist/assets/portrait_denny-DHsU_bUe.jpg",
+      "originalSha256": "3e718a0bf6b6f891928e762d7d5b4b5ea428163bb9b29d9f4b9fc7eec1e29681",
+      "sourceSize": [
+        672,
+        900
+      ],
+      "runtime": "portrait_denny.webp",
+      "runtimeSha256": "4bbcaef709585acdc6773e7646b99859dae592e7516c82f83eb179d778844fbb"
+    },
+    {
+      "key": "portrait_gruber",
+      "url": "https://rezona.ai/game/pgcserver/pv/xXCcKjnP/v21/dist/assets/portrait_gruber-CBElKpvH.jpg",
+      "originalSha256": "6865de99600bd274f8aaab42f86282b7890931ce7b7ca90f34d6b4065d23b617",
+      "sourceSize": [
+        672,
+        900
+      ],
+      "runtime": "portrait_gruber.webp",
+      "runtimeSha256": "97a3eb9d0ac09f9125021bb0e2ad556d52218cf2f4d02701fc13693339071f37"
+    },
+    {
+      "key": "portrait_ilsa",
+      "url": "https://rezona.ai/game/pgcserver/pv/xXCcKjnP/v21/dist/assets/portrait_ilsa-z3-ipiIe.jpg",
+      "originalSha256": "fe5915f1a5d530829459d2bdffcc664a80b3b4600e5cc21e5565217d3f0d58ad",
+      "sourceSize": [
+        672,
+        900
+      ],
+      "runtime": "portrait_ilsa.webp",
+      "runtimeSha256": "4565b35a9664619fac2e19ed4eca79ff4f579d569a7baba1a0a154d246781f64"
+    },
+    {
+      "key": "portrait_mara",
+      "url": "https://rezona.ai/game/pgcserver/pv/xXCcKjnP/v21/dist/assets/portrait_mara-5kkPiUf8.jpg",
+      "originalSha256": "e9f79f2a3799e9962237bd3a8ac931c29c2371cf8a261e8e573be040d883a7e3",
+      "sourceSize": [
+        672,
+        900
+      ],
+      "runtime": "portrait_mara.webp",
+      "runtimeSha256": "a08ceaa82d7fdb186ce5c2f6000b123bbffd9bdc380e3d5e3654786e9d098633"
+    },
+    {
+      "key": "portrait_petra",
+      "url": "https://rezona.ai/game/pgcserver/pv/xXCcKjnP/v21/dist/assets/portrait_petra-CLRphZ3j.jpg",
+      "originalSha256": "524a3ab20798cf44acd65b0989821ae150086c63eb354f89a3e65e8d69982e49",
+      "sourceSize": [
+        672,
+        900
+      ],
+      "runtime": "portrait_petra.webp",
+      "runtimeSha256": "94b9001f2acddccc501794616b29ad1ec59aeab8a4613ecd53385fb9cb820c10"
+    },
+    {
+      "key": "portrait_sasha",
+      "url": "https://rezona.ai/game/pgcserver/pv/xXCcKjnP/v21/dist/assets/portrait_sasha-pONW0lbJ.jpg",
+      "originalSha256": "6ee91834dac38660e955380fdad984c87353592cf245bb3ffc788f6cebe4d70d",
+      "sourceSize": [
+        672,
+        900
+      ],
+      "runtime": "portrait_sasha.webp",
+      "runtimeSha256": "598a97db6e715589a411037932e6248448ae5df7c9bb0583673655e14bc4f67d"
+    },
+    {
+      "key": "portrait_tomas",
+      "url": "https://rezona.ai/game/pgcserver/pv/xXCcKjnP/v21/dist/assets/portrait_tomas-tHyrd7gn.jpg",
+      "originalSha256": "b769d1c61cfc14873b0b21cac0caba7d2b9fc4232c9012af6407bd972aeab13a",
+      "sourceSize": [
+        672,
+        900
+      ],
+      "runtime": "portrait_tomas.webp",
+      "runtimeSha256": "5b5345088727ebc2df085cc888fb03be920aba6f615c3709ffe99142158b6d96"
+    },
+    {
+      "key": "portrait_viktor",
+      "url": "https://rezona.ai/game/pgcserver/pv/xXCcKjnP/v21/dist/assets/portrait_viktor-C4mzaUBY.jpg",
+      "originalSha256": "102b45c96cccebf034beacc03381e29c6e9cff02c4157b68df90b9b5739f26ed",
+      "sourceSize": [
+        672,
+        900
+      ],
+      "runtime": "portrait_viktor.webp",
+      "runtimeSha256": "039e8224526bfac1229c3908fc2801bdc16c0586d59270fba5a6096623adf3c1"
+    },
+    {
+      "key": "tex_door",
+      "url": "https://rezona.ai/game/pgcserver/pv/xXCcKjnP/v21/dist/assets/tex_door-BBpdiXSn.jpg",
+      "originalSha256": "26c226586a58d318525a7af97b76d2de317e12555b16a6c4383b58d0efd44281",
+      "sourceSize": [
+        572,
+        1024
+      ],
+      "runtime": "tex_door.webp",
+      "runtimeSha256": "e71a670759616eb02f0cece0d7b716e5447b3e7c07d1740ac16c88e775ec579e"
+    },
+    {
+      "key": "tex_wallpaper",
+      "url": "https://rezona.ai/game/pgcserver/pv/xXCcKjnP/v21/dist/assets/tex_wallpaper-Cv46FeK_.jpg",
+      "originalSha256": "1ccb3a8064bc9050b23f6fc9058f636c2089f0f857597c3276053490e5bbb02a",
+      "sourceSize": [
+        768,
+        768
+      ],
+      "runtime": "tex_wallpaper.webp",
+      "runtimeSha256": "0f57b89caa481248fb978a3bc8b794663d91ccd279780539d1f32f6225c1abff"
+    },
+    {
+      "key": "title_key_art",
+      "url": "https://rezona.ai/game/pgcserver/pv/xXCcKjnP/v21/dist/assets/title_key_art-xl7KQQBs.jpg",
+      "originalSha256": "4375fa003fa2cede120a6c08f98dc615aaf9d9f2f91cbee053e4f1a83d1d7b72",
+      "sourceSize": [
+        1376,
+        768
+      ],
+      "runtime": "title_key_art.webp",
+      "runtimeSha256": "118578a0532e58cf5011541d979af080d3e66730c12915d0c1e523fe4daece19"
+    },
+    {
+      "key": "true_ilsa",
+      "url": "https://rezona.ai/game/pgcserver/pv/xXCcKjnP/v21/dist/assets/true_ilsa-Dd_ps7Zi.jpg",
+      "originalSha256": "ab9de8a68fc26bbcf75d01149b18378fe94e3da755009e45d9a164695124dc59",
+      "sourceSize": [
+        672,
+        900
+      ],
+      "runtime": "true_ilsa.webp",
+      "runtimeSha256": "9c118fa66d3c5e2c66fa90879e7ec9293d948d8a6a376eed4850789cf85c0f0b"
+    },
+    {
+      "key": "true_petra",
+      "url": "https://rezona.ai/game/pgcserver/pv/xXCcKjnP/v21/dist/assets/true_petra-CFTmpFoi.jpg",
+      "originalSha256": "368a17a35b66e587c4e33fc479f9479f419ca3310198db01ff0c5ca0d72de593",
+      "sourceSize": [
+        672,
+        900
+      ],
+      "runtime": "true_petra.webp",
+      "runtimeSha256": "f8d2174571b09788b721a5720036f3c5c56780f98ce5fab5840b135ec8b88626"
+    },
+    {
+      "key": "true_sasha",
+      "url": "https://rezona.ai/game/pgcserver/pv/xXCcKjnP/v21/dist/assets/true_sasha-BJ7ecb8T.jpg",
+      "originalSha256": "55a5381a6705eada5582bbbb80ca573a64c8446fc5029645dc60662e528b20ed",
+      "sourceSize": [
+        672,
+        900
+      ],
+      "runtime": "true_sasha.webp",
+      "runtimeSha256": "f8fa230b857ae98762fab8968c56ae1d95b83b1d0aca12e65b5bb26b36d7af9f"
+    },
+    {
+      "key": "true_viktor",
+      "url": "https://rezona.ai/game/pgcserver/pv/xXCcKjnP/v21/dist/assets/true_viktor-CIrzoKVQ.jpg",
+      "originalSha256": "4e03390c1feedb9798f1f7799a57b3dc0c0e9465077add3bede36a169afb2d53",
+      "sourceSize": [
+        672,
+        900
+      ],
+      "runtime": "true_viktor.webp",
+      "runtimeSha256": "ac7832cad0abaf0cd7d8013ef79ca3cb7a1cbb8bf6e0f1b9e85705bc10987354"
+    }
+  ]
+}
