@@ -1,0 +1,19 @@
+{
+  "ART-DIRECTION.md": "49cdd6bedf24a323d5e66020a5fc927793d1aff2731795f3650d39da57082735",
+  "art.js": "bbd579899dee172e1f28f0a78bbedd0755ffaac1224ed8409ef9cb1e58ca04d4",
+  "build.py": "58f315c55da400d5700fa208675d4dec2a5f2d93500ffb9e0e69decf3307bd5f",
+  "game.js": "b10d7a97f18f170a8be9a7fba483a56309c617f0957a8edfa2b74a9737db3c0d",
+  "icon.svg": "60a6b627df9fa00c058ee63344091c2ac6532999542ce26dcb29691c45dbcfba",
+  "index-source.html": "0b2d70dff1f23e9b6928edcff8b5e0779ee2c86670116c5575172b67fcfd582d",
+  "index.html": "18b70be794c9c17b1921b8b8fc0f1bf7999ad6301af43eaeeb1e16a65982335b",
+  "LICENSE.txt": "4d40748ebfc5f3020c7411549e5f3650bd8dec78e479efa9955447cf4a4987ef",
+  "model.js": "8ef2e8a74311c08e5aa0db23a6f4e729537d4d6c1a4f59bc818a65c2bbf5a601",
+  "qa-browser-report.json": "4b8398d10eaa831988547ce57648a851b3cf968de4aa0c7034a61a0e570d489a",
+  "qa-model-report.json": "80f6e9bad7389621ad8f2637d983bdf07f40bd128d58e1eb2a8ca1dc4812b736",
+  "README.md": "cc2e8f68a0a2cac1ecca5dd3bd6f9f0195671f50112c715bfb0d072404a79d50",
+  "SKYRIBBON-OFFLINE.html": "18b70be794c9c17b1921b8b8fc0f1bf7999ad6301af43eaeeb1e16a65982335b",
+  "style.css": "fb6bbee17b24d8609b7a575ce82f76d6495bc9253e1dfffe62b29e869f4d3e55",
+  "test-model.cjs": "329008d7b85e9469b90d9e30c9323f9107a4aed5dc7297b2e45c420843bec0cb",
+  "vendor/THREE-LICENSE.txt": "df2a91696186fe58c92518a25d48bc59c8ee2edc7cac9ca6d19a5a0d599a2a05",
+  "vendor/three.min.js": "f34446bf875b5fb0dcd93819ffe1d9e182d46634ee855f5d904c6c4ac7cdbc95"
+}

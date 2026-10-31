@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "checks": 2370,
+  "rides": [
+    {
+      "park": 1,
+      "seconds": 16.6,
+      "glints": 12,
+      "stars": 3
+    },
+    {
+      "park": 2,
+      "seconds": 17.5,
+      "glints": 12,
+      "stars": 3
+    },
+    {
+      "park": 3,
+      "seconds": 17.2,
+      "glints": 12,
+      "stars": 3
+    },
+    {
+      "park": 4,
+      "seconds": 16.9,
+      "glints": 12,
+      "stars": 3
+    },
+    {
+      "park": 5,
+      "seconds": 17.2,
+      "glints": 12,
+      "stars": 3
+    },
+    {
+      "park": 6,
+      "seconds": 17.2,
+      "glints": 12,
+      "stars": 3
+    }
+  ],
+  "notes": "Geometry safety, five-car station clearance, arbitrary strokes, non-blocking collection, real upgrades and exact active-save continuation."
+}

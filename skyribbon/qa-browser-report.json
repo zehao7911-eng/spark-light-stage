@@ -1,0 +1,108 @@
+{
+  "campaign": [
+    {
+      "park": 1,
+      "result": "NEXT ISLAND UNLOCKED\nA ribbon\nto remember.\n✦✦✦\n12/12\nGLINTS\n+34\nEARNED\n1\nBOOSTS\n\nA little masterpiece. Try a longer train next.\n\nNEXT ISLAND\nDRAW AGAIN\nDEPOT"
+    },
+    {
+      "park": 2,
+      "customDraw": true,
+      "result": "NEXT ISLAND UNLOCKED\nA ribbon\nto remember.\n★★·\n7/12\nGLINTS\n+31\nEARNED\n1\nBOOSTS\n\nStars: finish, collect 8 glints, use a boost. Every ride is a good ride.\n\nNEXT ISLAND\nDRAW AGAIN\nDEPOT"
+    },
+    {
+      "park": 3,
+      "result": "NEXT ISLAND UNLOCKED\nA ribbon\nto remember.\n★★★\n12/12\nGLINTS\n+58\nEARNED\n1\nBOOSTS\n\nA little masterpiece. Try a longer train next.\n\nNEXT ISLAND\nDRAW AGAIN\nDEPOT"
+    },
+    {
+      "park": 4,
+      "result": "NEXT ISLAND UNLOCKED\nA ribbon\nto remember.\n★★★\n12/12\nGLINTS\n+58\nEARNED\n1\nBOOSTS\n\nA little masterpiece. Try a longer train next.\n\nNEXT ISLAND\nDRAW AGAIN\nDEPOT"
+    },
+    {
+      "park": 5,
+      "result": "NEXT ISLAND UNLOCKED\nA ribbon\nto remember.\n★★★\n12/12\nGLINTS\n+58\nEARNED\n1\nBOOSTS\n\nA little masterpiece. Try a longer train next.\n\nNEXT ISLAND\nDRAW AGAIN\nDEPOT"
+    },
+    {
+      "park": 6,
+      "result": "ALL SIX ISLANDS DISCOVERED\nA ribbon\nto remember.\n★★★\n12/12\nGLINTS\n+58\nEARNED\n1\nBOOSTS\n\nA little masterpiece. Try a longer train next.\n\nISLAND MAP\nDRAW AGAIN\nDEPOT"
+    }
+  ],
+  "mapRecords": "Papaya Pier\n★★★\nWisteria Bay\n★★\nGlasswater\n★★★\nMoonlit Fair\n★★★\nEmber Harbour\n★★★\nStarlight Isle\n★★★",
+  "customGesture": {
+    "nativeDrag": true,
+    "completed": true,
+    "glints": 7,
+    "stars": 2,
+    "nextIslandUnlocked": true
+  },
+  "upgradesPurchased": [
+    "cars 1",
+    "cars 2",
+    "magnet 1",
+    "magnet 2"
+  ],
+  "maxCarsObserved": 5,
+  "carFramingSamples": [
+    0.826,
+    0.806,
+    0.805,
+    0.807,
+    0.786
+  ],
+  "pausePixelExact": true,
+  "activeSaveBefore": {
+    "distance": "21.958",
+    "glints": "✦ 0 / 12",
+    "tickets": "71",
+    "cars": "5"
+  },
+  "activeSaveAfter": {
+    "distance": "21.958",
+    "glints": "✦ 0 / 12",
+    "tickets": "71",
+    "cars": "5"
+  },
+  "smallBuild": {
+    "bad": [],
+    "scroll": [
+      320,
+      568
+    ],
+    "viewport": [
+      320,
+      568
+    ]
+  },
+  "smallRide": {
+    "bad": [],
+    "viewport": [
+      320,
+      568
+    ]
+  },
+  "landscapeBuild": {
+    "bad": [],
+    "viewport": [
+      844,
+      390
+    ]
+  },
+  "landscapeRide": {
+    "bad": [],
+    "scroll": [
+      844,
+      390
+    ],
+    "viewport": [
+      844,
+      390
+    ]
+  },
+  "portrait": [
+    390,
+    844
+  ],
+  "keyboardRideAndBoost": true,
+  "consoleErrors": [],
+  "physicalHandsetTested": false,
+  "notes": "Ordinary UI-only play and real canvas drag. A non-perfect custom ride still unlocks the next island."
+}
