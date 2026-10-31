@@ -1,0 +1,12 @@
+IRON VOW includes third-party artwork from the publicly served Rezona game
+Rebirth Blade — 1v1 Boss Duel, at the user's explicit request.
+
+Source: https://rezona.ai/game/pgcserver/pv/fNvbHcfO/v1/dist/index.html
+Original media URLs and SHA-256 hashes: assets/PROVENANCE.json
+
+Artwork rights remain with their respective creators. No standalone license
+notice was found in the inspected HTML/bundle. This archive does not grant
+additional rights in that third-party artwork. The MIT grant in LICENSE.txt
+covers only the newly written Iron Vow code and original interface line art.
+
+No reference game JavaScript, music or sound recordings are included.

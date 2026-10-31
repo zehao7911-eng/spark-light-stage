@@ -1,0 +1,194 @@
+[
+  {
+    "file": "bg_castle-D5MoTi3t.jpg",
+    "url": "https://rezona.ai/game/pgcserver/pv/fNvbHcfO/v1/dist/assets/bg_castle-D5MoTi3t.jpg",
+    "bytes": 213969,
+    "size": [
+      1024,
+      1024
+    ],
+    "mode": "RGB",
+    "sha256": "88867dfed07685ac60b1254c7366c6b949327619e4f926eb35b9322c8bed9353"
+  },
+  {
+    "file": "bg_crypt-B22nuw0R.jpg",
+    "url": "https://rezona.ai/game/pgcserver/pv/fNvbHcfO/v1/dist/assets/bg_crypt-B22nuw0R.jpg",
+    "bytes": 217472,
+    "size": [
+      1024,
+      1024
+    ],
+    "mode": "RGB",
+    "sha256": "84294151592fbd5fcd9ef7ff8d558ada4f40a9206eb6063f19008f62b36ae086"
+  },
+  {
+    "file": "boss2_attack-PvKfXDtD.png",
+    "url": "https://rezona.ai/game/pgcserver/pv/fNvbHcfO/v1/dist/assets/boss2_attack-PvKfXDtD.png",
+    "bytes": 530557,
+    "size": [
+      681,
+      700
+    ],
+    "mode": "RGBA",
+    "sha256": "30a555c9e7877acea3d2ff76ebba5897197b82594917bdadb1c21c2e6101a342",
+    "alphaBBox": [
+      0,
+      0,
+      681,
+      700
+    ]
+  },
+  {
+    "file": "boss2_idle-BHUgOqFg.png",
+    "url": "https://rezona.ai/game/pgcserver/pv/fNvbHcfO/v1/dist/assets/boss2_idle-BHUgOqFg.png",
+    "bytes": 441846,
+    "size": [
+      615,
+      700
+    ],
+    "mode": "RGBA",
+    "sha256": "f95936a261e07da8180dc36c245d3ea9b8e499fd629454a2c6fc5005cc4d2c07",
+    "alphaBBox": [
+      0,
+      0,
+      615,
+      700
+    ]
+  },
+  {
+    "file": "boss2_stunned-CwLaiBmW.png",
+    "url": "https://rezona.ai/game/pgcserver/pv/fNvbHcfO/v1/dist/assets/boss2_stunned-CwLaiBmW.png",
+    "bytes": 482065,
+    "size": [
+      654,
+      700
+    ],
+    "mode": "RGBA",
+    "sha256": "252afbac41969da13ac8791a3f90bf31481e26788d6b67cb29237df07673d4f2",
+    "alphaBBox": [
+      0,
+      0,
+      654,
+      700
+    ]
+  },
+  {
+    "file": "boss2_windup-BBqQq4Ou.png",
+    "url": "https://rezona.ai/game/pgcserver/pv/fNvbHcfO/v1/dist/assets/boss2_windup-BBqQq4Ou.png",
+    "bytes": 522079,
+    "size": [
+      650,
+      700
+    ],
+    "mode": "RGBA",
+    "sha256": "f53773b1685763791403882d87da771ef6f989d25fa063dfd6daff8500fd5a52",
+    "alphaBBox": [
+      0,
+      0,
+      650,
+      700
+    ]
+  },
+  {
+    "file": "boss_attack-CX7Wn4hy.png",
+    "url": "https://rezona.ai/game/pgcserver/pv/fNvbHcfO/v1/dist/assets/boss_attack-CX7Wn4hy.png",
+    "bytes": 517185,
+    "size": [
+      805,
+      700
+    ],
+    "mode": "RGBA",
+    "sha256": "d1e3542c8c6dc3b2ad48a7f72ce09ed4e88a23a925d3b8c8c7a64e4160358603",
+    "alphaBBox": [
+      0,
+      0,
+      805,
+      700
+    ]
+  },
+  {
+    "file": "boss_idle-COh7jU-c.png",
+    "url": "https://rezona.ai/game/pgcserver/pv/fNvbHcfO/v1/dist/assets/boss_idle-COh7jU-c.png",
+    "bytes": 400238,
+    "size": [
+      553,
+      700
+    ],
+    "mode": "RGBA",
+    "sha256": "643ebe7d20d8aff71783b9371592367974d085cbbeffc0ff6f46f9330497b584",
+    "alphaBBox": [
+      0,
+      0,
+      553,
+      700
+    ]
+  },
+  {
+    "file": "boss_stunned--G7GgcCx.png",
+    "url": "https://rezona.ai/game/pgcserver/pv/fNvbHcfO/v1/dist/assets/boss_stunned--G7GgcCx.png",
+    "bytes": 501254,
+    "size": [
+      754,
+      700
+    ],
+    "mode": "RGBA",
+    "sha256": "d6613d337f7a279d90b26317df0b15f585aa02ccf38fe2033b653a1c4ca5ea36",
+    "alphaBBox": [
+      0,
+      0,
+      754,
+      700
+    ]
+  },
+  {
+    "file": "boss_windup-y24o14K0.png",
+    "url": "https://rezona.ai/game/pgcserver/pv/fNvbHcfO/v1/dist/assets/boss_windup-y24o14K0.png",
+    "bytes": 410166,
+    "size": [
+      628,
+      700
+    ],
+    "mode": "RGBA",
+    "sha256": "9d665af48d82a98d421f8cdeae99beae6cca8ba45069a5a6b33363bc2ef0ac42",
+    "alphaBBox": [
+      0,
+      0,
+      628,
+      700
+    ]
+  },
+  {
+    "file": "player_body-bRZDBCOz.png",
+    "url": "https://rezona.ai/game/pgcserver/pv/fNvbHcfO/v1/dist/assets/player_body-bRZDBCOz.png",
+    "bytes": 631169,
+    "size": [
+      822,
+      700
+    ],
+    "mode": "RGBA",
+    "sha256": "36a830ec355cfda0efdcb548251eff1c09881fe99578e02db096f331f9b1a122",
+    "alphaBBox": [
+      0,
+      0,
+      822,
+      700
+    ]
+  },
+  {
+    "file": "player_shield-1_ua5iFm.png",
+    "url": "https://rezona.ai/game/pgcserver/pv/fNvbHcfO/v1/dist/assets/player_shield-1_ua5iFm.png",
+    "bytes": 482271,
+    "size": [
+      587,
+      700
+    ],
+    "mode": "RGBA",
+    "sha256": "495f4375dd4ba9d978174e9f02a9adedffcd12a300a24dc750472c89ea1c60cf",
+    "alphaBBox": [
+      0,
+      0,
+      587,
+      700
+    ]
+  }
+]

@@ -1,0 +1,163 @@
+{
+  "assets": [
+    {
+      "runtime": "arena-castle.webp",
+      "source": "bg_castle-D5MoTi3t.jpg",
+      "size": [
+        800,
+        800
+      ],
+      "originalSize": [
+        1024,
+        1024
+      ],
+      "bytes": 197564
+    },
+    {
+      "runtime": "arena-crypt.webp",
+      "source": "bg_crypt-B22nuw0R.jpg",
+      "size": [
+        800,
+        800
+      ],
+      "originalSize": [
+        1024,
+        1024
+      ],
+      "bytes": 189904
+    },
+    {
+      "runtime": "boss-0-idle.webp",
+      "source": "boss_idle-COh7jU-c.png",
+      "size": [
+        474,
+        600
+      ],
+      "originalSize": [
+        553,
+        700
+      ],
+      "bytes": 74746
+    },
+    {
+      "runtime": "boss-0-windup.webp",
+      "source": "boss_windup-y24o14K0.png",
+      "size": [
+        538,
+        600
+      ],
+      "originalSize": [
+        628,
+        700
+      ],
+      "bytes": 85894
+    },
+    {
+      "runtime": "boss-0-attack.webp",
+      "source": "boss_attack-CX7Wn4hy.png",
+      "size": [
+        690,
+        600
+      ],
+      "originalSize": [
+        805,
+        700
+      ],
+      "bytes": 105316
+    },
+    {
+      "runtime": "boss-0-stunned.webp",
+      "source": "boss_stunned--G7GgcCx.png",
+      "size": [
+        646,
+        600
+      ],
+      "originalSize": [
+        754,
+        700
+      ],
+      "bytes": 93796
+    },
+    {
+      "runtime": "boss-1-idle.webp",
+      "source": "boss2_idle-BHUgOqFg.png",
+      "size": [
+        527,
+        600
+      ],
+      "originalSize": [
+        615,
+        700
+      ],
+      "bytes": 80276
+    },
+    {
+      "runtime": "boss-1-windup.webp",
+      "source": "boss2_windup-BBqQq4Ou.png",
+      "size": [
+        557,
+        600
+      ],
+      "originalSize": [
+        650,
+        700
+      ],
+      "bytes": 111460
+    },
+    {
+      "runtime": "boss-1-attack.webp",
+      "source": "boss2_attack-PvKfXDtD.png",
+      "size": [
+        584,
+        600
+      ],
+      "originalSize": [
+        681,
+        700
+      ],
+      "bytes": 100384
+    },
+    {
+      "runtime": "boss-1-stunned.webp",
+      "source": "boss2_stunned-CwLaiBmW.png",
+      "size": [
+        561,
+        600
+      ],
+      "originalSize": [
+        654,
+        700
+      ],
+      "bytes": 90932
+    },
+    {
+      "runtime": "player-body.webp",
+      "source": "player_body-bRZDBCOz.png",
+      "size": [
+        700,
+        596
+      ],
+      "originalSize": [
+        822,
+        700
+      ],
+      "bytes": 111112
+    },
+    {
+      "runtime": "player-shield.webp",
+      "source": "player_shield-1_ua5iFm.png",
+      "size": [
+        503,
+        600
+      ],
+      "originalSize": [
+        587,
+        700
+      ],
+      "bytes": 69364
+    }
+  ],
+  "sourcePreserved": true,
+  "generationUsed": false,
+  "runtimeBytes": 1396758
+}
