@@ -1,6 +1,6 @@
-import {Run,DIRS,ARROWS,RELICS,SIGILS,profile,fresh,record,medals} from './core.mjs';
-import {Battlefield} from './art.mjs';
-import {relicIcon} from './icons.mjs';
+import {Run,DIRS,ARROWS,RELICS,SIGILS,profile,fresh,record,medals} from './core.mjs?v=2';
+import {Battlefield} from './art.mjs?v=2';
+import {relicIcon} from './icons.mjs?v=2';
 const $=s=>document.querySelector(s),key='iron-vow-v1';let raw={};try{raw=JSON.parse(localStorage.getItem(key)||'{}')||{}}catch{}
 let p=profile(raw.profile),restored=Run.restore(raw.run),active=!!restored&&restored.id===p.runs,r=active?restored:new Run(p.runs+1,3726183,p.sigil),view=new Battlefield($('#canvas')),paused=true,menu=null,last=performance.now(),acc=0,lastDraw=0,lastSave=0,finishAt=0,callUntil=0,toastUntil=0,drag=null,held=null,voices=[],audio=null,previousFocus=null;
 function save(){if(active)record(p,r);try{localStorage.setItem(key,JSON.stringify({profile:p,run:active?r.save():null}))}catch{}}
@@ -37,4 +37,4 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();
 function interrupt(){held=null;drag=null;if(!menu&&active)show(r.phase==='loot'?'loot':r.phase==='over'?'over':'pause');hush();save()}
 window.addEventListener('blur',interrupt);document.addEventListener('visibilitychange',()=>{if(document.hidden)interrupt()});window.addEventListener('pagehide',save);new ResizeObserver(fit).observe($('#arena'));
 function frame(now){advance(now);if(!paused){if(finishAt&&now>=finishAt){finishAt=0;show(r.phase==='loot'?'loot':'over')}if(now-lastDraw>1000/(p.gentle?24:40)){refresh();lastDraw=now}if(now-lastSave>700){save();lastSave=now}}if(callUntil&&now>callUntil){$('#callout').className='';callUntil=0}if(toastUntil&&now>toastUntil){$('#toast').classList.remove('on');toastUntil=0}requestAnimationFrame(frame)}
-fit();show(active?(r.phase==='loot'?'loot':r.phase==='over'?'over':'pause'):'title');requestAnimationFrame(frame);view.ready.then(()=>{refresh();if(menu==='pause')show('pause')});
+view.onArt=()=>refresh();fit();show(active?(r.phase==='loot'?'loot':r.phase==='over'?'over':'pause'):'title');requestAnimationFrame(frame);view.ready.then(()=>{refresh();if(menu==='pause')show('pause')});
