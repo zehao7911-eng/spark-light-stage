@@ -1,0 +1,15 @@
+# CART RIOT — production brief
+
+Reference: Rezona Downhill Mayhem / CART JAM, https://rezona.ai/game/pgcserver/pv/trshKFFj/v36/dist/index.html. Actually entered Offline, pushed W to 63 km/h, later deliberately bailed with B: bailouts 0→1, style 0→91, speed fell to 1 km/h. No finish or reference victory claimed. Slagyard was inspected and rejected for multi-input FPS controls; Starwhisper preview unavailable. No reference code or art is included.
+
+New core: steer a springy shopping cart down a continuous street. Hold and drag to steer and wind the suspension; lift to hop. Soft crates burst and feed a chain boost, metal obstacles bonk without a game-over. Landings smash nearby soft objects. A full Riot burst is an optional action. First ready view shows the cart, crate stack and explicit smash goal; first deliberate gesture starts motion, first collision within a few seconds.
+
+This is a linear collision-and-jump score run, distinct from Table Top Turbo's free-steering three-lap furniture race and Alpine Swish's flag/jump skiing, although the broader racing family overlaps. Do not claim a new genre. No plants/matching, tug-of-war, delivery/cleanup or portal puzzle.
+
+Six finite streets: market opening, slalom works, waterside ramps, moving traffic, night tram crossings, mixed final speed-pad parade. A crate quota opens checkout; chain and hop/clean-run badges add optional mastery. Missing the quota banks earned coins and offers a free retry. Best-only medals pay first-time improvement coins, repeat runs earn capped gameplay coins. Three actual upgrades alter spring hop, bumper recovery, coin attraction; three paint finishes earned by medal milestones. New runs persist records and garage. Endless road remixes follow six authored routes, with bounded objects and difficulty.
+
+Art: original smooth real-time 3D toy-cart hero, expressive helmeted rider, rounded warm buildings, painted signs, layered road details, wheel/suspension/arms animation, squash and landing anticipation. Cream/ink/tomato race-ticket UI, lime reward accents, large silhouettes at phone size. Avoid dark generic boxes and cover-only illustration. No image generation in this production. Three.js r147 MIT bundled; no external scripts/fonts/CDN at runtime.
+
+Skills applied: game design (first meaningful impact, forgiving loop and per-street changes); game art (single rounded toy material/perspective/palette language); 3D games (simple colliders, instanced environment, look-ahead chase camera); game audio (impact transient/body/tail and sound variation); mobile (44px controls, pointer cancel, portrait/landscape, interruption); web games (local assets, graphics recovery, capped render resolution, no autoplay).
+
+Quality gates: native actual opening impact, every authored street completed, upgrade effect/retry/save exercised, actual captured mobile art inspected, all primary controls ≥44px and no overflow, public shipped build played and ZIP byte verified. Code checks are evidence of correctness, not a subjective quality grade. Physical phone performance is not claimed without hardware testing.
