@@ -1,0 +1,6 @@
+SEEDSTRIKE
+
+Original game code, interface, board/combat rules and synthesized sound were authored for this project.
+Selected images in assets and reference-originals are directly reused from Crush Plant Battle Undead, a publicly playable Rezona reference, at the explicit user's direction. Their authorship and an open-media license are not claimed. ART-SOURCES.json records exact URLs, source dimensions and SHA-256 hashes. The original code license excludes these third-party images.
+
+No reference game scripts, title logo, fonts or recorded audio are included. Four 2x2 walk atlases supply four actual poses per enemy; other character reactions are procedural transforms of the original image files.

@@ -1,0 +1,768 @@
+{
+  "bg_lawn": {
+    "width": 714,
+    "height": 1280,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          714,
+          1280
+        ],
+        "visible": [
+          0,
+          0,
+          714,
+          1280
+        ]
+      }
+    ]
+  },
+  "seed_lime": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          59,
+          44,
+          197,
+          212
+        ]
+      }
+    ]
+  },
+  "seed_lemon": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          29,
+          29,
+          227,
+          227
+        ]
+      }
+    ]
+  },
+  "seed_melon": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          43,
+          45,
+          213,
+          211
+        ]
+      }
+    ]
+  },
+  "seed_shroom": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          51,
+          48,
+          205,
+          208
+        ]
+      }
+    ]
+  },
+  "seed_bloom": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          45,
+          45,
+          211,
+          211
+        ]
+      }
+    ]
+  },
+  "seed_cactus": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          74,
+          57,
+          182,
+          199
+        ]
+      }
+    ]
+  },
+  "seed_chomper": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          49,
+          50,
+          207,
+          206
+        ]
+      }
+    ]
+  },
+  "plant_pea": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          49,
+          38,
+          207,
+          218
+        ]
+      }
+    ]
+  },
+  "plant_frost": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          70,
+          42,
+          186,
+          221
+        ]
+      }
+    ]
+  },
+  "plant_sun": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          67,
+          43,
+          214,
+          208
+        ]
+      }
+    ]
+  },
+  "plant_fume": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          46,
+          37,
+          208,
+          219
+        ]
+      }
+    ]
+  },
+  "plant_melon": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          40,
+          40,
+          216,
+          216
+        ]
+      }
+    ]
+  },
+  "plant_spike": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          45,
+          36,
+          211,
+          220
+        ]
+      }
+    ]
+  },
+  "plant_chomp": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          41,
+          30,
+          210,
+          250
+        ]
+      }
+    ]
+  },
+  "zombie_basic": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          69,
+          30,
+          187,
+          226
+        ]
+      }
+    ]
+  },
+  "zombie_cone": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          71,
+          22,
+          186,
+          227
+        ]
+      }
+    ]
+  },
+  "zombie_bucket": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          59,
+          22,
+          181,
+          232
+        ]
+      }
+    ]
+  },
+  "zombie_boss": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          14,
+          18,
+          242,
+          240
+        ]
+      }
+    ]
+  },
+  "zombie_basic_walk": {
+    "width": 512,
+    "height": 512,
+    "frames": 4,
+    "columns": 2,
+    "rows": 2,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          74,
+          26,
+          211,
+          245
+        ]
+      },
+      {
+        "source": [
+          256,
+          0,
+          512,
+          256
+        ],
+        "visible": [
+          68,
+          21,
+          191,
+          245
+        ]
+      },
+      {
+        "source": [
+          0,
+          256,
+          256,
+          512
+        ],
+        "visible": [
+          73,
+          14,
+          199,
+          234
+        ]
+      },
+      {
+        "source": [
+          256,
+          256,
+          512,
+          512
+        ],
+        "visible": [
+          67,
+          13,
+          184,
+          236
+        ]
+      }
+    ]
+  },
+  "zombie_cone_walk": {
+    "width": 512,
+    "height": 512,
+    "frames": 4,
+    "columns": 2,
+    "rows": 2,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          68,
+          25,
+          188,
+          238
+        ]
+      },
+      {
+        "source": [
+          256,
+          0,
+          512,
+          256
+        ],
+        "visible": [
+          67,
+          18,
+          186,
+          238
+        ]
+      },
+      {
+        "source": [
+          0,
+          256,
+          256,
+          512
+        ],
+        "visible": [
+          66,
+          10,
+          184,
+          221
+        ]
+      },
+      {
+        "source": [
+          256,
+          256,
+          512,
+          512
+        ],
+        "visible": [
+          70,
+          9,
+          184,
+          223
+        ]
+      }
+    ]
+  },
+  "zombie_bucket_walk": {
+    "width": 512,
+    "height": 512,
+    "frames": 4,
+    "columns": 2,
+    "rows": 2,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          52,
+          19,
+          185,
+          242
+        ]
+      },
+      {
+        "source": [
+          256,
+          0,
+          512,
+          256
+        ],
+        "visible": [
+          66,
+          16,
+          195,
+          240
+        ]
+      },
+      {
+        "source": [
+          0,
+          256,
+          256,
+          512
+        ],
+        "visible": [
+          68,
+          14,
+          196,
+          238
+        ]
+      },
+      {
+        "source": [
+          256,
+          256,
+          512,
+          512
+        ],
+        "visible": [
+          66,
+          23,
+          182,
+          238
+        ]
+      }
+    ]
+  },
+  "icon_house": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          47,
+          46,
+          209,
+          210
+        ]
+      }
+    ]
+  },
+  "icon_wave": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          34,
+          39,
+          222,
+          217
+        ]
+      }
+    ]
+  },
+  "icon_moves": {
+    "width": 256,
+    "height": 256,
+    "frames": 1,
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "visible": [
+          62,
+          54,
+          194,
+          202
+        ]
+      }
+    ]
+  },
+  "zombie_boss_walk": {
+    "width": 768,
+    "height": 768,
+    "frames": 4,
+    "columns": 2,
+    "rows": 2,
+    "cells": [
+      {
+        "source": [
+          0,
+          0,
+          384,
+          384
+        ],
+        "visible": [
+          38,
+          39,
+          376,
+          375
+        ]
+      },
+      {
+        "source": [
+          384,
+          0,
+          768,
+          384
+        ],
+        "visible": [
+          25,
+          28,
+          358,
+          374
+        ]
+      },
+      {
+        "source": [
+          0,
+          384,
+          384,
+          768
+        ],
+        "visible": [
+          27,
+          19,
+          375,
+          362
+        ]
+      },
+      {
+        "source": [
+          384,
+          384,
+          768,
+          768
+        ],
+        "visible": [
+          21,
+          22,
+          356,
+          358
+        ]
+      }
+    ]
+  }
+}

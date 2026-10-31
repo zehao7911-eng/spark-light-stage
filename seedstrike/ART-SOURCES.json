@@ -1,0 +1,424 @@
+{
+  "reference": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/index.html",
+  "title": "Crush Plant Battle Undead",
+  "retrieved": "2026-10-31",
+  "basis": "Direct reference artwork reused at explicit user direction. Public access/remixability is not asserted to be an open-media license. Code, logo, source-game audio and fonts are not reused.",
+  "assets": [
+    {
+      "name": "bg_lawn",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/bg_lawn-D2h1vJvw.jpg",
+      "original": "reference-originals/bg_lawn-D2h1vJvw.jpg",
+      "sha256": "67490f33e172d092ed12fa288414bca050841113bffd3c08f8bbaecab37ca2e8",
+      "size": [
+        714,
+        1280
+      ],
+      "mode": "RGB",
+      "frames": 1,
+      "runtime": "assets/bg_lawn.webp",
+      "bytes": 108732,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "seed_lime",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/seed_lime-BBSc9-21.png",
+      "original": "reference-originals/seed_lime-BBSc9-21.png",
+      "sha256": "ca6972ae3cf67849b06cdff6db1df7e9d520a351077aaadb2917763a9a89aee8",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/seed_lime.webp",
+      "bytes": 25978,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "seed_lemon",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/seed_lemon-DC0d31b7.png",
+      "original": "reference-originals/seed_lemon-DC0d31b7.png",
+      "sha256": "e884795526000bd94cbd0baa2de8a902fb9708d260804b92393e67923b557b41",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/seed_lemon.webp",
+      "bytes": 42990,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "seed_melon",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/seed_melon-Bm8czmYN.png",
+      "original": "reference-originals/seed_melon-Bm8czmYN.png",
+      "sha256": "b6641849f0e2b8a65c093bb15d5d60b41d53c6fd9b2e835a2e0c48c1b1d04959",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/seed_melon.webp",
+      "bytes": 27636,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "seed_shroom",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/seed_shroom-BmElcbOl.png",
+      "original": "reference-originals/seed_shroom-BmElcbOl.png",
+      "sha256": "e7f62bbff69b9570e20c38a7d6c8056e5a69502d5f359bd3c73f1048ce10bcc3",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/seed_shroom.webp",
+      "bytes": 26480,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "seed_bloom",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/seed_bloom-CnTrmlgK.png",
+      "original": "reference-originals/seed_bloom-CnTrmlgK.png",
+      "sha256": "aa16b398e16831805c79574db8b9fd3cf6c40f09d5ca55644592ffd31099f7d0",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/seed_bloom.webp",
+      "bytes": 34324,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "seed_cactus",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/seed_cactus-UYjnhChk.png",
+      "original": "reference-originals/seed_cactus-UYjnhChk.png",
+      "sha256": "d4a88d451936f60c359d33473498a7a26620155d507f3899da05a2cca6df2e1c",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/seed_cactus.webp",
+      "bytes": 16660,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "seed_chomper",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/seed_chomper-dAFId2QG.png",
+      "original": "reference-originals/seed_chomper-dAFId2QG.png",
+      "sha256": "0aec0ce9e29fbb242704fa4a0914e071478588f29d3243f604addb642d306d8e",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/seed_chomper.webp",
+      "bytes": 36512,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "plant_pea",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/plant_pea-elti_DBY.png",
+      "original": "reference-originals/plant_pea-elti_DBY.png",
+      "sha256": "97fc9ef2e12b42b2203235721bfb844842cbee82f2992bbd29474bc061fb3053",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/plant_pea.webp",
+      "bytes": 28566,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "plant_frost",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/plant_frost-CtkVWu2J.png",
+      "original": "reference-originals/plant_frost-CtkVWu2J.png",
+      "sha256": "20979a5027ec525db450731beb18541fa5288d8e31c3864f478c9dfa07a81306",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/plant_frost.webp",
+      "bytes": 28734,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "plant_sun",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/plant_sun-BEtOuv3b.png",
+      "original": "reference-originals/plant_sun-BEtOuv3b.png",
+      "sha256": "a202a66c8d92ddf45376a84db68084043bdd44965ae1bfc8338d8d70aedbb64f",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/plant_sun.webp",
+      "bytes": 29376,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "plant_fume",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/plant_fume-C3jB29A5.png",
+      "original": "reference-originals/plant_fume-C3jB29A5.png",
+      "sha256": "5302286b8582d52151451a9bfca1235e4ce23f9ca6d7e913e581952ca28c0564",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/plant_fume.webp",
+      "bytes": 38126,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "plant_melon",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/plant_melon-U80IAYgm.png",
+      "original": "reference-originals/plant_melon-U80IAYgm.png",
+      "sha256": "b3a8b8b5ffb385291e30526d4706270c630414cac5f18266ea79dd38929e5167",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/plant_melon.webp",
+      "bytes": 47898,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "plant_spike",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/plant_spike-DQ4oV_w_.png",
+      "original": "reference-originals/plant_spike-DQ4oV_w_.png",
+      "sha256": "dd2bb52402783a97dda719d84d681ae8a3d08ca4100a0ae0aa1bb7ad1274f9cf",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/plant_spike.webp",
+      "bytes": 40182,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "plant_chomp",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/plant_chomp-8NMmlwjk.png",
+      "original": "reference-originals/plant_chomp-8NMmlwjk.png",
+      "sha256": "bb32100490bdb493bf23296cea2ac00b3362334bbf1671600ac24da834789e43",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/plant_chomp.webp",
+      "bytes": 59060,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "zombie_basic",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/zombie_basic-BJg8Sv2P.png",
+      "original": "reference-originals/zombie_basic-BJg8Sv2P.png",
+      "sha256": "26d7f2a572ec7fe62357a2d92f1f0fe0175ca0e87686425c4c48cdeba49b5d06",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/zombie_basic.webp",
+      "bytes": 31854,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "zombie_cone",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/zombie_cone-kY4daZ90.png",
+      "original": "reference-originals/zombie_cone-kY4daZ90.png",
+      "sha256": "3c7f09f13f6fbe3eaca572ffa0b09f43eec13b336cff46830e9ca3ac80c652c0",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/zombie_cone.webp",
+      "bytes": 26560,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "zombie_bucket",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/zombie_bucket-Cy2LRDgH.png",
+      "original": "reference-originals/zombie_bucket-Cy2LRDgH.png",
+      "sha256": "a11b1e807978cc79881b6b2e9414b3d019d752db61bd1ebd764806b75006c2eb",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/zombie_bucket.webp",
+      "bytes": 32864,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "zombie_boss",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/zombie_boss-Q47FssGu.png",
+      "original": "reference-originals/zombie_boss-Q47FssGu.png",
+      "sha256": "49e83be4e8c454df48fc902e793173cbc632fca5680d2f4786cfeab960f7b4c9",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/zombie_boss.webp",
+      "bytes": 67522,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "zombie_basic_walk",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/zombie_basic_walk-deOh4WUM.png",
+      "original": "reference-originals/zombie_basic_walk-deOh4WUM.png",
+      "sha256": "6597fbab5f9cbbab124948d8a18c1c1a217bacac5a0205d62a64d82c06a631e7",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "frames": 4,
+      "runtime": "assets/zombie_basic_walk.webp",
+      "bytes": 143376,
+      "columns": 2,
+      "rows": 2
+    },
+    {
+      "name": "zombie_cone_walk",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/zombie_cone_walk-Bmp3DvRJ.png",
+      "original": "reference-originals/zombie_cone_walk-Bmp3DvRJ.png",
+      "sha256": "6cbcfd500b5b82a82ee784971d60f471092b31a408f54ee521a8793dd6574a91",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "frames": 4,
+      "runtime": "assets/zombie_cone_walk.webp",
+      "bytes": 114382,
+      "columns": 2,
+      "rows": 2
+    },
+    {
+      "name": "zombie_bucket_walk",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/zombie_bucket_walk-C6Pvuv9X.png",
+      "original": "reference-originals/zombie_bucket_walk-C6Pvuv9X.png",
+      "sha256": "7a632e570ffcc23bd96b0dc67bf1fb9e8563864a2f48cb7971aad9d5628f58cb",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "frames": 4,
+      "runtime": "assets/zombie_bucket_walk.webp",
+      "bytes": 143542,
+      "columns": 2,
+      "rows": 2
+    },
+    {
+      "name": "icon_house",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/icon_house-BK4vk2GD.png",
+      "original": "reference-originals/icon_house-BK4vk2GD.png",
+      "sha256": "75be40c2a38611f1f772d38cd5add838d5e0c7ac35a76757f2e64cae2e51a0a8",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/icon_house.webp",
+      "bytes": 33928,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "icon_wave",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/icon_wave-Dwasy-Lt.png",
+      "original": "reference-originals/icon_wave-Dwasy-Lt.png",
+      "sha256": "6a6b32e482eb048e724fe95b4dfe6bd83b35bd32d201a2cbd9b0d830822bcad9",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/icon_wave.webp",
+      "bytes": 33472,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "icon_moves",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/icon_moves-DMInLncC.png",
+      "original": "reference-originals/icon_moves-DMInLncC.png",
+      "sha256": "7481b0d244979d60cbf65c5f3664be9bf612f1bde99c53c3459423ff9c8f88d1",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "frames": 1,
+      "runtime": "assets/icon_moves.webp",
+      "bytes": 23166,
+      "columns": 1,
+      "rows": 1
+    },
+    {
+      "name": "zombie_boss_walk",
+      "url": "https://rezona.ai/game/pgcserver/pv/LMfXptZecQ/v9/dist/assets/zombie_boss_walk-CCB900lT.png",
+      "original": "reference-originals/zombie_boss_walk-CCB900lT.png",
+      "sha256": "9d21567c80d2e460f9d8abfa413a7c99f69eb3dab9859b6e185133af2db31339",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "frames": 4,
+      "runtime": "assets/zombie_boss_walk.webp",
+      "bytes": 451498,
+      "columns": 2,
+      "rows": 2
+    }
+  ]
+}
