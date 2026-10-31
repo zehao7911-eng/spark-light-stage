@@ -16,3 +16,5 @@
 - One sourceless MutationObserver error was captured in the iframe test harness. The game contains no MutationObserver code. Public direct-tab console is checked independently in the external delivery record; do not call this harness error a proven game error or claim zero errors from that harness.
 
 No physical handset test, measured frame-rate benchmark, platform grade or S-rating guarantee is claimed. Public Pages deployment, exact-file hashes, immutable ZIP/CRC and real direct-tab play are verified in external delivery records after packaging.
+
+Final framing refinement: the peephole keeps a .76 portrait aspect ratio on short desktop/landscape screens; real visitor art stays proportionate instead of floating in wide black side bars. Gameplay core is unchanged. The static CSS cache key is v2.

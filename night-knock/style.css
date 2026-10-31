@@ -45,3 +45,6 @@
  .modalContent[data-mode="report"] .primary{grid-column:1;grid-row:5;margin-top:6px;font-size:10px;padding:0 10px}
  .modalContent[data-mode="report"] .secondary{grid-column:2;grid-row:5;margin-top:6px;font-size:8px}
 }
+
+/* Keep the lens portrait-shaped on short desktop and landscape viewports too. */
+@supports(aspect-ratio:1){.lens{width:auto;aspect-ratio:.76}.lens img{transform:scale(1.025)}}
