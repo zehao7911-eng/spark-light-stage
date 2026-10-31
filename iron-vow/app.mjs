@@ -1,6 +1,6 @@
-import {Run,DIRS,ARROWS,RELICS,SIGILS,profile,fresh,record,medals} from './core.mjs?v=2';
-import {Battlefield} from './art.mjs?v=2';
-import {relicIcon} from './icons.mjs?v=2';
+import {Run,DIRS,ARROWS,RELICS,SIGILS,profile,fresh,record,medals} from './core.mjs?v=3';
+import {Battlefield} from './art.mjs?v=3';
+import {relicIcon} from './icons.mjs?v=3';
 const $=s=>document.querySelector(s),key='iron-vow-v1';let raw={};try{raw=JSON.parse(localStorage.getItem(key)||'{}')||{}}catch{}
 let p=profile(raw.profile),restored=Run.restore(raw.run),active=!!restored&&restored.id===p.runs,r=active?restored:new Run(p.runs+1,3726183,p.sigil),view=new Battlefield($('#canvas')),paused=true,menu=null,last=performance.now(),acc=0,lastDraw=0,lastSave=0,finishAt=0,callUntil=0,toastUntil=0,drag=null,held=null,voices=[],audio=null,previousFocus=null;
 function save(){if(active)record(p,r);try{localStorage.setItem(key,JSON.stringify({profile:p,run:active?r.save():null}))}catch{}}
