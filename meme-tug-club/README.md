@@ -7,3 +7,5 @@ The 2D artwork was made for this project with image generation, including two ma
 Reference observed: Rezona's Blep Cat (https://rezona.ai/game/pgcserver/play/mVFCTOfk): wake and petting interaction with a visible smile and reward. This tug-of-war game uses a different interaction. References to internet meme culture include Doge, a sneaker-wearing shark, a cappuccino dancer, a banana cat and an absurd wooden character.
 
 Open `index.html` from a static web server. All game files are local; there is no network dependency. The game can also be served from a static web host. Input: touch drag, tap, mouse, Space or left arrow. Escape pauses. Sound begins after interaction when the browser permits it.
+
+Pause and press RESET PROGRESS twice to start over.
