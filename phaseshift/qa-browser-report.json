@@ -1,0 +1,221 @@
+{
+  "firstChamber": {
+    "threeStars": true,
+    "steps": 4
+  },
+  "nativeCampaign": [
+    {
+      "chamber": 2,
+      "result": "CHAMBER 03 UNLOCKED\nConnection complete.\n✦✦✦\n9 STEPS\n11 GOLD TARGET\n\nClean route. Perfect phase alignment.\n\nNEXT CHAMBER\nREPLAY\nMAP"
+    },
+    {
+      "chamber": 3,
+      "result": "SAGE FINISH UNLOCKED\nConnection complete.\n✦✦✦\n14 STEPS\n16 GOLD TARGET\n\nClean route. Perfect phase alignment.\n\nNEXT CHAMBER\nREPLAY\nMAP"
+    },
+    {
+      "chamber": 4,
+      "result": "CHAMBER 05 UNLOCKED\nConnection complete.\n✦✦✦\n7 STEPS\n9 GOLD TARGET\n\nClean route. Perfect phase alignment.\n\nNEXT CHAMBER\nREPLAY\nMAP"
+    },
+    {
+      "chamber": 5,
+      "result": "CHAMBER 06 UNLOCKED\nConnection complete.\n✦✦✦\n16 STEPS\n18 GOLD TARGET\n\nClean route. Perfect phase alignment.\n\nNEXT CHAMBER\nREPLAY\nMAP"
+    },
+    {
+      "chamber": 6,
+      "result": "CHAMBER 07 UNLOCKED\nConnection complete.\n✦✦✦\n11 STEPS\n13 GOLD TARGET\n\nClean route. Perfect phase alignment.\n\nNEXT CHAMBER\nREPLAY\nMAP"
+    },
+    {
+      "chamber": 7,
+      "result": "CHAMBER 08 UNLOCKED\nConnection complete.\n✦✦✦\n15 STEPS\n17 GOLD TARGET\n\nClean route. Perfect phase alignment.\n\nNEXT CHAMBER\nREPLAY\nMAP"
+    },
+    {
+      "chamber": 8,
+      "result": "COPPER FINISH UNLOCKED\nConnection complete.\n✦✦✦\n12 STEPS\n14 GOLD TARGET\n\nClean route. Perfect phase alignment.\n\nNEXT CHAMBER\nREPLAY\nMAP"
+    },
+    {
+      "chamber": 9,
+      "result": "CHAMBER 10 UNLOCKED\nConnection complete.\n✦✦✦\n19 STEPS\n21 GOLD TARGET\n\nClean route. Perfect phase alignment.\n\nNEXT CHAMBER\nREPLAY\nMAP"
+    },
+    {
+      "chamber": 10,
+      "result": "CHAMBER 11 UNLOCKED\nConnection complete.\n✦✦✦\n18 STEPS\n20 GOLD TARGET\n\nClean route. Perfect phase alignment.\n\nNEXT CHAMBER\nREPLAY\nMAP"
+    },
+    {
+      "chamber": 11,
+      "result": "CHAMBER 12 UNLOCKED\nConnection complete.\n✦✦✦\n16 STEPS\n18 GOLD TARGET\n\nClean route. Perfect phase alignment.\n\nNEXT CHAMBER\nREPLAY\nMAP"
+    },
+    {
+      "chamber": 12,
+      "result": "ALL 12 CHAMBERS RECONNECTED\nStation restored.\n✦✦✦\n23 STEPS\n25 GOLD TARGET\n\nClean route. Perfect phase alignment.\n\nCHAMBER MAP\nREPLAY\nMAP"
+    }
+  ],
+  "pausePixelExact": true,
+  "pauseSha256": "58b0429ab36e42acbf83e5338170c9dfc2c9b69f9d8a4f42b3540a8acdf05d89",
+  "restore": {
+    "before": {
+      "steps": "04 STEPS",
+      "energy": "0 / 2",
+      "sockets": [
+        "B",
+        "A",
+        "3"
+      ]
+    },
+    "after": {
+      "steps": "04 STEPS",
+      "energy": "0 / 2",
+      "sockets": [
+        "B",
+        "A",
+        "3"
+      ],
+      "paused": true
+    }
+  },
+  "layout320": {
+    "buttons": [
+      {
+        "bottom": 53.5,
+        "h": 44,
+        "label": "Mute sound",
+        "right": 252,
+        "w": 44,
+        "x": 208,
+        "y": 9.5
+      },
+      {
+        "bottom": 53.5,
+        "h": 44,
+        "label": "Pause game",
+        "right": 304,
+        "w": 44,
+        "x": 260,
+        "y": 9.5
+      },
+      {
+        "bottom": 115.5,
+        "h": 44,
+        "label": "Open chamber map",
+        "right": 60,
+        "w": 44,
+        "x": 16,
+        "y": 71.5
+      },
+      {
+        "bottom": 247.984375,
+        "h": 44,
+        "label": "Walk to BLUE 1",
+        "right": 162.828125,
+        "w": 44,
+        "x": 118.828125,
+        "y": 203.984375
+      },
+      {
+        "bottom": 259.296875,
+        "h": 44,
+        "label": "Walk to AMBER 2",
+        "right": 220.046875,
+        "w": 44,
+        "x": 176.046875,
+        "y": 215.296875
+      },
+      {
+        "bottom": 328.09375,
+        "h": 44,
+        "label": "Walk to SOCKET 3",
+        "right": 167.5,
+        "w": 44,
+        "x": 123.5,
+        "y": 284.09375
+      },
+      {
+        "bottom": 451,
+        "h": 44,
+        "label": "How to play",
+        "right": 306,
+        "w": 44,
+        "x": 262,
+        "y": 407
+      },
+      {
+        "bottom": 506,
+        "h": 48,
+        "label": "WALK",
+        "right": 74.65625,
+        "w": 60.65625,
+        "x": 14,
+        "y": 458
+      },
+      {
+        "bottom": 506,
+        "h": 48,
+        "label": "BLUE",
+        "right": 140.328125,
+        "w": 60.671875,
+        "x": 79.65625,
+        "y": 458
+      },
+      {
+        "bottom": 506,
+        "h": 48,
+        "label": "AMBER",
+        "right": 206,
+        "w": 60.671875,
+        "x": 145.328125,
+        "y": 458
+      },
+      {
+        "bottom": 504,
+        "h": 44,
+        "label": "Undo last action",
+        "right": 256,
+        "w": 44,
+        "x": 212,
+        "y": 460
+      },
+      {
+        "bottom": 504,
+        "h": 44,
+        "label": "Show a hint",
+        "right": 306,
+        "w": 44,
+        "x": 262,
+        "y": 460
+      },
+      {
+        "bottom": 557,
+        "h": 44,
+        "label": "RESTART",
+        "right": 306,
+        "w": 44,
+        "x": 262,
+        "y": 513
+      }
+    ],
+    "height": 568,
+    "scrollWidth": 320,
+    "width": 320,
+    "finalCorrection": "Controls changed to stacked icons; all final targets >=44 and in viewport."
+  },
+  "landscape": {
+    "bad": [],
+    "scroll": [
+      844,
+      390
+    ],
+    "viewport": [
+      844,
+      390
+    ]
+  },
+  "sceneTap": {
+    "chamber": 2,
+    "cellTapSteps": 2,
+    "portalSocketTap": true,
+    "exitSceneTap": true,
+    "totalSteps": 9,
+    "threeStars": true
+  },
+  "consoleErrors": [],
+  "physicalHandsetTested": false
+}

@@ -1,0 +1,102 @@
+{
+  "passed": true,
+  "checks": 803,
+  "chambers": [
+    {
+      "chamber": 1,
+      "name": "First light",
+      "optimalActions": 4,
+      "goldTarget": 6,
+      "teleports": 0,
+      "toggles": 0
+    },
+    {
+      "chamber": 2,
+      "name": "Across the seam",
+      "optimalActions": 9,
+      "goldTarget": 11,
+      "teleports": 1,
+      "toggles": 0
+    },
+    {
+      "chamber": 3,
+      "name": "Three islands",
+      "optimalActions": 14,
+      "goldTarget": 16,
+      "teleports": 2,
+      "toggles": 0
+    },
+    {
+      "chamber": 4,
+      "name": "Live circuit",
+      "optimalActions": 7,
+      "goldTarget": 9,
+      "teleports": 0,
+      "toggles": 1
+    },
+    {
+      "chamber": 5,
+      "name": "Split current",
+      "optimalActions": 16,
+      "goldTarget": 18,
+      "teleports": 2,
+      "toggles": 1
+    },
+    {
+      "chamber": 6,
+      "name": "Return signal",
+      "optimalActions": 11,
+      "goldTarget": 13,
+      "teleports": 1,
+      "toggles": 1
+    },
+    {
+      "chamber": 7,
+      "name": "Two frequencies",
+      "optimalActions": 15,
+      "goldTarget": 17,
+      "teleports": 0,
+      "toggles": 3
+    },
+    {
+      "chamber": 8,
+      "name": "One way out",
+      "optimalActions": 12,
+      "goldTarget": 14,
+      "teleports": 1,
+      "toggles": 0
+    },
+    {
+      "chamber": 9,
+      "name": "Relay station",
+      "optimalActions": 19,
+      "goldTarget": 21,
+      "teleports": 2,
+      "toggles": 2
+    },
+    {
+      "chamber": 10,
+      "name": "Cross talk",
+      "optimalActions": 18,
+      "goldTarget": 20,
+      "teleports": 1,
+      "toggles": 2
+    },
+    {
+      "chamber": 11,
+      "name": "Slipstream",
+      "optimalActions": 16,
+      "goldTarget": 18,
+      "teleports": 3,
+      "toggles": 0
+    },
+    {
+      "chamber": 12,
+      "name": "Event horizon",
+      "optimalActions": 23,
+      "goldTarget": 25,
+      "teleports": 3,
+      "toggles": 1
+    }
+  ]
+}
