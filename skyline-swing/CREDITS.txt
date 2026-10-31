@@ -1,0 +1,5 @@
+SKYLINE SWING
+Original game logic, illustration, icon, interface and synthesized audio.
+Reference: Golf Orbit, Rezona public mqFCTOiA/v1.
+Reference gameplay observation only. No upstream source or media bundled.
+System fonts are requested by family name and not redistributed.
