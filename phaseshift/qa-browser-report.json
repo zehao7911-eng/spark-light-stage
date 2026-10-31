@@ -217,5 +217,12 @@
     "threeStars": true
   },
   "consoleErrors": [],
-  "physicalHandsetTested": false
+  "physicalHandsetTested": false,
+  "renderOptimization": {
+    "staticBoardAndOrbitalBoxesInstanced": true,
+    "chamber9MeasuredDrawCalls": 114,
+    "postBatchSceneAndWalkRechecked": true,
+    "rulesUnchanged": true,
+    "restoredGateVisualStateSnapsToLogicalState": true
+  }
 }

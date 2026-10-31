@@ -21,7 +21,7 @@ Local save key `phaseshift.v1` stores chamber stars, best routes, explorer finis
 
 Original procedural Three.js dioramas: warm-white modular ceramic panels, dark blue mechanical supports, cyan/amber portal spirals, green faceted energy cells, a small articulated explorer, distant orbital structures and a shader planet. Restricted material families and stable camera framing keep the game board readable. Animated limbs, portal compression/reassembly, independent collection/circuit/portal sounds and bounded particles make actions legible. Reduced-motion settings disable camera drift. Runtime art uses no generated image, downloaded illustration or reference-game asset.
 
-Rendering is capped near 40 fps, DPR 1.5, with simple geometry, no real-time shadow maps and at most 120 short particles. World picking uses actual tile meshes; rules use discrete coordinates and bounded graph searches. Touch input ignores extra pointers and cancelled drags. The layout supports portrait and landscape safe areas and controls of at least 44 CSS pixels. Browser viewport tests do not certify performance on a physical handset.
+Rendering is capped near 40 fps, DPR 1.5, with instanced static panel/structure batches, simple geometry, no real-time shadow maps and at most 120 short particles. World picking uses actual tile meshes; rules use discrete coordinates and bounded graph searches. Touch input ignores extra pointers and cancelled drags. The layout supports portrait and landscape safe areas and controls of at least 44 CSS pixels. Browser viewport tests do not certify performance on a physical handset.
 
 ## Reference and skills
 
