@@ -1,0 +1,112 @@
+{
+  "reference": "https://rezona.ai/game/pgcserver/play/ncwefrYD",
+  "retrieved": "2026-10-31",
+  "tool": "Browser pageAssets inventory and bundle",
+  "basis": "Public reference images reused at explicit user direction. Public access is not asserted to be an open-media license. Original artwork ownership is not claimed. No reference game code, logo, font or recorded audio is included.",
+  "assets": [
+    {
+      "name": "chamber",
+      "url": "https://rezona.ai/game/pgcserver/pv/ncwefrYD/v5/dist/assets/bg_board-BshDlPJg.jpg",
+      "original": "reference-originals\\bg_board-BshDlPJg.jpg",
+      "sha256": "f2108681a77af0e88f139f64cb21c0a4b3c3d5fb6d1051bf4bee332d937d8492",
+      "dimensions": [
+        768,
+        1376
+      ],
+      "mode": "RGB",
+      "runtime": "assets/chamber.webp",
+      "runtimeBytes": 296480
+    },
+    {
+      "name": "keeper",
+      "url": "https://rezona.ai/game/pgcserver/pv/ncwefrYD/v5/dist/assets/devil_bust-Bf15WGHl.png",
+      "original": "reference-originals\\devil_bust-Bf15WGHl.png",
+      "sha256": "2379b3e7947248d84e669b5bdcf1eff51e2297bd89375477ec659be633a1ee8f",
+      "dimensions": [
+        640,
+        640
+      ],
+      "mode": "RGBA",
+      "runtime": "assets/keeper.webp",
+      "runtimeBytes": 40072
+    },
+    {
+      "name": "nova",
+      "url": "https://rezona.ai/game/pgcserver/pv/ncwefrYD/v5/dist/assets/orb_bomb-2hXvXs5P.png",
+      "original": "reference-originals\\orb_bomb-2hXvXs5P.png",
+      "sha256": "d598df903c392070484999a43aae2f132e2272fd77d96f43779ab345d25323b6",
+      "dimensions": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "runtime": "assets/nova.webp",
+      "runtimeBytes": 57798
+    },
+    {
+      "name": "frame",
+      "url": "https://rezona.ai/game/pgcserver/pv/ncwefrYD/v5/dist/assets/hud_frame-DNyw2DeC.png",
+      "original": "reference-originals\\hud_frame-DNyw2DeC.png",
+      "sha256": "23d37ef184123f4fdfc20de417ecac5134b539acc45286311620ab9eaa7aa8b6",
+      "dimensions": [
+        1280,
+        714
+      ],
+      "mode": "RGBA",
+      "runtime": "assets/frame.webp",
+      "runtimeBytes": 127150
+    },
+    {
+      "name": "keeper-laugh",
+      "url": "https://rezona.ai/game/pgcserver/pv/ncwefrYD/v5/dist/assets/devil_laugh-B1fVIBwt.png",
+      "original": "reference-originals\\devil_laugh-B1fVIBwt.png",
+      "sha256": "2d95eeca088837477037093f82cce56d3bf4b1e7caaf44b9a9fc0c394dceb9fb",
+      "dimensions": [
+        640,
+        640
+      ],
+      "mode": "RGBA",
+      "runtime": "assets/keeper-laugh.webp",
+      "runtimeBytes": 58092
+    },
+    {
+      "name": "ivory",
+      "url": "https://rezona.ai/game/pgcserver/pv/ncwefrYD/v5/dist/assets/piece_tooth-BFWrpiun.png",
+      "original": "reference-originals\\piece_tooth-BFWrpiun.png",
+      "sha256": "98b970ecee549f83199eb334849a9f3380d768b18b3523ca2f8d549898634ce7",
+      "dimensions": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "runtime": "assets/ivory.webp",
+      "runtimeBytes": 35332
+    },
+    {
+      "name": "bones",
+      "url": "https://rezona.ai/game/pgcserver/pv/ncwefrYD/v5/dist/assets/piece_bone-DZIXt6Ly.png",
+      "original": "reference-originals\\piece_bone-DZIXt6Ly.png",
+      "sha256": "956899395faa0a10bd2996dbae562cbdd0520c410a197dae18bc898ed60364cd",
+      "dimensions": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "runtime": "assets/bones.webp",
+      "runtimeBytes": 40538
+    },
+    {
+      "name": "soul",
+      "url": "https://rezona.ai/game/pgcserver/pv/ncwefrYD/v5/dist/assets/piece_soul-DmY0JauD.png",
+      "original": "reference-originals\\piece_soul-DmY0JauD.png",
+      "sha256": "c126fa5a7d99034f3ab018a06a88cd6b526be5e15944eb8375d7f63343259846",
+      "dimensions": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "runtime": "assets/soul.webp",
+      "runtimeBytes": 50790
+    }
+  ]
+}

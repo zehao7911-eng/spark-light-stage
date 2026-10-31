@@ -1,0 +1,6 @@
+NIGHTGLIDE
+
+Original game code, interface, physics and synthesized sound: authored for this project.
+Selected image files in assets and reference-originals come directly from the publicly playable Sweet Rot on Rezona, reused at the explicit user's direction. They are third-party artwork; this project does not claim their authorship or assert a public-domain/open-media license. See ART-SOURCES.json for exact provenance and SHA-256 hashes. The code license does not grant rights to those images. No reference game code, logo, font or recorded audio is included.
+
+The supplied source game is an independent air-hockey implementation, not Sweet Rot's source or its match-three rules.
