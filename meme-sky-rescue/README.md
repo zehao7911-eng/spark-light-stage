@@ -1,0 +1,7 @@
+# Meme Sky Rescue
+
+A one-finger arcade rescue game. Drag left or right to move the trampoline, catch the falling crew and bounce them into the balloon. Catch near either edge to influence the direction. Earn coins and upgrade to a wider trampoline between flights. Six flights add moving balloons, wind and bumpers; the sequence repeats with a slightly faster spawn rhythm. A missed character costs a heart. A failed flight can be retried. The current flight, coins, upgrades and sound preference are saved locally; an interrupted flight restarts from its beginning. Pause and tap RESET PROGRESS twice to start over.
+
+Four meme-inspired characters, each with a matching bounce expression, were generated for this game. The seaside street, balloon and trampoline are separate generated layers. UI, animation, physics, particles and sound are independently implemented. No reference game code or game assets were used. Rezona references were inspected for presentation and interaction: Big Belly FC's opening match and Where's My Tralalero's level view. This game uses a different rescue mechanic and is not a port of either.
+
+Run `index.html` from any static server or host. Runtime files are local and do not need an external library. Drag on the field or lower control; left/right arrow keys also move the trampoline. Escape pauses. Audio starts after user interaction where the browser permits it.
