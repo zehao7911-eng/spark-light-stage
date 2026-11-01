@@ -1,0 +1,79 @@
+{
+  "passed": true,
+  "checks": 200,
+  "results": [
+    {
+      "stage": 1,
+      "taps": 10,
+      "pops": 12,
+      "stars": 3,
+      "stamp": 0,
+      "choir": 0
+    },
+    {
+      "stage": 2,
+      "taps": 16,
+      "pops": 14,
+      "stars": 3,
+      "stamp": 0,
+      "choir": 0
+    },
+    {
+      "stage": 3,
+      "taps": 10,
+      "pops": 16,
+      "stars": 3,
+      "stamp": 1,
+      "choir": 0
+    },
+    {
+      "stage": 4,
+      "taps": 13,
+      "pops": 16,
+      "stars": 3,
+      "stamp": 1,
+      "choir": 0
+    },
+    {
+      "stage": 5,
+      "taps": 8,
+      "pops": 18,
+      "stars": 3,
+      "stamp": 1,
+      "choir": 0
+    },
+    {
+      "stage": 6,
+      "taps": 5,
+      "pops": 18,
+      "stars": 3,
+      "stamp": 1,
+      "choir": 1
+    },
+    {
+      "stage": 7,
+      "taps": 8,
+      "pops": 20,
+      "stars": 3,
+      "stamp": 1,
+      "choir": 1
+    },
+    {
+      "stage": 8,
+      "taps": 8,
+      "pops": 20,
+      "stars": 3,
+      "stamp": 1,
+      "choir": 1
+    },
+    {
+      "stage": 9,
+      "taps": 8,
+      "pops": 22,
+      "stars": 3,
+      "stamp": 1,
+      "choir": 1
+    }
+  ],
+  "physicalHandsetTested": false
+}

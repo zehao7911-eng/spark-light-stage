@@ -1,0 +1,125 @@
+{
+  "passed": true,
+  "campaignNativeResults": [
+    "PRINT 01 · COLLECTED\nA very\ngood pop.\n★★★\n12\nEYES POPPED\n12×\nBEST CHAIN\n+44\nINK TOKENS\nNEXT ODDBALL →\nPOP AGAIN\nCOLLECTION\nSTUDIO",
+    "PRINT 02 · COLLECTED\nA very\ngood pop.\n★★★\n14\nEYES POPPED\n14×\nBEST CHAIN\n+48\nINK TOKENS\nINK STAMP UNLOCKED · Charge it with 8 pops.\nNEXT ODDBALL →\nPOP AGAIN\nCOLLECTION\nSTUDIO",
+    "PRINT 03 · COLLECTED\nA very\ngood pop.\n★★★\n16\nEYES POPPED\n16×\nBEST CHAIN\n+52\nINK TOKENS\nNEXT ODDBALL →\nPOP AGAIN\nCOLLECTION\nSTUDIO",
+    "PRINT 04 · COLLECTED\nA very\ngood pop.\n★★★\n16\nEYES POPPED\n16×\nBEST CHAIN\n+52\nINK TOKENS\nNEXT ODDBALL →\nPOP AGAIN\nCOLLECTION\nSTUDIO",
+    "PRINT 05 · COLLECTED\nA very\ngood pop.\n★★★\n18\nEYES POPPED\n18×\nBEST CHAIN\n+56\nINK TOKENS\nEYE CHOIR UNLOCKED · A free chorus every portrait.\nNEXT ODDBALL →\nPOP AGAIN\nCOLLECTION\nSTUDIO",
+    "PRINT 06 · COLLECTED\nA very\ngood pop.\n★★★\n18\nEYES POPPED\n18×\nBEST CHAIN\n+56\nINK TOKENS\nNEXT ODDBALL →\nPOP AGAIN\nCOLLECTION\nSTUDIO",
+    "PRINT 07 · COLLECTED\nA very\ngood pop.\n★★★\n20\nEYES POPPED\n20×\nBEST CHAIN\n+60\nINK TOKENS\nNEXT ODDBALL →\nPOP AGAIN\nCOLLECTION\nSTUDIO",
+    "PRINT 08 · COLLECTED\nA very\ngood pop.\n★★★\n20\nEYES POPPED\n20×\nBEST CHAIN\n+60\nINK TOKENS\nNEXT ODDBALL →\nPOP AGAIN\nCOLLECTION\nSTUDIO",
+    "PRINT 09 · COLLECTED\nA very\ngood pop.\n★★★\n22\nEYES POPPED\n22×\nBEST CHAIN\n+62\nINK TOKENS\nENCORES UNLOCKED · New arrangements. Familiar oddballs.\nPLAY AN ENCORE →\nPOP AGAIN\nCOLLECTION\nSTUDIO"
+  ],
+  "encoreNativeResult": "PRINT 10 · COLLECTED\nA very\ngood pop.\n★★★\n22\nEYES POPPED\n20×\nBEST CHAIN\n+62\nINK TOKENS\nPLAY AN ENCORE →\nPOP AGAIN\nCOLLECTION\nSTUDIO",
+  "realCanvasSwipe": true,
+  "directStripedEyeThreeTaps": {
+    "afterFirst": "0 / 16",
+    "afterThird": "1 / 16"
+  },
+  "stampNativeUsed": true,
+  "choirNativeUsed": true,
+  "upgrades": "THE PRINT STUDIO · 142 INK TOKENS\nLittle tools.\nBig feelings.\n◎\nBIGGER TOUCH\nA wider touch and a bigger stamp.\nLEVEL 3 / 3\nMAX\n✺\nGOLDEN ECHO\nGold eyes reach farther with every chain.\nLEVEL 3 / 3\nMAX\n\n2 portraits → Ink Stamp.\n5 portraits → Eye Choir.\n9 portraits → Endless Encores.\n\nBACK TO POPPING",
+  "layouts": [
+    {
+      "badButtons": [],
+      "scroll": [
+        320,
+        568
+      ],
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "badButtons": [
+        {
+          "h": 44,
+          "id": "album",
+          "w": 40
+        }
+      ],
+      "scroll": [
+        568,
+        320
+      ],
+      "viewport": [
+        568,
+        320
+      ]
+    },
+    {
+      "badButtons": [
+        {
+          "h": 44,
+          "id": "album",
+          "w": 40
+        }
+      ],
+      "scroll": [
+        844,
+        390
+      ],
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "badButtons": [
+        {
+          "h": 44,
+          "id": "album",
+          "w": 40
+        }
+      ],
+      "scroll": [
+        568,
+        320
+      ],
+      "viewport": [
+        568,
+        320
+      ]
+    },
+    {
+      "badButtons": [
+        {
+          "h": 44,
+          "id": "album",
+          "w": 40
+        }
+      ],
+      "scroll": [
+        844,
+        390
+      ],
+      "viewport": [
+        844,
+        390
+      ]
+    }
+  ],
+  "partialRestoreBefore": {
+    "animation": "0.750",
+    "combo": "2",
+    "mode": "paused",
+    "pops": "2",
+    "stage": "8",
+    "time": "0.750",
+    "total": "20"
+  },
+  "partialRestoreAfter": {
+    "stage": 8,
+    "pops": 2,
+    "time": 0.75
+  },
+  "pausedPNGEqual": true,
+  "pausedPNGHash": "d2d5e642972721eaf2bccaf3bbd4618dd9d13a8c7e93160ae6680acf6b6146b0",
+  "initialPauseCaptureNote": "Initial compositor warmup pair differed; stable pair after DOM and frame settlement matched.",
+  "gentleAndMutePersisted": true,
+  "keyboardSpace": true,
+  "physicalHandsetTested": false,
+  "keyboardSpaceMethod": "Native Space activation of the focused POP AN EYE button changed 0/24 to 1/24; unscoped Space not used as proof."
+}
