@@ -1,0 +1,6 @@
+import assert from'node:assert/strict';import{readFileSync,existsSync}from'node:fs';import{createHash}from'node:crypto';import{Art}from'../art.mjs';
+const pending=[];globalThis.Image=class{set src(v){this.url=v;pending.push(this)}};globalThis.devicePixelRatio=1;
+let canvas={getContext:()=>({setTransform(){}}),getBoundingClientRect:()=>({width:390,height:500})};let a=new Art(canvas);assert.equal(pending.length,16);assert.equal(Object.keys(a.images).length,0);pending[0].onload();assert.equal(Object.keys(a.images).length,1);for(let im of pending.slice(1))im.onload();assert.equal(Object.keys(a.images).length,16);
+const base=new URL('../',import.meta.url),meta=JSON.parse(readFileSync(new URL('assets/PROVENANCE.json',base)));assert.equal(meta.images.length,16);
+for(let m of meta.images){let bytes=readFileSync(new URL(m.runtime,base));assert.equal(createHash('sha256').update(bytes).digest('hex'),m.runtimeSha256);let source=readFileSync(new URL('assets/originals/'+m.file,base));assert.equal(createHash('sha256').update(source).digest('hex'),m.originalSha256);assert.ok(pending.some(im=>im.url===m.runtime));if(m.preparation?.grid)assert.deepEqual(m.preparation.grid,[3,3]);}
+console.log('Art: 16 runtime/original pairs verified; independent and late image loads install correctly.');

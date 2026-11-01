@@ -1,0 +1,10 @@
+The source-code MIT license does not apply to images under assets/, preserved
+original images, prepared actor sheets, or cover/icon compositions containing
+the third-party images credited in ART-SOURCES.md and assets/PROVENANCE.json.
+
+These files are sourced from the publicly served Rezona Shrinebreak page.
+Public availability and a site's remix capability do not establish a separate
+standalone open-media license. No ownership or universal commercial-use rights
+in those third-party images are claimed by this project.
+
+No reference executable code, font, title logo, recorded voice or music is bundled.
