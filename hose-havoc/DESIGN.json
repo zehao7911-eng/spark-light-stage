@@ -1,0 +1,22 @@
+{
+  "title": "Hose Havoc",
+  "reference": "https://rezona.ai/game/pgcserver/pv/GMjoMZku/v8/dist/index.html",
+  "loop": "Aim water \u2192 suppress heat / wet neighbours / cool tanks \u2192 residents evacuate \u2192 best stars \u2192 functional nozzles",
+  "scope": "6 short calls, 3 shared room themes, repeat same calls after finale",
+  "dedup": [
+    "Rinse & Shine: static UV dirt cleaning",
+    "Fossil & Fern: brush/chisel/rinse restoration",
+    "Sweepwick: litter pickup and recycling",
+    "Out of Office: contextual pranks and patrol avoidance"
+  ],
+  "art": "Navy/vermillion/fire yellow industrial miniature, original procedural humans, no animals or generated bitmap assets",
+  "skills": [
+    "game-design",
+    "game-art",
+    "3d-games",
+    "web-games",
+    "mobile-games",
+    "game-audio"
+  ],
+  "referenceAssetsCopied": false
+}
