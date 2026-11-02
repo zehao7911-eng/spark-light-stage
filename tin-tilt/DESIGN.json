@@ -1,0 +1,21 @@
+{
+  "title": "Tin Tilt",
+  "reference": "https://rezona.ai/game/pgcserver/pv/OVKxsQlp/v1/dist/index.html",
+  "loop": "Track medallion \u2192 automatic approach \u2192 lance contact/unseat \u2192 score/stars \u2192 useful lances/next cup",
+  "scope": "6 short cups, 3 shared grounds; capped3-tier repeat lap",
+  "dedup": [
+    "Iron Vow: directional parry/hold strike",
+    "Neon Knockout: ball-return combat",
+    "Send It Park: rail editing and braking",
+    "Hose Havoc: fire suppression and rescue"
+  ],
+  "art": "Enamel armour, brass trim, wood mechanisms, heraldic cloth; original sculpted geometry; no copied assets or imagegen",
+  "skills": [
+    "game-design",
+    "game-art",
+    "3d-games",
+    "web-games",
+    "mobile-games",
+    "game-audio"
+  ]
+}

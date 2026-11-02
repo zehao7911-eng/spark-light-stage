@@ -1,0 +1,16 @@
+{
+  "name": "Tin Tilt",
+  "short_name": "Tin Tilt",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#243f4b",
+  "theme_color": "#243f4b",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
