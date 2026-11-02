@@ -1,0 +1,101 @@
+{
+  "passed": true,
+  "campaignNativeResults": [
+    "AIRWAY 1 · RESTORED\nSuch sky.\nVery proud.\n★★★\n3/3\nSKY RINGS\n12\nVERY GOOD FLIPS\n+98\nBANKED TOKENS\nNEXT AIRWAY →\nFLY AGAIN\nHANGAR\nTRAVEL LOG",
+    "AIRWAY 2 · RESTORED\nSuch sky.\nVery proud.\n★★★\n3/3\nSKY RINGS\n12\nVERY GOOD FLIPS\n+98\nBANKED TOKENS\nAIR HOP UNLOCKED · Tap again in flight to leap past a step.\nNEXT AIRWAY →\nFLY AGAIN\nHANGAR\nTRAVEL LOG",
+    "AIRWAY 3 · RESTORED\nSuch sky.\nVery proud.\n★★★\n3/3\nSKY RINGS\n6\nVERY GOOD FLIPS\n+77\nBANKED TOKENS\nNEXT AIRWAY →\nFLY AGAIN\nHANGAR\nTRAVEL LOG",
+    "AIRWAY 4 · RESTORED\nSuch sky.\nVery proud.\n★★★\n3/3\nSKY RINGS\n6\nVERY GOOD FLIPS\n+77\nBANKED TOKENS\nGLIDER UNLOCKED · Open your wings in flight for a longer float.\nNEXT AIRWAY →\nFLY AGAIN\nHANGAR\nTRAVEL LOG",
+    "AIRWAY 5 · RESTORED\nSuch sky.\nVery proud.\n★★★\n3/3\nSKY RINGS\n6\nVERY GOOD FLIPS\n+91\nBANKED TOKENS\nNEXT AIRWAY →\nFLY AGAIN\nHANGAR\nTRAVEL LOG",
+    "AIRWAY 6 · RESTORED\nSuch sky.\nVery proud.\n★★★\n3/3\nSKY RINGS\n6\nVERY GOOD FLIPS\n+91\nBANKED TOKENS\nSKY TOURS UNLOCKED · Keep climbing through the workshop worlds.\nTAKE A SKY TOUR →\nFLY AGAIN\nHANGAR\nTRAVEL LOG"
+  ],
+  "passport": "AIR MAIL PASSPORT · 18 / 18 ★\nPlaces of\nconsiderable wow.\n✥\nCloud Nine Workshop\n★★★\n☕\nThe Teacup Turnpike\n★★★\n✧\nLavender Liftworks\n★★★\n✣\nThe Wandering Windmill\n★★★\n☾\nMoonbeam Bureau\n★★★\n✹\nThe Grand Sky Parade\n★★★\nTAKE A SKY TOUR →BACK TO THE SKY",
+  "finalTourResult": "AIRWAY 7 · RESTORED\nSuch sky.\nVery proud.\n★★☆\n0/3\nSKY RINGS\n6\nVERY GOOD FLIPS\n+69\nBANKED TOKENS\nTAKE A SKY TOUR →\nFLY AGAIN\nHANGAR\nTRAVEL LOG",
+  "exactFlightBefore": {
+    "airborne": "true",
+    "drawCalls": "151",
+    "engine": "three.js r147",
+    "height": "11.917",
+    "mode": "paused",
+    "node": "7",
+    "time": "95.191"
+  },
+  "exactFlightAfter": {
+    "airborne": "true",
+    "drawCalls": "145",
+    "engine": "three.js r147",
+    "height": "11.917",
+    "mode": "paused",
+    "node": "7",
+    "time": "95.191"
+  },
+  "stablePausedPNGEqual": true,
+  "stablePausedPNGHash": "112b17cfda356d8b21b4256fb12fda9136f572efe082066d022e21018c0ff37d",
+  "upgradesAndOutfit": "THE LITTLE HANGAR · 51 BANKED TOKENS\nA little more\nairborne.\n↥\nSPRING BOOTS\nHigher arcs help you catch sky rings.\nLEVEL 3 / 3\nMAX\n◎\nRING MAGNET\nCatch sky rings from farther away.\nLEVEL 3 / 3\nMAX\nCLOUD TEAL\nLILAC SKY\n✓ HONEY SUN\nALL SET",
+  "finalLayouts": [
+    {
+      "badTargets": [],
+      "overlaps": [],
+      "scroll": [
+        320,
+        568
+      ],
+      "size": [
+        320,
+        568
+      ]
+    },
+    {
+      "badTargets": [],
+      "overlaps": [],
+      "scroll": [
+        568,
+        320
+      ],
+      "size": [
+        568,
+        320
+      ]
+    },
+    {
+      "badTargets": [],
+      "overlaps": [],
+      "scroll": [
+        844,
+        390
+      ],
+      "size": [
+        844,
+        390
+      ]
+    },
+    {
+      "badTargets": [],
+      "overlaps": [],
+      "scroll": [
+        390,
+        844
+      ],
+      "size": [
+        390,
+        844
+      ]
+    }
+  ],
+  "earlierLayoutFailure": "568x320 pause/garage overlapped before compact toolbar refinement; final same-size check has no overlap.",
+  "keyboard": {
+    "space": true,
+    "gGlide": true,
+    "escapePause": true
+  },
+  "directCanvasPlatformTap": true,
+  "twoTapReset": {
+    "prompt": "TAP AGAIN TO RESET THIS PASSPORT",
+    "finalCoins": 0,
+    "finalStep": 0
+  },
+  "muteAndGentlePersisted": true,
+  "resultReloadWithoutRepay": true,
+  "console": [],
+  "renderingNotes": "All six campaign routes played during iteration. Final changes refined flip interpolation, camera bounds, actor scale, contact decal, scene labels and compact layout. Final native Sky Tour completion and first-route replay/layouts verified after those changes; frozen public first-route play is recorded separately.",
+  "physicalHandsetTested": false
+}

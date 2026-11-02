@@ -1,0 +1,61 @@
+{
+  "passed": true,
+  "checks": 235,
+  "campaign": [
+    {
+      "airway": 1,
+      "hops": 12,
+      "boosts": 0,
+      "glides": 0,
+      "rings": 3,
+      "stars": 3,
+      "earned": 98
+    },
+    {
+      "airway": 2,
+      "hops": 12,
+      "boosts": 0,
+      "glides": 0,
+      "rings": 3,
+      "stars": 3,
+      "earned": 98
+    },
+    {
+      "airway": 3,
+      "hops": 6,
+      "boosts": 6,
+      "glides": 0,
+      "rings": 0,
+      "stars": 2,
+      "earned": 59
+    },
+    {
+      "airway": 4,
+      "hops": 6,
+      "boosts": 6,
+      "glides": 0,
+      "rings": 0,
+      "stars": 2,
+      "earned": 59
+    },
+    {
+      "airway": 5,
+      "hops": 6,
+      "boosts": 6,
+      "glides": 6,
+      "rings": 0,
+      "stars": 2,
+      "earned": 71
+    },
+    {
+      "airway": 6,
+      "hops": 6,
+      "boosts": 6,
+      "glides": 6,
+      "rings": 0,
+      "stars": 2,
+      "earned": 71
+    }
+  ],
+  "physicalHandsetTested": false
+}

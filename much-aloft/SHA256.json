@@ -1,0 +1,19 @@
+{
+  "ART-DIRECTION.md": "7ee4e9ce23fec1b4c1fbb67232990bd47df3781fc1826dc8f16df54561766560",
+  "build.py": "63a397a530d6cfb6387c122aad6518807f63874db60eee43c4eb6782dcf2f3b8",
+  "game.js": "c266d7589685c1dad88be1ebc731bfca04ce78116634bf7df80d56e647e18e3c",
+  "icon.svg": "8bec68d229be653dd1a4b1fa07e70968c9ce5f2c20e1e31849ef44e32ce86da1",
+  "index-source.html": "b89d673779a4bc309005433052b3ec5399d7578519f2d8a0bebb306fe19b4dab",
+  "index.html": "dac622253c55b4ccedef3f88c5d777e747b5cbc3709b13bfc8ecf37c2d7f7646",
+  "LICENSE.txt": "87426d5148660aa63e5638d3c47407b7e3365ad651ec983d7a2eb02f27607bc4",
+  "model.js": "293be7571937c2155c20894cc2f9f8e04798177f2e65d968996e4b64a1a2367f",
+  "MUCH-ALOFT-OFFLINE.html": "dac622253c55b4ccedef3f88c5d777e747b5cbc3709b13bfc8ecf37c2d7f7646",
+  "qa-browser-report.json": "f173db0af27b645a0fdbe4b6bf42bc32bd5e3405bc1713205645d4a12bd36610",
+  "qa-model-report.json": "ad55590c45d78c2abe2a0e53f4d64e53f829d7a6d7d784fe17f62b659310c3d7",
+  "README.md": "25f44f1d492439d1c648877f511323c0e2fd3c0858fed5e87ba4387fd3b3b568",
+  "style.css": "b739258480b90f434c15295af96d41550b9d7fefd1be6f211af5f80612922e0f",
+  "test-model.cjs": "b0ded81fdec681ab3d9625adb58e7d8c25c4be49536be073f58ea9e61b7efa49",
+  "vendor/THREE-LICENSE.txt": "df2a91696186fe58c92518a25d48bc59c8ee2edc7cac9ca6d19a5a0d599a2a05",
+  "vendor/three.min.js": "f34446bf875b5fb0dcd93819ffe1d9e182d46634ee855f5d904c6c4ac7cdbc95",
+  "view.js": "1f9ccdef4d1417b3aa3ea26d0e9c09ef3128a2afba29d812fd5d312478024d89"
+}
