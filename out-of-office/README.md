@@ -36,3 +36,12 @@ The reference's start, countdown, walking and one contextual character interacti
 All game-specific code, procedural meshes, UI, animations, original SVG icon and synthesized audio were created for this project. The cover is a screenshot of the real title scene. No reference executable, character models, images, fonts or recorded audio are included. No image generation was used. The locally bundled Three.js retains its MIT notice in `vendor/THREE-LICENSE.txt`; original work is covered by `LICENSE.txt`.
 
 Run `node tools/test.mjs` for core checks, including all six shifts, route obstruction, capture rollback, retry, idempotent rewards and save continuity. Browser viewport QA is reported separately from physical handset tests. No hardware frame-rate or platform-grade guarantee is claimed.
+
+
+## Usability and stability update
+
+The chosen prank now has a highlighted dock button, a larger marker in the room and an explicit walking/working status. Stop Walking cancels the route. Boss suspicion and all three warnings are visible without opening the rules. Pranks display their +150 reward. Completed buttons are disabled, while failed/undone pranks become available again.
+
+Movement consumes its remaining distance through grid waypoints, eliminating the old per-node pause. HUD writes are throttled independently of the fixed simulation. Outfit selection updates the current clerk immediately. Sound indicators stay synchronized with Pause settings; transient effects reset between shifts. The initial patrol cone is visible before the first command. Gentle mode removes celebration jumps and uses slower camera follow.
+
+An expired timer now causes loss before evaluating same-frame desk arrival. Partial-save validation rejects altered task layouts, invalid patrol paths and out-of-range actor values while retaining valid profile rewards. Previous valid saves remain readable.
