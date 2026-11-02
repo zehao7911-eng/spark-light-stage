@@ -1,7 +1,5 @@
-# Art and design notes
+# Pixel art direction
 
-The three street backgrounds, taxi, capybara guard, pigeon and dog were created for this game using image generation. Background variations preserve the crosswalk and roadway layout. All moving characters are cropped sprites with programmatic movement and bobbing; they are not multiframe animations or real-time 3D models. The cover is a capture of the playable build and the icon is original SVG.
+Reference: https://mygamesartstyle.jupiterthewarlock.com/styles/detailed-pixel/ — especially the principles of grouped pixels, restrained value ramps and clear focal silhouettes. The site's NobodyNowhere city-street screenshot was viewed for its street-material detail and warm/cool contrast. The actual game scene uses its own overhead composition and original code-drawn art; no reference image or game asset is included.
 
-The supplied videos informed the goal of clear objectives, immediate reactions, coherent scenes, progression and replay. Corner Crew's hold/release traffic-control loop is a new implementation in this workspace, not a claim to reproduce any supplied game's entire mechanics or production quality.
-
-Game design skills informed a one-action opening and six distinct traffic configurations; mobile/web skills informed large touch targets, pointer cancellation, visibility pause, a bundled offline asset set and responsive layout; art/audio skills informed consistent scene lighting, distinct silhouettes and action-linked sound and particles.
+The street, school and festival districts, cars, guard and pedestrians are drawn at a consistent 480x720 pixel grid in art.js. Character foot positions change between two procedural poses; particles are square pixels. The UI and icon were redrawn to match. The cover is a capture from this build. No image-generation tool or AI-generated bitmap was used in the redesign.
