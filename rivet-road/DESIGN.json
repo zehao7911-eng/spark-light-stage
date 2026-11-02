@@ -1,0 +1,16 @@
+{
+  "title": "Rivet Road",
+  "reference": {"name":"Steel Boulevard", "url":"https://rezona.ai/game/pgcserver/pv/PwVerjLk/v2/dist/index.html", "study":"Vehicle structure and coherent urban space; independent simple touch campaign."},
+  "userQualityReferences": ["6.mp4: readable action and contact", "7.mp4: physical cause and effect", "8.mp4: visible capability growth", "9.mp4: repair unlocks a usable ride"],
+  "skillsApplied": {
+    "game-development": "Fixed 60 Hz deterministic simulation, bounded effects and state machines.",
+    "game-design": "One-finger drive/stop-fire loop, four authored objectives, physical capability unlocks.",
+    "game-art": "One shared material palette and lighting rig across character, vehicle, objects and city. Separate tread, turret, recoil, crew and bridge animation.",
+    "3d-games": "Simple simulation colliders, instanced tracks, geometry batching, restrained shadow map and smooth following camera.",
+    "web-games": "Bundled renderer, local ES modules, explicit graphics failure UI, gesture-unlocked audio and interruption handling.",
+    "mobile-games": "Touch joystick, pointer cancellation, 44px controls, bounded DPR and optional Light graphics.",
+    "game-audio": "Synthesized engine, distinct shot/metal/break/rescue sounds and subdued musical pulse. No recorded reference audio."
+  },
+  "art": {"source":"Original procedural geometry and SVG", "imageGeneration":false,"referenceMediaCopied":false},
+  "limits": ["No physical handset benchmark or S-grade guarantee", "Reference pointer-lock prevented reliable continuous native play", "Campaign has four districts; Free Roam reuses them with capped armour scaling"]
+}
