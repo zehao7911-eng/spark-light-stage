@@ -1,0 +1,16 @@
+{
+  "title": "Out of Office",
+  "reference": {"name":"Meteor 60 Seconds", "url":"https://rezona.ai/game/pgcserver/pv/RTyBunEu/v1/dist/index.html", "observed":"Start, countdown, native walking, contextual KISS MAX action and confirmation. No ending or full campaign claim."},
+  "scope": "Independent one-finger 3D office mischief; six short authored shifts across three shared room types.",
+  "qualityAnchors": ["User reference 7.mp4: comic object/NPC cause and effect", "User reference 6.mp4: readable action/reaction", "User reference 9.mp4: rewards become usable physical capabilities"],
+  "skillsApplied": {
+    "game-design": "Simple tap-route/park-work/return loop, readable guard sight, exploitable distractions and meaningful warning rollback.",
+    "game-art": "Original toon characters with outlines, consistent stationery palette, expressive head/limb animation and matching props/UI.",
+    "3d-games": "Actual procedural geometry, merged rigid pieces, instanced paper/confetti/route dots and occlusion-aware sight cones.",
+    "web-games": "Local versioned ES modules, no CDN, gesture-unlocked synthesis, retry UI and explicit graphics failure handling.",
+    "mobile-games": "Stable 58px touch dock, large controls, bounded DPR, Full/Light rendering and interruption handling.",
+    "game-audio": "Original understated musical pulse and layered prank, warning, slip and result sounds. No reference recorded audio."
+  },
+  "art": {"source":"Original procedural meshes and SVG", "imageGeneration":false, "referenceAssetsCopied":false},
+  "limits": ["No physical handset benchmark or platform grade guarantee", "After Hours repeats the authored layouts with bounded patrol scaling"]
+}
