@@ -10,5 +10,10 @@
     "web-games": "Local pinned library, self-contained classic HTML, no runtime CDN.",
     "mobile-games": "44px buttons, pointer cancellation, portrait/landscape, pause and restore.",
     "game-audio": "Short layered rail clicks, brakes and varying celebratory synth tones; muted play readable."
-  }
+  },
+  "revision": "User rejected the first art pass as rough, then explicitly chose to retain the coaster and completely rebuild art and feel.",
+  "art_rebuild": "Seated articulated riders, smooth heads/ears/eyes/nose/hair/cap/clothes/hands/boots; enamel shells, ribbed cushions, safety bars, couplers and rotating wheel groups; trestle frames, footings, textured boardwalk, marquees, benches and planting. Ink/brass instruments replace heavy pastel panels.",
+  "feel_rebuild": "Finger offset compensation, camera held during rail drag, spring body/head lag, speed-dependent acting, advance braking/arch warnings, pressed brake state, rolling/brake sound layers and quieter reward toast.",
+  "performance": "Static geometry and wheel parts merged; cached static sun shadows, dynamic soft carriage blobs, Full/Light and Gentle. Observed local steady scene budget74drawcalls/121883triangles; not physical handset FPS.",
+  "additional_reference": "Texel Raptor official Parkitect presskit screenshot01: trestle supports, stations, planting beds, materials and layered park space inspected as visual study. No source/media copied. https://www.texelraptor.com/games/parkitect/presskit"
 }

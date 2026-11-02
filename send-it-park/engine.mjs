@@ -1,4 +1,5 @@
 export const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+export function feedback(s){let high=s.sp.gates&&s.rail.pts.some(p=>p.x>10.2&&p.x<11.8&&p.y>4.5),risk=0;if(s.phase==='ride')for(let k=0;k<8;k++){let p=sample(s.rail,s.distance+k*.35);risk=Math.max(risk,(s.speed*s.speed*p.curve-6.5)/14);}return {high,risk,brake:s.phase==='ride'&&(risk>.5||s.panic>.3),text:high?'LOWER THE RAIL UNDER THE ARCH':s.brake?'STEADY. YOU GOT THIS.':'BRAKE AHEAD'};}
 export const NAMES=['First Scream','Double Dip','Low Clearance','Tailwind Tickets','Neon Switchback','The Big Swoop','Night Flight','One Last Ride'];
 export function spec(i){i=clamp(i|0,0,998);let j=i%8;return {i,j,name:i<8?NAMES[j]:'Encore '+(i-7),theme:j<3?0:j<6?1:2,heights:[[6,5,3.6,3,2.5,2.6,2.4],[6,3.2,5,2.7,4.2,2.7,2.4],[6,4.8,2.5,2.2,2.4,3.1,2.4],[6,4.8,3.4,4,2.7,3.5,2.4],[6,3.8,5.1,2.7,4.5,2.7,2.4],[6,4.8,3.8,1.6,2.1,4,2.4],[6,4,3,4.6,3.2,2.5,2.4],[6,3,5.3,1.8,4.6,3,2.4]][j],stars:[[5.5,4.2],[11,2.9],[17,2.6]],wind:j===3?.65:j===6?-.35:0,gates:j===2||j===7,boost:j===4||j===7,night:j>=6};}
 // Uniform cubic Hermite rail with slope limiting. Not a free rigid-body coaster.
