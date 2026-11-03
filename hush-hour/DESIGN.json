@@ -1,0 +1,15 @@
+{
+  "title": "Hush Hour",
+  "slug": "hush-hour",
+  "core": "Hold to tiptoe and spend breath; gently stop at a lamp; release to refill; cross sleeping lookout rings; recover keepsakes; reach home; best stars unlock practical kits",
+  "reference": "https://rezona.ai/game/pgcserver/pv/UHTebvyb/v4/dist/index.html",
+  "observedReferenceScope": "Intro entered, foggy street/stalker/strength display inspected; no completed reference run. No copied source or media.",
+  "dedup": "Rejected Hotframe due earlier time-motion game, Exquisite Corpse due Oddling Parade. Adjacent Out of Office is free route/prank/patrol play; this is a one-button breath/quiet-lamp timing corridor. No claim that stealth is an invented genre.",
+  "art": "Original procedural midnight library/hotel/museum, teal and terracotta clothed human courier, navy curators, muted ivory edges and warm safe lamps; no animal mascot, Image generation or copied reference art",
+  "scope": "Six finite nights in three shared sets; After Hours repeats with capped speed scaling",
+  "skills": ["game-development", "game-design", "game-art", "3d-games", "web-games", "mobile-games", "game-audio"],
+  "sdk": "Guarded documented neonlib integration, real callback-only cosmetic unlocks, local fallback and optional full-envelope cloud saves; host integration not yet verified",
+  "language": "English",
+  "input": ["Pointer hold/release", "Space hold/release"],
+  "distribution": "Static local-relative files, root-index game-only ZIP, GitHub Pages"
+}
