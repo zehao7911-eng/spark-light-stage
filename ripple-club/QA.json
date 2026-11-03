@@ -1,0 +1,48 @@
+{
+  "title": "RIPPLE CLUB",
+  "native_campaign": {
+    "courses_completed": 6,
+    "stars": 18,
+    "course_throws": [
+      1,
+      3,
+      2,
+      3,
+      3,
+      3
+    ],
+    "course_scores": [
+      640,
+      1060,
+      860,
+      1060,
+      1080,
+      1080
+    ]
+  },
+  "controller_assertions": 91,
+  "generated_mesh_assertions": 1375,
+  "poses_checked": 80,
+  "sdk": "Mock suite passed; real host events not tested",
+  "native_ui": [
+    "390x844 full campaign",
+    "320x568 swipe and Tap Controls first-course wins",
+    "568x320 default and Tap Controls layout",
+    "844x390 keyboard first-course win",
+    "1280x720 visual review",
+    "reload during active flight restores paused",
+    "completed receipt survives reload",
+    "pause freezes scene screenshot",
+    "kits, mute, Light View and Tap Controls persist",
+    "no horizontal overflow at 320px; 44px or larger controls"
+  ],
+  "console_warnings_errors": [],
+  "limitations": [
+    "Browser viewport emulation, no physical handset FPS or thermal measurement",
+    "Six authored courses, no endless unique campaign",
+    "Original source-code art; no commercial asset extraction or image generation",
+    "Stylized shader water, no general fluid or rigidbody simulation",
+    "Real GameWave host and SDK integration unverified"
+  ],
+  "cover": "Actual runtime screenshot"
+}

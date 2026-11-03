@@ -1,0 +1,27 @@
+(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.RippleCore=api})(typeof window==='object'?window:globalThis,()=>{'use strict';
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const courses=[
+{name:'The First Ripple',place:'PINEWATER LAKE',theme:0,par:1,current:0,targets:[[0,-5],[0,-10],[0,-15]],rocks:[]},
+{name:'Three Little Bells',place:'PINEWATER LAKE',theme:0,par:3,current:.025,targets:[[-3.2,-7],[3.8,-11],[0,-17]],rocks:[]},
+{name:'The Long Way Round',place:'CANYON SPRINGS',theme:1,par:2,current:-.055,targets:[[-1.7,-7],[-3.1,-13],[3.6,-15]],rocks:[[0,-10,.65]]},
+{name:'Between the Stones',place:'CANYON SPRINGS',theme:1,par:3,current:.065,targets:[[0,-7],[-4.4,-15],[4.5,-17]],rocks:[[-2.2,-5,.6],[2.8,-6,.6]]},
+{name:'A Glassy Morning',place:'FROSTBELL COVE',theme:2,par:3,current:-.09,targets:[[-3.4,-9],[0,-14],[4.1,-18]],rocks:[[-1.5,-13,.65]]},
+{name:'One for the Shore',place:'FROSTBELL COVE',theme:2,par:3,current:.10,targets:[[-4,-10],[4.6,-16],[0,-19]],rocks:[[-1.9,-7,.55],[3.2,-7,.55]]}
+];
+function create(course=0){course=clamp(Number.isInteger(course)?course:0,0,courses.length-1);return{course,time:0,throws:0,score:0,hits:[false,false,false],stone:null,skips:0,bestSkip:0,bestDistance:0,phase:'ready',settle:0,won:false,events:[]}}
+function launch(s,angle=0,power=1){if(s.phase!=='ready'||s.won||!Number.isFinite(angle)||!Number.isFinite(power))return false;angle=clamp(angle,-.48,.48);power=clamp(power,.1,1);const speed=11+8*power;s.stone={x:0,y:.60,z:0,vx:Math.sin(angle)*speed,vy:-.6,vz:-Math.cos(angle)*speed,age:-.18,angle,power,skips:0,travel:0,bonks:[],spin:0};s.throws++;s.phase='flight';s.settle=0;s.events.push({type:'windup',angle,power});return true}
+function tick(s,dt){if(!Number.isFinite(dt)||dt<=0||s.won)return;dt=Math.min(dt,.05);s.time+=dt;
+if(s.phase==='settle'){s.settle+=dt;if(s.settle>.65){if(s.hits.every(Boolean)){s.won=true;s.phase='won';s.events.push({type:'win'})}else{s.phase='ready';s.settle=0;s.events.push({type:'ready'})}}return}
+if(s.phase!=='flight'||!s.stone)return;const r=s.stone,l=courses[s.course],prev={x:r.x,y:r.y,z:r.z};const beforeAge=r.age;r.age+=dt;if(beforeAge<0){if(r.age>=0)s.events.push({type:'throw',angle:r.angle,power:r.power});return}r.vx+=l.current*dt;r.vy-=8.5*dt;r.x+=r.vx*dt;r.y+=r.vy*dt;r.z+=r.vz*dt;r.travel+=Math.hypot(r.x-prev.x,r.z-prev.z);r.spin+=dt*(18+r.skips*4);
+if(r.y<=.065&&r.vy<0){r.y=.065;r.skips++;s.skips++;s.bestSkip=Math.max(s.bestSkip,r.skips);s.score+=20;s.events.push({type:'skip',x:r.x,z:r.z,n:r.skips});r.vy=1.65*Math.pow(.84,r.skips-1);r.vx*=.82;r.vz*=.82;}
+for(let i=0;i<l.targets.length;i++){if(s.hits[i])continue;const [x,z]=l.targets[i];if(prev.z>=z&&r.z<=z){const t=(z-prev.z)/(r.z-prev.z),px=prev.x+(r.x-prev.x)*t,py=prev.y+(r.y-prev.y)*t;if(Math.hypot(px-x,py-.85)<=1.10){s.hits[i]=true;s.score+=200;s.events.push({type:'ring',id:i,x,z,skips:r.skips});}}}
+for(let i=0;i<l.rocks.length;i++){const [x,z,radius]=l.rocks[i];if(r.y<.7&&!r.bonks.includes(i)&&Math.hypot(r.x-x,r.z-z)<radius+.13){r.bonks.push(i);r.vx=(r.x<x?-1:1)*Math.max(1.5,Math.abs(r.vx)*.65);r.vz*=.44;r.vy=1.9;s.events.push({type:'rock',x:r.x,z:r.z});}}
+if(s.hits.every(Boolean)||Math.hypot(r.vx,r.vz)<2.7||r.age>7||r.z< -26||Math.abs(r.x)>11){s.bestDistance=Math.max(s.bestDistance,r.travel);s.phase='settle';s.settle=0;s.events.push({type:'splash',x:r.x,z:r.z,skips:r.skips});s.stone=null;}
+}
+function stars(s){return s.won?(s.throws<=courses[s.course].par?3:s.throws<=courses[s.course].par+2?2:1):0}
+function predict(course,angle,power){const s=create(course);launch(s,angle,power);const points=[],bounces=[],hit=[];let max=0;for(let n=0;n<650&&s.phase==='flight';n++){tick(s,.01);if(n%8===0&&s.stone)points.push([s.stone.x,s.stone.y,s.stone.z]);for(const e of s.events){if(e.type==='skip')bounces.push([e.x,e.z]);if(e.type==='ring')hit.push(e.id)}s.events=[];max=n}return{points:points.slice(0,70),bounces:bounces.slice(0,12),hits:hit,steps:max}}
+function gesture(dx,dy,unit){if(![dx,dy,unit].every(Number.isFinite)||unit<=0||dy> -12||Math.hypot(dx,dy)<18)return null;return{angle:clamp(Math.atan2(dx,-dy)*.58,-.48,.48),power:clamp(Math.hypot(dx,dy)/(unit*.34),.1,1)}}
+function restore(a){if(!a||!Number.isInteger(a.course)||a.course<0||a.course>=courses.length||!Array.isArray(a.hits)||a.hits.length!==3||!a.hits.every(v=>typeof v==='boolean'))return null;const s=create(a.course);for(const k of ['time','throws','score','skips','bestSkip','bestDistance','settle']){if(!Number.isFinite(a[k])||a[k]<0||a[k]>1e8)return null;s[k]=a[k]}if(!Number.isInteger(s.throws)||!Number.isInteger(s.skips)||!Number.isInteger(s.bestSkip)||!['ready','flight','settle','won'].includes(a.phase))return null;s.hits=[...a.hits];s.phase=a.phase;s.won=a.won===true;if(s.won!== (s.phase==='won')||s.won&&!s.hits.every(Boolean)||s.settle>1)return null;
+if(s.phase==='flight'){const r=a.stone;if(!r||!['x','y','z','vx','vy','vz','age','skips','travel','spin','angle','power'].every(k=>Number.isFinite(r[k]))||Math.abs(r.x)>12||r.z>1||r.z< -27||r.y<0||r.y>3||r.age<-.2||r.age>8||Math.abs(r.angle)>.48||r.power<.1||r.power>1||Math.hypot(r.vx,r.vy,r.vz)>40||!Number.isInteger(r.skips)||r.skips<0||r.skips>30||!Array.isArray(r.bonks)||r.bonks.some(i=>!Number.isInteger(i)||i<0||i>=courses[s.course].rocks.length))return null;s.stone={...r,bonks:[...r.bonks]};}return s}
+return{courses,clamp,create,launch,tick,stars,predict,gesture,restore};
+});
