@@ -71,7 +71,7 @@ function down(e){if(menu||paused||!['ready','play'].includes(s.phase))return;e?.
 $('hold').addEventListener('pointerdown',down);$('hold').addEventListener('pointerup',()=>{pump();release();updateHud();});$('hold').addEventListener('pointercancel',()=>{pump();release();updateHud();});$('hold').addEventListener('lostpointercapture',()=>{release();updateHud();});
 window.addEventListener('keydown',e=>{if(e.code==='Escape'){if(!menu&&!paused)pause();return;}if(e.code==='Space'&&!menu&&!paused){e.preventDefault();if(!e.repeat)down();}});window.addEventListener('keyup',e=>{if(e.code==='Space'){pump();release();updateHud();}});
 $('pause').onclick=pause;$('play').onclick=enter;$('book').onclick=book;$('settings').onclick=settings;$('credits').onclick=credits;$('close').onclick=closePanel;$('reload').onclick=()=>location.reload();
-function interrupt(){release();if(!menu&&!paused&&!['win','lose'].includes(s.phase))pause();persist(true);}
+function interrupt(){pump();release();if(!menu&&!paused&&!['win','lose'].includes(s.phase))pause();persist(true);}
 document.addEventListener('visibilitychange',()=>{if(document.hidden)interrupt();else{last=0;sdk.connect();dirty=true;}});window.addEventListener('blur',interrupt);window.addEventListener('pagehide',()=>{interrupt();sdk.stop();});window.addEventListener('pageshow',e=>{if(e.persisted)location.reload();});
 canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();interrupt();$('error-text').textContent='The graphics context was interrupted. Your night is saved.';$('error').hidden=false;});
 if(renderer){build();updateCover();updateHud();requestAnimationFrame(frame);}else persist();
