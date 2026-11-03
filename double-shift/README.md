@@ -25,3 +25,7 @@ All robots, environment, poster illustrations, interface and synthesized sounds 
 ## Validation
 
 `node tools/test.mjs` checks 54 complete production networks (6 orders × 3 kits × 3 Encore tiers), actual finite stock, shortages, recall recovery, corruption handling, exact save continuation, monotonic rewards, terminal state and mocked SDK lifecycle/cloud contracts. Phone-size browser input testing covers all six orders, real drag and tap routes, 320×568, 390×844, 568×320 and 844×390 layouts, pause, save recovery and settings. Physical handset performance and real GameWave App import remain unverified. Full/Light graphics and Gentle motion are available.
+
+## Model fix — 2026-11-03
+
+Blinking now preserves each pupil’s original local scale. The previous animation accidentally assigned unit scale to a 0.035-scale sphere, stretching black pupils beyond the head. Idle, walk and carrying poses now keep their eye proportions. Existing progress is compatible. `node tools/model-test.cjs` checks pupil and whole-rig bounds across all crew colours, gold goggles, poses and blink phases.
