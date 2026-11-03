@@ -1,0 +1,47 @@
+{
+  "title": "POCKET QUARTET",
+  "source_native_campaign": {
+    "concerts": 6,
+    "best_stars": 18,
+    "scores": [
+      1650,
+      1900,
+      1950,
+      2050,
+      2200,
+      2250
+    ],
+    "fifth_slips": 1,
+    "sixth_slips": 0,
+    "note_positions": 106,
+    "note": "Campaign completed across input/art iterations. Final batched renderer additionally completed a guided first concert at 320x568, preserving prior best stars."
+  },
+  "controller_assertions": 530,
+  "generated_mesh_assertions": 3612,
+  "tested_poses": 144,
+  "actor_draw_meshes": 5,
+  "sdk": "Mock tests passed; no real host verification",
+  "native_checks": [
+    "390x844 full campaign",
+    "320x568 guided concert 1650 / 1 slip / 1 star; prior 18 stars retained",
+    "568x320 keyboard opening phrase 300; no horizontal overflow; result both actions fit without scrolling",
+    "844x390 layout checked with no horizontal overflow",
+    "1280x720 full visual review and actual cover capture",
+    "Actual 3D pianist and drummer tapped for first phrase 300",
+    "Partial phrase 350 / diamond then two empty slots survived paused reload",
+    "Mute retained and keyboard silent continuation reached 750",
+    "Paused screenshot pair byte identical",
+    "Velvet and Golden Hour actual coats selected; Guide and Light settings retained across reload",
+    "Free Jam entered and four instrument controls available",
+    "Final source console captured no warnings/errors"
+  ],
+  "limitations": [
+    "No physical handset FPS, heat or memory measurement",
+    "Native raw-coordinate landscape input unavailable in this browser test surface; keyboard and DOM layout were tested there",
+    "Real GameWave SDK host events/import untested",
+    "Reference piano key C4 observed, no full reference parity or source/media reuse",
+    "Six finite concerts, no endless unique songs"
+  ],
+  "source_reference": "https://rezona.ai/game/pgcserver/pv/dWLSSnKV/v1/dist/index.html",
+  "cover": "Actual 1280x720 runtime screenshot; no image generation"
+}

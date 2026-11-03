@@ -1,0 +1,15 @@
+# GameWave import — Pocket Quartet
+
+Keep index.html at the ZIP root. The bundled entry contains all required runtime code and assets; no CDN, separate model, font fetch, installer or build step is required. A browser with WebGL and JavaScript is needed. The local title is Pocket Quartet and the source icon.svg and actual runtime cover.webp are included for platform metadata.
+
+Play: watch the lit instruments, then press the same four keys in order. The first two-note phrase explains itself. Keyboard 1–4 / A S D F are alternatives. A player may play silently by following colours and symbols. Guide notes is an optional next-key aid. Tap rules do not require a beat. Six finite concerts, three venues, cosmetic wardrobe and free play are included.
+
+The host may expose window.neonlib. sdk.js registers onLike and onComment only when available and accepts successful registration responses with code 0. A genuine callback with status === true grants brass lapel pins once; false/unlike events do not grant it. A direct-comment callback with a nonempty string project_id grants coral bow ties once, including a valid image-only comment whose text content is empty. These are permanent local cosmetics and never prerequisites for a concert, score or retry. The game does not fabricate interactions, auto-like, auto-comment or post any message.
+
+When genuine successful callback listeners are supported, the Club displays explanatory text about those optional cosmetics. It does not create pretend host buttons. Unsupported states are hidden. Errors and absent SDK methods do not block boot or play. Listener unsubscribe functions are retained, called once on teardown, and late registrations unsubscribe after pagehide. Callback handlers ignore events after disposal. gameStart is attempted when an actual concert starts and gameOver when an active visit ends; methods are guarded, and failures are ignored. No cloud saves, SDK purchases, comments retrieval, leaderboard, login or host viewport API are implemented. Local layout uses viewport CSS and safe-area insets.
+
+The bridge follows the previously inspected October 30 SDK callback contract. No claim is made that a newer host update was live-validated. Successful mock cases are distinct from real GameWave host testing, which remains unverified. If the host injects the bridge later than page boot, the initial adapter may not attach; the ordinary game remains playable.
+
+Progress uses pocket-quartet-v1 in localStorage. An unfinished visit restores paused, including accepted current-phrase notes. Completed receipts and best-only stars survive reload where storage is allowed. A fresh denied/private storage environment may not retain this data. No hosted backend is required.
+
+The configured 40/30 FPS rendering, DPR caps and five actor draw meshes are optimization choices, not a promise about handset hardware. Portrait and landscape browser viewports are tested separately. Audio begins only after a user gesture and is optional. A context loss gives a manual reload instruction without automatic reload loops.
