@@ -40,7 +40,7 @@ export function bridge({host=()=>globalThis.neonlib,read,write,changed=()=>{},sc
  }
  function probe(n=0){connect();if(alive&&n<8)later(()=>probe(n+1),1500);}
  probe();
- return {save,connect,support:()=>({...support}),start(){if(started&&!ended)return;started=true;ended=false;call('gameStart');},end(){if(!started||ended)return;ended=true;call('gameOver');},
+ return {save,connect,support:()=>({...support}),prepare(){started=false;ended=false;},start(){if(started&&!ended)return;started=true;ended=false;call('gameStart');},end(){if(!started||ended)return;ended=true;call('gameOver');},
   stop(){if(!alive)return;alive=false;epoch++;for(let t of timers)cancel(t);timers.clear();for(let e of entries.values()){e.expired=true;safeStop(e.stop);}entries.clear();support={like:false,comment:false};},
   viewport(){try{let v=host()?.getGameViewport?.();if(v&&Number.isFinite(v.width)&&Number.isFinite(v.height)&&v.width>0&&v.height>0)return {width:v.width,height:v.height,density:Number.isFinite(v.density)?v.density:1};}catch{}return null;}
  };
