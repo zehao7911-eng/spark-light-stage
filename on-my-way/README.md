@@ -1,0 +1,27 @@
+# ON MY WAY — One More Block
+
+An original one-thumb street-crossing game. Hold the large button or the scene to walk; release to wait. Space/Up also walks; Escape pauses. A green button is a forecast of a clear crossing window to the next curb at your walking speed; amber means wait. It is advice, not automatic movement or immunity.
+
+Six finite walks contain 3/4/4/5/5/6 perpendicular traffic lanes, with cars, bicycles, delivery vans and longer faster trams. The routes use three sets: morning shopfronts; rainy record-store streets with suspended lights; sunset promenade with trees, benches, railing and sailboats. Reach the checked arrival arch. Collect three street stamps along the path; bumps spill your coffee and return you to the last crossed curb without removing collected stamps or points. There is no countdown, life purchase or permanent loss. A stamp each for finishing, all three collectibles, and no bumps; 18 best-only stamps unlock mint at6 and plum/hat at12. Coats are cosmetic. Easy traffic defaults on (slower traffic), with the same rewards. All six finite routes can be replayed.
+
+## Run and build
+
+Open index.html through any static HTTP host, including GitHub Pages. The root index and standalone.html are identical self-contained builds: all Three.js, code and CSS inline. No CDN, account or external asset request is required to play. The SVG favicon is a separate optional asset.
+
+Run `node tests.mjs` for the deterministic controller and mock SDK checks. Run `python build.py` to rebuild the two HTML files and the game-only ZIP. Read GAMEWAVE-IMPORT.txt for the platform handoff prompt. The ZIP includes source, MIT licenses, cover and icon. Three.js r147 is bundled under its MIT license. primitives.mjs, guarded sdk.mjs and audio scaffolding were adapted from this workspace's original Spoon Summit helpers; the traffic model, street/vehicle/human art, city sets and gameplay are original here. No commercial source, media, fonts or recorded music were copied; no image generation was used.
+
+## Art and input decisions
+
+An orthographic toy-city camera leaves the walking path open. Original modeled windows and frames on all visible building faces, awnings, rooftop planting, pavement seams, shop signs, coffee tables, chairs, bins and lamps provide scale. A cream cap, bright backpack and gold ground ring distinguish the player from smaller muted passers-by. Jointed legs and level shoes, swinging arms, a carried cup, body bounce and head motion provide movement. Vehicles have windows, wheels, lights; bicycles have frames and riders; trams have overhead arms and rails. Coin spin, checkpoint badges, coffee droplets, near-miss chimes and arrival confetti reflect actual game events. The scene is procedural 3D with constrained path/contact logic, not a general rigid-body traffic simulator. Wet colored road patches are stylized decoration, not real-time reflections.
+
+Input is action-based. Fixed100Hz simulation is advanced from both frames and input boundaries, so a short hold still moves if no rendered frame occurs between down and up; bounded .5sec catch-up prevents a long tab stall from skipping an entire road. Pointer capture supports moving outside the button; cancellation, blur, pagehide and pause release the hold. Hidden pages pause. Restored active play opens paused. The full run and settings persist locally; storage denial falls back to the session. Renderer DPR is capped1.5; Light graphics uses1 and disables shadow maps. Static meshes batch by material, rain is one bounded72-instance draw (20 Gentle), particles cap80 and synth voices cap20. No actual physical handset FPS/heat/memory measurement is claimed.
+
+## Reference scope
+
+Hipster Whale's official Crossy Road page (https://www.crossyroad.com/) informed the clear pedestrian-versus-perpendicular-traffic premise. This game uses continuous hold/wait movement, authored finite routes, curb recovery and its own human/city art. It is not a port, source adaptation, or exact visual reproduction. Rezona Fracture Point gabSFRUb/v13 preview was opened but not played and excluded as a complex direction. Prior production and active reservations were checked before selection; previous vehicle driving/traffic routing are adjacent genres, while Spoon Summit's contact-lever climbing is a different core action.
+
+## Optional GameWave bridge
+
+Core startup never awaits window.neonlib. The bridge checks each optional API, registration code0, callback fields and cleanup. Genuine positive onLike unlocks a golden pin; a genuine direct onComment (including empty image-only content) unlocks a party hat. Rewards persist once; registration success, unlike, guide clicks and counts do not award anything. No social action is posted automatically. All ordinary gameplay and coat rewards work standalone. Lifecycle calls occur only for real started/ended walks.
+
+Cloud loads accept an empty object or the matching on-my-way v1 envelope only; unknown, failed or timed-out loads suppress cloud writes. Known progress merges by max/union; active local play keeps local ownership. The complete profile+active snapshot is stored in the matching envelope, preserving unknown top-level fields. SDK viewport width/height are CSS dimensions; device density is not multiplied a second time. Mock behavior is tested; real GameWave App import/social/cloud behavior remains unverified.
