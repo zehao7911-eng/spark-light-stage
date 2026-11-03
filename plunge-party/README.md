@@ -16,7 +16,7 @@ Serve this folder over HTTP(S), e.g. `python -m http.server 8000`, then open loc
 
 ## Model and simulation scope
 
-Original human faces, clothes, hair, goggles, shoes, articulated shoulder/elbow/wrist and hip/knee/ankle joints. Held guests are face up, follow the real palm midpoint and keep attached limbs through turns. Guest struggle, toss, fall and walking are authored joint animations. Planar circle contacts and ballistic flight form a small custom simulation. This is not a full 3D ragdoll or fluid solver. Water is a lightweight original shader with bounded splash particles. No AI-generated bitmap art. Cover is an actual game screenshot; icon is original SVG.
+Original human faces, clothes, hair, goggles, shoes, articulated shoulder/elbow/wrist and hip/knee/ankle joints. Standing height is calibrated from the actual boot mesh bounds to the float surface. Held guests are face up, follow the real palm midpoint and keep attached limbs through turns. Guest struggle, toss, fall and walking are authored joint animations. Planar circle contacts and ballistic flight form a small custom simulation. This is not a full 3D ragdoll or fluid solver. Water is a lightweight original shader with bounded splash particles. No AI-generated bitmap art. Cover is an actual game screenshot; icon is original SVG.
 
 ## Reference / rights
 
