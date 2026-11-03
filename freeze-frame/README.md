@@ -4,8 +4,8 @@ An original single-finger 3D camera game. Museum statues creep when you look awa
 
 ## Play
 
-- Drag the beam across the gallery, tap a statue marker, or use the three large direction buttons. Keep the beam still until the focus ring fills.
-- Tap BLINK before eye strain fills. A short voluntary blink rests your eyes. Ignoring strain causes a longer forced blink, giving unseen statues time to approach.
+- Tap an actual statue portrait at the bottom, or tap the statue itself. The camera stays on that lane; wait for the progress bar and flash, then select another statue. No sustained press is needed.
+- Blinking is automatic and does not penalize stars. The eye meter and manual-blink button are hidden; there is one primary action to learn. The first gallery is safe until the first tap and highlights its single portrait card.
 - Three bumps end a visit. Retries are free and do not remove earned stars.
 - Left / right arrows or A / D look sideways; Up or W looks centre. Space blinks. Escape pauses.
 - Easy pace is on by default. It slows statues without reducing rewards; changes apply to the next visit.
@@ -14,13 +14,13 @@ Six authored galleries contain 1, 3, 4, 8, 10 and 12 sculptures: 38 captures in 
 
 ## A real little photo album
 
-Every capture renders the same original sculpture kind and its actual frozen gait pose in a small 96×128 model studio, using the game's own WebGL renderer. This is not an external image, AI generation or a screenshot of the entire gallery. A Polaroid appears during play and in the result. One collected portrait per completed gallery is saved with the profile and displayed in the album. The JPEG is generated only at capture, not every frame. Film choices change the visible photo mount; optional celebration film changes capture particles.
+Every capture renders the same original sculpture kind and its actual frozen gait pose in a small 96×128 model studio, using the game's own WebGL renderer. This is not an external image, AI generation or a screenshot of the entire gallery. A Polaroid appears during play and in the result. One collected portrait per completed gallery is saved with the profile and displayed in the album. Actual-pose JPEGs are generated at capture. Four neutral posed-model portraits are cached per gallery build for the clickable controls; no portrait is generated per frame. Film choices change the visible photo mount; optional celebration film changes capture particles.
 
 ## Models and scene
 
 Four independent procedural sculpture variants share connected shoulder/elbow/wrist and hip/knee/ankle rigs, with waistcoats, lapels, buttons, bow tie, glasses, bun, moustache, top hat, monocle, watch chain and detailed shoes. Movement advances a gait distance only while unseen. A watched actor's limb matrices remain frozen. Feet follow two-link leg targets with level soles, with the lowest sole calibrated to the measured bevelled tile surface. This is a stylized constrained animation, not full rigidbody or general crowd physics.
 
-The gallery has a patterned floor, columns and cornices, framed sculptural reliefs, an arched window, sconces, labelled plinths, velvet ropes, benches, plants and a modelled camera/tripod. Static geometry is batched. Portrait mode emphasizes the approaching figures; landscape uses a shallower camera and smaller presentation scale to keep people separate from controls. Landscape focus progress is also shown on the direction buttons. Title framing is independent of gameplay framing.
+The gallery has a patterned floor, columns and cornices, framed sculptural reliefs, an arched window, sconces, labelled plinths, velvet ropes, benches, plants and a modelled camera/tripod. Static geometry is batched. Portrait mode emphasizes the approaching figures; landscape uses a shallower camera and smaller presentation scale to keep people separate from controls. Landscape photo progress is also shown on the same portrait cards. Title framing is independent of gameplay framing.
 
 ## Packaging / local server
 
@@ -42,4 +42,4 @@ Source, sculpture models, gallery, icon, poses and synthesized shutter/chimes ar
 
 ## Validation
 
-Run `node tools/test.mjs` and `node tools/model-test.cjs`. Tests cover 72 complete controller visits across six galleries, three kits, two Encore tiers and both pace settings, as well as real freeze/unfreeze, partial exposure, blink/strain, genuine loss, corrupt saves, exact continuation, idempotent rewards and optional SDK guards. Mesh checks cover joint lengths, eye scale, level soles, actual floor contact and frozen pose stability across four kinds, four scales, three headings and seven gait samples. Native browser QA uses ordinary visible controls separately from these pure tests. Browser phone viewport testing does not certify physical-phone FPS, heat or memory, nor a real GameWave host.
+Run `node tools/test.mjs` and `node tools/model-test.cjs`. Tests cover 72 complete controller visits across six galleries, three kits, two Encore tiers and both pace settings, as well as real freeze/unfreeze, partial exposure, automatic blinking and backward-compatible manual-blink snapshots, genuine loss, corrupt saves, exact continuation, idempotent rewards and optional SDK guards. Mesh checks cover joint lengths, eye scale, level soles, actual floor contact and frozen pose stability across four kinds, four scales, three headings and seven gait samples. Native browser QA uses ordinary visible controls separately from these pure tests. Browser phone viewport testing does not certify physical-phone FPS, heat or memory, nor a real GameWave host.
