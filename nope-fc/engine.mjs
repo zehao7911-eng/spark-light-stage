@@ -1,0 +1,30 @@
+export const CUPS=[
+ {name:'The Local Legend',place:0,shots:5,need:3,duration:2.3,kinds:['straight'],tag:'WARM-UP'},
+ {name:'Bend It, Bestie',place:0,shots:6,need:4,duration:2.15,kinds:['straight','curve'],tag:'CURVE BALLS'},
+ {name:'Ground Control',place:1,shots:6,need:4,duration:2.1,kinds:['low','curve','straight'],tag:'LOW & SLOW'},
+ {name:'Double Trouble',place:1,shots:7,need:4,duration:1.95,kinds:['curve','low','straight'],tag:'QUICK RETURNS'},
+ {name:'After Dark',place:2,shots:7,need:5,duration:1.9,kinds:['knuckle','curve','low'],tag:'KNUCKLE BALLS'},
+ {name:'The Clean Sheet',place:2,shots:8,need:6,duration:1.85,kinds:['curve','knuckle','low','straight'],tag:'THE FINAL'}
+];
+const clamp=(n,a,b)=>Math.min(b,Math.max(a,n));
+export const copy=x=>JSON.parse(JSON.stringify(x));
+export function profile(p={}){if(!p||typeof p!=='object')p={};return {version:1,stars:Array.from({length:6},(_,i)=>clamp(Math.floor(+p.stars?.[i]||0),0,3)),best:Array.from({length:6},(_,i)=>clamp(+p.best?.[i]||0,0,99999)),cleared:Array.from({length:6},(_,i)=>p.cleared?.[i]===true),rewards:{gold:p.rewards?.gold===true,confetti:p.rewards?.confetti===true},sound:p.sound!==false,gentle:p.gentle===true,kit:clamp(Math.floor(+p.kit||0),0,2)};}
+export function mergeProfiles(a,b){a=profile(a);b=profile(b);a.stars=a.stars.map((n,i)=>Math.max(n,b.stars[i]));a.best=a.best.map((n,i)=>Math.max(n,b.best[i]));a.cleared=a.cleared.map((n,i)=>n||b.cleared[i]);for(const k of ['gold','confetti'])a.rewards[k] ||=b.rewards[k];return a;}
+export const starTotal=p=>p.stars.reduce((a,b)=>a+b,0);
+export function grantReward(p,key){if(!['gold','confetti'].includes(key)||p.rewards[key])return false;p.rewards[key]=true;return true;}
+export const unlocked=p=>Math.min(5,p.cleared.findIndex(x=>!x)<0?5:p.cleared.findIndex(x=>!x));
+export function shotFor(cup,index,lap=0){const c=CUPS[cup],a=[[-.05,.04],[-.7,.52],[.64,-.55],[-.6,-.48],[.62,.5],[0,.67],[.72,0],[-.7,.15]][(index+cup*2)%8],kind=c.kinds[index%c.kinds.length];return {x:lap%2?-a[0]:a[0],y:kind==='low'?-.73:a[1],kind,bend:kind==='curve'?(index%2?1:-1)*.9:0,origin:(index%3-1)*.42,duration:Math.max(1.55,c.duration-Math.min(lap,3)*.08)};}
+export function makeRun(cup=0,lap=0){cup=clamp(Math.floor(+cup||0),0,5);return {version:1,cup,lap:clamp(Math.floor(+lap||0),0,99),phase:'ready',time:0,index:0,saves:0,perfect:0,score:0,combo:0,bestCombo:0,misses:0,aim:{x:0,y:0},hands:{x:0,y:0},velocity:{x:0,y:0},last:null,history:[],events:[],ended:false};}
+export function begin(s){if(s.phase!=='ready')return false;s.phase='windup';s.time=0;s.events.push({type:'start'});return true;}
+export function aim(s,x,y){s.aim={x:clamp(x,-1.04,1.04),y:clamp(y,-1.04,1.04)};}
+export function ballAt(s){const q=shotFor(s.cup,s.index,s.lap),t=clamp(s.time/(q.duration*(s.kit===2?1.16:1)),0,1),ease=t*t*(3-2*t);return {x:q.origin*(1-t)+q.x*t+q.bend*Math.sin(Math.PI*t),y:(1-t)*-.13+q.y*t+Math.sin(Math.PI*t)*(q.kind==='low'?-.12:.25)+(q.kind==='knuckle'?Math.sin(t*19)*.12*Math.sin(Math.PI*t):0),t,z:ease,kind:q.kind};}
+export function tick(s,dt,kit=0){if(!Number.isFinite(dt)||dt<0)return;s.events=[];if(s.ended||s.phase==='ready')return;dt=Math.min(dt,.05);s.time+=dt;const ox=s.hands.x,oy=s.hands.y,k=1-Math.exp(-dt*28);s.hands.x+=(s.aim.x-ox)*k;s.hands.y+=(s.aim.y-oy)*k;s.velocity={x:(s.hands.x-ox)/Math.max(dt,.001),y:(s.hands.y-oy)/Math.max(dt,.001)};
+ if(s.phase==='windup'&&s.time>=.65){s.phase='flight';s.time=0;s.events.push({type:'kick'});}
+ else if(s.phase==='flight'&&s.time>=shotFor(s.cup,s.index,s.lap).duration*(kit===2?1.16:1)){const q=shotFor(s.cup,s.index,s.lap),dx=(s.hands.x-q.x)/(.245+(kit===1?.045:0)),dy=(s.hands.y-q.y)/(.31+(kit===1?.035:0)),dist=Math.hypot(dx,dy),caught=dist<=1,perfect=caught&&dist<.52,punch=caught&&!perfect&&Math.hypot(s.velocity.x,s.velocity.y)>1.4;
+ s.combo=caught?s.combo+1:0;s.bestCombo=Math.max(s.bestCombo,s.combo);if(caught)s.saves++;else s.misses++;if(perfect)s.perfect++;const points=caught?(perfect?200:punch?160:100)+Math.min(5,s.combo-1)*25:0;s.score+=points;
+ s.last={type:caught?(perfect?'catch':punch?'punch':'parry'):'miss',x:q.x,y:q.y,points,perfect,index:s.index};s.history.push(s.last.type);s.events.push({...s.last});s.phase='reaction';s.time=0;
+ }else if(s.phase==='reaction'&&s.time>=1.05){s.index++;if(s.index>=CUPS[s.cup].shots){s.ended=true;s.phase='result';s.time=0;s.events.push({type:'end'});}else{s.phase='windup';s.time=0;}}
+}
+export function result(s){const c=CUPS[s.cup],won=s.ended&&s.saves>=c.need;return {won,stars:won?1+(s.saves>=c.shots-1?1:0)+(s.saves===c.shots&&s.perfect>=Math.ceil(c.shots/2)?1:0):0,score:s.score,saves:s.saves,perfect:s.perfect,shots:c.shots};}
+export function record(p,s){if(!s.ended)return false;const r=result(s),before=JSON.stringify(p);p.stars[s.cup]=Math.max(p.stars[s.cup],r.stars);p.best[s.cup]=Math.max(p.best[s.cup],r.score);p.cleared[s.cup] ||=r.won;return JSON.stringify(p)!==before;}
+export function restore(v){if(!v||v.version!==1||!Number.isInteger(v.cup)||v.cup<0||v.cup>5||!['ready','windup','flight','reaction','result'].includes(v.phase))return null;const r=makeRun(v.cup,v.lap);for(const k of ['time','index','saves','perfect','score','combo','bestCombo','misses'])if(!Number.isFinite(v[k])||v[k]<0)return null;if(!Number.isInteger(v.index)||v.index>CUPS[v.cup].shots||(!v.ended&&v.index>=CUPS[v.cup].shots)||v.saves+v.misses> CUPS[v.cup].shots||v.perfect>v.saves||v.time>10)return null;if(v.phase==='reaction'&&(!v.last||!Number.isFinite(v.last.x)||!Number.isFinite(v.last.y)||!['catch','punch','parry','miss'].includes(v.last.type)))return null;Object.assign(r,copy(v));r.aim={x:clamp(+v.aim?.x||0,-1.04,1.04),y:clamp(+v.aim?.y||0,-1.04,1.04)};r.hands={x:clamp(+v.hands?.x||0,-1.04,1.04),y:clamp(+v.hands?.y||0,-1.04,1.04)};r.velocity={x:Number.isFinite(v.velocity?.x)?v.velocity.x:0,y:Number.isFinite(v.velocity?.y)?v.velocity.y:0};r.events=[];r.history=Array.isArray(v.history)?v.history.slice(0,8):[];if(r.ended!== (r.phase==='result'))return null;return r;}
