@@ -29,3 +29,9 @@ All robots, environment, poster illustrations, interface and synthesized sounds 
 ## Model fix — 2026-11-03
 
 Blinking now preserves each pupil’s original local scale. The previous animation accidentally assigned unit scale to a 0.035-scale sphere, stretching black pupils beyond the head. Idle, walk and carrying poses now keep their eye proportions. Existing progress is compatible. `node tools/model-test.cjs` checks pupil and whole-rig bounds across all crew colours, gold goggles, poses and blink phases.
+
+## Limb and workshop clearance update — 2026-11-03
+
+Arms now have independent shoulder, elbow and wrist joints; legs have hip, knee and level-sole ankle articulation. Loads follow the actual palm midpoint. Limb segments remain attached in the hierarchy through walking and turns. The press body and tray sit farther behind the dock, keeping the torso clear of the feeding tray. Crew presentation uses small directional lanes, local separation and obstacle clearance, with smoothed lane changes and facing the dock during pickup/drop. This is presentation spacing, not a rigid-body physics simulation; production timing and saved routes are unchanged.
+
+`node tools/rig-test.cjs` checks connected segment lengths, level boots, floor bounds and palm/load alignment across 960 animated and turning samples. `node tools/crew-test.mjs` checks the six production networks and six identical overlapping routes for torso spacing and finite, nearby presentation positions. These checks supplement visual browser review; physical handset performance remains unmeasured.
