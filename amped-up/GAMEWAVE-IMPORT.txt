@@ -1,0 +1,41 @@
+GAMEWAVE IMPORT AND SDK CONTRACT — checked 2026-11-02
+
+Apply this contract in addition to the game-specific design. Preserve the existing game, artwork and progress unless the task explicitly asks to change them. Keep all player-facing text in English and support simple phone touch controls.
+
+Source of truth:
+https://rg975ojk5z.feishu.cn/wiki/MQg7wMknzieOkukxyWVc4UB0nDh
+The interaction listener APIs are documented from SDK 0.8.0 onward and also require host App support. Recheck the current document before using new capabilities. Do not invent SDK method names, script URLs, readiness events, initial-state queries or postMessage protocols.
+
+1. Boot independently of the platform.
+The host may inject its SDK at window.neonlib. The game must start and remain playable whether this object is present, absent, late, incomplete, unsupported or returns an error. Neither the presence nor absence of neonlib may gate the game's own startup, render loop or input handlers. Never leave GitHub Pages, a share preview or an ordinary browser waiting indefinitely for the SDK. Keep optional SDK setup separate from core boot. Feature-detect individual methods; if optional registration times out, apply a bounded retry only while the relevant page/scene remains active.
+
+2. Use documented lifecycle semantics.
+Call gameStart() at an actual user-initiated run start and gameOver() once when that run truly ends in success or failure. Both are documented without arguments or return values. Do not emit them per frame, on every render, or on opening a settings panel. Games without discrete runs may omit them. All SDK calls are optional; handle their absence and unexpected exceptions without stopping gameplay.
+
+3. Register the real interaction listeners.
+Use onLike(callback), onSave(callback), onComment(callback) and onShare(callback) only when present. They observe the current player's operations on the current game page, not other players' activity.
+Awaiting registration returns its registration result, not an interaction or initial social state. Check result.code === 0; a fulfilled Promise alone does not prove success. SDK failures are normally returned as non-zero codes: -2/TIMEOUT, -4/INVALID_INPUT and -6/NOT_SUPPORTED. Handle other non-zero results as failures too; catch unexpected exceptions defensively.
+The event callback receives fields directly: event.status, event.content, event.channel and event.project_id. Do not read event.data. Keep project_id as a string. count is a quantity snapshot, not a delta or unique event ID; zero may mean unknown. Do not use count for reward de-duplication or to infer a new event.
+Registration does not call the callback, return current like/favorite state, replay old actions or backfill an event lost when the page changed. Represent initial state as unknown unless a separately documented API establishes it; do not label it unliked or promise historical rewards automatically.
+
+4. Add optional, tangible interaction rewards.
+For a like reward, grant only after onLike reports event.status === true. A cancellation updates visible status but must not award again. For a comment reward, wait for onComment: it reports successful direct comments on the work, not replies. content can be empty for an image-only comment; do not accidentally require positive text or a nonempty string for a generic comment reward. onSave observes favorite/unfavorite and has no relation to game-state storage. onShare means successful share dispatch, including copying a link or opening a share entry; it does not prove that a message was actually sent in another app.
+Choose a small bonus that is useful and visible, such as an extra toy, cosmetic trail, alternate prop or optional bonus challenge. Explain it with short English copy and show immediate in-game feedback after the verified event. Keep the base game fully playable. A reward-card click only explains where to interact in the App; it must not simulate success or silently post/like/comment. Do not assume undocumented methods for opening the App's social panels. Hide unavailable reward controls or label them honestly as available in the App on standalone/GitHub builds.
+
+5. Persist and make grants idempotent.
+Use stable, versioned unlock flags for the relevant player/project/reward. Prefer idempotent feature or cosmetic unlocks over repeatedly incrementing currency. Never infer a stable player identity from display name, avatar, comment text or count. Use only identity/storage capabilities actually documented by the platform. Repeated callbacks, cancel/re-like cycles, scene restarts and reloads must not duplicate an already granted unlock. Read/merge reward flags with the rest of the player's state and avoid overwriting progress with a stale async response. Do not claim server-atomic, cross-device currency guarantees without a supporting platform/server primitive.
+saveUserGameState(state) accepts a JSON-serializable object; a successful save has code === 0. It stores the latest state, so include the game's complete intended save object rather than overwriting it with only one reward flag. The loadUserGameState table lists no input parameters and describes a direct saved-state object, possibly empty; its heading inconsistently shows '(state)'. Do not assume that every API uses a universal result.data wrapper. Handle empty, malformed and unavailable cloud saves with a local fallback and explicit merge rules. Confirm the host's actual load return shape during integration.
+
+6. Own listener lifetimes.
+Keep stable callbacks and one intended registration per event/page lifecycle. Store the successful registration's result.data.unsubscribe function. Clean up when a scene no longer needs notifications. If the scene exits before async registration resolves, mark it stopped and immediately unsubscribe when the registration later succeeds. The unsubscribe function can be called repeatedly; it does not revoke the original social action or stop an already running callback. Do not accumulate fresh anonymous listeners every restart.
+
+7. Fit the embedded viewport.
+Use getGameViewport() when supported and valid; its documented fields are width, height and density. Keep layout dimensions and render density separate, and verify the host's units instead of multiplying everything twice. Fall back to the actual canvas/container bounds and browser viewport when no SDK is available. Support portrait/landscape, resize, safe areas, pause/resume, pointer cancellation, audio activation after a gesture and usable touch targets. Sensor/microphone features are optional and should be added only when the game benefits from them, with a touch alternative.
+
+8. Delivery and verification for this project.
+Provide a game-only ZIP with index.html at the archive root, local relative asset paths and all required libraries/assets/licenses. This packaging convention is the project's delivery requirement, not a newly verified rule from the SDK document. Continue providing a verified GitHub Pages link and pinned download ZIP.
+Test: no SDK; incomplete SDK; late injection; methods missing; registration success, timeout and unsupported results; stop-before-registration-completes; true/false like events; direct and image-only comments; duplicate callbacks; repeated startup/scene exit; reward save/reload; viewport changes; standalone loading. Keep these simulations clearly separate from real GameWave App integration. Verify the imported game's boot, touch, real host events and save behavior inside GameWave before claiming App integration success. An SDK-compliant prompt alone does not guarantee that a package will import successfully.
+
+
+AMPED UP SPECIFIC: Import the ZIP with index.html at root. Hold shield / release blast, optional tap toggle. Six finite shows, best18stars. Core standalone boot; only cosmetic gold trim and party confetti use genuine like/comment callbacks. Keep all player text English. Do not replace original models, invent SDK APIs or simulate social success. Actual GameWave host events/import/cloud have not been tested in this package.
+

@@ -1,0 +1,35 @@
+// Original fixed-step absorb / discharge duel. No renderer or browser dependencies.
+export const ACTS=[
+ {name:'Sound Check',rival:'Jett',hp:48,pattern:[1,1],gap:1.9,speed:1,set:0},
+ {name:'Double Trouble',rival:'Vega',hp:116,pattern:[2,1,2],gap:1.65,speed:1.10,set:0},
+ {name:'Bass Drop',rival:'Bruno',hp:170,pattern:[3,2],gap:1.65,speed:.92,set:1},
+ {name:'Quick Mix',rival:'Izzy',hp:200,pattern:[2,3,1],gap:1.45,speed:1.23,set:1},
+ {name:'Neon Encore',rival:'Vega',hp:245,pattern:[3,2,3],gap:1.55,speed:1.18,set:2},
+ {name:'The Headliner',rival:'Bruno',hp:290,pattern:[3,3,2],gap:1.5,speed:1.20,set:2}
+];
+export const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+export const stars=p=>p.best.reduce((a,b)=>a+b,0);
+export function fresh(){return {v:1,best:Array(6).fill(0),skin:0,rewards:{like:false,comment:false},settings:{sound:true,gentle:false,light:false,tap:false}};}
+export function cleanProfile(raw){let p=fresh();if(!raw||typeof raw!=='object')return p;for(let i=0;i<6;i++)p.best[i]=Number.isInteger(raw.best?.[i])?clamp(raw.best[i],0,3):0;p.skin=Number.isInteger(raw.skin)?clamp(raw.skin,0,2):0;p.rewards={like:raw.rewards?.like===true,comment:raw.rewards?.comment===true};for(let k of Object.keys(p.settings))if(typeof raw.settings?.[k]==='boolean')p.settings[k]=raw.settings[k];if((p.skin===1&&stars(p)<6)||(p.skin===2&&stars(p)<12))p.skin=0;return p;}
+export function mergeProfile(a,b){a=cleanProfile(a);b=cleanProfile(b);a.best=a.best.map((v,i)=>Math.max(v,b.best[i]));for(let k of ['like','comment'])a.rewards[k]||=b.rewards[k];return a;}
+export function create(act=0,kit=0,lap=0){act=clamp(Math.trunc(act)||0,0,5);return {v:1,act,kit:clamp(Math.trunc(kit)||0,0,2),lap:clamp(Math.trunc(lap)||0,0,3),phase:'ready',t:0,hp:5,enemy:ACTS[act].hp,energy:0,heat:0,holding:false,pending:false,lock:0,recoil:0,hurt:0,inv:0,enemyHurt:0,next:.8,seq:0,serial:0,spawn:[],orbs:[],beam:null,caught:0,hits:0,overloads:0,blasts:0,perfect:0,score:0,combo:0,peak:0,receipt:null};}
+export function capacity(s){return s.kit>=1?5:4;}
+export function safeWindow(s){return s.phase==='play'&&s.energy>=1.8&&!s.orbs.some(o=>o.p>.44)&&!s.spawn.length&&s.lock<=0;}
+export function shield(s,on){if(!['ready','play'].includes(s.phase))return [];if(s.lock>0){s.pending=on;return [];}if(s.phase==='ready')s.phase='play';if(s.holding===on)return [];s.holding=on;let ev=[];if(!on&&s.energy>=.32){let charge=s.energy;s.energy=0;s.heat=Math.max(0,s.heat-.28);s.blasts++;s.lock=s.kit>=2?.22:.30;s.recoil=.40;s.beam={t:0,power:charge,damage:Math.round(charge*14+(charge>=capacity(s)-.3?8:0)),perfect:charge>=capacity(s)-.3};ev.push({type:'fire',power:charge});}return ev;}
+export function cancel(s){s.holding=false;s.pending=false;}
+function hurt(s,overload,ev){if(s.inv>0)return;s.inv=.65;s.hp--;s.hits++;s.combo=0;s.hurt=.55;if(overload){s.overloads++;s.energy=0;s.heat=.18;s.lock=1.15;s.holding=false;s.pending=false;}ev.push({type:overload?'overload':'hurt'});if(s.hp<=0){s.hp=0;s.phase='lose';s.holding=false;s.receipt={stars:0,score:s.score,caught:s.caught,blasts:s.blasts,hits:s.hits};ev.push({type:'lose'});}}
+export function advance(s,dt){let events=[];if(s.phase!=='play')return events;let steps=Math.max(1,Math.ceil(clamp(dt,0,3)/(1/60))),h=clamp(dt,0,3)/steps;for(let k=0;k<steps&&s.phase==='play';k++)tick(s,h,events);return events;}
+function tick(s,dt,ev){let m=ACTS[s.act];s.t+=dt;for(let key of ['lock','hurt','inv','recoil','enemyHurt'])s[key]=Math.max(0,s[key]-dt);if(s.lock===0&&s.pending){s.holding=true;s.pending=false;}
+ s.heat=clamp(s.heat+(s.holding?(s.kit>=2?.065:.10):-.75)*dt,0,1);if(s.holding){s.energy=Math.min(capacity(s),s.energy+.28*dt);if(s.heat>=1)hurt(s,true,ev);}if(s.phase!=='play')return;
+ s.next-=dt;if(s.next<=0){let n=m.pattern[s.seq++%m.pattern.length];s.next=m.gap+(n-1)*.35;for(let i=0;i<n;i++)s.spawn.push({in:.58+i*.35});ev.push({type:'wind',count:n});}
+ for(let a of s.spawn)a.in-=dt;let due=s.spawn.filter(a=>a.in<=0);s.spawn=s.spawn.filter(a=>a.in>0);for(let a of due){s.orbs.push({id:s.serial++,p:0,speed:m.speed*(1+s.lap*.06),big:s.act===2||s.act===5});ev.push({type:'shot'});}
+ for(let o of s.orbs){o.p+=dt*.83*o.speed;if(o.p>=1){if(s.holding&&s.lock<=0){s.energy=Math.min(capacity(s),s.energy+1);s.heat=Math.min(1,s.heat+.07);s.caught++;if(s.caught%6===0&&s.hp<5){s.hp++;ev.push({type:'repair'});}s.combo++;s.peak=Math.max(s.peak,s.combo);s.score+=50+Math.min(10,s.combo)*5;ev.push({type:'catch',id:o.id,power:s.energy});}else hurt(s,false,ev);}}
+ s.orbs=s.orbs.filter(o=>o.p<1);if(s.phase!=='play')return;
+ if(s.beam){s.beam.t+=dt;if(s.beam.t>=.18){let b=s.beam;s.enemy=Math.max(0,s.enemy-b.damage);s.enemyHurt=.65;s.score+=b.damage*5;if(b.perfect){s.perfect++;ev.push({type:'perfect'});}ev.push({type:'hit',power:b.power,damage:b.damage});s.beam=null;if(s.enemy<=0){s.phase='win';s.holding=false;s.orbs=[];s.spawn=[];let rating=1+(s.hp>=4?1:0)+(s.overloads===0?1:0);s.receipt={stars:rating,score:s.score+500+s.hp*100,caught:s.caught,blasts:s.blasts,hits:s.hits};ev.push({type:'win'});}}}
+}
+export function bank(p,s){if(s.phase==='win'&&s.receipt)p.best[s.act]=Math.max(p.best[s.act],s.receipt.stars);return p;}
+export function decode(raw){try{let s=typeof raw==='string'?JSON.parse(raw):structuredClone(raw);if(!s||s.v!==1||!Number.isInteger(s.act)||s.act<0||s.act>5||!['ready','play','win','lose'].includes(s.phase))return null;let base=create(s.act,s.kit,s.lap);if(base.kit!==s.kit||base.lap!==s.lap)return null;for(let key of ['t','hp','enemy','energy','heat','lock','hurt','inv','recoil','enemyHurt','next','seq','serial','caught','hits','overloads','blasts','perfect','score','combo','peak'])if(!Number.isFinite(s[key])||s[key]<0)return null;if(s.hp>5||s.enemy>ACTS[s.act].hp||s.energy>capacity(s)+.001||s.heat>1||s.t>1e7||s.next>10||s.seq>1e8||s.serial>1e8)return null;for(let key of ['hp','seq','serial','caught','hits','overloads','blasts','perfect','combo','peak'])if(!Number.isInteger(s[key]))return null;if(!Array.isArray(s.orbs)||s.orbs.length>16||!Array.isArray(s.spawn)||s.spawn.length>6)return null;let ids=new Set();for(let o of s.orbs){if(!Number.isInteger(o.id)||o.id<0||o.id>=s.serial||ids.has(o.id)||!Number.isFinite(o.p)||o.p<0||o.p>=1||!Number.isFinite(o.speed)||o.speed<=0||o.speed>3)return null;ids.add(o.id);}for(let a of s.spawn)if(!Number.isFinite(a.in)||a.in<0||a.in>4)return null;if(s.beam&&(!Number.isFinite(s.beam.t)||s.beam.t<0||s.beam.t>=.18||!Number.isFinite(s.beam.power)||s.beam.power<.32||s.beam.power>capacity(s)||!Number.isFinite(s.beam.damage)||s.beam.damage<0||s.beam.damage>100))return null;if(s.phase==='win'&&(s.enemy!==0||s.hp<1||s.receipt?.stars!==1+(s.hp>=4?1:0)+(s.overloads===0?1:0)))return null;if(s.phase==='lose'&&s.hp!==0)return null;if((s.phase==='play'||s.phase==='ready')&&(s.hp<=0||s.enemy<=0))return null;if(['win','lose'].includes(s.phase)){let r=s.receipt;if(!r||!Number.isFinite(r.score)||r.score<0||r.caught!==s.caught||r.blasts!==s.blasts||r.hits!==s.hits)return null;}s.holding=false;s.pending=false;return s;}catch{return null;}}
+
+
+
+
