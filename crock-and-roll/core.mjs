@@ -1,0 +1,54 @@
+export const SHOPS=[
+ {name:'A Fine Mess',venue:'THE TEA ARCADE',set:0,quota:12,par:3,layout:[[-2,2,0],[2,1,0],[-2,-2,0],[2,-3,0],[0,-5,1]]},
+ {name:'Shelf Esteem',venue:'THE TEA ARCADE',set:0,quota:18,par:4,layout:[[-2.7,2,0],[0,1,1],[2.7,0,0],[-2.7,-2,1],[0,-3,0],[2.7,-4,1]]},
+ {name:'Glass Act',venue:'THE PALM HOUSE',set:1,quota:20,par:4,layout:[[-2.5,2,0],[1.8,1,2],[-2,-1,1],[2.5,-2,0],[-2.5,-4,2],[1,-5,1]]},
+ {name:'Room Service',venue:'THE PALM HOUSE',set:1,quota:23,par:5,layout:[[-2.8,2,2],[1.8,1,0],[-2.4,-1,2],[2.8,-2,1],[-2.7,-4,0],[0,-5,2],[2.8,-5.5,1]]},
+ {name:'Night at the Vase',venue:'THE VELVET GALLERY',set:2,quota:24,par:5,layout:[[-2.6,2,1],[1.8,1.8,2],[-2,-.5,0],[2.7,-1.5,1],[-2.6,-3.7,1],[0,-5.5,2],[2.8,-4.7,0]]},
+ {name:'The Grand Finale',venue:'THE VELVET GALLERY',set:2,quota:30,par:6,layout:[[-2.5,2,2],[1.9,1.6,1],[-2.8,-.7,0],[0,-1.2,2],[2.8,-1,0],[-2.6,-3.5,1],[0,-5.5,1],[2.7,-4.5,2]]}
+];
+export const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const finite=(x,a,b)=>Number.isFinite(x)&&x>=a&&x<=b;
+export function profile(raw={}){let p={best:Array(6).fill(0),scores:Array(6).fill(0),unlocked:1,kit:0,paint:0,sound:true,light:false,motion:true,rewards:{like:false,comment:false}};if(!raw||typeof raw!=='object')return p;for(let i=0;i<6;i++){p.best[i]=Number.isInteger(raw.best?.[i])?clamp(raw.best[i],0,3):0;p.scores[i]=finite(raw.scores?.[i],0,1e7)?Math.floor(raw.scores[i]):0;}p.unlocked=clamp(Math.max(1,p.best.findLastIndex(n=>n>0)+2),1,6);for(let k of ['sound','light','motion'])if(typeof raw[k]==='boolean')p[k]=raw[k];p.rewards={like:raw.rewards?.like===true,comment:raw.rewards?.comment===true};let n=p.best.reduce((a,b)=>a+b,0);p.kit=Number.isInteger(raw.kit)&&raw.kit>=0&&raw.kit<=2&&(raw.kit===0||n>=(raw.kit===1?6:12))?raw.kit:0;p.paint=Number.isInteger(raw.paint)&&raw.paint>=0&&raw.paint<=2&&(raw.paint===0||n>=(raw.paint===1?6:12))?raw.paint:0;return p;}
+export function mergeProfile(local,remote){let a=profile(local),b=profile(remote);a.best=a.best.map((v,i)=>Math.max(v,b.best[i]));a.scores=a.scores.map((v,i)=>Math.max(v,b.scores[i]));a.rewards={like:a.rewards.like||b.rewards.like,comment:a.rewards.comment||b.rewards.comment};return profile({...a,kit:local.kit,paint:local.paint});}
+export function makeRun(level=0){level=clamp(Math.floor(level)||0,0,5);let s={v:1,level,mode:'ready',time:0,x:0,z:4.6,vx:0,vz:0,heading:.6,tx:0,tz:4.6,targetID:-1,moving:false,held:false,charge:0,dash:0,cool:0,score:0,broken:0,gold:0,chain:0,bestChain:0,lastBreak:-9,bonks:0,dashes:0,settle:0,seed:1123+level*97,clusters:[],pieces:[],pending:[],events:[]};
+ SHOPS[level].layout.forEach(([x,z,type],i)=>{let c={id:i,x,z,type,angle:0,toppled:false,at:-1,phase:i*1.7,dir:i%2?1:-1};s.clusters.push(c);let count=type===1?6:5;for(let j=0;j<count;j++){let col=(j%3)-1,row=Math.floor(j/3),gold=j===2&&i%2===0;let piece={id:s.pieces.length,cluster:i,ox:col*.70,oz:type===1?0:(row-.5)*.70,y:type===1?.74+row*.65:.77,r:.24,kind:(i+j)%3,color:(i+j)%4,gold,broken:false,at:-1,x:x+col*.70,z:z+(row-.5)*.70};s.pieces.push(piece);}});return s;}
+export function clusterPoint(s,c){return{x:clamp(c.x+(c.slideX||0)+(c.type===2&&!c.toppled?Math.sin(s.time*.72+c.phase)*.65:0),-3.15,3.15),z:c.z+(c.slideZ||0)};}
+export function piecePoint(s,p){let c=s.clusters[p.cluster],q=clusterPoint(s,c);return{x:q.x+p.ox,z:q.z+p.oz,y:p.y};}
+export function steer(s,x,z,held=true){if(s.mode==='won'||s.mode==='settling'||!finite(x,-20,20)||!finite(z,-20,20))return false;if(s.mode==='ready'){s.mode='play';s.events.push({type:'start'});}s.targetID=-1;s.tx=clamp(x,-3.9,3.9);s.tz=clamp(z,-6.2,5.4);s.moving=true;s.held=held;return true;}
+export function target(s,id){let c=s.clusters[id];if(!c||c.toppled)return false;let q=clusterPoint(s,c);if(!steer(s,q.x,q.z,false))return false;s.targetID=id;return true;}
+export function brake(s){s.moving=false;s.held=false;s.targetID=-1;s.charge=0;s.events.push({type:'brake',x:s.x,z:s.z});}
+export function random(s){s.seed=(1664525*s.seed+1013904223)>>>0;return s.seed/4294967296;}
+function queue(s,id,at,force){let p=s.pieces[id];if(p.broken)return;if(!s.pending.some(v=>v.id===id))s.pending.push({id,at,force});}
+function shatter(s,p,force=1){if(p.broken)return;p.broken=true;p.at=s.time;s.broken++;s.gold+=p.gold?1:0;if(s.time-s.lastBreak>1.15)s.chain=0;s.chain++;s.lastBreak=s.time;s.bestChain=Math.max(s.bestChain,s.chain);let q=piecePoint(s,p);p.bx=q.x;p.bz=q.z;let gain=(p.gold?180:35)+Math.min(12,s.chain)*8;s.score+=gain;s.events.push({type:'break',id:p.id,x:q.x,y:q.y,z:q.z,gold:p.gold,color:p.color,kind:p.kind,chain:s.chain,gain,force});
+ // A tilted rack physically sheds its shelf contents in sequence. Nearby floor
+ // displays can be struck by that fall, rather than an arbitrary global clear.
+ let c=s.clusters[p.cluster];if(c.toppled)for(let n of s.pieces)if(n.cluster===c.id&&!n.broken)queue(s,n.id,s.time+.055+.06*Math.abs(n.ox-p.ox),force*.8);
+ for(let n of s.pieces){if(n.broken||n.cluster===p.cluster)continue;let r=piecePoint(s,n);if(Math.hypot(r.x-q.x,r.z-q.z)<.72)queue(s,n.id,s.time+.13,force*.65);}
+}
+function topple(s,c,vx,vz){if(c.toppled)return;let q=clusterPoint(s,c);c.toppled=true;c.slideX=q.x-c.x;c.slideZ=0;c.svx=c.type===2?vx*.75:0;c.svz=c.type===2?vz*.75:0;c.at=s.time;c.dir=vx>=0?1:-1;s.events.push({type:'topple',cluster:c.id,x:q.x,z:q.z});for(let p of s.pieces)if(p.cluster===c.id&&!p.broken)queue(s,p.id,s.time+.025+p.id%3*.055+(c.type===1?Math.floor(p.id%6/3)*.13:0),Math.hypot(vx,vz)/5);}
+function rollingCarts(s,dt){for(let c of s.clusters){if(!c.toppled||c.type!==2)continue;c.slideX=clamp((c.slideX||0)+(c.svx||0)*dt,-3.3-c.x,3.3-c.x);c.slideZ=clamp((c.slideZ||0)+(c.svz||0)*dt,-5.8-c.z,5.2-c.z);c.svx=(c.svx||0)*Math.exp(-dt*1.3);c.svz=(c.svz||0)*Math.exp(-dt*1.3);if(Math.hypot(c.svx,c.svz)<.8)continue;let q=clusterPoint(s,c);for(let n of s.clusters){if(n.toppled)continue;let b=clusterPoint(s,n);if(Math.hypot(q.x-b.x,q.z-b.z)<1.8){topple(s,n,c.svx,c.svz);c.svx*=.6;c.svz*=.6;}}}}
+export function tick(s,dt,kit=0){if(!finite(dt,0,.1)||s.mode==='ready'||s.mode==='won')return;s.time+=dt;
+ rollingCarts(s,dt);if(s.mode==='settling'){for(let i=s.pending.length-1;i>=0;i--)if(s.pending[i].at<=s.time){let q=s.pending.splice(i,1)[0];shatter(s,s.pieces[q.id],q.force);}s.settle-=dt;if(s.settle<=0){s.settle=0;s.mode='won';s.events.push({type:'win'});}return;}
+ s.dash=Math.max(0,s.dash-dt);s.cool=Math.max(0,s.cool-dt);
+ if(Number.isInteger(s.targetID)&&s.targetID>=0){let c=s.clusters[s.targetID];if(c&&!c.toppled){let q=clusterPoint(s,c);s.tx=q.x;s.tz=q.z;}else{s.moving=false;s.targetID=-1;}}
+ let dx=s.tx-s.x,dz=s.tz-s.z,dist=Math.hypot(dx,dz),speed=Math.hypot(s.vx,s.vz),desX=0,desZ=0;
+ if(s.moving&&dist>.11){let a=Math.atan2(dx,dz),diff=Math.atan2(Math.sin(a-s.heading),Math.cos(a-s.heading));s.heading+=clamp(diff,-dt*(s.dash>0?3.3:7),dt*(s.dash>0?3.3:7));s.charge+=dt;if(s.held&&s.charge>.85&&s.cool<=0){s.dash=.68;s.cool=1.45;s.charge=0;s.dashes++;s.events.push({type:'dash',x:s.x,z:s.z});}let velocity=s.dash>0?8.2:4.25;velocity=Math.min(velocity,dist*(s.dash>0?7:8))*Math.max(.12,Math.cos(diff));desX=Math.sin(s.heading)*velocity;desZ=Math.cos(s.heading)*velocity;}else{s.charge=0;if(!s.held)s.moving=false;}
+ let blend=1-Math.exp(-dt*(s.moving?8:kit===2?18:10));s.vx+=(desX-s.vx)*blend;s.vz+=(desZ-s.vz)*blend;let ox=s.x,oz=s.z;s.x+=s.vx*dt;s.z+=s.vz*dt;
+ let bonk=false;if(s.x<-3.0||s.x>3.0){s.x=clamp(s.x,-3.0,3.0);s.vx*=-.25;bonk=true;}if(s.z<-5.2||s.z>4.6){s.z=clamp(s.z,-5.2,4.6);s.vz*=-.25;bonk=true;}if(bonk&&speed>3.2&&s.time-(s.lastBonk||-9)>.6){s.lastBonk=s.time;s.bonks++;s.events.push({type:'bonk',x:s.x,z:s.z});}
+ let reach=kit>=1?.88:.72;for(let c of s.clusters){if(c.toppled)continue;let q=clusterPoint(s,c);if(segmentDistance(ox,oz,s.x,s.z,q.x,q.z)<reach+.7&&speed>1.1)topple(s,c,s.vx,s.vz);}
+ for(let i=s.pending.length-1;i>=0;i--)if(s.pending[i].at<=s.time){let p=s.pending.splice(i,1)[0];shatter(s,s.pieces[p.id],p.force);}
+ if(s.broken>=SHOPS[s.level].quota){s.mode='settling';s.settle=1.1;s.moving=false;s.held=false;s.vx*=.2;s.vz*=.2;}
+}
+export function segmentDistance(ax,az,bx,bz,x,z){let dx=bx-ax,dz=bz-az,t=clamp(((x-ax)*dx+(z-az)*dz)/(dx*dx+dz*dz||1),0,1);return Math.hypot(ax+dx*t-x,az+dz*t-z);}
+export function result(s){let all=s.pieces.filter(p=>p.gold).length;return{score:s.score,broken:s.broken,chain:s.bestChain,gold:s.gold,totalGold:all,bonks:s.bonks,stars:s.mode==='won'?1+(s.gold>=Math.max(1,all-1)?1:0)+(s.bestChain>=9?1:0):0};}
+export function award(p,s){if(s.mode!=='won')return false;let r=result(s);p.best[s.level]=Math.max(p.best[s.level],r.stars);p.scores[s.level]=Math.max(p.scores[s.level],r.score);p.unlocked=Math.max(p.unlocked,Math.min(6,s.level+2));return true;}
+export function restore(raw){if(!raw||raw.v!==1||!Number.isInteger(raw.level)||raw.level<0||raw.level>5)return null;let b=makeRun(raw.level);if(!['ready','play','settling','won'].includes(raw.mode)||!Array.isArray(raw.pieces)||raw.pieces.length!==b.pieces.length)return null;
+ for(let k of ['time','score','broken','gold','chain','bestChain','bonks','dashes','charge','dash','cool','settle'])if(!finite(raw[k],k==='settle'?-.1:0,k==='time'?1e7:1e8))return null;for(let k of ['x','z','tx','tz','vx','vz','heading'])if(!finite(raw[k],-100,100))return null;if(Math.abs(raw.x)>4.16||raw.z<-6.51||raw.z>5.66)return null;
+ if(!Array.isArray(raw.clusters)||raw.clusters.length!==b.clusters.length||!Array.isArray(raw.pending)||raw.pending.length>b.pieces.length)return null;
+ let broken=0,gold=0;for(let i=0;i<b.pieces.length;i++){let p=raw.pieces[i];if(typeof p.broken!=='boolean'||!finite(p.at,-1,raw.time+.1))return null;b.pieces[i].broken=p.broken;b.pieces[i].at=p.at;if(p.broken){broken++;gold+=b.pieces[i].gold?1:0;if(p.bx!==undefined){if(!finite(p.bx,-8,8)||!finite(p.bz,-9,9))return null;b.pieces[i].bx=p.bx;b.pieces[i].bz=p.bz;}}}
+ if(broken!==raw.broken||gold!==raw.gold||raw.chain>broken||raw.bestChain>broken)return null;
+ for(let i=0;i<b.clusters.length;i++){let c=raw.clusters[i];if(typeof c.toppled!=='boolean'||!finite(c.at,-1,raw.time+.1)||![-1,1].includes(c.dir))return null;Object.assign(b.clusters[i],{toppled:c.toppled,at:c.at,dir:c.dir});for(let k of ['slideX','slideZ','svx','svz'])if(c[k]!==undefined){if(!finite(c[k],-15,15))return null;b.clusters[i][k]=c[k];}}
+ for(let q of raw.pending)if(!Number.isInteger(q.id)||q.id<0||q.id>=b.pieces.length||!finite(q.at,0,raw.time+5)||!finite(q.force,0,10))return null;
+ if(raw.mode==='won'&&broken<SHOPS[b.level].quota||raw.mode==='settling'&&broken<SHOPS[b.level].quota)return null;
+ for(let k of ['mode','time','score','broken','gold','chain','bestChain','bonks','dashes','charge','dash','cool','settle','x','z','tx','tz','vx','vz','heading','seed','lastBreak','lastBonk'])if(raw[k]!==undefined)b[k]=raw[k];b.pending=raw.pending.map(q=>({...q}));b.moving=false;b.held=false;b.events=[];return b;
+}

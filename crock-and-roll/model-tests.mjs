@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import * as C from './core.mjs';
+const require=createRequire(import.meta.url);globalThis.window={THREE:require('./vendor/three.min.js')};let T=window.THREE;
+const V=await import('./models.mjs');let checks=0;const ok=(v,m)=>{assert.ok(v,m);checks++;};
+let scene=new T.Scene(),b=V.bull(scene);for(let leg of b.legs){scene.updateMatrixWorld(true);let box=new T.Box3().setFromObject(leg);ok(Math.abs(box.min.y-.045)<.003,'actual hoof baseline calibrated to .045 floor');}for(let angle=0;angle<6.3;angle+=.16){b.root.rotation.y=angle;b.body.rotation.z=Math.sin(angle)*.035;scene.updateMatrixWorld(true);let box=new T.Box3().setFromObject(b.root);ok(Number.isFinite(box.min.x)&&box.max.y<2.0&&box.min.y>=.02,'finite compact articulated bull');}
+for(let level=0;level<6;level++){let s=C.makeRun(level),parent=new T.Group();let before=process.memoryUsage().heapUsed;for(let c of s.clusters){let r=V.rack(parent,c,V.PALETTES[C.SHOPS[level].set]);for(let p of s.pieces.filter(p=>p.cluster===c.id)){let o=V.porcelain(parent,p,V.PALETTES[C.SHOPS[level].set]),q=C.piecePoint(s,p);o.position.set(q.x,q.y,q.z);o.updateMatrixWorld(true);let box=new T.Box3().setFromObject(o);ok(Math.abs(box.min.y-q.y)<.03,'porcelain foot contacts matching shelf surface');ok(box.max.y<2.3,'no tall model spikes');let surface=c.type===1?.725+Math.floor(p.id%6/3)*.65:.75; // independent local row check below
+  let support=c.type===1?(p.y<1?.725:1.375):.75;ok(Math.abs(box.min.y-support)<.05,'no floating unsupported pottery');o.traverse(m=>{if(!m.isMesh)return;for(let value of m.geometry.attributes.position.array)ok(Number.isFinite(value)&&Math.abs(value)<4,'finite local painted mesh');});}
+ }ok(process.memoryUsage().heapUsed-before<200e6,'bounded small original model build');}
+console.log(JSON.stringify({checks,scope:'Actual Three geometry: hoof baseline, rotating bull bounds, ceramic/support contact, finite vertices and six model builds.'}));

@@ -1,0 +1,63 @@
+{
+  "simulation": {
+    "controllerVisits": 36,
+    "checks": 9246,
+    "allShopsAllKitsBothInputStyles": true,
+    "movingTargetTracking": true,
+    "rollingCartNeighbourCollision": true,
+    "completedReceiptRestore": true,
+    "sdk": "mock callbacks and cloud guards only"
+  },
+  "geometry": {
+    "checks": 1423325,
+    "scope": "Actual Three geometry: hoof baseline, rotating bull bounds, ceramic/support contact, finite vertices and six model builds."
+  },
+  "nativeBrowser": {
+    "campaignDamage": [
+      2003,
+      2236,
+      1781,
+      2873,
+      2556,
+      2894
+    ],
+    "campaignStars": [
+      3,
+      3,
+      2,
+      3,
+      3,
+      3
+    ],
+    "totalStars": 17,
+    "viewports": [
+      [
+        320,
+        568
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        568,
+        320
+      ],
+      [
+        844,
+        390
+      ]
+    ],
+    "activeRestore": [
+      10,
+      1080
+    ],
+    "finalReceiptRestore": [
+      2894,
+      17
+    ],
+    "earnedKitAndNeckerchiefSelected": true,
+    "warningsAndErrors": [],
+    "scope": "Iterative source campaign; real game UI controls, held scene press, and display tags. No injected game state. Actual physical phones and GameWave hosting untested."
+  }
+}
