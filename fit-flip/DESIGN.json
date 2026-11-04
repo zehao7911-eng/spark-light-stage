@@ -1,0 +1,25 @@
+{
+  "title": "Fit Flip",
+  "slug": "fit-flip",
+  "language": "en",
+  "reference": {
+    "name": "Today\u2019s Fit / Nostalgic Fit",
+    "url": "https://rezona.ai/game/pgcserver/pv/dWzjLSNDyl/v5/dist/index.html",
+    "observed": "Fullbody 1 selected, visible layers 1 -> 2; no reference completion claimed",
+    "reuse": "No reference media or code"
+  },
+  "loop": "Choose garment -> choose two actors -> swap -> match complete roles -> stars and Lookbook -> next authored call",
+  "calls": 8,
+  "styles": 5,
+  "actors": 3,
+  "sets": 3,
+  "maximumBestStars": 24,
+  "art": "Original procedural 3D adult actors and stage sets, SVG icon, actual runtime cover",
+  "input": "Tap or drag; keyboard alternative",
+  "network": "No runtime dependency; optional guarded GameWave SDK",
+  "limits": [
+    "WebGL required",
+    "Finite eight-call collection, five role remixes",
+    "No physical handset or native GameWave host certification"
+  ]
+}

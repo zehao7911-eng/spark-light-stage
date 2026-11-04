@@ -1,0 +1,18 @@
+FIT FLIP — HTML5 IMPORT
+
+Upload the contents of this game-only archive. index.html is at the archive root. Preserve vendor/, assets/ and the module files. Host through HTTPS with JavaScript/module and SVG/JPEG MIME types. There is no build step or CDN requirement. The package does not include other games in the GitHub repository.
+
+Use an ordinary viewport responsive to actual browser layout; the page includes viewport-fit=cover and safe-area padding. No landscape lock is requested. Real host getGameViewport values are recorded separately from browser layout; the game does not assume a synchronous optional SDK response is always available.
+
+The game must boot independently of window.neonlib. GameWave may inject it, but standalone/GitHub/shared pages often do not. Never wrap game boot or normal input in a check that requires the SDK. Optional calls are individually detected and failures do not block gameplay.
+
+Actual first garment swap calls gameStart() when supported; a completed call calls gameOver() once. Repeated UI renders, pause/resume and result views do not resend these lifecycle events.
+
+At initialization, sdk.mjs independently registers onLike and onComment when available. Registration success requires code === 0. A qualifying positive direct onLike event.status === true earns a gold lapel pin; an unlike does not. A successful direct onComment callback earns multicolor party confetti, including an image-only comment with empty content. Replies are outside the documented onComment event. Events are read directly, not from event.data. count is not used as an identifier and project_id is not converted to a number. Registration does not award cosmetics or replay historical interactions. Optional prompt rows only appear for successfully supported methods.
+
+Each cosmetic has a claimed flag in the normal profile. Repeated callbacks do not repeatedly grant it. Local-only claims are browser/device scoped. Cloud merging is conservative, preserves the known envelope and never blindly overwrites an unknown, failed or timed-out read. This is not a server-authoritative reward/identity system. Late completed registrations unsubscribe after disposal; listener cleanup is idempotent. No undocumented method is assumed to open the host like/comment UI.
+
+Official contract checked 2026-11-04; document displayed October 30 modification:
+https://rg975ojk5z.feishu.cn/wiki/MQg7wMknzieOkukxyWVc4UB0nDh
+
+Mock checks cover absent/failed methods, unlike, direct/image-only comments, duplicates, lifecycle deduplication, unknown cloud writes and late cleanup. Actual GameWave import, native host social events/cloud sync and physical-phone performance were not available for testing. Check those in the supported host before platform submission.
