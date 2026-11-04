@@ -1,0 +1,9 @@
+# GameWave import
+
+Upload the root-index ZIP, or use the self-contained `standalone.html` when the platform accepts a single HTML entry. The archive's root contains `index.html`; do not put another outer directory around it. All gameplay, 3D code and synthesized audio are local. No model/texture URL or autoplay audio permission is required to boot.
+
+The optional `sdk.mjs` bridge uses the previously verified `neonlib` contract. It does not block boot and it does not inject a remote SDK script. When the host supplies the SDK, independent guarded `onLike` and `onComment` subscriptions can unlock optional cosmetic rewards: a positive direct like gives a brass wrist band; a direct comment, including an image-only/empty-content comment with a valid project identifier, gives coloured discovery particles. There are no fake likes, inferred comments, gating of game content, or automated social submissions. Unsupported capabilities are hidden.
+
+`gameStart` / `gameOver` follow actual visits and deduplicate pause/resume/receipt calls. Asynchronous listener cleanup, timeout, bounded retry, late SDK injection, partial methods and rejected promises are handled. Cloud writes wait for a recognized complete game envelope or a known empty cloud value; failed, unknown or timed-out cloud loads cannot overwrite remote state. Stars/scores merge by maximum and reward flags by union. The local active visit remains locally owned; a late cloud response does not replace an ongoing game. CSS viewport/safe areas are used, and rotation triggers a real redraw even when paused.
+
+Mocks are tested locally. This delivery does not claim a real GameWave import, actual account/social event, latest-document revalidation or host cloud round trip. Normal GitHub Pages and offline play do not require the SDK.
