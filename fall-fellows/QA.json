@@ -1,0 +1,730 @@
+{
+  "game": "Fall Fellows",
+  "date": "2026-11-04",
+  "controller": {
+    "checks": 791,
+    "visits": [
+      {
+        "meet": 1,
+        "kit": 0,
+        "offset": 0,
+        "seconds": 9.95,
+        "score": 1530,
+        "hits": 3,
+        "total": 3,
+        "misses": 0,
+        "average": 0.9999999999999997,
+        "stars": 3
+      },
+      {
+        "meet": 1,
+        "kit": 0,
+        "offset": 0.025,
+        "seconds": 9.95,
+        "score": 1446,
+        "hits": 3,
+        "total": 3,
+        "misses": 0,
+        "average": 0.8604671842513745,
+        "stars": 3
+      },
+      {
+        "meet": 1,
+        "kit": 1,
+        "offset": 0,
+        "seconds": 9.95,
+        "score": 1530,
+        "hits": 3,
+        "total": 3,
+        "misses": 0,
+        "average": 0.9999999999999999,
+        "stars": 3
+      },
+      {
+        "meet": 1,
+        "kit": 1,
+        "offset": 0.025,
+        "seconds": 9.95,
+        "score": 1464,
+        "hits": 3,
+        "total": 3,
+        "misses": 0,
+        "average": 0.8898425138826641,
+        "stars": 3
+      },
+      {
+        "meet": 1,
+        "kit": 2,
+        "offset": 0,
+        "seconds": 9.95,
+        "score": 1530,
+        "hits": 3,
+        "total": 3,
+        "misses": 0,
+        "average": 0.9999999999999999,
+        "stars": 3
+      },
+      {
+        "meet": 1,
+        "kit": 2,
+        "offset": 0.025,
+        "seconds": 9.95,
+        "score": 1464,
+        "hits": 3,
+        "total": 3,
+        "misses": 0,
+        "average": 0.8898425138826641,
+        "stars": 3
+      },
+      {
+        "meet": 2,
+        "kit": 0,
+        "offset": 0,
+        "seconds": 9.95,
+        "score": 1530,
+        "hits": 3,
+        "total": 3,
+        "misses": 0,
+        "average": 0.9999999999999997,
+        "stars": 3
+      },
+      {
+        "meet": 2,
+        "kit": 0,
+        "offset": 0.025,
+        "seconds": 9.95,
+        "score": 1437,
+        "hits": 3,
+        "total": 3,
+        "misses": 0,
+        "average": 0.8451833040100629,
+        "stars": 3
+      },
+      {
+        "meet": 2,
+        "kit": 1,
+        "offset": 0,
+        "seconds": 9.95,
+        "score": 1530,
+        "hits": 3,
+        "total": 3,
+        "misses": 0,
+        "average": 0.9999999999999999,
+        "stars": 3
+      },
+      {
+        "meet": 2,
+        "kit": 1,
+        "offset": 0.025,
+        "seconds": 9.95,
+        "score": 1457,
+        "hits": 3,
+        "total": 3,
+        "misses": 0,
+        "average": 0.8777762926395235,
+        "stars": 3
+      },
+      {
+        "meet": 2,
+        "kit": 2,
+        "offset": 0,
+        "seconds": 9.95,
+        "score": 1530,
+        "hits": 3,
+        "total": 3,
+        "misses": 0,
+        "average": 0.9999999999999999,
+        "stars": 3
+      },
+      {
+        "meet": 2,
+        "kit": 2,
+        "offset": 0.025,
+        "seconds": 9.95,
+        "score": 1457,
+        "hits": 3,
+        "total": 3,
+        "misses": 0,
+        "average": 0.8777762926395235,
+        "stars": 3
+      },
+      {
+        "meet": 3,
+        "kit": 0,
+        "offset": 0,
+        "seconds": 13.27,
+        "score": 2100,
+        "hits": 4,
+        "total": 4,
+        "misses": 0,
+        "average": 0.9999999999999993,
+        "stars": 3
+      },
+      {
+        "meet": 3,
+        "kit": 0,
+        "offset": 0.025,
+        "seconds": 13.27,
+        "score": 1973,
+        "hits": 4,
+        "total": 4,
+        "misses": 0,
+        "average": 0.8416920780407119,
+        "stars": 3
+      },
+      {
+        "meet": 3,
+        "kit": 1,
+        "offset": 0,
+        "seconds": 13.27,
+        "score": 2100,
+        "hits": 4,
+        "total": 4,
+        "misses": 0,
+        "average": 0.9999999999999996,
+        "stars": 3
+      },
+      {
+        "meet": 3,
+        "kit": 1,
+        "offset": 0.025,
+        "seconds": 13.27,
+        "score": 1999,
+        "hits": 4,
+        "total": 4,
+        "misses": 0,
+        "average": 0.8750200616110884,
+        "stars": 3
+      },
+      {
+        "meet": 3,
+        "kit": 2,
+        "offset": 0,
+        "seconds": 13.27,
+        "score": 2100,
+        "hits": 4,
+        "total": 4,
+        "misses": 0,
+        "average": 0.9999999999999998,
+        "stars": 3
+      },
+      {
+        "meet": 3,
+        "kit": 2,
+        "offset": 0.025,
+        "seconds": 13.27,
+        "score": 1999,
+        "hits": 4,
+        "total": 4,
+        "misses": 0,
+        "average": 0.8750200616110881,
+        "stars": 3
+      },
+      {
+        "meet": 4,
+        "kit": 0,
+        "offset": 0,
+        "seconds": 13.27,
+        "score": 2100,
+        "hits": 4,
+        "total": 4,
+        "misses": 0,
+        "average": 0.9999999999999993,
+        "stars": 3
+      },
+      {
+        "meet": 4,
+        "kit": 0,
+        "offset": 0.025,
+        "seconds": 13.27,
+        "score": 1957,
+        "hits": 4,
+        "total": 4,
+        "misses": 0,
+        "average": 0.820875838402948,
+        "stars": 3
+      },
+      {
+        "meet": 4,
+        "kit": 1,
+        "offset": 0,
+        "seconds": 13.27,
+        "score": 2100,
+        "hits": 4,
+        "total": 4,
+        "misses": 0,
+        "average": 0.9999999999999994,
+        "stars": 3
+      },
+      {
+        "meet": 4,
+        "kit": 1,
+        "offset": 0.025,
+        "seconds": 13.27,
+        "score": 1987,
+        "hits": 4,
+        "total": 4,
+        "misses": 0,
+        "average": 0.8585861882128536,
+        "stars": 3
+      },
+      {
+        "meet": 4,
+        "kit": 2,
+        "offset": 0,
+        "seconds": 13.27,
+        "score": 2100,
+        "hits": 4,
+        "total": 4,
+        "misses": 0,
+        "average": 0.9999999999999996,
+        "stars": 3
+      },
+      {
+        "meet": 4,
+        "kit": 2,
+        "offset": 0.025,
+        "seconds": 13.27,
+        "score": 1987,
+        "hits": 4,
+        "total": 4,
+        "misses": 0,
+        "average": 0.8585861882128536,
+        "stars": 3
+      },
+      {
+        "meet": 5,
+        "kit": 0,
+        "offset": 0,
+        "seconds": 16.58,
+        "score": 2700,
+        "hits": 5,
+        "total": 5,
+        "misses": 0,
+        "average": 0.9999999999999843,
+        "stars": 3
+      },
+      {
+        "meet": 5,
+        "kit": 0,
+        "offset": 0.025,
+        "seconds": 16.58,
+        "score": 2539,
+        "hits": 5,
+        "total": 5,
+        "misses": 0,
+        "average": 0.8387915905846828,
+        "stars": 3
+      },
+      {
+        "meet": 5,
+        "kit": 1,
+        "offset": 0,
+        "seconds": 16.58,
+        "score": 2700,
+        "hits": 5,
+        "total": 5,
+        "misses": 0,
+        "average": 0.9999999999999878,
+        "stars": 3
+      },
+      {
+        "meet": 5,
+        "kit": 1,
+        "offset": 0.025,
+        "seconds": 16.58,
+        "score": 2573,
+        "hits": 5,
+        "total": 5,
+        "misses": 0,
+        "average": 0.8727302030931705,
+        "stars": 3
+      },
+      {
+        "meet": 5,
+        "kit": 2,
+        "offset": 0,
+        "seconds": 16.58,
+        "score": 2700,
+        "hits": 5,
+        "total": 5,
+        "misses": 0,
+        "average": 0.9999999999999881,
+        "stars": 3
+      },
+      {
+        "meet": 5,
+        "kit": 2,
+        "offset": 0.025,
+        "seconds": 16.58,
+        "score": 2573,
+        "hits": 5,
+        "total": 5,
+        "misses": 0,
+        "average": 0.8727302030931711,
+        "stars": 3
+      },
+      {
+        "meet": 6,
+        "kit": 0,
+        "offset": 0,
+        "seconds": 16.58,
+        "score": 2700,
+        "hits": 5,
+        "total": 5,
+        "misses": 0,
+        "average": 0.9999999999999799,
+        "stars": 3
+      },
+      {
+        "meet": 6,
+        "kit": 0,
+        "offset": 0.025,
+        "seconds": 16.58,
+        "score": 2524,
+        "hits": 5,
+        "total": 5,
+        "misses": 0,
+        "average": 0.8237859621306777,
+        "stars": 3
+      },
+      {
+        "meet": 6,
+        "kit": 1,
+        "offset": 0,
+        "seconds": 16.58,
+        "score": 2700,
+        "hits": 5,
+        "total": 5,
+        "misses": 0,
+        "average": 0.9999999999999842,
+        "stars": 3
+      },
+      {
+        "meet": 6,
+        "kit": 1,
+        "offset": 0.025,
+        "seconds": 16.58,
+        "score": 2561,
+        "hits": 5,
+        "total": 5,
+        "misses": 0,
+        "average": 0.860883654313693,
+        "stars": 3
+      },
+      {
+        "meet": 6,
+        "kit": 2,
+        "offset": 0,
+        "seconds": 16.58,
+        "score": 2700,
+        "hits": 5,
+        "total": 5,
+        "misses": 0,
+        "average": 0.999999999999984,
+        "stars": 3
+      },
+      {
+        "meet": 6,
+        "kit": 2,
+        "offset": 0.025,
+        "seconds": 16.58,
+        "score": 2561,
+        "hits": 5,
+        "total": 5,
+        "misses": 0,
+        "average": 0.860883654313693,
+        "stars": 3
+      }
+    ],
+    "scope": "Controller, authored campaign, compiled export, clock, save recovery and guarded SDK mocks. No actual GameWave-host import or physical phone certification."
+  },
+  "models": {
+    "checks": 40924,
+    "actorPoses": 210,
+    "strikes": 3,
+    "treeContacts": 48,
+    "scope": "Actual grip, fixed arm length, shoe ground, axe cut contact, finite canopy vertices, real canopy/ground support and scored crown-centre checks."
+  },
+  "nativeScores": [
+    1506,
+    1449,
+    2036,
+    2049,
+    2623,
+    2610
+  ],
+  "nativeBestStars": 18,
+  "nativeInput": "Visible scene tap/drag, aim buttons and HUD; no direct game-state mutation.",
+  "sdkNative": {
+    "scope": "Local simulator, not real GameWave",
+    "lateInjectionAfterActualFirstLanding": true,
+    "beforeRewards": "Both optional prompts present after unlike",
+    "earned": "Brass axe \u00b7 earned. Coloured landing chips \u00b7 earned.",
+    "duplicates": {
+      "before": "start 1 | end 0 | saves 7 | like listeners 1 | comment listeners 1 | envelope fall-fellows",
+      "after": "start 1 | end 0 | saves 7 | like listeners 1 | comment listeners 1 | envelope fall-fellows"
+    },
+    "roundResult": "1362 points, 72% precision, Guide used, one star",
+    "trace": "start 1 | end 1 | saves 25 | like listeners 1 | comment listeners 1 | envelope fall-fellows",
+    "hostViewport": {
+      "width": 360,
+      "height": 700,
+      "density": 3.5
+    },
+    "browserViewport": {
+      "width": 390,
+      "height": 844
+    },
+    "actualMain": {
+      "width": 360,
+      "height": 700
+    },
+    "actualCanvas": {
+      "cssWidth": 360,
+      "cssHeight": 491,
+      "pixelWidth": 360,
+      "pixelHeight": 491
+    }
+  },
+  "layouts": [
+    {
+      "controls": [
+        {
+          "height": 44,
+          "id": "sound",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 44,
+          "id": "book",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 44,
+          "id": "pause",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 44,
+          "id": "left",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 44,
+          "id": "right",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 90,
+          "id": "chop",
+          "inView": true,
+          "width": 57
+        },
+        {
+          "height": 90,
+          "id": "guide",
+          "inView": true,
+          "width": 44
+        }
+      ],
+      "height": 568,
+      "overflow": false,
+      "stage": {
+        "height": 377,
+        "width": 320
+      },
+      "width": 320,
+      "modalPrimary": {
+        "height": 51,
+        "inView": true,
+        "width": 240
+      }
+    },
+    {
+      "controls": [
+        {
+          "height": 44,
+          "id": "sound",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 44,
+          "id": "book",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 44,
+          "id": "pause",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 44,
+          "id": "left",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 44,
+          "id": "right",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 61,
+          "id": "chop",
+          "inView": true,
+          "width": 76
+        },
+        {
+          "height": 44,
+          "id": "guide",
+          "inView": true,
+          "width": 76
+        }
+      ],
+      "height": 320,
+      "overflow": false,
+      "stage": {
+        "height": 240,
+        "width": 385
+      },
+      "width": 568,
+      "modalPrimary": {
+        "height": 51,
+        "inView": true,
+        "width": 141
+      }
+    },
+    {
+      "controls": [
+        {
+          "height": 44,
+          "id": "sound",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 44,
+          "id": "book",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 44,
+          "id": "pause",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 44,
+          "id": "left",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 44,
+          "id": "right",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 61,
+          "id": "chop",
+          "inView": true,
+          "width": 76
+        },
+        {
+          "height": 44,
+          "id": "guide",
+          "inView": true,
+          "width": 76
+        }
+      ],
+      "height": 390,
+      "overflow": false,
+      "stage": {
+        "height": 310,
+        "width": 661
+      },
+      "width": 844,
+      "modalPrimary": {
+        "height": 51,
+        "inView": true,
+        "width": 141
+      }
+    },
+    {
+      "controls": [
+        {
+          "height": 44,
+          "id": "sound",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 44,
+          "id": "book",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 44,
+          "id": "pause",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 44,
+          "id": "left",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 44,
+          "id": "right",
+          "inView": true,
+          "width": 44
+        },
+        {
+          "height": 90,
+          "id": "chop",
+          "inView": true,
+          "width": 66
+        },
+        {
+          "height": 90,
+          "id": "guide",
+          "inView": true,
+          "width": 44
+        }
+      ],
+      "height": 844,
+      "overflow": false,
+      "stage": {
+        "height": 635,
+        "width": 390
+      },
+      "width": 390,
+      "modalPrimary": {
+        "height": 51,
+        "inView": true,
+        "width": 300
+      }
+    }
+  ],
+  "limits": [
+    "No physical phone certification",
+    "No actual GameWave-host import/account/social/cloud test",
+    "Six finite meets/24 trees/three shared environment sets",
+    "No cold-file browser UI test"
+  ]
+}
