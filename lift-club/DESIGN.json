@@ -1,0 +1,10 @@
+{
+ "title":"Lift Club",
+ "slug":"lift-club",
+ "reference":{"platform":"Rezona","title":"Zero2hero","url":"https://rezona.ai/game/pgcserver/pv/SfqGKqkS/v1/dist/index.html","actuallyObserved":["3-coin Learn to Walk purchase","Next Run","native D key attempted for 1.2 seconds","time-up screen and 3 coins"],"notClaimed":["reference boss defeated","reference campaign completed","successful reference jump or combat","source or media reuse","one-to-one art or gameplay parity"]},
+ "loop":["pull to lift","reach upper marker","lower and settle","earn reps and streak feedback","complete meet","spend earned coins on muscle or control","open a new load and venue"],
+ "content":{"authoredMeets":6,"venues":3,"loadModels":["plate stacks","paint drums","bass cabinets","vending machines","jet engines","monster trucks"],"bestStars":18,"upgradeRanksPerStat":3,"outfits":3,"encore":"same six meets, three capped extra mass tiers"},
+ "art":{"method":"original code-built 3D meshes and SVG; actual-render screenshot cover","palette":["cream","mustard","crimson","teal","violet"],"characters":"original connected adult athlete and human spectators","imageGeneration":false,"copiedReferenceAssets":false,"effects":["chalk","landing ring","streak type","confetti","spectator jumps","separate engine fan and truck wheel rotation","strain eyebrows and mouth"]},
+ "mobile":{"primary":"portrait","other":"responsive short landscape and desktop","touchAlternatives":["vertical arena drag","large two-state tap button"],"pauseOn":["blur","hidden","explicit pause"],"coreNeverWaitsForSDK":true},
+ "limits":["stylized target-height spring, not a full biomechanical/rigidbody simulator","six authored meets, not infinite unique maps","physical-phone and real-GameWave-host testing still required","quality and fun require user review"]
+}
