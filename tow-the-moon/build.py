@@ -4,11 +4,11 @@ r=Path(__file__).resolve().parent
 def source(name):
  s=(r/name).read_text('utf8');names=re.findall(r'\bexport\s+(?:function|const|class)\s+(\w+)',s);s=re.sub(r'^import .*?;\s*','',s,flags=re.M);s=re.sub(r'\bexport\s+','',s);return s,names
 code=''
-for file,alias in [('core.mjs','C'),('primitives.mjs','A'),('models.mjs','V'),('sdk.mjs','S'),('sound.mjs','AU')]:
+for file,alias in [('core.mjs','C'),('primitives.mjs','A'),('models.mjs','V'),('sdk.mjs','S'),('sound.mjs','AU'),('frame-clock.mjs','FC')]:
  s,names=source(file)
  if file=='models.mjs':s='const {MISSIONS,HOME,hoverPoint,hazards}=C;'+s
  code+='const '+alias+'=(()=>{'+s+';return {'+','.join(names)+'};})();'
-code+='const {View}=V,{bridge}=S,{Sfx}=AU;'+source('app.mjs')[0]
+code+='const {View}=V,{bridge}=S,{Sfx}=AU,{FrameClock}=FC;'+source('app.mjs')[0]
 html=(r/'index-source.html').read_text('utf8').replace('<link rel="stylesheet" href="style.css">','<style>'+(r/'style.css').read_text('utf8')+'</style>').replace('<script src="vendor/three.min.js"></script>','<script>'+(r/'vendor/three.min.js').read_text('utf8')+'</script>').replace('<script type="module" src="app.mjs"></script>','<script>(()=>{'+code+'})();</script>')
 (r/'index.html').write_text(html,'utf8');(r/'standalone.html').write_text(html,'utf8')
 out=r.parent/'TOW-THE-MOON.zip'

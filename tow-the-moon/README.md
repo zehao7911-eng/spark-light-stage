@@ -10,7 +10,7 @@ Six finite authored missions contain 21 passengers across Moonpost, Driftyard wr
 
 ## Play, source and build
 
-Use a current WebGL browser. index.html and identical standalone.html contain the full game, CSS and bundled Three.js with no runtime CDN, account or GameWave dependency. A static HTTP server or GitHub Pages is recommended. index-source.html loads editable modules. `python build.py` rebuilds both embedded entries and ../TOW-THE-MOON.zip. `node tests.mjs` tests the steering/constraint controller and mock SDK. `node model-tests.mjs` checks actual generated model contacts and bounds. Python and Node are development tools only.
+Use a current WebGL browser. index.html and identical standalone.html contain the full game, CSS and bundled Three.js with no runtime CDN, account or GameWave dependency. A static HTTP server or GitHub Pages is recommended. index-source.html loads editable modules. `python build.py` rebuilds both embedded entries and ../TOW-THE-MOON.zip. `node tests.mjs` tests the steering/constraint controller and mock SDK. `node model-tests.mjs` checks actual generated model contacts and bounds. `node performance-tests.mjs` covers presentation timing under frequent pointer input. Python and Node are development tools only.
 
 Mouse/touch: tap HELP, tap/drag space, tap HOME. Keyboard: arrows/WASD steer, Space selects a waiting passenger or HOME, Escape pauses. Interrupted dragging releases the pointer. An active saved flight reopens paused; its trajectory and cargo remain available on resume. Local key tow-the-moon-v1 stores settings, progress and the full active run. Storage failure does not block play.
 
@@ -29,3 +29,7 @@ The GameWave SDK is individually guarded and never awaited for core startup. A g
 Rezona reference: https://rezona.ai/game/pgcserver/pv/EqRiokfD/v26/dist/index.html (Space Rescue Service). Its manual, manifest, launch, O2 HUD and a short native W input were observed. It is a first-person salvage/shooting game; this delivery independently adapts a broad space-evacuation premise into single-finger tug rescue, not its FPS controls, exact artwork, systems or assets. No full reference run or art-parity claim. Today's Fit was also inspected and excluded. Prior Starlift Orchard beam harvest/fling and Stillwater fishing/towing were checked while avoiding repeated core controls.
 
 Original game code is MIT, including adapted own-project primitive/SDK scaffolding; see LICENSE. Bundled Three.js r147 retains vendor/THREE-LICENSE.txt. Browser viewport checks do not establish physical iOS/Android GPU, audio, battery or thermal certification.
+
+## Repair update
+
+Input and presentation clocks are separate so dragging cannot starve drawing. Vertex-colour static batches, instanced articulated limbs and a fixed particle pool reduce draw calls without simplifying the meshes. GPU route buffers and HUD layout are reused. Cable attachment follows the banked craft, hands grasp a front handle with fixed-length limbs, and disembarking passengers keep their size with measured boot/deck contact. Existing saves and mission rules remain compatible. See VALIDATION.md for measured browser comparisons and handset limits.
