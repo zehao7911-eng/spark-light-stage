@@ -1,0 +1,7 @@
+export class Sfx{
+ constructor(read){this.read=read;this.voices=[];}
+ wake(){try{this.ctx ||=new(window.AudioContext||window.webkitAudioContext)();this.ctx.resume().catch(()=>{});}catch{}}
+ stop(){for(let o of this.voices)try{o.stop();}catch{}this.voices=[];}
+ tone(f,delay=0,d=.18,vol=.035,end=f,type='sine'){if(!this.ctx||!this.read().sound)return;let t=this.ctx.currentTime+delay,o=this.ctx.createOscillator(),g=this.ctx.createGain();o.type=type;o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(Math.max(20,end),t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(this.ctx.destination);o.start(t);o.stop(t+d+.02);this.voices.push(o);o.onended=()=>{this.voices=this.voices.filter(x=>x!==o);o.disconnect();g.disconnect();};while(this.voices.length>16)try{this.voices.shift().stop();}catch{}}
+ play(e){if(e.type==='boop'){let f=[330,230,600,410,720][e.animal];this.tone(f,0,.16,.055,f*1.7,'triangle');this.tone(f*1.5,.06,.22,.025,f*1.1);if(e.chain>1)[660,830,990].slice(0,Math.min(3,e.chain)).forEach((n,i)=>this.tone(n,.1+i*.055,.20,.025));}else if(e.type==='launch')this.tone(150,0,.16,.025,420,'triangle');else if(e.type==='spring')this.tone(250,0,.30,.035,850);else if(e.type==='rail'||e.type==='pot')this.tone(130,0,.08,.018,85,'triangle');else if(e.type==='jet')this.tone(450,0,.22,.02,1000);else if(e.type==='win')[440,554,660,880,1108].forEach((n,i)=>this.tone(n,i*.075,.35,.03,n,'triangle'));else this.tone(440,0,.07,.012);}
+}
