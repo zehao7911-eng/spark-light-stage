@@ -487,6 +487,19 @@
       "pixelHeight": 491
     }
   },
+  "sdkResume": {
+    "scope": "Actual UI, local SDK simulator",
+    "before": "start 0 | end 0 | saves 26 | like listeners 1 | comment listeners 1 | envelope fall-fellows",
+    "afterCommit": "start 1 | end 0 | saves 30 | like listeners 1 | comment listeners 1 | envelope fall-fellows",
+    "finished": "start 1 | end 1 | saves 40 | like listeners 1 | comment listeners 1 | envelope fall-fellows",
+    "warnings": [
+      {
+        "level": "error",
+        "message": "Uncaught TypeError: Failed to execute 'observe' on 'MutationObserver': parameter 1 is not of type 'Node'.",
+        "timestamp": "2026-11-04T11:10:52.925Z"
+      }
+    ]
+  },
   "layouts": [
     {
       "controls": [
@@ -726,5 +739,9 @@
     "No actual GameWave-host import/account/social/cloud test",
     "Six finite meets/24 trees/three shared environment sets",
     "No cold-file browser UI test"
-  ]
+  ],
+  "simulatorCodeMatchesFinal": {
+    "app.mjs": "2efdb6b39102f10f0d07086c64e66646f564f296a10e7f940605c29eec57ccee",
+    "sdk.mjs": "74b6b9c362cd60f825742c6393786e92e038c88b61f7f9088f70b54c3adf69e0"
+  }
 }

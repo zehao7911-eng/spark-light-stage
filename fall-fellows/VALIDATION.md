@@ -20,6 +20,8 @@ A clearly labelled local host first allowed a normal cut without SDK, then injec
 
 At actual390x844, the mock host reported logical360x700/density3.5. Main was360x700; canvas CSS/pixels360x491 at DPR1. Density did not expand the CSS box. Simulator warning/error logs were empty. Subsequent final visual changes do not alter the tested SDK/app routines.
 
+A final integration regression restored a meet between trees after a page reload. The host trace showed zero starts while waiting, one start on the next actual committed cut, and one end on completion. This corrected a missing start report for a saved ready/aim state with earlier landings. The native resumed meet completed1530points/100% using Guide; the current SDK and app routines are byte-matched against the simulator in QA.json. This is still a local simulator, not a real host claim.
+
 ## Package and public verification
 
 Final ZIP CRC/path safety, source/extracted equality, identical standalone entries, extracted controller/model tests, served-file matching, pinned download checksum and public first-meet/reload observations are recorded outside the game in delivery metadata, avoiding a circular package hash. No actual GameWave App import/account/social/cloud, physical handset, cold-file browser UI, full rigid-body forestry fracture or exact reference-art reproduction is claimed.
