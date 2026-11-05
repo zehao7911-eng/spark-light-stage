@@ -2,7 +2,7 @@
 
 ## Controller and build
 
-744 controller assertions cover 48 complete lock visits: twelve optimal routes across three appearance settings, plus twelve undo/hint/recovery routes. Reachable-state BFS proves the par and supplies legal hints. Checks include no extra turns during an animation, free undo of a partial turn, sticky hint provenance, exact fractional-timer restoration and deterministic continuation, best-only awards, local-setting-preserving profile merges and corrupt-save rejection. Appearance loops are configuration checks, not proof of visual quality.
+744 controller assertions cover 48 complete lock visits: twelve optimal routes at 30, 60 and 120 logic ticks per second, plus twelve undo/hint/recovery routes. Reachable-state BFS proves the par and supplies legal hints. Checks include no extra turns during an animation, free undo of a partial turn, sticky hint provenance, exact fractional-timer restoration and deterministic continuation, best-only awards, local-setting-preserving profile merges and corrupt-save rejection. Different tick sizes check controller robustness; they do not measure visual quality or physical device frame rates.
 
 24 optional SDK mocks exercise absence, partial/unsupported methods, very late injection, rejected calls, nonzero save results, known/unknown cloud records, long string IDs, positive like versus unlike, empty direct comments, repeated/previously claimed callbacks, registration timeout, late cleanup, replacement and resumed-ready action lifecycle. Tests do not certify a real GameWave App import.
 
