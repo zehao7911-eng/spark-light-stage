@@ -1,0 +1,7 @@
+export class Sfx{
+ constructor(read){this.read=read;this.voices=[];}
+ wake(){try{this.ctx ||=new(window.AudioContext||window.webkitAudioContext)();this.ctx.resume().catch(()=>{});}catch{}}
+ stop(){for(let v of this.voices)try{v.stop();}catch{}this.voices=[];}
+ tone(f,delay=0,d=.16,vol=.024,end=f,type='sine'){if(!this.ctx||!this.read().sound)return;let t=this.ctx.currentTime+delay,o=this.ctx.createOscillator(),g=this.ctx.createGain();o.type=type;o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(Math.max(20,end),t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.007);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(this.ctx.destination);o.start(t);o.stop(t+d+.02);this.voices.push(o);o.onended=()=>{this.voices=this.voices.filter(v=>v!==o);o.disconnect();g.disconnect();};while(this.voices.length>14)try{this.voices.shift().stop();}catch{}}
+ play(e){if(e.type==='turn'){this.tone(180,0,.09,.018,90,'triangle');this.tone(420,.03,.055,.01,170,'triangle');}else if(e.type==='click'){this.tone(980,0,.06,.02,320,'triangle');if(e.aligned)this.tone(440+e.aligned*110,.025,.35,.018);}else if(e.type==='unlock'){[330,440,554,660].forEach((f,i)=>this.tone(f,i*.08,.5,.02));this.tone(110,.16,.35,.02,60,'triangle');}else if(e.type==='complete'||e.type==='wind'){[523,659,784,1046,1318].forEach((f,i)=>this.tone(f,i*.09,.6,.018));}else if(e.type==='undo')this.tone(300,0,.15,.018,180,'triangle');else this.tone(660,0,.08,.012,700);}
+}
