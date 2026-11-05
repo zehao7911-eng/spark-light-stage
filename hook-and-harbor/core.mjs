@@ -1,0 +1,40 @@
+export const TYPES=[{name:'SUPPLIES',mark:'+',color:0xcc7955},{name:'CHILLED',mark:'❄',color:0x659cad},{name:'GARDEN',mark:'✿',color:0x85a177},{name:'FRAGILE',mark:'◇',color:0xa78aa2}];
+export const JOBS=[
+ {name:'The First Crossing',ship:'MERRY TERN',area:0,kinds:[0,1,0,1],par:58,wind:0},
+ {name:'A Greener Shore',ship:'LITTLE FERN',area:0,kinds:[2,0,1,2,0],par:74,wind:.07},
+ {name:'Handle With Care',ship:'AMBER GULL',area:1,kinds:[3,1,2,0,3,1],par:90,wind:.12},
+ {name:'The Upper Deck',ship:'TWO STOREYS',area:1,kinds:[0,2,1,3,0,2,0],par:110,wind:.18},
+ {name:'Lights Across the Bay',ship:'NIGHTJAR',area:2,kinds:[1,3,2,0,1,3,1,3],par:125,wind:.20},
+ {name:'One Last Voyage',ship:'HOMEWARD',area:2,kinds:[3,2,1,0,3,2,3,2],par:130,wind:.24}
+];
+export const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+export function source(i){return{x:(i%3-1)*3.1,z:4.0+Math.floor(i/3)*2.35,y:1.20}}
+export function slot(i){let n=i%6;return{x:(n%3-1)*3.1,z:-3.15+Math.floor(n/3)*2.25,y:1.0+Math.floor(i/6)*1.37}}
+export function profile(v={}){return{stars:Array.from({length:6},(_,i)=>clamp(Math.floor(Number(v.stars?.[i])||0),0,3)),best:Array.from({length:6},(_,i)=>Math.max(0,Math.floor(Number(v.best?.[i])||0))),rewards:{brass:v.rewards?.brass===true,pennants:v.rewards?.pennants===true},sound:v.sound!==false,low:v.low===true,stabilizer:v.stabilizer!==false}}
+export function merge(a,b){let p=profile(a),q=profile(b);p.stars=p.stars.map((v,i)=>Math.max(v,q.stars[i]));p.best=p.best.map((v,i)=>Math.max(v,q.best[i]));for(let k of['brass','pennants'])p.rewards[k]||=q.rewards[k];return p}
+export function unlocked(p){let i=0;while(i<5&&p.stars[i]>0)i++;return i}
+export function claim(p,k){if(!['brass','pennants'].includes(k)||p.rewards[k])return false;p.rewards[k]=true;return true}
+export function makeRun(job=0){job=clamp(Math.floor(job)||0,0,5);return{job,phase:'welcome',started:false,t:0,elapsed:0,boxes:JOBS[job].kinds.map((kind,i)=>({kind,loaded:false,from:source(i)})),slots:JOBS[job].kinds.map((kind,i)=>({kind,box:-1,...slot(i)})),selected:-1,hover:-1,queued:-1,mode:'idle',mt:0,hx:0,hz:4,tx:0,tz:4,sx:0,sz:0,vx:0,vz:0,prevVX:0,prevVZ:0,score:0,combo:0,maxCombo:0,lastLoad:-99,smooth:0,rushed:0,landings:0,pickAt:0,stabilizer:false,steady:false,depart:0,events:[],serial:0}}
+function event(s,type,data={}){s.events.push({type,id:++s.serial,...data});if(s.events.length>20)s.events.shift()}
+export function begin(s){if(s.phase!=='welcome')return false;s.phase='ready';event(s,'ready');return true}
+export function available(s,i){return Number.isInteger(i)&&i>=0&&i<s.slots.length&&s.slots[i].box<0&&(i<6||s.slots[i-6].box>=0)}
+export function pickup(s,i){if(!['ready','play'].includes(s.phase)||s.mode!=='idle'||!Number.isInteger(i)||!s.boxes[i]||s.boxes[i].loaded)return false;if(!s.started){s.started=true;event(s,'start')}s.phase='play';s.selected=i;s.mode='lifting';s.mt=0;s.hover=-1;s.queued=-1;s.hx=s.boxes[i].from.x;s.hz=s.boxes[i].from.z;s.tx=s.hx;s.tz=s.hz;s.sx=s.sz=s.vx=s.vz=0;s.pickAt=s.elapsed;event(s,'pickup',{box:i});return true}
+export function aim(s,x,z){if(s.selected<0||!['lifting','carrying'].includes(s.mode)||!Number.isFinite(x)||!Number.isFinite(z))return false;s.tx=clamp(x,-5.2,5.2);s.tz=clamp(z,-4.6,9.0);s.hover=nearest(s,s.tx,s.tz);return true}
+export function nearest(s,x,z){let best=-1,d=1.65;for(let i=0;i<s.slots.length;i++){let a=s.slots[i],dist=Math.hypot(a.x-x,a.z-z);if(available(s,i)&&s.boxes[s.selected]?.kind===a.kind&&dist<d){best=i;d=dist}}return best}
+export function deliver(s,i){if(s.selected<0||!['lifting','carrying'].includes(s.mode)||!available(s,i))return false;let a=s.slots[i];if(s.boxes[s.selected].kind!==a.kind){event(s,'wrong');return false}s.queued=i;s.tx=a.x;s.tz=a.z;s.hover=i;event(s,'route',{slot:i});return true}
+export function release(s){if(s.selected<0)return false;let i=nearest(s,s.tx,s.tz);return i>=0?deliver(s,i):false}
+export function steady(s,on){s.steady=!!on&&s.stabilizer&&s.selected>=0}
+export function loaded(s){return s.boxes.filter(b=>b.loaded).length}
+export function stars(s){if(s.phase!=='end')return 0;return 1+(s.rushed<=1?1:0)+(s.elapsed<=JOBS[s.job].par?1:0)}
+export function record(p,s){if(s.phase!=='end')return false;let n=stars(s);p.stars[s.job]=Math.max(p.stars[s.job],n);p.best[s.job]=Math.max(p.best[s.job],s.score);return true}
+export function tick(s,dt){if(!Number.isFinite(dt)||dt<=0)return;dt=Math.min(dt,.05);if(s.phase==='welcome'||s.phase==='end')return;s.t+=dt;if(!s.started)return;if(s.phase==='depart'){s.depart+=dt;if(s.depart>=4.2){s.phase='end';event(s,'end')}return}s.elapsed+=dt;if(s.selected<0)return;let b=s.boxes[s.selected];
+ if(s.mode==='lifting'){s.mt+=dt;if(s.mt>=1.05){s.mt=0;s.mode='carrying';event(s,'carry')}return}
+ if(s.mode==='carrying'){s.mt+=dt;let oldx=s.hx,oldz=s.hz,speed=s.steady?3.1:5.7,dx=s.tx-s.hx,dz=s.tz-s.hz,d=Math.hypot(dx,dz),move=Math.min(d,speed*dt);if(d>.001){s.hx+=dx/d*move;s.hz+=dz/d*move}let vx=(s.hx-oldx)/dt,vz=(s.hz-oldz)/dt;let damping=s.steady?14:s.stabilizer?6.5:3.0,wind=JOBS[s.job].wind;s.vx+=(-s.sx*17-s.vx*damping+Math.sin(s.t*1.7)*wind)*dt-(vx-s.prevVX)*.23;s.vz+=(-s.sz*17-s.vz*damping)*dt-(vz-s.prevVZ)*.23;s.sx=clamp(s.sx+s.vx*dt,-.65,.65);s.sz=clamp(s.sz+s.vz*dt,-.65,.65);s.prevVX=vx;s.prevVZ=vz;
+  if(s.queued>=0&&Math.hypot(s.hx-s.tx,s.hz-s.tz)<.035){s.mt=0;s.mode='settling';event(s,'settle')}
+ }else if(s.mode==='settling'){s.mt+=dt;let damp=s.steady?15:s.stabilizer?8:4;s.sx*=Math.exp(-damp*dt);s.sz*=Math.exp(-damp*dt);s.vx=s.vz=0;if(s.mt>=(b.kind===3?1.25:.65)){s.mode='lowering';s.mt=0;event(s,'lower')}}
+ else if(s.mode==='lowering'){s.mt+=dt;s.sx*=Math.exp(-8*dt);s.sz*=Math.exp(-8*dt);if(s.mt>=.95){let i=s.selected,a=s.slots[s.queued];if(!a||!available(s,s.queued)||a.kind!==b.kind){s.mode='carrying';s.queued=-1;return}let chilled=b.kind===1&&s.elapsed-s.pickAt<9,perfect=Math.hypot(s.sx,s.sz)<.08;let combo=s.elapsed-s.lastLoad<13?s.combo+1:1;s.combo=combo;s.maxCombo=Math.max(s.maxCombo,combo);s.lastLoad=s.elapsed;s.landings++;if(perfect)s.smooth++;else s.rushed++;let points=100+Math.min(combo,6)*25+(perfect?75:0)+(chilled?50:0);s.score+=points;b.loaded=true;a.box=i;event(s,'loaded',{box:i,slot:s.queued,points,combo,perfect,chilled});s.selected=-1;s.queued=-1;s.hover=-1;s.mode='idle';s.steady=false;s.mt=0;if(loaded(s)===s.boxes.length){s.phase='depart';s.depart=0;event(s,'sail')}}}
+}
+export function restore(v){if(!v||!Number.isInteger(v.job)||v.job<0||v.job>5||!['welcome','ready','play','depart','end'].includes(v.phase))return null;let s=makeRun(v.job);if(!Array.isArray(v.boxes)||!Array.isArray(v.slots)||v.boxes.length!==s.boxes.length||v.slots.length!==s.slots.length)return null;let used=new Set();for(let i=0;i<s.slots.length;i++){let n=v.slots[i]?.box;if(n===-1)continue;if(!Number.isInteger(n)||n<0||n>=s.boxes.length||used.has(n)||s.boxes[n].kind!==s.slots[i].kind||!v.boxes[n]?.loaded||i>=6&&v.slots[i-6]?.box<0)return null;s.slots[i].box=n;s.boxes[n].loaded=true;used.add(n)}for(let i=0;i<s.boxes.length;i++)if(!!v.boxes[i]?.loaded!==s.boxes[i].loaded)return null;
+ s.started=!!v.started||used.size>0;s.phase=v.phase==='play'?'ready':v.phase;for(let k of['t','elapsed','score','combo','maxCombo','smooth','rushed','landings','depart','pickAt','lastLoad'])s[k]=clamp(Number(v[k])||0,k==='lastLoad'?-100:0,1000000);s.stabilizer=!!v.stabilizer;
+ let i=v.selected;if(Number.isInteger(i)&&i>=0&&i<s.boxes.length&&!s.boxes[i].loaded&&['lifting','carrying','settling','lowering'].includes(v.mode)){s.selected=i;s.mode=v.mode;s.mt=clamp(Number(v.mt)||0,0,1.3);for(let k of['hx','tx'])s[k]=clamp(Number(v[k])||0,-5.2,5.2);for(let k of['hz','tz'])s[k]=clamp(Number(v[k])||0,-4.6,9);s.queued=Number.isInteger(v.queued)&&available(s,v.queued)&&s.slots[v.queued].kind===s.boxes[i].kind?v.queued:-1;if(['settling','lowering'].includes(s.mode)&&s.queued<0)s.mode='carrying';s.hover=s.queued;if(s.started)s.phase='ready'}
+ if(used.size===s.boxes.length){s.selected=-1;s.mode='idle';if(!['end','depart'].includes(s.phase))s.phase='depart'}else if(['end','depart'].includes(s.phase))return null;return s}
