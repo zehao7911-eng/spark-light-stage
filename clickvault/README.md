@@ -24,7 +24,7 @@ Local save key: `clickvault-v1`. Only this game's profile and active lock are st
 
 ## Art and reference
 
-The emerald/coral/brass cabinet, engraved annuli, rounded hardware, inlay, tiny mechanical objects, three backdrops, interface, SVG icon and Web Audio cues are original code-built illustrations. Rendering is Canvas 2D with layered depth, not a 3D engine. `cover.png` is an actual runtime screenshot. No image generation or reference media extraction was used.
+The emerald/coral/brass cabinet, engraved annuli, rounded hardware, inlay, tiny mechanical objects, three backdrops, interface, SVG icon and Web Audio cues are original code-built illustrations. Rendering is Canvas 2D with layered depth, not a 3D engine. `cover.jpg` is an actual runtime screenshot. No image generation or reference media extraction was used.
 
 The current [Rezona Screw Shiba](https://rezona.ai/game/pgcserver/pv/oENpcHewif/v3/dist/index.html) was started and a blue screw was removed through normal pointer input, visibly falling toward the rack. Its immediate mechanical feedback informed the presentation; its screw-removal and colour-box rules are not used here. The reference was not completed. Earlier Bolt & Boogie already used screw-removal rules, so this game's core instead aligns linked notches to release a key. Earlier glass-fitting and spring-factory games are adjacent craft themes, not the same ring-lock puzzle. No claim of reference art parity, a platform grade or a full commercial-game remake is made.
 
