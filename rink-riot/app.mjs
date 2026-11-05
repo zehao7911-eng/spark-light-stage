@@ -3,6 +3,7 @@ import {RinkView} from './view.mjs';
 import {RinkHost} from './sdk.mjs';
 const $=q=>document.querySelector(q),KEY='rink-riot-v1';let p=profile(),s=makeRun(),host,view,audio,paused=false,shown=false,seen=0,dirtyVisit=false,stamp=0,loaded=false,menuName='',support={},input={x:0,z:0},keys=new Set(),joyId=null,actionId=null,eventTime=0,toastTime=0,saveTime=0,skateSfx=0,chargeReady=false,renderAt=0,logicAt=performance.now(),hudAt=0;
 try{let v=JSON.parse(localStorage.getItem(KEY)||'null');if(v?.game==='rink-riot'&&v.v===1){p=profile(v.profile);s=restore(v.run)||makeRun(0,p);stamp=v.updated||0;loaded=true}}catch{}
+const initialStamp=stamp;
 try{view=new RinkView($('#world'),p.low);view.render(s,0,p)}catch(e){$('#fallback').hidden=false;$('#welcome').hidden=true;console.error('Rink renderer failed',e)}
 class RinkAudio{
  constructor(){this.ctx=new(window.AudioContext||window.webkitAudioContext)();this.nodes=new Set()}
@@ -16,7 +17,7 @@ function snapshot(){return {game:'rink-riot',v:1,updated:stamp,profile:p,run:s}}
 function save(cloud=false){stamp=Date.now();try{localStorage.setItem(KEY,JSON.stringify(snapshot()))}catch{}if(cloud)host?.save(snapshot())}
 function notify(t){$('#toast').textContent=t;$('#toast').style.opacity=1;toastTime=2.5}
 function impact(a,b,d=1.2){$('#event b').textContent=a;$('#event small').textContent=b;$('#event').style.opacity=1;eventTime=d}
-function attachHost(){host=new RinkHost(window,{status:v=>support=v,reward:k=>{if(!claim(p,k))return;dirtyVisit=true;save(true);notify(k==='gold'?'GOLD CAPTAIN HELMET UNLOCKED':'COLOUR CONFETTI UNLOCKED')},load:v=>{let r=restore(v.run);if(!dirtyVisit&&Number.isFinite(v.updated)&&v.updated>stamp&&r){p=profile(v.profile);s=r;stamp=v.updated;shown=false;seen=s.eventSeq;stopInput();if(s.phase==='end')result();else if(s.phase!=='welcome')pause();view?.render(s,0,p);}else p=merge(p,v.profile);save();hud()}});host.poll()}
+function attachHost(){host=new RinkHost(window,{status:v=>support=v,reward:k=>{if(!claim(p,k))return;dirtyVisit=true;save(true);notify(k==='gold'?'GOLD CAPTAIN HELMET UNLOCKED':'COLOUR CONFETTI UNLOCKED')},load:v=>{let r=restore(v.run);if(!dirtyVisit&&Number.isFinite(v.updated)&&v.updated>initialStamp&&r){p=profile(v.profile);s=r;stamp=v.updated;shown=false;seen=s.eventSeq;stopInput();if(s.phase==='end')result();else if(s.phase!=='welcome')pause();view?.render(s,0,p);}else p=merge(p,v.profile);save();hud()}});host.poll()}
 attachHost();
 function processEvents(){for(let e of s.events){if(e.id<=seen)continue;seen=e.id;view?.event(e);audio?.event(e);if(e.type==='goal'){impact(e.team>0?'GOOOAL!':'THEY SCORE.',e.team>0?(s.ours>=MATCHES[s.match].target?'THAT’S THE GAME!':'BACK TO CENTRE ICE'):'YOUR NEXT PLAY STARTS NOW',2.5);if(e.team>0)try{navigator.vibrate?.([20,25,35])}catch{}save(true)}if(e.type==='frost'){impact('FROST SHOT!','THE KEEPER IS FROZEN',.8);save()}if(e.type==='steal'){impact('POCKETED.','YOUR PUCK. YOUR MOVE.',.65);save()}if(e.type==='save')notify(e.team<0?'SAVED! GRAB THE REBOUND':'YOUR KEEPER SAYS NO.');if(e.type==='lost')notify('GET CLOSE + TAP CHECK');if(e.type==='end'){host.end();settle(p,s);save(true);shown=false;setTimeout(()=>{if(s.phase==='end'&&!shown)result()},750)}}}
 function accepted(){dirtyVisit=true;host.start();processEvents();save()}
