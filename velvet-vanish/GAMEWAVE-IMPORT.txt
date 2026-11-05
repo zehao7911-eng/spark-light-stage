@@ -1,0 +1,13 @@
+VELVET VANISH — HTML5 IMPORT
+
+Upload the complete independent ZIP. index.html must remain at the root. It includes the complete game, Three.js and styles. standalone.html is byte-identical. No CDN, build, account or server API is needed for ordinary play. Enable WebGL. The English layout supports portrait and landscape with safe areas and large cup targets.
+
+GameWave injects window.neonlib; do not insert a blocking SDK startup gate. This game's adapter uses optional real lifecycle calls, own save/checkpoint data, genuine async direct social callbacks and cleanup. Verified current document: November 6, 2026 / displayed revision October 30.
+
+Like reward: gold cups. Direct-comment reward: multicolor confetti. These cosmetics are optional and only granted from qualifying confirmed callbacks, not clicks on an invented host button or initial state. Unsupported prompts remain hidden. Local rewards are device/browser scoped unless own cloud save is available; no server-authoritative deduplication is promised.
+
+Own local key: velvet-vanish-v1. Own cloud marker: game=velvet-vanish, v=1. Do not combine this with any other game's localStorage or clear shared-origin saves. Reimporting must preserve profile and checkpoint.
+
+Acceptance: standalone startup; absent/partial/late APIs; registration/save/load rejection and timeout; actual watch/pick/start/end; resumed between-trick and moving checkpoint; exact reload; code0 positive like vs unlike; image-only direct comment; duplicate claim guards; unsubscribe after late registration; safe viewport and rotation. Mock results are integration evidence, not actual GameWave App certification.
+
+The package excludes all development SDK simulators and QA-only host controls. Use a real supported App/account to perform platform import and social/cloud acceptance. No prior games are certified by this package.
