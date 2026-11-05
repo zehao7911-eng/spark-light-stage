@@ -1,0 +1,18 @@
+PRESS PAUSE — GAMEWAVE IMPORT
+
+Import this game-only ZIP with index.html at its root. index.html and standalone.html are identical self-contained playable files. No external CDN/library/font/model or ES-module loader is required by those entries. Keep the editable source, assets and license notices if repackaging. Rebuild BOTH entries with build.py after any SDK/source change, then regenerate the root-index ZIP.
+
+Boot and input MUST remain independent from window.neonlib. The host injects optional methods, not a required startup token. Individual capability checks, async failure/timeout fallbacks and cleanup are implemented in sdk.mjs, then inlined into both entries.
+
+gameStart is wired to an accepted real circular stroke or hold action; gameOver to actual completed visit, or explicit abandoned visit on restart. Ready-after-one-knot resume is tested: refreshing is not a start; the next committed input starts the resumed page once. No extra lifecycle calls from pause, receipts, cosmetics or duplicate callbacks. Partial gameOver-only support and very-late keyboard-driven API discovery are covered.
+
+Own save key press-pause-v1, game:'press-pause', v:1. Profile includes a validated own checkpoint. Cloud load returns the stored object directly, not a guessed code/data wrapper. Unknown/failed reads are never blindly overwritten. Best-star/record/photo/reward merging preserves current local active run. No other game's localStorage is touched. Current held pointer state is neutralized on reload.
+
+Register onLike and onComment independently. Accept code===0, keep returned data.unsubscribe and invoke it on cleanup, including late registration results. Direct event.status===true on a like grants one gold roller finish; unlike does not. A direct comment callback, including content:'', grants one multicolor particle cosmetic. Event fields are direct, not event.data. project_id remains string; count is not an event ID. Durable per-game flags deduplicate; unsupported prompts stay hidden. No social gate and no invented host UI API. Local-only claims are browser/device scoped.
+
+Safe areas, rotation and local viewport fallback are retained. Host viewport width/height are logical dimensions; density is separately validated metadata, not a CSS scale factor. Audio unlocks only on a gesture. Pause/blur/background/cancel stop contact and sound without losing progress. Light graphics reduces pixel ratio and disables real-time shadows.
+
+Official document rechecked 2026-11-05, still displayed October 30 modification:
+https://rg975ojk5z.feishu.cn/wiki/MQg7wMknzieOkukxyWVc4UB0nDh
+
+Evidence: static/build checks, 855 controller/SDK mock checks, real six-visit browser flow, own local mock-host browser with actual shipped game and real inputs, public-browser checks and archive parity. Actual supported GameWave App import/account callbacks/cloud and physical-phone performance are NOT certified; verify those in the real supported host before claiming platform validation. This delivery does not migrate or certify previous games.
