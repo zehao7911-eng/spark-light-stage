@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#142631">
+<title>CHUTE SCOOT — The Little Airmail Club</title>
+<meta name="description" content="Hold to glide, steer a fox courier and deliver little parcels to floating post pads.">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="app">
+  <div class="brand">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M2 15C3 7 9 4 16 4s13 3 14 11c-5-2-8-2-14 0-6-2-9-2-14 0Z" fill="#f7bf7a" stroke="currentColor" stroke-width="1.5"/><path d="m3 15 11 10m15-10L18 25M16 5c-4 3-6 6-6 8m6-8c4 3 6 6 6 8" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="12" y="24" width="8" height="5" rx="1" fill="#f6dab0" stroke="currentColor" stroke-width="1.5"/></svg>
+    <span>THE LITTLE AIRMAIL CLUB</span>
+    <button id="menu" class="quiet" type="button" aria-label="Pause and settings">☰</button>
+  </div>
+  <section class="intro" aria-label="Route details">
+    <div class="ticket">FIRST CLASS <span>✦</span> AIR MAIL</div>
+    <h1>CHUTE<br class="wideBreak"> SCOOT</h1>
+    <p class="sub">A fox. A parcel. A very small runway.</p>
+    <div class="route">
+      <div><span id="routeNumber" class="eyebrow">ROUTE 01</span><strong id="routeName">Orchard Post</strong></div>
+      <div id="progress" class="progress" aria-label="0 of 3 parcels delivered">◇ ◇ ◇</div>
+    </div>
+    <div class="tools">
+      <button id="map" type="button" class="quiet">Route book</button>
+      <button id="closet" type="button" class="quiet">Canopies</button>
+    </div>
+  </section>
+  <section class="flight" aria-label="Airmail flight">
+    <div id="scene" class="scene">
+      <canvas id="canvas" role="img" aria-label="Fox courier above a gold floating delivery platform"></canvas>
+      <div class="sceneTop" aria-hidden="true"><span id="wind">CALM AIR</span><span>● LIVE DROP</span></div>
+      <div id="flyHint" class="flyHint">Land on the gold pad ↓</div>
+      <div id="result" class="result" role="status" hidden>
+        <small id="resultTag">AIR MAIL RECEIPT</small>
+        <strong id="resultTitle"></strong>
+        <span id="resultNote"></span>
+      </div>
+    </div>
+    <div class="controls">
+      <button id="hold" class="hold" type="button"><span aria-hidden="true">✦</span> Hold to glide</button>
+      <button id="advance" class="hold" type="button" hidden>Next parcel <span aria-hidden="true">→</span></button>
+      <div id="help" class="help">Drag left or right to steer. Release to dive.</div>
+    </div>
+  </section>
+  <dialog id="panel">
+    <div class="panelHeader"><div><span class="eyebrow">AIR POST CLUB</span><h2 id="panelTitle"></h2></div><button class="quiet close" id="close" type="button" aria-label="Close">×</button></div>
+    <div id="panelBody"></div>
+  </dialog>
+</main>
+<script type="module" src="app.mjs"></script>
+</body>
+</html>
