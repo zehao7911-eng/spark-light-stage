@@ -754,8 +754,8 @@ function updateHud() {
     $('resultTag').textContent=finished ? 'ROUTE COMPLETE' : run.outcome==='miss' ? 'DELIVERY RETRY' : 'AIR MAIL RECEIPT';
     $('resultTitle').textContent=finished ? 'Signed & delivered!' :
       {perfect:'Bullseye!',landed:'Parcel delivered!',miss:'A little off-course'}[run.outcome];
-    $('resultNote').textContent=finished ? '★'.repeat(1+Number(!run.misses)+Number(run.perfect>=2))+' · '+run.perfect+' precision landings'
-      : run.outcome==='miss' ? 'Try holding the canopy open a little longer.' : run.drop+' of 3 parcels safely delivered';
+    $('resultNote').textContent=finished ? '★'.repeat(1+Number(!run.misses)+Number(run.perfect>=2))+' · '+run.perfect+(run.perfect===1?' precision landing':' precision landings')
+      : run.outcome==='miss' ? 'Guide the dotted path onto the gold pad.' : run.drop+' of 3 parcels safely delivered';
     advance.textContent=finished ? run.index===5 ? 'Open route book →' : 'Next route →'
       : run.outcome==='miss' ? 'Retry this drop ↻' : 'Next parcel →';
   }
@@ -1004,6 +1004,7 @@ addEventListener('pageshow',event=>{if(event.persisted){connect();previous=0;fra
 connect();
 updateHud();
 frame=requestAnimationFrame(loop);
+
 
 
 })();
