@@ -51,3 +51,7 @@ Evidence states are separate:
 - Physical iOS/Android and actual supported GameWave App import/like/comment callbacks: not tested here. They remain required before claiming platform certification.
 
 High quality caps pixel density at 1.35 with one 1024px shadow map; low quality uses density 1/no shadows. Portrait drawing targets approximately 30fps, desktop high approximately 40fps. The bounded simulation clock is independent of compositor RAF throttling. Paused/hidden pages stop gameplay and new sound. Optional audio/storage failures do not block normal play. `artbook.html` is a developer-only live scene contact sheet requiring HTTP for its source module imports; the actual game entries remain self-contained.
+
+## Music
+
+“Monkeys Spinning Monkeys” by Kevin MacLeod (Incompetech), [source](https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1400011), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The original recording plays on a loop at reduced volume.
