@@ -1,5 +1,7 @@
 # RINK RIOT
 
+Background music: “Electrodoodle” by Kevin MacLeod. The sound button controls music and effects. See MUSIC-CREDITS.md for the recording and license.
+
 A complete, original touch-friendly 3D hockey game. English throughout. Chunky articulated players, painted block arenas and soft winter lighting continue the requested block-model art direction, with a new hockey theme and actual skating, possession, tackling, charged shots, goalkeepers and board rebounds.
 
 ## Play
@@ -22,7 +24,7 @@ Three.js r147 is bundled under MIT; see `vendor/THREE-LICENSE.txt`. `build.cjs` 
 
 ## GameWave
 
-Official SDK document rechecked November 5, 2026; the public page still displays October 30 as its modification date. `sdk.mjs` is individually scoped to this game and is wired into real controller actions, actual end states, the own-game profile and run snapshot. It handles absent, partial and late `window.neonlib`, asynchronous registration, errors and cleanup independently of startup.
+Official SDK document rechecked November 10, 2026; the public page still displays October 30 as its modification date. `sdk.mjs` is individually scoped to this game and is wired into real controller actions, actual end states, the own-game profile and run snapshot. It handles absent, partial and late `window.neonlib`, asynchronous registration, errors and cleanup independently of startup.
 
 - `gameStart()` on accepted movement/shot/check, once per actual host session, including ready phases restored with existing match progress.
 - `gameOver()` on a genuine final score, timeout or explicit abandoned match; not on pause or result viewing.
