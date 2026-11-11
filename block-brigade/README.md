@@ -54,4 +54,4 @@ High quality caps pixel density at 1.35 with one 1024px shadow map; low quality 
 
 ## Music
 
-“Monkeys Spinning Monkeys” by Kevin MacLeod (Incompetech), [source](https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1400011), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The original recording plays on a loop at reduced volume.
+The game loops the audio track supplied for this build.
