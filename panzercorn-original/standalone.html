@@ -1,0 +1,2212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#091a34">
+<link rel="icon" href="data:,">
+<title>Panzercorn</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000}
+canvas{display:block;width:100%;height:100%;height:100dvh;touch-action:none;user-select:none;-webkit-user-select:none}
+#game-note,#game-medals{position:fixed;color:#f7f5ff;font:600 13px/1.45 system-ui,sans-serif;text-align:center;background:#142743dd;border:1px solid #ffffff58;border-radius:12px;padding:8px 13px;pointer-events:none}
+#game-note{bottom:calc(env(safe-area-inset-bottom,0px) + 15px);left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100% - 52px)}
+#game-medals{top:calc(env(safe-area-inset-top,0px) + 9px);right:calc(env(safe-area-inset-right,0px) + 9px);text-align:right;font-size:11px}
+#game-medals .aurora{color:#ffb6e5}#game-medals .prism{color:#b9f9ff}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<canvas id="C" aria-label="Panzercorn game"></canvas>
+<div id="game-note" role="status">Tap to wake up. Hold and aim. Release to fire.</div>
+<div id="game-medals" hidden></div>
+<script>(()=>{
+// Optional host integration. Gameplay never awaits SDK discovery or registration.
+function bridge({host=()=>globalThis.neonlib,read,write,changed=()=>{},schedule=setTimeout,cancel=clearTimeout,timeout=5000}){
+ const game='panzercorn-gamewave';let alive=true,epoch=0,sdk=null,started=false,ended=false,startHost=null,loadStarted=false,cloudReady=false,cloudBase={},dirty=false,saving=false,timers=new Set(),entries=new Map(),support={like:false,comment:false};
+ const later=(fn,ms)=>{let id=schedule(()=>{timers.delete(id);fn();},ms);timers.add(id);return id;};
+ const safeStop=fn=>{try{fn?.();}catch{}};
+ const getHost=()=>{try{let h=host();return h&&typeof h==='object'?h:null;}catch{return null;}};
+ const emit=e=>{if(alive)try{changed(e);}catch{}};
+ function call(h,name){try{if(typeof h?.[name]!=='function')return false;Promise.resolve(h[name]()).catch(()=>{});return true;}catch{return false;}}
+ function notifyStart(){if(started&&!ended&&sdk&&startHost!==sdk&&call(sdk,'gameStart'))startHost=sdk;}
+ function save(){dirty=true;flush();}
+ function flush(){
+  if(!alive||saving||!dirty||!cloudReady||typeof sdk?.saveUserGameState!=='function')return;
+  let snapshot;
+  try{snapshot={...cloudBase,game,v:1,profile:JSON.parse(JSON.stringify(read()))};}catch{return;}
+  dirty=false;
+  saving=true;
+  const destination=sdk,gen=epoch;
+  let settled=false, timedOut=false;
+  const timer=later(()=>{
+   if(!alive||gen!==epoch||settled)return;
+   timedOut=true;
+   cloudReady=false;
+   dirty=true;
+   emit({type:'cloudUnavailable'});
+  },timeout);
+  function finish(success){
+   if(settled)return;
+   settled=true;
+   cancel(timer);
+   timers.delete(timer);
+   if(!alive||gen!==epoch)return;
+   saving=false;
+   if(timedOut)cloudReady=true;
+   if(!success){dirty=true;return;}
+   emit({type:'saved'});
+   if(dirty)flush();
+  }
+  try{Promise.resolve(destination.saveUserGameState(snapshot)).then(result=>finish(result?.code===0),()=>finish(false));}
+  catch{finish(false);}
+ }
+ function reward(kind,e){if(!alive||!e||typeof e!=='object'||typeof e.project_id!=='string'||!e.project_id.trim()||kind==='like'&&e.status!==true||kind==='comment'&&typeof e.content!=='string')return;let p=read();if(p.rewards?.[kind])return;p.rewards={...p.rewards,[kind]:true};write(p,false);emit({type:'reward',kind});save();}
+ function reg(kind,name,attempt=0){if(!alive||entries.has(kind)||typeof sdk?.[name]!=='function')return;let gen=epoch,entry={live:false,expired:false,stop:null};entries.set(kind,entry);
+  let timer=later(()=>{if(!alive||gen!==epoch)return;entry.expired=true;if(attempt<1&&entries.get(kind)===entry)entries.delete(kind);support[kind]=false;emit({type:'support',...support});if(attempt<1)later(()=>reg(kind,name,attempt+1),1000);},timeout);
+  const callback=e=>{if(alive&&gen===epoch&&entry.live&&!entry.expired)reward(kind,e);};
+  const done=r=>{cancel(timer);timers.delete(timer);let stop=r?.code===0&&typeof r?.data?.unsubscribe==='function'?r.data.unsubscribe:null;if(!alive||gen!==epoch||entry.expired){safeStop(stop);return;}if(r?.code!==0){entry.expired=true;if(r?.code===-2&&attempt<1){entries.delete(kind);later(()=>reg(kind,name,attempt+1),1000);}return;}entry.live=true;entry.stop=stop;support[kind]=true;emit({type:'support',...support});};
+  try{Promise.resolve(sdk[name](callback)).then(done,()=>done(null));}catch{done(null);}
+ }
+ function recognized(raw){return !!raw&&typeof raw==='object'&&!Array.isArray(raw)&&raw.game===game&&raw.v===1&&raw.profile&&typeof raw.profile==='object'&&!Array.isArray(raw.profile);}
+ function connect(){if(!alive)return;let h=getHost();if(!h)return;if(sdk!==h){epoch++;for(let e of entries.values()){e.expired=true;safeStop(e.stop);}entries.clear();support={like:false,comment:false};cloudReady=false;loadStarted=false;cloudBase={};saving=false;sdk=h;emit({type:'connected'});}
+  if(!loadStarted&&typeof sdk.loadUserGameState==='function'){loadStarted=true;let gen=epoch,resolved=false;later(()=>{if(alive&&gen===epoch&&!resolved){resolved=true;cloudReady=false;emit({type:'cloudUnavailable'});}},timeout);
+   try{Promise.resolve(sdk.loadUserGameState()).then(raw=>{if(!alive||gen!==epoch||resolved)return;resolved=true;if(recognized(raw)){cloudBase=raw;write(raw.profile,true);emit({type:'cloud'});}cloudReady=recognized(raw)||!!raw&&typeof raw==='object'&&!Array.isArray(raw)&&Object.keys(raw).length===0;if(dirty)flush();},()=>{if(gen===epoch){resolved=true;cloudReady=false;}});}catch{resolved=true;cloudReady=false;}}
+  notifyStart();reg('like','onLike');reg('comment','onComment');if(dirty)flush();
+ }
+ function probe(n=0){connect();if(alive&&n<8)later(()=>probe(n+1),1500);}
+ function nudge(){connect();}const external=typeof globalThis.addEventListener==='function';if(external)for(let name of ['pointerdown','focus','resize'])globalThis.addEventListener(name,nudge,{passive:true});probe();
+ return{save,connect,support:()=>({...support}),prepare(){started=false;ended=false;startHost=null;},start(){if(started&&!ended)return;started=true;ended=false;connect();notifyStart();},end(){if(!started||ended)return;ended=true;call(startHost,'gameOver');},
+  viewport(){let h=getHost();try{let v=h?.getGameViewport?.();if(v&&typeof v.then==='function'){Promise.resolve(v).catch(()=>{});return null;}if(v&&Number.isFinite(v.width)&&Number.isFinite(v.height)&&v.width>0&&v.height>0)return{width:v.width,height:v.height,density:Number.isFinite(v.density)&&v.density>0?v.density:1};}catch{}return null;},
+  stop(){if(!alive)return;alive=false;epoch++;if(external)for(let name of ['pointerdown','focus','resize'])globalThis.removeEventListener(name,nudge);for(let t of timers)cancel(t);timers.clear();for(let e of entries.values()){e.expired=true;safeStop(e.stop);}entries.clear();support={like:false,comment:false};}
+ };
+}
+
+
+const key = "panzercorn-profile-v1";
+const note = document.getElementById("game-note");
+const medals = document.getElementById("game-medals");
+
+function sanitize(raw) {
+  const number = value => Number.isSafeInteger(value) && value >= 0 ? value : 0;
+  return {
+    best: number(raw?.best),
+    wave: number(raw?.wave),
+    rewards: { like: raw?.rewards?.like === true, comment: raw?.rewards?.comment === true }
+  };
+}
+
+let initial;
+try { initial = JSON.parse(localStorage.getItem(key)); } catch {}
+let profile = sanitize(initial);
+let active = false;
+let awake = false;
+let adapter;
+
+function render() {
+  const support = adapter?.support() || {};
+  const lines = [];
+  if (profile.best) lines.push("BEST " + profile.best.toLocaleString("en"));
+  if (profile.wave) lines.push("WAVE " + profile.wave);
+  if (profile.rewards.like) lines.push("AURORA MEDAL");
+  if (profile.rewards.comment) lines.push("PRISM MEDAL");
+  if (!active && support.like && !profile.rewards.like) lines.push("Like to earn Aurora");
+  if (!active && support.comment && !profile.rewards.comment) lines.push("Comment to earn Prism");
+  medals.textContent = lines.join("  ·  ");
+  medals.hidden = !lines.length;
+  medals.classList.toggle("aurora", profile.rewards.like);
+  medals.classList.toggle("prism", profile.rewards.comment);
+}
+
+function write(raw, merge = false) {
+  const value = sanitize(raw);
+  profile = merge ? {
+    best: Math.max(profile.best, value.best),
+    wave: Math.max(profile.wave, value.wave),
+    rewards: {
+      like: profile.rewards.like || value.rewards.like,
+      comment: profile.rewards.comment || value.rewards.comment
+    }
+  } : value;
+  try { localStorage.setItem(key, JSON.stringify(profile)); } catch {}
+  render();
+}
+
+adapter = bridge({
+  read: () => sanitize(profile),
+  write,
+  changed: render
+});
+render();
+
+document.addEventListener("panzercorn:ready", () => {
+  awake = true;
+  note.textContent = "Tap Start. Hold and aim. Release to fire.";
+});
+document.addEventListener("panzercorn:start", () => {
+  if (active) return;
+  active = true;
+  note.hidden = true;
+  adapter.prepare();
+  adapter.start();
+  render();
+});
+document.addEventListener("panzercorn:finish", event => {
+  if (!active) return;
+  active = false;
+  const { score, wave } = event.detail;
+  write({ best: score, wave }, true);
+  adapter.end();
+  adapter.save();
+  note.textContent = "Score " + score.toLocaleString("en") + "  ·  Wave " + wave;
+  note.hidden = false;
+});
+addEventListener("pagehide", event => {
+  if (!event.persisted) adapter.stop();
+});
+addEventListener("pageshow", () => adapter.connect());
+if (!awake) note.hidden = false;
+
+})();</script>
+<script>const { PI, sin, cos, atan2, abs, random, min, max, floor, pow, hypot, exp, sqrt, } = Math;
+const PI2 = PI * 2;
+const f32 = (value) => new Float32Array(value);
+let delta = 0;
+const setDelta = (value) => {
+    delta = value;
+};
+const clamp = (a, _min, _max) => {
+    return min(_max, max(_min, a));
+};
+const lerp = (a, b, x) => {
+    return a + (b - a) * x;
+};
+const damp = (a, b, speed) => {
+    return lerp(b, a, exp(-speed * delta));
+};
+const randomBetween = (x, y) => {
+    return lerp(x, y, random());
+};
+const v3 = (x = 0, y = x, z = y) => {
+    return { x, y, z };
+};
+const v3Normalize = (v) => {
+    let len = v3lengthSquared(v);
+    if (len <= 0.001)
+        return 0;
+    len = sqrt(len);
+    v.x /= len;
+    v.y /= len;
+    v.z /= len;
+    return len;
+};
+const v3FromArray = (t, a, i) => v3set(t, a[i], a[i + 1], a[i + 2]);
+const v3sub = (t, a, b) => {
+    t.x = a.x - b.x;
+    t.y = a.y - b.y;
+    t.z = a.z - b.z;
+};
+const v3addScaled = (t, a, b, s) => {
+    t.x = a.x + b.x * s;
+    t.y = a.y + b.y * s;
+    t.z = a.z + b.z * s;
+};
+const v3lerp = (a, b, s) => {
+    a.x += (b.x - a.x) * s;
+    a.y += (b.y - a.y) * s;
+    a.z += (b.z - a.z) * s;
+};
+const v3damp = (a, b, s) => {
+    a.x = damp(a.x, b.x, s);
+    a.y = damp(a.y, b.y, s);
+    a.z = damp(a.z, b.z, s);
+};
+const v3copy = (a, b) => {
+    a.x = b.x;
+    a.y = b.y;
+    a.z = b.z;
+};
+const v3set = (t, x, y = x, z = y) => {
+    t.x = x;
+    t.y = y;
+    t.z = z;
+};
+const v3dot = (a, b) => a.x * b.x + a.y * b.y + a.z * b.z;
+const v3lengthSquared = (v) => v3dot(v, v);
+const forMap = (count, fn) => {
+    return Array.from({ length: count }, (_, i) => fn(i));
+};
+const forIndex = (count, fn) => {
+    for (let i = 0; i < count; ++i)
+        fn(i);
+};
+const shuffle = (a) => a.sort(() => random() - 0.5);const clock = { tim: 0, dlta: 0 };
+const updateClock = (tim) => {
+    const seconds = (tim / 1000) % 999;
+    clock.dlta = clamp(seconds - clock.tim, 0, 0.1);
+    setDelta(clock.dlta);
+    clock.tim = seconds;
+};const unicornAnim = f32(33 /* UnicornPart.Count */);
+const toadAnim = f32(31 /* ToadPart.Count */);
+const hawkAnim = f32(33 /* HawkPart.Count */);
+const whaleAnim = f32(15 /* WhalePart.Count */);
+const butterflyAnim = f32(14 /* ButterflyPart.Count */);
+const animateWhale = (swim) => {
+    whaleAnim.fill(0);
+    swim += 2.6;
+    whaleAnim[2 /* WhalePart.head_006 */] = sin(swim) * 0.3;
+    swim -= 1.5;
+    whaleAnim[0 /* WhalePart.whale */] = sin(swim) * 0.3;
+    swim -= 1;
+    whaleAnim[9 /* WhalePart.tail1_001 */] = sin(swim) * 0.3;
+    swim -= 1;
+    whaleAnim[11 /* WhalePart.tail2_001 */] = sin(swim) * 0.4;
+    swim -= 1;
+    whaleAnim[12 /* WhalePart.tail3_001 */] = sin(swim) * 0.5;
+    swim -= 1;
+    whaleAnim[13 /* WhalePart.r_tail_001 */] = whaleAnim[14 /* WhalePart.l_tail_001 */] =
+        sin(swim) * 0.6;
+    swim -= 3.2;
+    whaleAnim[5 /* WhalePart.r_fin1 */] = whaleAnim[7 /* WhalePart.l_fin1 */] = sin(swim) * 0.8;
+    swim -= 1.2;
+    whaleAnim[6 /* WhalePart.r_fin2 */] = whaleAnim[8 /* WhalePart.l_fin2 */] = sin(swim) * 0.5;
+};
+const gait1 = 0;
+const gait2 = gait1 + PI * 0.3;
+const gait3 = PI * 1.9;
+const gait4 = gait3 + PI * 0.3;
+/** [part, amplitude, phase] */
+// prettier-ignore
+const gait = [
+    0 /* UnicornPart.unicorn */, 0.01, -1,
+    17 /* UnicornPart.neck */, 0.25, 0.8,
+    18 /* UnicornPart.head */, 0.25, 2.5,
+    23 /* UnicornPart.r_front_shoulder */, 0.25, gait1,
+    24 /* UnicornPart.r_front_leg */, 0.5, gait1,
+    25 /* UnicornPart.r_front_calf */, 0.85, gait1 - 1.5,
+    26 /* UnicornPart.r_front_shin */, 0.52, gait1 - 2.1,
+    28 /* UnicornPart.l_front_shoulder */, 0.25, gait2,
+    29 /* UnicornPart.l_front_leg */, 0.5, gait2,
+    30 /* UnicornPart.l_front_calf */, 0.85, gait2 - 1.5,
+    31 /* UnicornPart.l_front_shin */, 0.52, gait2 - 2.1,
+    3 /* UnicornPart.r_butt */, 0.6, gait3,
+    4 /* UnicornPart.r_rear_leg */, 0.3, gait3 + 1,
+    5 /* UnicornPart.r_rear_calf */, 0.4, gait3 + 2,
+    6 /* UnicornPart.r_rear_shin */, 0.5, gait3 + 2.5,
+    8 /* UnicornPart.l_butt */, 0.6, gait4,
+    9 /* UnicornPart.l_rear_leg */, 0.3, gait4 + 1,
+    10 /* UnicornPart.l_rear_calf */, 0.4, gait4 + 2,
+    11 /* UnicornPart.l_rear_shin */, 0.5, gait4 + 2.5,
+    13 /* UnicornPart.tail1 */, 0.2, 0,
+    14 /* UnicornPart.tail2 */, 0.3, -1,
+    15 /* UnicornPart.tail3 */, 0.4, -2,
+    16 /* UnicornPart.tail4 */, 0.5, -3,
+];
+const animateUnicorn = (t) => {
+    t += PI;
+    unicornAnim.fill(0);
+    for (let i = 0; i < gait.length; i += 3) {
+        let si = sin(t + gait[i + 2]);
+        si = 0.5 + 0.5 * si;
+        si = si * si * (3 - 2 * si);
+        si = si * 2 - 1;
+        unicornAnim[gait[i]] += gait[i + 1] * si;
+    }
+};
+const animateHawk = (t) => {
+    hawkAnim.fill(0);
+    hawkAnim[6 /* HawkPart.head_004 */] = abs(sin(clock.tim)) * 0.3;
+    hawkAnim[15 /* HawkPart.r_wing */] = hawkAnim[24 /* HawkPart.l_wing */] = sin(t) * 0.9;
+    hawkAnim[17 /* HawkPart.r_wing2 */] = hawkAnim[26 /* HawkPart.l_wing2 */] =
+        sin((t -= 0.5)) * 0.9;
+    hawkAnim[23 /* HawkPart.r_feather5 */] = hawkAnim[32 /* HawkPart.l_feather5 */] =
+        sin((t -= 0.5)) * 0.5;
+    hawkAnim[1 /* HawkPart.butt */] = sin((t += 0.5)) * 0.2;
+    hawkAnim[4 /* HawkPart.tail */] = sin((t -= 0.1)) * 0.3;
+    hawkAnim[3 /* HawkPart.l_tail */] = hawkAnim[2 /* HawkPart.r_tail */] = sin((t -= 0.1)) * 0.4;
+};
+const animateButterfly = () => {
+    let flap = clock.tim * 13 + pow(sin(clock.tim), 2) * 11;
+    butterflyAnim.fill(0);
+    butterflyAnim[3 /* ButterflyPart.r_wing1 */] = butterflyAnim[5 /* ButterflyPart.l_wing1 */] =
+        sin(flap) * 0.9;
+    butterflyAnim[7 /* ButterflyPart.r_wing2_001 */] = butterflyAnim[10 /* ButterflyPart.l_wing2_001 */] = sin(flap - 0.8) * 0.9;
+};
+const animate = () => {
+    animateButterfly();
+};let scrollSpeed = 1.5;
+let worldDistance = 0;
+let scroll = 0;
+const worldSpeed = 47;
+const setScrollSpeed = (speed) => {
+    scrollSpeed = speed;
+};
+const updateWorld = () => (worldDistance += scroll = clock.dlta * worldSpeed * scrollSpeed);const hands = [];
+const handSides = [];
+const handBlobs = [];
+let buttonAnchor = 1.4;
+const setButtonAnchor = (b, l) => {
+    buttonAnchor = lerp(buttonAnchor, b, l);
+};
+const clearXRInputs = () => {
+    hands.length = 0;
+    handSides.length = 0;
+    handBlobs.length = 0;
+};
+const handRadius = 0.01;var workletSource = "const rate = sampleRate;\nconst midi = (note) => 440 * 2 ** ((note - 69) / 12);\nconst { sin, exp, tanh } = Math;\nconst silent = \"................................\";\nconst parts = [\n    [\"yy55<<77\", \"....2.4.5...4.2.....0.2.4...2...\"],\n    [\"yy775544\", \"....2.4.5.7.5.4.2...1.2.0.......\"],\n    [\"rr..5500\", \"0...4.2...0.2.5.0.4...2.3...5.2.\"],\n    [\"rr00..04\", \"0.4.7...2...5.4.1...5.3.0.....4.\"],\n    [\"yy55rr44\", \"....4...2.......1...0...........\"],\n    [\"yy775544\", \"....2...1.......0.......0.......\"],\n    [\n        \"ww..00--\",\n        \"0..2.4..5...4.2.7..5.4..2...1...\",\n        \"x..x..x.x...x...\",\n        \"....x.......x...\",\n        \"x.x.x.x.x.x.x.x.\",\n    ],\n    [\n        \"rrrr....\",\n        silent,\n        \"x...............\",\n        \"............x...\",\n        \"..x...x...x...x.\",\n    ],\n    [\n        \"55550000\",\n        silent,\n        \"x...............\",\n        \"............x...\",\n        \"..x...x...x...x.\",\n    ],\n    [\n        \"rr..00--\",\n        \"....0...2...4...5.4.2.0.2.4.5.7.\",\n        \"x...x...x.x.x.x.\",\n        \"....x.......x...\",\n        \"..x...x.x.x.x.x.\",\n    ],\n    [\"tt007722\", \"0...2.4...5.4...2...4.5...7.5...\"],\n    [\"tt2200//\", \"7...5.4...2.....0...2...4.5.4.2.\"],\n];\n// tempo, part order, default kick and snare.\nconst songs = [\n    [94, \"0101\", \"x.......x.......\", \"....x.......x...\"],\n    [156, \"23236:;:;789\", \"x...x...x...x...\", \"....x.......x...\"],\n    [72, \"4545\", \"x.......x.......\", \"............x...\"],\n];\nlet song = 0 /* Song.None */, pendingSong = 0 /* Song.None */, sampleTime = 0, lastStep = -1, songBpm = 0;\nlet padLfo = 0, padLow = 0;\nconst padPhases = [0.12, 0.31, 0.53, 0.77], padPhases2 = [0.67, 0.43, 0.21, 0.05], padTargets = [57, 60, 64, 67].map(midi), padFrequencies = [...padTargets];\nlet leadPhase = 0, leadModPhase = 0, leadFrequency = 0, leadLevel = 0;\nlet kickAge = rate, snareAge = rate, hatAge = rate, noise = 1, snareLow = 0;\nlet aimPhase = 0, aimLfo = 0, aimLevel = 0, aimTarget = 0, aimFrequency = midi(48), aimPitch = aimFrequency, locks = 0;\nlet pewAge = rate, pewPhase = 0, pewPitch = 800, pews = 0;\nlet boomAge = rate, boomPhase = 0, boomPitch = 70, boomLow = 0;\nconst delayLength = rate >> 1, delayBuffers = [new Float32Array(delayLength), new Float32Array(delayLength)], delayTaps = [0, 0], delayLows = [0, 0];\nlet delayWrite = 0;\nlet chordRoot = 57, minor = 1;\nconst intervals = [0, 2, 4, 5, 7, 9, 11], chordDegrees = [0, 2, 4, 6];\nconst lockPitches = [52, 55, 60, 67, 72];\nconst interval = (degree) => intervals[degree] - minor * +(degree === 2 || degree > 4);\nconst selectChord = (part, row) => {\n    const chord = part[0].charCodeAt(row >> 2);\n    minor = +(chord > 90);\n    chordRoot = chord - minor * 64;\n    for (let voice = 0; voice < 4; voice++)\n        padTargets[voice] = midi(chordRoot + interval(chordDegrees[voice]));\n};\nconst note = (pattern, row, octave) => {\n    const degree = pattern.charCodeAt(row) - 48;\n    return degree < 0\n        ? 0\n        : midi(chordRoot + interval(degree % 7) + 12 * (octave + ((degree / 7) | 0)));\n};\nclass PanzercornTracker extends AudioWorkletProcessor {\n    constructor() {\n        super();\n        this.port.onmessage = (event) => {\n            const next = event.data;\n            if (next >= 32 /* AudioCommand.Tempo */) {\n                songBpm = next - 32 /* AudioCommand.Tempo */;\n                sampleTime = 0;\n                lastStep = -1;\n                return;\n            }\n            if (next >= 5 /* Sound.Aim */) {\n                if (next === 5 /* Sound.Aim */) {\n                    locks = 0;\n                    aimTarget = 0.088;\n                    aimPitch = midi(48);\n                }\n                if (next === 6 /* Sound.Lock */) {\n                    aimPhase = 0;\n                    aimLevel = 0.176;\n                    aimFrequency = aimPitch = midi(lockPitches[locks < 5 ? locks++ : 4]);\n                }\n                if (next === 7 /* Sound.Stop */)\n                    aimTarget = 0;\n                if (next === 8 /* Sound.Pew */)\n                    pews++;\n                if (next >= 9 /* Sound.Boom */) {\n                    boomAge = boomPhase = 0;\n                    boomPitch =\n                        next === 9 /* Sound.Boom */\n                            ? 60 + noise * 35\n                            : next === 10 /* Sound.Hurt */\n                                ? ((kickAge = 0), 45)\n                                : 270;\n                }\n                return;\n            }\n            if (next < 0 /* Song.None */ || next > 3 /* Song.Defeat */)\n                return;\n            songBpm = 0;\n            if (next === 0 /* Song.None */ || song === 0 /* Song.None */) {\n                song = pendingSong = next;\n                sampleTime = 0;\n                lastStep = -1;\n            }\n            else\n                pendingSong = next;\n        };\n    }\n    process(_inputs, outputs) {\n        const out = outputs[0];\n        for (let i = 0; i < out[0].length; i++, sampleTime++) {\n            let sample = 0;\n            if (song !== 0 /* Song.None */) {\n                const current = songs[song - 1];\n                const bpm = songBpm || current[0];\n                const stepDuration = (rate * 60) / bpm / 4;\n                const step = (sampleTime / stepDuration) | 0;\n                if (step !== lastStep) {\n                    lastStep = step;\n                    const row = step & 31;\n                    if (!(step & 15) && step && pendingSong !== song) {\n                        song = pendingSong;\n                        sampleTime = 0;\n                        lastStep = -1;\n                        continue;\n                    }\n                    const order = current[1], part = parts[order.charCodeAt((step >> 5) % order.length) - 48];\n                    if (!(row & 3))\n                        selectChord(part, row);\n                    const lead = note(part[1], row, 1);\n                    if (lead) {\n                        leadFrequency = lead;\n                        leadLevel = 0.18;\n                    }\n                    if ((part[2] || current[2])[row & 15] === \"x\")\n                        kickAge = 0;\n                    if ((part[3] || current[3])[row & 15] === \"x\")\n                        snareAge = 0;\n                    if (part[4] ? part[4][row & 15] === \"x\" : current[0] > 100 || row & 1)\n                        hatAge = 0;\n                }\n                padLfo = (padLfo + 0.25 / rate) % 1;\n                let pad = 0;\n                for (let voice = 0; voice < 4; voice++) {\n                    padFrequencies[voice] +=\n                        (padTargets[voice] - padFrequencies[voice]) * 0.0015;\n                    padPhases[voice] =\n                        (padPhases[voice] + padFrequencies[voice] / rate) % 1;\n                    padPhases2[voice] =\n                        (padPhases2[voice] +\n                            (padFrequencies[voice] * (1 + (voice - 1.5) * 0.0015)) / rate) %\n                            1;\n                    const phase = padPhases[voice];\n                    pad +=\n                        (phase + padPhases2[voice] - 1) * 0.35 + sin(phase * 6.283) * 0.45;\n                }\n                padLow += (pad * 0.25 - padLow) * (0.016 + sin(padLfo * 6.283) * 0.004);\n                sample = padLow * 1.2;\n                if (leadFrequency) {\n                    leadPhase = (leadPhase + leadFrequency / rate) % 1;\n                    leadModPhase = (leadModPhase + (leadFrequency * 2.01) / rate) % 1;\n                    leadLevel *= 0.99988;\n                    sample +=\n                        sin((leadPhase + sin(leadModPhase * 6.283) * 0.18) * 6.283) *\n                            leadLevel;\n                }\n                if (kickAge < rate * 0.35) {\n                    const time = kickAge++ / rate;\n                    sample +=\n                        sin(time * (150 - time * 260) * 6.283) * exp(-time * 14) * 0.65;\n                }\n                if (snareAge < rate * 0.22) {\n                    const time = snareAge++ / rate;\n                    snareLow += (noise - 0.5 - snareLow) * 0.18;\n                    sample += snareLow * exp(-time * 18) * 0.5;\n                }\n                if (hatAge < rate * 0.045)\n                    sample += (noise - 0.5) * exp(-(hatAge++ / rate) * 80) * 0.12;\n            }\n            noise = (noise * 1.73) % 1;\n            aimLevel += (aimTarget - aimLevel) * 0.003;\n            aimFrequency += (aimPitch - aimFrequency) * 0.003;\n            aimLfo = (aimLfo + (12 + locks * 2) / rate) % 1;\n            const wobble = sin(aimLfo * 6.283);\n            aimPhase = (aimPhase + (aimFrequency * (1 + wobble * 0.04)) / rate) % 1;\n            const aim = sin(aimPhase * 6.283) * aimLevel * (0.8 + wobble * 0.2);\n            if (pews && pewAge > rate * 0.07) {\n                pews--;\n                pewAge = pewPhase = 0;\n                pewPitch = 1750 + noise * 100;\n            }\n            if (pewAge < rate * 0.16) {\n                const time = pewAge++ / rate;\n                pewPhase += (pewPitch * (1 - time * 3)) / rate;\n                sample += sin(pewPhase * 6.283) * exp(-time * 24) * 0.3;\n            }\n            if (boomAge < rate * (boomPitch > 100 ? 1 : 0.5)) {\n                const time = boomAge++ / rate;\n                boomPhase += ((boomPitch % 150) * (1 - time)) / rate;\n                boomLow += (noise - 0.5 - boomLow) * 0.08;\n                sample +=\n                    (sin(boomPhase * 6.283) * (boomPitch > 100 ? 1.5 : 0.35) +\n                        boomLow * +(boomPitch < 100)) *\n                        exp(-time * (boomPitch > 100 ? 3 : 8)) *\n                        1.04;\n            }\n            for (let channel = 0; channel < 2; channel++) {\n                const tap = (delayTaps[channel] =\n                    delayBuffers[channel][((delayWrite - rate * (0.36 + channel * 0.12) + delayLength) %\n                        delayLength) |\n                        0]);\n                delayLows[channel] += (tap - delayLows[channel]) * 0.02;\n                delayBuffers[channel][delayWrite] =\n                    sample + (delayTaps[1 - channel] - delayLows[1 - channel]) * 0.62;\n                out[channel][i] = tanh(sample * 0.46 + tap * 0.18 + aim);\n            }\n            delayWrite = ++delayWrite % delayLength;\n        }\n        return true;\n    }\n}\nregisterProcessor(\"P\", PanzercornTracker);";
+let context$1;
+let tracker;
+const createTracker = async () => {
+    const url = URL.createObjectURL(new Blob([workletSource], { type: "text/javascript" }));
+    try {
+        await context$1.audioWorklet.addModule(url);
+    }
+    finally {
+        URL.revokeObjectURL(url);
+    }
+    const node = new AudioWorkletNode(context$1, "P", { outputChannelCount: [2] });
+    node.connect(context$1.destination);
+    return node;
+};
+const initializeAudio = () => {
+    try {
+        context$1 ||= new AudioContext();
+        void context$1.resume().catch(() => { });
+        return (tracker ||= createTracker().catch(() => undefined));
+    }
+    catch {
+        return Promise.resolve(undefined);
+    }
+};
+const setSong = async (song) => {
+    const node = await initializeAudio();
+    node?.port.postMessage(song);
+};
+const setTempo = async (bpm) => {
+    const node = await initializeAudio();
+    node?.port.postMessage(32 /* AudioCommand.Tempo */ + bpm);
+};
+const playSound = async (sound) => {
+    const node = await initializeAudio();
+    node?.port.postMessage(sound);
+};const flightBounds = { x: 26, y: 16 };
+const flightPosition = v3(0, 1, 0);
+const flightVelocity = v3(0, 0, 0);
+const flightControl = v3(0, 0, 0);
+const flightOrb = v3(0, 0, 0);
+const palmPoint = v3(), rollAxis = v3();
+let showFlightOrb = false;
+let flightRoll = 0;
+let flightPitch = 0;
+let flightYaw = 0;
+let health = 5;
+let hurt = 0;
+let gameOver = false;
+let playerScore = 0;
+let scoreMultiplier = 1;
+let invulnerable = 0, multiplierTimer = 0, cr = 1, sr = 0, cp = 1, sp = 0, cy = 1, sy = 0;
+const scoreMessageCount = 7;
+const scoreMessages = forMap(scoreMessageCount, () => ({
+    timer: 0,
+}));
+const addPlayerScore = (amount, message, priority) => {
+    playerScore += amount;
+    let insert = -1;
+    for (let i = 0; i < scoreMessageCount; ++i) {
+        if (scoreMessages[i].priority < priority) {
+            insert = i;
+        }
+        if (!scoreMessages[i].msg) {
+            insert = i;
+            break;
+        }
+    }
+    if (insert >= 0) {
+        scoreMessages[insert].msg = message;
+        scoreMessages[insert].priority = priority;
+        scoreMessages.sort((a, b) => a.timer - b.timer);
+    }
+};
+const addBonus = (amount, message, priority) => {
+    addPlayerScore(amount, message, priority);
+    scoreMultiplier++;
+};
+const resetPlayer = () => {
+    health = 5;
+    hurt = 0;
+    gameOver = false;
+    playerScore = 0;
+    scoreMultiplier = 1;
+    invulnerable = multiplierTimer = 0;
+    v3set(flightPosition, 0, 1, 0);
+    v3set(flightVelocity, 0);
+    scoreMessages.map((m) => (m.msg = undefined));
+};
+const giveInvulnerable = (d) => {
+    invulnerable = d;
+};
+const hitPlayer = () => {
+    if (invulnerable > 0 || gameOver)
+        return false;
+    health--;
+    hurt = 1;
+    playSound(10 /* Sound.Hurt */);
+    invulnerable = 0.9;
+    gameOver = health === 0;
+    return true;
+};
+const healPlayer = () => {
+    health = min(5, health + 1);
+};
+/** Maps a stable game-world point into the player-local rendered world. */
+const flightWorldPoint = (out, x, y, z) => {
+    x -= flightPosition.x;
+    y -= flightPosition.y;
+    const rx = cr * x - sr * y;
+    const ry = sr * x + cr * y;
+    const py = cp * ry - sp * z, pz = sp * ry + cp * z;
+    out.x = cy * rx + sy * pz;
+    out.y = py;
+    out.z = -sy * rx + cy * pz;
+};
+/** Maps a tracked/render-space point back into the stable game world. */
+const inverseFlightPoint = (out, point) => {
+    const x = cy * point.x - sy * point.z, rz = sy * point.x + cy * point.z;
+    const y = cp * point.y + sp * rz;
+    const z = -sp * point.y + cp * rz;
+    out.x = cr * x + sr * y + flightPosition.x;
+    out.y = -sr * x + cr * y + flightPosition.y;
+    out.z = z;
+};
+const desktopInput = v3(), vrInput = v3(), controllerInput = v3();
+let vrActive = false, controllerActive = false;
+const deadZone = (value) => {
+    const magnitude = abs(value);
+    return magnitude < 0.1
+        ? 0
+        : clamp((magnitude - 0.12) / 0.44, 0, 1) ** 2 * (value < 0 ? -1 : 1);
+};
+const setDesktopFlight = (x, y) => {
+    v3set(desktopInput, x, y, 0);
+};
+const clearControllerFlight = () => (controllerActive = false);
+const setControllerFlight = (x, y) => {
+    v3set(controllerInput, deadZone(x), deadZone(y), 0);
+    controllerActive = true;
+};
+const clearVrFlightControl = () => {
+    showFlightOrb = false;
+    vrActive = false;
+};
+const updateVrFlightControl = (head) => {
+    const targetHeight = head.y - 0.3;
+    v3set(flightOrb, -0.4, lerp(flightOrb.y, targetHeight, 0.01), -0.4);
+    showFlightOrb = true;
+    vrActive = false;
+    for (let strt = 0; strt < hands.length; strt += 18) {
+        if (handBlobs[strt / 18] || handSides[strt / 18])
+            continue;
+        const palm = strt + 15;
+        v3FromArray(palmPoint, hands, palm);
+        v3sub(palmPoint, palmPoint, flightOrb);
+        if (v3lengthSquared(palmPoint) > 0.16)
+            continue;
+        const height = palmPoint.y;
+        v3FromArray(rollAxis, hands, strt + 12);
+        v3FromArray(palmPoint, hands, strt);
+        v3sub(rollAxis, rollAxis, palmPoint);
+        v3Normalize(rollAxis);
+        vrInput.x = deadZone(rollAxis.y);
+        const distance = abs(height) - 0.03;
+        vrInput.y =
+            distance > 0
+                ? clamp(distance / 0.12, 0, 1) ** 2 * (height < 0 ? -1 : 1)
+                : 0;
+        vrActive = true;
+        break;
+    }
+    v3copy(flightControl, vrActive ? vrInput : controllerActive ? controllerInput : desktopInput);
+};
+const touchInput = v3(0);
+const updatePlayer = () => {
+    scoreMessages.map((m) => {
+        if (m.msg) {
+            m.timer += clock.dlta;
+            if (m.timer > 1) {
+                m.timer = 0;
+                m.msg = undefined;
+            }
+        }
+    });
+    invulnerable = max(0, invulnerable - clock.dlta);
+    hurt = max(0, hurt - clock.dlta);
+    if (scoreMultiplier > 1 && (multiplierTimer -= clock.dlta) < 0) {
+        scoreMultiplier--;
+        multiplierTimer = 3;
+    }
+    if (!showFlightOrb)
+        v3addScaled(flightControl, desktopInput, touchInput, 1);
+    let controlSpeed = 16 + scrollSpeed * 2;
+    flightVelocity.x = damp(flightVelocity.x, flightControl.x * controlSpeed, 4);
+    flightVelocity.y = damp(flightVelocity.y, flightControl.y * controlSpeed, 4);
+    v3addScaled(flightPosition, flightPosition, flightVelocity, clock.dlta);
+    flightPosition.x = clamp(flightPosition.x, -26, flightBounds.x);
+    flightPosition.y = clamp(flightPosition.y, 0.75, flightBounds.y);
+    if (abs(flightPosition.x) === flightBounds.x)
+        flightVelocity.x = 0;
+    if (flightPosition.y === 0.75 || flightPosition.y === flightBounds.y)
+        flightVelocity.y = 0;
+    flightRoll = damp(flightRoll, flightVelocity.x * 0.02, 3);
+    flightPitch = damp(flightPitch, (flightPosition.y / flightBounds.y - 0.5) * 0.36, 3);
+    flightYaw = showFlightOrb ? 0 : damp(flightYaw, touchInput.z, 3);
+    cr = cos(flightRoll);
+    sr = sin(flightRoll);
+    cp = cos(flightPitch);
+    sp = sin(flightPitch);
+    cy = cos(flightYaw);
+    sy = sin(flightYaw);
+};var vertexShader = "#version 300 es\nuniform lowp int k;\nuniform float ws,pc;\nuniform mat4 pr,vw,md,fm;\nuniform vec3 cl;\nuniform vec4 sp,tr[128];\nout vec4 u;\nout vec3 w;\nout float r;\nfloat hs(vec2 p){\np=fract(p*vec2(23.3,56.2));\np+=dot(p,p+45.32);\nreturn fract(p.x*p.y);\n}\nfloat ns(vec2 p){\nvec2 i=floor(p),f=fract(p);\nreturn mix(\nmix(hs(i),hs(i+vec2(1,0)),f.x),\nmix(hs(i+vec2(0,1)),hs(i+1.),f.x),\nf.y\n);\n}\nfloat fr(vec2 p){\nfloat h=.5*ns(p/37.);\nh+=.25*ns(p/19.+7.);\nreturn h+.1*ns(p/9.+3.);\n}\nvoid main(){\nvec4 t,p,v;\nvec3 s,cp;\nu=vec4(0,0,0,1);\nr=0.;\nfloat a;\nvec2 g=vec2(gl_VertexID>>1,gl_InstanceID+(gl_VertexID & 1))/cl.y;\nif(k==0){\ns=vec3(gl_VertexID==1?3.:-1.,gl_VertexID==2?3.:-1.,.999);\nmat3 iv=transpose(mat3(vw));\ncp=-iv*vw[3].xyz;\nw=cp+iv*vec3(\n(pr[2][0]- s.x*pr[2][3])/pr[0][0],\n(pr[2][1]- s.y*pr[2][3])/pr[1][1],\n-1.\n)*400.;\nw=cp+transpose(mat3(fm))*(w - cp);\nr=1.;\nu.x=cl.x;\ngl_Position=vec4(s,1);\nreturn;\n}else if(k==1){\nu.xy=g-.5;\nt.w=pow(abs(u.x*2.),1.5)+.05;\nu.xy*=vec2(360.,1000.);\nt.x=1000./cl.y;\nt.y=ws;\nt.z=floor(t.y/t.x);\ns.xz=u.xy;\ns.z+=t.y-t.z*t.x;\na=fr(u.xy-vec2(0.,t.z*t.x));\nt.w=a*t.w;\ns.y=max(0.,-10.+115.*t.w);\nu.w=.4+t.w*3.3;\ns.x-=.6*a*u.x;\ns.z+=sin(s.z/5.+s.x/7.)*max(0.,1.-s.y)*2.;\n}else if(k==2){\nu.xy=g-.5;\nt.x=pow(g.y,.6);\na=sin(t.x*14. - cl.x*9.)*pow(length(u.xy),3.);\nu.w=.6+a*.3;\ns=vec3(u.x,.2+a*.4,u.y)*.7;\n}else if(k==3){\nt.x=g.y*4. - 2.;\nt.y=clamp(t.x,-1.,1.);\nt.z=t.x - t.y;\nt.x=mix(sp.x,sp.y,t.x*.25+.5);\nt.w=pow(max(1. - t.z*t.z,0.),sp.w*.5);\ns.xy=vec2(cos(g.x*6.2832),sin(g.x*6.2832));\ns.xy=sign(s.xy)*pow(abs(s.xy),sp.ww);\nt.z=sign(t.z)*pow(abs(t.z),sp.w);\nt.y=t.y*sp.z+t.x*t.z;\nt.x=mix(sp.x,sp.y,clamp((t.y+sp.z+sp.x)/(2.*sp.z+sp.x+sp.y),0.,1.));\ns=vec3(t.x*t.w*s.xy,t.y);\n}else if(k==4){\nint p=gl_VertexID>>1;\nvec4 a=fm*md*vec4(tr[p].xyz,1.),b=fm*md*vec4(tr[p+1].xyz,1.),av=vw*a,bv=vw*b;\nw=a.xyz;\nvec3 s=normalize(cross(bv.xyz - av.xyz,av.xyz));\nav.xyz+=s*tr[p].w*float((gl_VertexID & 1)*2 - 1);\nt.x=float(p)/cl.z;\nu.y=t.x*6.2;\nu.z=1.;\nu.w=1.3+.3*sin(cl.x*30.);\ngl_Position=pr*av;\nreturn;\n}else if(k==6){\ns=vec3(0.,g.y,g.x);\nu.y=g.x*9.-cl.x*9.;\nu.z=1.;\n}else if(k==7){\nu.xy=g;\nt.x=g.x*6.283;\nt.y=g.y*3.1416;\ns=vec3(cos(t.x)*sin(t.y),cos(t.y),sin(t.x)*sin(t.y));\na=fr(s.xz*97.+abs(s.y)*73.+vec2(sp.w,sp.w*17.));\ns*=.5+a*.5;\nu.w=.4+a*.7;\n}else if(k==8){\nt=tr[gl_VertexID];\ns=t.xyz*sp.x;\ns.y+=sp.w*t.w;\np=fm*md*vec4(s,1);\nv=vw*p;\nw=p.xyz;\nu.z=1.;\nu.y=g.x*9.;\nu.w=sp.z;\ngl_Position=pr*v;\ngl_PointSize=pr[1][1]*pc/max(.01,-v.z)*sp.y*t.w;\nreturn;\n}else if(k==9){\nu.xy=g;\ns=sp.xyz+transpose(mat3(vw))*vec3((u.xy*2.-1.)*1.4,-1);\ngl_Position=pr*vw*vec4(s,1);\nreturn;\n}else{\nu.xy=vec2(gl_VertexID & 1,gl_VertexID>>1);\nt=tr[gl_InstanceID];\ns.xy=u.xy-.5;\ns.x+=t.z;\nu.y=1. - u.y;\nu.xy+=t.xy;\nu.xy/=16.;\n}\np=md*vec4(s,1.);\nr=p.y;\nw=(fm*p).xyz;\nu.w*=smoothstep(-5.,1.,normalize((fm*md*vec4(s,0.))).y);\ngl_Position=pr*vw*vec4(w,1.);\n}";var fragmentShader = "#version 300 es\nprecision highp float;\nuniform lowp int k;\nuniform sampler2D ft;\nuniform mat4 vw;\nuniform vec3 c,s;\nin vec4 u;\nin vec3 w;\nin float r;\nout vec4 o;\nvoid main(){\nfloat a;\nif(k==9){\na=(.2+.8*smoothstep(.0,.5,length(u.xy-.5)))*c.x;\no=vec4(1,0,0,a);\nreturn;\n}\nvec3 e=transpose(mat3(vw))*vw[3].xyz,\nry=normalize(w+e),\nl=vec3(c.x*(k==0?smoothstep(-.2,.2,ry.y*.35):u.w),mix(c.yz,.4*vec2(cos(u.y),sin(u.y)),u.z));\na=.8+.2*min(1.,abs(r)*99.);\nif(k==5){\nfloat tex=texture(ft,u.xy).r;\nl.x+=max(0.,tex*.5-.3);\na=smoothstep(0.,.1,tex);\n}\nfloat fd=1.-smoothstep(.1,.38,ry.y);\nfloat fg=smoothstep(50.,500.,abs(k==0?ry.z*500.:w.z))*fd;\nif(k>3){fg=max(fg,pow(max(0.,1.-(abs(r)/9.)),4.)*.3);}\nif(k!=4){l=mix(l,s,fg);}\nl=mat3(1,1,1,.3963,-.1056,-.0895,.2158,-.0639,-1.29)*l;\nl*=l*l;\nvec3 s=mat3(4.077,-1.268,-.004,-3.308,2.6,-.7034,.23,-.3413,1.708)*l;\no=vec4(mix(s*12.92,1.055*pow(max(s,0.),vec3(1./2.4))-.055,step(.0031,s)),a);\n}";const cvs = window.C;
+const gl = cvs.getContext("webgl2");const modelMatrix = f32(16);
+/** Y * X * Z rotation, then local scale. */
+const matrix = (m, x = 0, y = 0, z = 0, rx = 0, ry = 0, rz = 0, sx = 1, sy = sx, sz = sx) => {
+    rx /= 2;
+    ry /= 2;
+    rz /= 2;
+    const a = sin(ry), b = cos(ry), c = sin(rx), d = cos(rx), e = sin(rz), f = cos(rz);
+    quaternion(m, b * c * f + a * d * e, a * d * f - b * c * e, b * d * e - a * c * f, b * d * f + a * c * e);
+    scale(m, sx, sy, sz);
+    m[12] = x;
+    m[13] = y;
+    m[14] = z;
+    m[15] = 1;
+};
+const quaternion = (m, x, y, z, w) => {
+    const xx = x * x, yy = y * y, zz = z * z, xy = x * y, xz = x * z, yz = y * z, wx = w * x, wy = w * y, wz = w * z;
+    m[0] = 1 - 2 * (yy + zz);
+    m[1] = 2 * (xy + wz);
+    m[2] = 2 * (xz - wy);
+    m[3] = 0;
+    m[4] = 2 * (xy - wz);
+    m[5] = 1 - 2 * (xx + zz);
+    m[6] = 2 * (yz + wx);
+    m[7] = 0;
+    m[8] = 2 * (xz + wy);
+    m[9] = 2 * (yz - wx);
+    m[10] = 1 - 2 * (xx + yy);
+    m[11] = 0;
+    m[15] = 1;
+};
+const multiply = (out, a, b) => {
+    const a0 = a[0], a1 = a[1], a2 = a[2], a4 = a[4], a5 = a[5], a6 = a[6], a8 = a[8], a9 = a[9], a10 = a[10], a12 = a[12], a13 = a[13], a14 = a[14];
+    for (let i = 0; i < 16; i += 4) {
+        const x = b[i], y = b[i + 1], z = b[i + 2], w = i == 12;
+        out[i] = a0 * x + a4 * y + a8 * z + (w ? a12 : 0);
+        out[i + 1] = a1 * x + a5 * y + a9 * z + (w ? a13 : 0);
+        out[i + 2] = a2 * x + a6 * y + a10 * z + (w ? a14 : 0);
+    }
+    out[15] = 1;
+};
+const translate = (m, x, y, z) => {
+    m[12] += m[0] * x + m[4] * y + m[8] * z;
+    m[13] += m[1] * x + m[5] * y + m[9] * z;
+    m[14] += m[2] * x + m[6] * y + m[10] * z;
+};
+const scale = (m, x, y = x, z = x) => {
+    for (let i = 0; i < 3; i++) {
+        m[i] *= x;
+        m[i + 4] *= y;
+        m[i + 8] *= z;
+    }
+};
+/** Post-rotate about X by -90 degrees. */
+const turnX = (m) => {
+    for (let i = 0; i < 3; i++) {
+        const y = m[i + 4];
+        m[i + 4] = -m[i + 8];
+        m[i + 8] = y;
+    }
+};const glyphOffsets = f32(128 * 4);
+const flightMatrix = f32(16);
+let viewer = v3(0, 1.5, 0);
+const program = gl.createProgram();
+forIndex(2, (i) => {
+    const source = [vertexShader, fragmentShader][i];
+    const shader = gl.createShader(35633 /* GL.VERTEX_SHADER */ - i);
+    gl.shaderSource(shader, source);
+    gl.compileShader(shader);
+    if (!gl.getShaderParameter(shader, 35713 /* GL.COMPILE_STATUS */))
+        console.error(source, gl.getShaderInfoLog(shader));
+    gl.attachShader(program, shader);
+});
+gl.linkProgram(program);
+if (!gl.getProgramParameter(program, 35714 /* GL.LINK_STATUS */))
+    console.error(vertexShader, fragmentShader, gl.getProgramInfoLog(program));
+const [projection$1, view$1, clockUniform, kindUniform, transform, shapeUniform, mainColor, trailUniform, shaderFog, worldScrollUniform, flightUniform, pointScaleUniform,] = [
+    "pr",
+    "vw",
+    "cl",
+    "k",
+    "md",
+    "sp",
+    "c",
+    "tr[0]",
+    "s",
+    "ws",
+    "fm",
+    "pc",
+].map((name) => gl.getUniformLocation(program, name));
+gl.enable(2929 /* GL.DEPTH_TEST */);
+gl.enable(3042 /* GL.BLEND */);
+gl.blendFunc(770 /* GL.SRC_ALPHA */, 771 /* GL.ONE_MINUS_SRC_ALPHA */);
+gl.useProgram(program);
+const setKind = (kind) => {
+    gl.uniform1i(kindUniform, kind);
+};
+const setFlightTransform = (enabled, x = 0, y = 0, pitch = 0, yaw = 0, roll = 0) => {
+    matrix(flightMatrix, 0, 0, 0, enabled ? pitch : 0, enabled ? yaw : 0, enabled ? roll : 0);
+    if (enabled) {
+        flightMatrix[12] = -(flightMatrix[0] * x + flightMatrix[4] * y);
+        flightMatrix[13] = -(flightMatrix[1] * x + flightMatrix[5] * y);
+        flightMatrix[14] = -(flightMatrix[2] * x + flightMatrix[6] * y);
+    }
+    gl.uniformMatrix4fv(flightUniform, false, flightMatrix);
+};
+const drawGrid = (density = 20, instances = density - 1, prim = 5 /* GL.TRIANGLE_STRIP */) => {
+    gl.uniform3f(clockUniform, clock.tim, density - 1, density - 1);
+    gl.drawArraysInstanced(prim, 0, density * 2, instances);
+};
+const drawPoints = (count) => gl.drawArrays(0 /* GL.POINTS */, 0, count);
+const setPointScale = () => gl.uniform1f(pointScaleUniform, cvs.height / 2);
+const setModelTS = (x = 0, y = 0, z = 0, sx = 1, sy = sx, sz = sx) => setModelTRS(x, y, z, 0, 0, 0, sx, sy, sz);
+const setModelTRS = (x, y, z, rx = 0, ry = 0, rz = 0, sx = 1, sy = sx, sz = sx) => {
+    matrix(modelMatrix, x, y, z, rx, ry, rz, sx, sy, sz);
+    gl.uniformMatrix4fv(transform, false, modelMatrix);
+};
+/** shape uniform actually varies by kind */
+const shape = (startRadius, endRadius, length, squareness) => {
+    gl.uniform4f(shapeUniform, startRadius, endRadius, length, squareness);
+};
+const label = (text) => {
+    const spacing = 0.45;
+    forIndex(text.length, (i) => {
+        const character = text.charCodeAt(i);
+        const offset = i * 4;
+        glyphOffsets[offset] = character & 15;
+        glyphOffsets[offset + 1] = character >> 4;
+        glyphOffsets[offset + 2] = (i + 0.5 - text.length / 2) * spacing;
+    });
+    gl.uniform4fv(trailUniform, glyphOffsets, 0, text.length * 4);
+    drawGrid(2, text.length);
+};
+const lookAt = (roll = 0, x = viewer.x, y = viewer.y, z = viewer.z) => {
+    x -= modelMatrix[12];
+    y -= modelMatrix[13];
+    z -= modelMatrix[14];
+    setModelTRS(modelMatrix[12], modelMatrix[13], modelMatrix[14], atan2(-y, hypot(x, z)), atan2(x, z), roll, hypot(modelMatrix[0], modelMatrix[1], modelMatrix[2]), hypot(modelMatrix[4], modelMatrix[5], modelMatrix[6]), hypot(modelMatrix[8], modelMatrix[9], modelMatrix[10]));
+};
+const compoundTransforms = forMap(9, () => f32(16));
+const localTransform = f32(16);
+const renderCompound = (compound, jointAngles, density = 100) => {
+    const quantum = compound[0];
+    compoundTransforms[0].set(modelMatrix);
+    setKind(3 /* MeshKind.Capsulite */);
+    for (let i = 1, part = 0; i < compound.length;) {
+        const header = compound[i++];
+        if (header == 6 /* MeshKind.Color */) {
+            setColorOKLCH(compound[i++], compound[i++], compound[i++]);
+        }
+        else {
+            const partIndex = part++;
+            const depth = (header & 255) >> 5, localX = compound[i++] * quantum, localY = compound[i++] * quantum, localZ = compound[i++] * quantum;
+            let localRotationX = compound[i++] / 99, localRotationY = compound[i++] / 99, localRotationZ = compound[i++] / 99, localRotationW = compound[i++] / 99;
+            const animation = jointAngles[partIndex] / 2;
+            if (animation) {
+                const sine = sin(animation), cosine = cos(animation), x = localRotationW * sine + localRotationX * cosine, y = localRotationY * cosine + localRotationZ * sine, z = localRotationZ * cosine - localRotationY * sine, w = localRotationW * cosine - localRotationX * sine;
+                localRotationX = x;
+                localRotationY = y;
+                localRotationZ = z;
+                localRotationW = w;
+            }
+            quaternion(localTransform, localRotationX, localRotationY, localRotationZ, localRotationW);
+            localTransform[12] = localX;
+            localTransform[13] = localY;
+            localTransform[14] = localZ;
+            const world = compoundTransforms[depth + 1];
+            multiply(world, compoundTransforms[depth], localTransform);
+            {
+                const tipLength = compound[i++] * quantum;
+                shape(compound[i++] * quantum, compound[i++] * quantum, tipLength / 2, compound[i++] / 99);
+                const aspect = 1 + compound[i++] / 99;
+                modelMatrix.set(world);
+                translate(modelMatrix, 0, tipLength / 2, 0);
+                turnX(modelMatrix);
+                scale(modelMatrix, 1, aspect);
+            }
+            gl.uniformMatrix4fv(transform, false, modelMatrix);
+            drawGrid(density);
+        }
+    }
+};
+const setUniformColorOKLCH = (uniform, luminance, sat, hue) => {
+    sat = (sat * 0.3) / 9.0;
+    hue = (hue * PI2) / 32;
+    gl.uniform3f(uniform, luminance / 9.0, sat * cos(hue), sat * sin(hue));
+};
+/** values are in a "compressed" scale:
+ * luminance is 0-9, mapped to 0-1
+ * saturation is 0-9 mapped to 0-0.3
+ * hue is 0-32 mapped to 0-2PI
+ */
+const setColorOKLCH = (luminance, sat, hue) => {
+    setUniformColorOKLCH(mainColor, luminance, sat, hue);
+};
+const setColorVec = (color) => setColorOKLCH(color.x, color.y, color.z);const asteroids$1 = forMap(48, (i) => ({
+    z: 101,
+    seed: i * 19.37 + 3.1,
+}));
+let closeChain = -1, closeRow = -2;
+const closeNames = ["daredevil", "insane", "thread the needle", "untouchable"];
+const spawnAsteroid = (x, kind, row) => {
+    const asteroid = asteroids$1.find((a) => a.z > 100), tall = flightBounds.y;
+    if (!asteroid)
+        return;
+    asteroid.x = x;
+    asteroid.z = -500;
+    const wide = kind == "T" || kind == "t" || kind == "u", sphere = kind == "A" || kind == "a";
+    asteroid.rad = wide ? 22 : 6;
+    asteroid.heit =
+        kind == "I"
+            ? tall * 2
+            : kind == "i"
+                ? tall / 2
+                : wide
+                    ? tall * 0.25
+                    : asteroid.rad;
+    asteroid.y = sphere
+        ? tall * (kind == "A" ? 1 / 3 : 2 / 3) + 4
+        : kind == "T"
+            ? tall
+            : kind == "t"
+                ? tall * 0.5
+                : 0;
+    asteroid.seed += 7.1;
+    asteroid.row = row;
+    asteroid.hit = false;
+};
+const updateAsteroids = () => {
+    asteroids$1.map((asteroid) => {
+        if (asteroid.z > 100)
+            return;
+        asteroid.z += scroll;
+        if (asteroid.z > 0)
+            asteroid.y -= (scroll * (asteroid.heit + 2)) / 100;
+    });
+};
+const clearAsteroids = () => {
+    asteroids$1.map((a) => (a.z = 101));
+    closeChain = -1;
+    closeRow = -2;
+};
+const checkAsteroidHits = () => {
+    asteroids$1.map((asteroid) => {
+        if (asteroid.z > 100 || asteroid.hit)
+            return;
+        const dx = asteroid.x - flightPosition.x - viewer.x, dy = asteroid.y - flightPosition.y - viewer.y, x = dx / (asteroid.rad + 0.5), y = dy / (asteroid.heit / 2 + 0.5);
+        const z = (asteroid.z - viewer.z) / (asteroid.rad + 0.5);
+        const distance = x * x + y * y + z * z;
+        if (distance < 1) {
+            asteroid.z = 101;
+            closeChain = -1;
+            closeRow = asteroid.row;
+            hitPlayer();
+        }
+        else if (asteroid.z > viewer.z) {
+            asteroid.hit = true;
+            if ((distance < 2 ||
+                (asteroid.rad > 10 &&
+                    abs(dx) < asteroid.rad * 1.2 &&
+                    abs(dy) < asteroid.heit + 2)) &&
+                asteroid.row !== closeRow) {
+                closeChain = asteroid.row === closeRow + 1 ? min(3, closeChain + 1) : 0;
+                closeRow = asteroid.row;
+                const score = (closeChain + 1) * 50;
+                addBonus(score, `${closeNames[closeChain]}! +${score}`, 3 /* ScoreMessagePriority.StuntBonus */);
+            }
+        }
+    });
+};const particleCount = 128;
+const particleDataLength = particleCount * 4;
+const splashes = forMap(32, () => ({
+    orgn: v3(),
+    pnts: f32(particleDataLength),
+    age: 2,
+}));
+const spawnSplash = (point) => {
+    for (const splash of splashes) {
+        if (splash.age >= 1.5) {
+            v3copy(splash.orgn, point);
+            splash.age = 0;
+            const p = splash.pnts;
+            for (let i = 0; i < particleCount * 4;) {
+                const ang = randomBetween(0, PI2);
+                const dist = 5 + 15 * pow(random(), 2);
+                p[i++] = sin(ang) * dist;
+                p[i++] = (cos(ang) + 0.5) * dist;
+                p[i++] = randomBetween(-9, 4);
+                p[i++] = randomBetween(0.2, 1);
+            }
+            return;
+        }
+    }
+};
+const updateSplashes = () => {
+    splashes.map((s) => {
+        if (s.age < 1.5) {
+            s.orgn.z += scroll;
+            s.age += clock.dlta;
+        }
+    });
+};const butterflyBeamRadius = 0.5;
+const eagleBeamHeightOffset = 1;
+const unicornX = 20;
+const unicornZ = -30;
+// health, score, radius
+// prettier-ignore
+const enemyStats = [
+    1, 10, 2, // butter
+    3, 50, 2, // toad
+    20, 200, 12, // whali
+    50, 500, 8, // eagli
+    100, 1000, 2, // uni
+    1, 5, 1.5, // bubble
+];
+const enemyNames = [
+    "buttercorn",
+    "toadicorn",
+    "whalicorn",
+    "eaglicorn",
+    "unicorn",
+    "bubble",
+];
+const enemies$1 = forMap(24, () => ({
+    stat: 0 /* EnemyState.inactive */,
+    pos: v3(),
+    mov: v3(),
+    rot: v3(),
+}));
+const whaleSpouts = forMap(3, () => ({
+    pos: v3(0),
+    age: 0,
+}));
+const spout = (whale) => {
+    whale.dlay = 2;
+    let spout = whaleSpouts.find((t) => !t.age);
+    if (spout) {
+        playSound(9 /* Sound.Boom */);
+        spout.age = 1;
+        v3copy(spout.pos, whale.pos);
+        spout.pos.y = 0;
+        spout.hght = 0;
+    }
+};
+const spawnEnemy = (kind, x, y = 0, z = -500) => {
+    const enemy = enemies$1.find((e) => e.stat === 0 /* EnemyState.inactive */);
+    if (enemy) {
+        enemy.knd = kind;
+        enemy.stat = 1 /* EnemyState.spawning */;
+        enemy.health = enemyStats[kind * 3];
+        enemy.timer = 0;
+        enemy.unitTimer = 0;
+        enemy.cycle = kind == 4 /* EnemyKind.unicorn */ ? 1 : 0;
+        enemy.dlay = 0;
+        enemy.lcked = 0;
+        enemy.lckable = true;
+        enemy.rad = enemyStats[kind * 3 + 2];
+        v3set(enemy.pos, x, y, z);
+        const ang = randomBetween(0, PI2);
+        v3set(enemy.mov, sin(ang), cos(ang), 0);
+        v3set(enemy.rot, 0);
+    }
+};
+const clearEnemies = () => {
+    enemies$1.map((e) => ((e.stat = 0 /* EnemyState.inactive */), (e.lckable = false)));
+    whaleSpouts.map((w) => (w.age = 0));
+};
+const timerState = (enemy, duration, from, to, then) => {
+    if (enemy.stat == from) {
+        if (enemy.timer >= duration) {
+            enemy.timer = 0;
+            enemy.stat = to;
+            if (to == 5 /* EnemyState.firing */ && enemy.knd > 2 /* EnemyKind.whalicorn */)
+                playSound(11 /* Sound.Bwoom */);
+            then?.(enemy);
+        }
+        enemy.unitTimer = enemy.timer / duration;
+    }
+};
+const enemyUpdate = [
+    (butter) => {
+        // butter
+        const bx = flightBounds.x - 2;
+        const by = flightBounds.y - 2;
+        timerState(butter, 2, 2 /* EnemyState.ranging */, 5 /* EnemyState.firing */);
+        timerState(butter, 1, 5 /* EnemyState.firing */, 2 /* EnemyState.ranging */);
+        v3addScaled(butter.pos, butter.pos, butter.mov, clock.dlta * 2);
+        if (abs(butter.pos.x) > bx) {
+            butter.pos.x = clamp(butter.pos.x, -bx, bx);
+            butter.mov.x = -butter.mov.x;
+        }
+        if (butter.pos.y < 2 || butter.pos.y > by) {
+            butter.pos.y = clamp(butter.pos.y, 2, by);
+            butter.mov.y = -butter.mov.y;
+        }
+        butter.rot.x = sin(clock.tim * 1.7) * 0.2;
+        butter.rot.y = PI;
+        if (butter.stat == 5 /* EnemyState.firing */) {
+            const x = butter.pos.x - flightPosition.x - viewer.x, y = butter.pos.y - flightPosition.y - viewer.y;
+            if (x * x + y * y < (butterflyBeamRadius + 0.5) ** 2)
+                hitPlayer();
+        }
+    },
+    (toad) => {
+        // toad
+        // opt out of the spawn behavior, we're going to just crawl along anyway
+        if (toad.stat == 1 /* EnemyState.spawning */)
+            toad.stat = 2 /* EnemyState.ranging */;
+        toad.pos.z += scroll;
+        if (toad.pos.z > 10) {
+            toad.stat = 0 /* EnemyState.inactive */;
+        }
+        if (toad.pos.z > -200) {
+            toad.dlay -= clock.dlta;
+            if (toad.dlay < 0) {
+                spawnEnemy(5 /* EnemyKind.bubble */, toad.pos.x, toad.pos.y, toad.pos.z);
+                toad.dlay = 3;
+            }
+        }
+    },
+    (whale) => {
+        // whale
+        timerState(whale, 6, 2 /* EnemyState.ranging */, 6 /* EnemyState.exposed */, spout);
+        timerState(whale, 2, 6 /* EnemyState.exposed */, 2 /* EnemyState.ranging */, spout);
+        const t = whale.unitTimer;
+        let anim = pow(t, 2);
+        if (whale.stat == 2 /* EnemyState.ranging */) {
+            anim *= PI2 * 3;
+        }
+        if (whale.stat == 6 /* EnemyState.exposed */) {
+            anim *= PI2;
+        }
+        animateWhale(anim);
+        whale.lckable = whale.stat == 6 /* EnemyState.exposed */;
+        let swim = whale.cycle;
+        whale.pos.x = sin(swim) * 20;
+        whale.rot.y = -cos(swim + 0.4) * 0.7;
+        if (whale.stat == 1 /* EnemyState.spawning */) {
+            whale.pos.y = -5;
+            whale.cycle += clock.dlta;
+        }
+        else {
+            whale.pos.z = -50 + sin(swim) * 15;
+        }
+        let rot = 0;
+        if (whale.stat == 2 /* EnemyState.ranging */) {
+            whale.pos.y = -5;
+            whale.cycle += clock.dlta;
+            whale.dlay -= clock.dlta;
+            if (whale.dlay < 0) {
+                spout(whale);
+            }
+        }
+        if (whale.stat == 6 /* EnemyState.exposed */) {
+            let bounce = sin(t * PI);
+            whale.pos.y = -5 + bounce * 20;
+            rot = cos(t * PI);
+            whale.cycle += clock.dlta * 1.5;
+            whale.dlay = 0.5;
+        }
+        whale.rot.x = damp(whale.rot.x, rot, 3);
+    },
+    (eagle) => {
+        // eagli
+        // eagle cycle is effectively the angle around the player, as a phase
+        // eagle patrols back and forth along an arc, pauses to charge, then fires
+        timerState(eagle, 3, 2 /* EnemyState.ranging */, 3 /* EnemyState.charging */);
+        timerState(eagle, 2, 3 /* EnemyState.charging */, 5 /* EnemyState.firing */);
+        timerState(eagle, 3, 5 /* EnemyState.firing */, 2 /* EnemyState.ranging */);
+        let tilt = 0;
+        if (eagle.stat == 2 /* EnemyState.ranging */) {
+            eagle.pos.y = damp(eagle.pos.y, max(3, flightPosition.y - eagleBeamHeightOffset), 0.5);
+            eagle.cycle += clock.dlta;
+            eagle.dlay += clock.dlta * 7;
+        }
+        if (eagle.stat == 3 /* EnemyState.charging */) {
+            tilt = -1;
+            eagle.dlay += clock.dlta * 12;
+        }
+        if (eagle.stat == 5 /* EnemyState.firing */) {
+            tilt = -0.3;
+            eagle.dlay += clock.dlta;
+            if (abs(flightPosition.y - eagle.pos.y - eagleBeamHeightOffset) < 1 &&
+                eagle.timer > 0.2) {
+                hitPlayer();
+            }
+        }
+        if (eagle.stat != 1 /* EnemyState.spawning */) {
+            let angle = sin(eagle.cycle);
+            eagle.pos.x = damp(eagle.pos.x, flightPosition.x / 2 + sin(angle) * 30, 5);
+            eagle.pos.z = damp(eagle.pos.z, abs(cos(angle)) * -40, 5);
+            v3sub(eagle.mov, flightPosition, eagle.pos);
+            v3set(eagle.mov, tilt, atan2(eagle.mov.x, eagle.mov.z), 0);
+            v3damp(eagle.rot, eagle.mov, 3);
+        }
+        else {
+            eagle.dlay += clock.dlta * 4;
+            eagle.pos.y = flightBounds.y / 2;
+            eagle.pos.x = 0;
+        }
+        animateHawk(eagle.dlay);
+    },
+    (uni) => {
+        // opt out of the spawn behavior, just start them in cycle
+        if (uni.stat == 1 /* EnemyState.spawning */)
+            uni.stat = 2 /* EnemyState.ranging */;
+        timerState(uni, 8, 2 /* EnemyState.ranging */, 3 /* EnemyState.charging */, (enemy) => (enemy.rot.y = 0));
+        timerState(uni, 1, 3 /* EnemyState.charging */, 4 /* EnemyState.holding */);
+        timerState(uni, 0.2, 4 /* EnemyState.holding */, 5 /* EnemyState.firing */);
+        timerState(uni, 3, 5 /* EnemyState.firing */, 7 /* EnemyState.recovering */);
+        timerState(uni, 3, 7 /* EnemyState.recovering */, 2 /* EnemyState.ranging */, (enemy) => (enemy.cycle = -enemy.cycle));
+        const t = uni.unitTimer;
+        // uni
+        if (uni.stat == 2 /* EnemyState.ranging */) {
+            let arc = sin(t * PI);
+            let phase = t * PI * 7;
+            v3set(uni.pos, uni.cycle *
+                (unicornX - pow(t, 0.5) * unicornX * 2 + arc * unicornX * 2), 5 + abs(sin(phase)) / 2 + arc * 20, lerp(10, unicornZ, t) - arc * 40);
+            v3set(uni.rot, 0, PI + uni.cycle * max(0, (t - 0.5) * PI2), 0);
+            animateUnicorn(phase * 2);
+        }
+        if (uni.stat == 3 /* EnemyState.charging */) {
+            v3set(uni.pos, unicornX * -uni.cycle, 5, unicornZ);
+            v3sub(uni.mov, flightPosition, uni.pos);
+            v3set(uni.mov, 0, atan2(uni.mov.x, uni.mov.z), 0);
+            v3damp(uni.rot, uni.mov, 3);
+            animateUnicorn(t * 3);
+        }
+        if (uni.stat == 5 /* EnemyState.firing */) {
+            const s = sin(uni.rot.y), c = cos(uni.rot.y);
+            v3set(uni.pos, 0, -9, 9);
+            if (abs((flightPosition.x + viewer.x + unicornX * uni.cycle) * c -
+                (viewer.z - unicornZ) * s) < 1)
+                hitPlayer();
+        }
+    },
+    (bubble) => {
+        // bubble
+        const delta = clock.dlta;
+        if (bubble.stat == 1 /* EnemyState.spawning */)
+            bubble.stat = 2 /* EnemyState.ranging */;
+        bubble.pos.z += scroll;
+        bubble.pos.y += max(0, 1 - bubble.timer) * delta * 20;
+        bubble.rot.x += delta * 3;
+        bubble.rot.y += delta * 7;
+        bubble.rot.z += delta * 5;
+        bubble.rad = 1 + sin(delta * 4) * 0.2;
+        if (bubble.pos.z > 0) {
+            bubble.stat = 0 /* EnemyState.inactive */;
+        }
+        else {
+            v3sub(bubble.mov, flightPosition, bubble.pos);
+            let distance = v3Normalize(bubble.mov);
+            if (distance < 2) {
+                hitPlayer();
+                bubble.stat = 0 /* EnemyState.inactive */;
+                spawnSplash(bubble.pos);
+            }
+            v3addScaled(bubble.pos, bubble.pos, bubble.mov, delta * 20);
+        }
+    },
+];
+const updateEnemies = () => {
+    enemies$1.map((enemy) => {
+        if (enemy.health && enemy.stat !== 0 /* EnemyState.inactive */) {
+            if (enemy.stat == 1 /* EnemyState.spawning */) {
+                enemy.pos.z += scroll * 1.5;
+                if (enemy.pos.z > -40) {
+                    enemy.pos.z = -40;
+                    enemy.stat = 2 /* EnemyState.ranging */;
+                    enemy.timer = 0;
+                }
+            }
+            enemy.timer += clock.dlta;
+            enemy.lckable = enemy.pos.z > -300;
+            enemyUpdate[enemy.knd](enemy);
+        }
+    });
+    whaleSpouts.map((s) => {
+        s.age = max(0, s.age - clock.dlta * 0.5);
+        if (s.age) {
+            let w = sin(pow(s.age, 2) * PI);
+            s.rad = 7 - w * 5;
+            s.hght = damp(s.hght, 30, 6);
+            s.pos.z += scroll;
+            const x = s.pos.x - flightPosition.x - viewer.x, z = s.pos.z - viewer.z;
+            if (x * x + z * z < s.rad * s.rad) {
+                s.age = 0;
+                hitPlayer();
+            }
+        }
+    });
+};
+const enemyPoint = (enemy, out) => flightWorldPoint(out, enemy.pos.x, enemy.pos.y, enemy.pos.z);
+const damageEnemy = (enemy) => {
+    if (enemy.health && (--enemy.lcked, !--enemy.health)) {
+        const score = enemyStats[enemy.knd * 3 + 1] * scoreMultiplier;
+        enemy.stat = 0 /* EnemyState.inactive */;
+        enemy.lckable = false;
+        addPlayerScore(score, `~${enemyNames[enemy.knd]}~ +${score}`, 1 /* ScoreMessagePriority.EnemyHit */);
+    }
+};
+function areAnyEnemiesAlive() {
+    return enemies$1.find((e) => e.stat != 0 /* EnemyState.inactive */) !== undefined;
+}const compound = (expanded, quantum, data, mirroredRanges) => {
+    expanded.push(quantum);
+    let from = 0;
+    for (let range = 0; range < mirroredRanges.length; range += 2) {
+        const end = mirroredRanges[range + 1], start = mirroredRanges[range], copy = data.slice(start, end);
+        for (let i = 0; i < copy.length;) {
+            if (copy[i++] == 6 /* MeshKind.Color */)
+                i += 3;
+            else {
+                copy[i] = -copy[i];
+                copy[i + 4] = -copy[i + 4];
+                copy[i + 5] = -copy[i + 5];
+                i += 12;
+            }
+        }
+        expanded.push(...data.slice(from, end), ...copy);
+        from = end;
+    }
+    expanded.push(...data.slice(from));
+};/** Blender root: butterfly; quantum: 0.00716162; max component error: 0.00357572 */
+const butterfly = [];
+/** Blender root: hawk; quantum: 0.00675758; max component error: 0.00336358 */
+const hawk = [];
+/** Blender root: toad; quantum: 0.01059596; max component error: 0.00517943 */
+const toad = [];
+/** Blender root: unicorn; quantum: 0.00561102; max component error: 0.00277121 */
+const unicorn = [];
+/** Blender root: whale; quantum: 0.00559295; max component error: 0.00276912 */
+const whale = [];
+compound(butterfly, 0.0072, [
+    6, 5, 6, 28, 3, 0, 0, 0, -71, 0, 0, 69, 18, 6, 6, 99, 0, 35, 0, 28, 0, 0, 0,
+    0, 99, 10, 12, 4, 99, 0, 6, 7, 5, 29, 67, 0, 4, 6, 33, 0, 0, 93, 99, 6, 0,
+    99, 0, 6, 7, 6, 31, 35, 7, 7, 0, 11, -11, -50, 84, 56, 5, 80, 53, -88, 6, 7,
+    3, 23, 67, 0, 0, 1, -1, 0, 0, 99, 67, 3, 28, 64, -48, 6, 7, 6, 31, 35, 7,
+    -1, -2, 5, -14, -93, 32, 27, 5, 59, 53, -87, 6, 5, 6, 28, 67, 0, 0, 1, -1,
+    0, 0, 99, 44, 5, 22, 90, -54, 6, 7, 6, 31, 67, 20, 78, 0, 0, 0, -7, 99, 15,
+    4, 15, 53, -80, 6, 5, 6, 28, 35, 0, -4, -1, -99, 0, 0, 8, 35, 6, 2, 99, 0,
+], [47, 81, 81, 132]);
+compound(hawk, 0.0068, [
+    6, 5, 6, 2, 3, 0, 0, 0, 0, -73, -67, 0, 20, 32, 15, 69, -35, 35, -1, -37,
+    -2, -99, 0, 0, 6, 28, 37, 8, 96, -29, 6, 6, 6, 3, 67, 10, 38, -2, 0, 3, -18,
+    97, 50, 10, 29, 62, -65, 6, 5, 6, 2, 67, -1, 35, -1, 0, 0, -2, 99, 60, 10,
+    32, 62, -65, 35, 0, 34, 0, 1, 0, 0, 99, 20, 15, 6, 96, -24, 67, 0, 33, -3,
+    -14, 2, 1, 98, 7, 16, 6, 57, -41, 6, 7, 5, 5, 99, 0, 14, 0, -13, 1, 0, 98,
+    4, 7, 5, 50, -50, 131, 0, 10, -4, -48, 0, -1, 87, 5, 6, 1, 38, -49, 99, 0,
+    15, -5, -25, 1, 0, 96, 1, 6, 2, 50, -52, 99, 0, -1, 7, 38, -1, 1, 91, 57, 6,
+    1, 85, 0, 6, 2, 1, 25, 99, 10, -4, 0, -3, -7, 4, 99, 2, 5, 2, 48, -48, 6, 5,
+    6, 2, 99, 11, -5, 3, -11, -17, 11, 96, 9, 7, 1, 82, -48, 6, 5, 6, 2, 35, 30,
+    9, 0, 4, 6, -60, 78, 9, 22, 15, 52, -62, 67, 24, 1, 2, 0, -5, -66, 74, 26,
+    12, 6, 52, -64, 6, 6, 6, 3, 67, -6, 23, 1, 4, -9, 22, 96, 23, 18, 11, 52,
+    -62, 6, 5, 6, 2, 99, 17, -14, -2, -5, -1, -75, 64, 32, 15, 5, 52, -64, 99,
+    15, 10, -2, -2, -1, -50, 85, 59, 15, 5, 52, -64, 99, 17, 2, -1, 0, -3, -70,
+    70, 36, 15, 5, 52, -64, 99, 6, 27, -1, 1, -2, -44, 89, 80, 15, 3, 52, -64,
+    99, 1, 33, 0, 0, 0, -31, 94, 89, 15, 3, 52, -64, 6, 6, 6, 3, 99, -6, 36, 1,
+    2, 0, -16, 98, 99, 12, 4, 52, -62,
+], [30, 47, 146, 163, 163, 180, 180, 313]);
+compound(toad, 0.0106, [
+    6, 5, 5, 13, 3, 0, 0, 0, 0, -94, -31, 0, 21, 17, 38, 67, -44, 35, 0, 59, 1,
+    -31, 0, 0, 94, 2, 24, 34, 58, -71, 67, 0, 4, 8, -9, 0, 0, 99, 19, 26, 8, 99,
+    -3, 6, 7, 4, 13, 99, 0, -2, 15, 36, 0, 0, 92, 47, 7, 1, 99, -3, 67, 1, 0,
+    -3, -6, 0, 1, 99, 2, 19, 32, 58, -71, 6, 5, 5, 13, 67, 7, -3, 12, 13, 7,
+    -21, 96, 12, 6, 18, 78, 0, 6, 2, 1, 25, 99, 0, 29, 0, 0, 0, 0, 99, 1, 12, 7,
+    99, 0, 6, 7, 4, 13, 35, 0, -16, -11, 88, 0, 0, 45, 1, 99, 83, 91, -94, 6, 5,
+    5, 13, 35, 25, 48, 1, -86, -13, -11, 46, 26, 7, 5, 99, 0, 67, 0, 27, 0, 11,
+    1, 29, 94, 39, 7, 3, 99, 0, 99, 0, 40, 1, 41, -30, 29, 80, 12, 3, 5, 99, 0,
+    99, 0, 40, 1, 51, -6, -14, 84, 15, 3, 5, 99, 0, 99, 0, 40, 1, 49, 15, -46,
+    71, 13, 3, 5, 99, 0, 6, 5, 5, 13, 35, 25, 1, 6, -16, -36, -33, 84, 42, 26,
+    9, 99, 0, 67, 0, 43, -3, -93, 0, 0, 35, 42, 14, 4, 99, 0, 99, -1, 41, 1, 68,
+    -31, 29, 58, 10, 3, 5, 99, 0, 99, -1, 41, 1, 75, 4, -1, 64, 10, 3, 5, 99, 0,
+    99, -1, 41, 1, 61, 44, -35, 54, 10, 3, 5, 99, 0, 6, 7, 4, 13, 35, 0, 2, -9,
+    0, 0, 0, 99, 26, 9, 27, 67, -44,
+], [73, 107, 124, 193, 193, 262]);
+compound(unicorn, 0.0056, [
+    6, 8, 0, 16, 3, 0, 0, 0, 0, -64, 76, 0, 23, 50, 45, 71, 0, 35, 0, 54, -2,
+    -15, 0, 0, 98, 23, 42, 39, 82, 0, 67, 0, 43, -2, -9, 0, 0, 99, 36, 39, 32,
+    96, 0, 6, 8, 0, 16, 99, 22, 44, 4, 73, 0, 0, 67, 61, 38, 23, 96, 0, 131, 0,
+    70, 1, -36, 0, 0, 92, 48, 17, 11, 99, 0, 163, 0, 48, 1, 57, 0, 0, 81, 57,
+    11, 5, 99, 0, 195, 0, 61, 0, -8, 0, 0, 99, 11, 6, 5, 99, 0, 227, 0, 13, -1,
+    -12, 0, 0, 98, 7, 5, 9, 20, 0, 99, 0, 72, -11, 9, 0, 0, 99, 53, 9, 11, 96,
+    0, 131, 0, 56, 0, 3, 0, 0, 99, 53, 11, 15, 96, 0, 163, 0, 54, 0, 4, 0, 0,
+    99, 41, 15, 18, 96, 0, 195, 0, 52, 1, 18, 0, 0, 97, 57, 18, 5, 99, 0, 35, 0,
+    -30, -22, -96, 0, 0, 26, 94, 36, 21, 67, 0, 67, 0, 99, -7, -50, 0, 0, 85,
+    14, 30, 22, 91, 0, 6, 9, 0, 16, 99, 0, 8, 29, 60, 0, 0, 79, 70, 7, 1, 99, 0,
+    6, 2, 1, 25, 99, 21, 12, 11, -13, 56, -5, 80, 5, 5, 3, 99, 0, 6, 8, 0, 16,
+    99, 0, 24, -1, -6, 0, 0, 99, 37, 21, 12, 49, 0, 6, 8, 0, 16, 35, 31, -16, 1,
+    72, 0, 0, 68, 37, 35, 19, 81, 0, 67, 0, 43, 0, 10, 0, 0, 98, 58, 18, 9, 96,
+    0, 99, 0, 59, 0, -36, 0, 0, 92, 46, 9, 5, 96, 0, 131, 0, 47, 0, -4, 0, 0,
+    99, 18, 6, 4, 96, 0, 163, 0, 19, -1, -5, 0, 0, 99, 4, 6, 9, 24, 0,
+], [43, 112, 207, 224, 241, 310]);
+compound(whale, 0.0056, [
+    6, 4, 5, 24, 3, 0, 0, 0, -69, 0, 0, 71, 45, 41, 35, 99, -14, 6, 6, 3, 24,
+    35, 0, 13, -18, 3, 0, 0, 99, 48, 34, 20, 99, -14, 6, 4, 5, 24, 35, 0, 99,
+    -1, -5, 0, 0, 99, 18, 40, 24, 99, -28, 6, 6, 3, 24, 67, 0, 22, 18, 24, 0, 0,
+    96, 82, 8, 0, 99, 0, 67, 0, -10, -12, 0, 0, 0, 99, 34, 25, 14, 99, -28, 6,
+    4, 5, 24, 35, 38, 32, -6, -81, -54, 15, 8, 36, 28, 15, 73, -55, 67, -3, 48,
+    0, 0, 0, 14, 98, 37, 20, 5, 73, -58, 35, 0, -44, 2, 99, 0, 0, 2, 33, 42, 19,
+    99, -19, 6, 6, 3, 24, 67, 0, -11, 21, -7, 0, 0, 99, 46, 28, 6, 99, -19, 6,
+    4, 5, 24, 67, 0, 48, 0, 0, 0, 0, 99, 36, 24, 10, 99, -19, 99, 0, 45, 0, 0,
+    0, 0, 99, 23, 14, 5, 99, -26, 6, 4, 5, 24, 131, 5, 26, 0, 0, 1, -36, 92, 24,
+    8, 38, 73, -81,
+], [81, 111, 171, 188]);const labelCanvas = document.createElement("canvas");
+labelCanvas.width = 2048;
+labelCanvas.height = 2048;
+const context = labelCanvas.getContext("2d");
+context.font = "bold 88px monospace";
+context.textAlign = "center";
+context.textBaseline = "middle";
+forMap(256, (i) => {
+    let c = String.fromCharCode(i);
+    let y = floor(i / 16);
+    let x = i - y * 16;
+    x = x * 128 + 64;
+    y = y * 128 + 64;
+    context.fillStyle = "#333";
+    context.fillText(c, x + 2, y + 2);
+    context.fillStyle = "#fff";
+    context.fillText(c, x - 4, y - 4);
+});
+gl.bindTexture(3553 /* GL.TEXTURE_2D */, gl.createTexture());
+gl.texParameteri(3553 /* GL.TEXTURE_2D */, 10240 /* GL.TEXTURE_MAG_FILTER */, 9728 /* GL.NEAREST */);
+gl.texParameteri(3553 /* GL.TEXTURE_2D */, 10241 /* GL.TEXTURE_MIN_FILTER */, 9728 /* GL.NEAREST */);
+gl.texImage2D(3553 /* GL.TEXTURE_2D */, 0, 33321 /* GL.R8 */, 6403 /* GL.RED */, 5121 /* GL.UNSIGNED_BYTE */, labelCanvas);const laserSamples = 32;
+const weaponLocks = forMap(5, () => ({
+    age: 0,
+}));
+const targetPoint = v3();
+const laserPoint = v3();
+let fistClosed = false, lockDelay = 0;
+let sighting = false;
+let desktopHeld = false;
+let desktopMode = false;
+let controllerHeld = false;
+const desktopRay = v3(0, 0, -1);
+const xrEyes = [v3(), v3()];
+const lockNames = ["", "double", "triple", "quad", "penta"];
+const lockTitles = ["lockster", "lock king", "lock wiz", "lock god"];
+let lockChain = 0;
+let xrEyeCount = 0;
+const lasers = forMap(12, () => ({
+    tim: 2,
+    pnts: f32(laserSamples * 4),
+    strt: v3(),
+    trgtPoint: v3(),
+    offs: v3(),
+}));
+const setDesktopWeapon = (held, x, y) => {
+    desktopMode = true;
+    desktopHeld = held;
+    v3set(desktopRay, x, y, -1);
+    v3Normalize(desktopRay);
+};
+const clearDesktopWeapon = () => {
+    desktopMode = desktopHeld = false;
+};
+const cancelDesktopWeapon = () => {
+    desktopHeld = false;
+    fistClosed = sighting = false;
+    lockDelay = 0;
+    for (const lock of weaponLocks) {
+        if (lock.enemy)
+            lock.enemy.lcked = Math.max(0, lock.enemy.lcked - 1);
+        lock.enemy = undefined;
+    }
+};
+const resetWeapon = () => {
+    playSound(7 /* Sound.Stop */);
+    weaponLocks.map((lock) => (lock.enemy = undefined));
+    lasers.map((laser) => {
+        laser.tim = 2;
+        laser.trgt = undefined;
+    });
+    fistClosed = sighting = desktopHeld = controllerHeld = desktopMode = false;
+    lockDelay = lockChain = 0;
+};
+const setXrAimEyes = (left, right) => {
+    v3copy(xrEyes[0], left);
+    xrEyeCount = 1;
+    if (right) {
+        v3copy(xrEyes[1], right);
+        xrEyeCount = 2;
+    }
+};
+const clearXrAimEyes = () => (xrEyeCount = 0);
+const setControllerWeapon = (held) => (controllerHeld = held);
+const rightHand = () => handSides.indexOf(1) * 18;
+const isFistClosed = (start) => {
+    let distance = 0;
+    const palm = start + 15;
+    v3FromArray(laserPoint, hands, palm);
+    for (let finger = 0; finger < 5; finger++) {
+        const tip = start + finger * 3;
+        v3FromArray(tempVec, hands, tip);
+        v3sub(tempVec, tempVec, laserPoint);
+        distance += v3Normalize(tempVec);
+    }
+    return distance < 0.55;
+};
+const tempVec = v3();
+const rayHit = (ray, origin, rad, growth = 0) => {
+    v3sub(tempVec, targetPoint, origin);
+    const along = v3dot(ray, tempVec);
+    rad += along * growth;
+    return along > 0.1 && v3lengthSquared(tempVec) - along * along < rad * rad
+        ? along
+        : Infinity;
+};
+const findTarget = (ray, origin = viewer) => {
+    let sighted, nearest = Infinity;
+    enemies$1.map((enemy) => {
+        if (enemy.lckable && enemy.lcked < enemy.health) {
+            enemyPoint(enemy, targetPoint);
+            const along = rayHit(ray, origin, enemy.rad, 0.02);
+            if (along < nearest) {
+                sighted = enemy;
+                nearest = along;
+            }
+        }
+    });
+    return sighted;
+};
+const appendPoint = (laser) => {
+    if (laser.trgt) {
+        v3copy(laser.trgtPoint, laser.trgt.pos);
+    }
+    let t = clamp(laser.tim, 0, 1);
+    const travel = scroll * t * (2 - t);
+    laser.strt.z += travel;
+    for (let point = 0; point < laser.pointsLength; point++)
+        laser.pnts[point * 4 + 2] += travel;
+    v3copy(laserPoint, laser.strt);
+    v3lerp(laserPoint, laser.trgtPoint, t);
+    const arc = sin(t * PI);
+    v3addScaled(laserPoint, laserPoint, laser.offs, arc);
+    const points = laser.pnts;
+    if (laser.pointsLength === laserSamples)
+        points.copyWithin(0, 4);
+    else
+        laser.pointsLength++;
+    const end = (laser.pointsLength - 1) * 4;
+    points[end] = laserPoint.x;
+    points[end + 1] = laserPoint.y;
+    points[end + 2] = laserPoint.z;
+    points[end + 3] = arc;
+};
+const fireLocks = (start) => {
+    if (start < 0)
+        v3set(tempVec, 0, 2, 0);
+    else
+        v3FromArray(tempVec, hands, start + 15);
+    inverseFlightPoint(targetPoint, tempVec);
+    let delay = 0, bonus = 0, last;
+    weaponLocks.map((lock, finger) => {
+        const laser = lasers.find((laser) => laser.tim > 1.5);
+        if (laser && lock.enemy) {
+            if (last)
+                last.bonus = 0;
+            laser.bonus = bonus++;
+            last = laser;
+            playSound(8 /* Sound.Pew */);
+            laser.trgt = lock.enemy;
+            v3copy(laser.strt, targetPoint);
+            laser.tim = 0;
+            v3sub(tempVec, lock.enemy.pos, laser.strt);
+            laser.duration = v3Normalize(tempVec) / 100 + delay;
+            delay += 0.1;
+            laser.pointsLength = 0;
+            let ang = randomBetween(0.7, 0.9) + (1.2 * finger) / 4;
+            laser.offs.x = cos(ang) * 30;
+            laser.offs.y = sin(ang) * 18;
+            appendPoint(laser);
+            appendPoint(laser);
+            lock.enemy = undefined;
+            if (bonus < 4)
+                lockChain = 0;
+        }
+    });
+};
+const fireDesktopWeapon = () => {
+    desktopHeld = false;
+    playSound(7 /* Sound.Stop */);
+    fireLocks(-1);
+    fistClosed = false;
+    lockDelay = 0;
+};
+const updateLasers = () => {
+    lasers.map((laser) => {
+        if (!laser.trgt?.health)
+            laser.trgt = undefined;
+        if (laser.tim <= 1.5) {
+            if (laser.tim < 1) {
+                laser.tim += clock.dlta / laser.duration;
+            }
+            else {
+                if (laser.trgt) {
+                    spawnSplash(laser.trgt.pos);
+                    playSound(9 /* Sound.Boom */);
+                    damageEnemy(laser.trgt);
+                    const bonus = laser.bonus * 10;
+                    if (bonus)
+                        addPlayerScore(bonus, `${lockNames[laser.bonus]} lock +${bonus}!`, 2 /* ScoreMessagePriority.LockBonus */);
+                    if (laser.bonus > 2) {
+                        const chain = min(3, lockChain++), score = (chain + 1) * 100;
+                        addBonus(score, `${lockTitles[chain]}! +${score}`, 2 /* ScoreMessagePriority.LockBonus */);
+                    }
+                    laser.trgt = undefined;
+                }
+                laser.tim += clock.dlta;
+            }
+            appendPoint(laser);
+        }
+    });
+};
+const tempRay = v3();
+const updateWeapon = () => {
+    updateLasers();
+    const start = rightHand();
+    if (gameOver || (start < 0 && !desktopMode)) {
+        if (fistClosed)
+            playSound(7 /* Sound.Stop */);
+        fistClosed = sighting = false;
+        lockDelay = 0;
+        return;
+    }
+    weaponLocks.map((lock) => {
+        if (lock.enemy) {
+            lock.age += clock.dlta * 10;
+            if (lock.enemy.pos.z >= 5 || lock.enemy.stat === 0 /* EnemyState.inactive */) {
+                lock.enemy.lcked = 0;
+                lock.enemy = undefined;
+            }
+        }
+    });
+    const palm = start + 15;
+    let target;
+    if (start >= 0 && !desktopMode) {
+        v3FromArray(laserPoint, hands, palm);
+        for (let eye = 0; eye < xrEyeCount && !target; eye++) {
+            v3sub(tempRay, laserPoint, xrEyes[eye]);
+            v3Normalize(tempRay);
+            target = findTarget(tempRay, xrEyes[eye]);
+        }
+    }
+    else {
+        v3copy(tempRay, desktopRay);
+        target = findTarget(tempRay);
+    }
+    sighting = !!target;
+    const closed = desktopMode
+        ? desktopHeld
+        : handBlobs[(start / 18) | 0]
+            ? controllerHeld
+            : isFistClosed(start);
+    if (closed && !fistClosed)
+        playSound(5 /* Sound.Aim */);
+    if (closed) {
+        if (lockDelay > 0) {
+            lockDelay -= clock.dlta;
+        }
+        else {
+            const next = weaponLocks.find((lock) => !lock.enemy);
+            if (target && next) {
+                next.enemy = target;
+                next.age = 0;
+                target.lcked++;
+                playSound(6 /* Sound.Lock */);
+                lockDelay = 0.2;
+            }
+        }
+    }
+    else if (fistClosed) {
+        playSound(7 /* Sound.Stop */);
+        fireLocks(start);
+        lockDelay = 0;
+    }
+    fistClosed = closed;
+};const EnvColorCount = 5;
+// prettier-ignore
+const plainColors = [
+    // swamp
+    [v3(5, 9, 19), v3(9, 4, 22), v3(5, 6, 13), v3(3, 6, 13), v3(5, 8, 9)],
+    // peach
+    [v3(6, 6, 24), v3(8, 5, 26), v3(5, 3, 1), v3(4, 3, 1), v3(7, 4, 17)],
+    // night?
+    [v3(2, 2, 22), v3(3, 1, 22), v3(7, 4, 11), v3(7, 4, 11), v3(4, 3, 11)],
+];
+const bossColors = [
+    // ocean - whale
+    [v3(7, 7, 21), v3(11, 5, 15), v3(6, 7, 16), v3(10, 5, 14), v3(8, 6, 19)],
+    // desert - hawk
+    [v3(7, 7, 19), v3(10, 3, 13), v3(6, 3, 7), v3(4, 3, 7), v3(4, 2, 5)],
+    // neon - unicorn
+    [v3(2, 6, 22), v3(7, 7, 5), v3(2, 9, 29), v3(5, 9, 30), v3(4, 8, 27)],
+];
+const skySet = [v3(), v3(), v3(), v3(), v3()];
+const laneCount = 5;
+let asteroidClear = ".+...";
+let asteroidEasy = ["I.+.I", ".i+i.", "i+.+i"];
+for (const c of "iIaA")
+    for (let i = 0; i < 3; i++)
+        asteroidEasy.push(("+.+." + c + ".+.+").slice(i, i + laneCount));
+let asteroidMedium = ["+ITI+", "+iti+", "iti.+", "ITI.+", "+.u.+", ".u.+."];
+let asteroidHard = [
+    "ITITI",
+    "+u+II",
+    "III..",
+    ".uIt+",
+    "ITIti",
+    "III+a",
+    "++a++",
+    "+I+I+",
+];
+let asteroids = [];
+let enemies = [];
+const bossCycle = 5;
+const enemyWaveGenerator = (level) => {
+    let result = [];
+    if (level % bossCycle == bossCycle - 1) {
+        // boss
+        let difficulty = floor(level / (bossCycle * 3));
+        for (let i = 0; i < min(8, difficulty * 2); ++i) {
+            result.push(0 /* EnemyKind.buttercorn */);
+        }
+        for (let i = 1; i < min(8, difficulty); ++i) {
+            result.push(1 /* EnemyKind.toadicorn */);
+        }
+        shuffle(result);
+        let boss = ((level / bossCycle) | 0) % 3;
+        result.unshift(2 /* EnemyKind.whalicorn */ + boss);
+        colorTarget = bossColors[boss];
+    }
+    else {
+        // regular
+        for (let i = 0; i < min(16, 1 + level); ++i) {
+            result.push(0 /* EnemyKind.buttercorn */);
+        }
+        for (let i = 1; i < min(16, level / 3); ++i) {
+            result.push(1 /* EnemyKind.toadicorn */);
+        }
+        colorTarget = plainColors[level % 3];
+        shuffle(result);
+    }
+    return result;
+};
+let level = -1;
+let rush = 0;
+let rushDuration = 3;
+let rowSpacing = 1;
+let distance = 0, lastStep = -1, colorTarget = plainColors[0], speed = 1, altitudeTime = 0, altitudeChain = 0, altitudeZone = 0, defeatTime = -1;
+const startButton = {
+    x: 0,
+    y: -0.3,
+    z: -0.8,
+    scl: 0,
+    lum: 6,
+    sat: 6,
+    hue: 0,
+    actv: 1,
+    labl: "START",
+    pulse: 1,
+    stat: 0,
+    squareness: 0.3,
+};
+const revealStartButton = () => (startButton.scl = 2);
+const pushAsteroids = (some) => (asteroids = asteroids.concat(some));
+const beginLevel = (next) => {
+    level = next;
+    if (level % bossCycle == 0)
+        healPlayer();
+    const bpm = min(160, 100 + next);
+    speed = bpm / 100;
+    rowSpacing = max(1.5, 3 - next * 0.05);
+    setScrollSpeed(speed);
+    setSong(2 /* Song.Combat */);
+    setTempo(bpm);
+    distance = altitudeTime = altitudeChain = altitudeZone = 0;
+    rush = rushDuration = max(1, 3 - level / 5);
+    giveInvulnerable(rush);
+    defeatTime = -1;
+    lastStep = -1;
+    startButton.actv = 0;
+    clearEnemies();
+    shuffle(asteroidMedium);
+    asteroids = [];
+    pushAsteroids(Array(max(2, floor(6 - level / 3))).fill(asteroidClear));
+    pushAsteroids(asteroidEasy.slice(0, max(2, 10 - level / 3)));
+    pushAsteroids(asteroidMedium.slice(0, clamp(level / 3 - 3, 0, 9)));
+    pushAsteroids(asteroidHard.slice(0, clamp(level / 3 - 9, 0, 9)));
+    shuffle(asteroids);
+    enemies = enemyWaveGenerator(next);
+};
+const startGame = () => {
+    resetPlayer();
+    resetWeapon();
+    clearAsteroids();
+    beginLevel(0);
+    document.dispatchEvent(new Event("panzercorn:start"));
+};
+const completeLevel = () => beginLevel(level + 1);
+const pressStart = (x, y, z) => {
+    if (startButton.actv && startButton.scl > 0) {
+        const bx = startButton.x - viewer.x;
+        const by = startButton.y + buttonAnchor - viewer.y;
+        const bz = startButton.z - viewer.z;
+        const length = x * x + y * y + z * z;
+        const t = (bx * x + by * y + bz * z) / length;
+        const r = 0.05 * startButton.scl;
+        if (t > 0 && bx * bx + by * by + bz * bz - t * t * length < r * r) {
+            startGame();
+            return true;
+        }
+    }
+    return false;
+};
+const updateStartButton = () => {
+    const b = startButton;
+    let state = 0;
+    if (b.actv) {
+        for (let i = 0; i < hands.length; i += 3) {
+            if (handBlobs[(i / 18) | 0] || i % 18 != 15) {
+                const x = hands[i] - b.x, y = hands[i + 1] - b.y - buttonAnchor, z = hands[i + 2] - b.z, r = 0.05 * b.scl + handRadius;
+                if (x * x + y * y + z * z < r * r)
+                    state = 1;
+            }
+        }
+        if (state && !b.stat)
+            startGame();
+        b.stat = state;
+    }
+};
+const updateLevel = () => {
+    for (let i = 0; i < EnvColorCount; i++)
+        v3damp(skySet[i], colorTarget[i], 1);
+    setUniformColorOKLCH(shaderFog, skySet[1].x, skySet[1].y, skySet[1].z);
+    animate();
+    if (gameOver) {
+        if (defeatTime < 0) {
+            defeatTime = 0;
+            setScrollSpeed(0);
+            setSong(3 /* Song.Defeat */);
+            document.dispatchEvent(new CustomEvent("panzercorn:finish", {
+                detail: { score: playerScore, wave: level + 1 },
+            }));
+        }
+        else if ((defeatTime += clock.dlta) > 3) {
+            startButton.labl = "RETRY";
+            startButton.actv = min(1, startButton.actv + clock.dlta * 5);
+        }
+        return;
+    }
+    rush = max(0, rush - clock.dlta);
+    setScrollSpeed(speed * (1 + 3 * sin((rush / rushDuration) * PI)));
+    updatePlayer();
+    updateWorld();
+    updateEnemies();
+    updateWeapon();
+    updateAsteroids();
+    updateSplashes();
+    checkAsteroidHits();
+    if (level >= 0) {
+        const zone = flightPosition.y < 2 ? -1 : flightPosition.y > flightBounds.y - 2 ? 1 : 0;
+        if (zone && !gameOver) {
+            if (zone !== altitudeZone)
+                altitudeTime = altitudeChain = 0;
+            if ((altitudeTime += clock.dlta) > 5) {
+                altitudeTime = 0;
+                altitudeChain = min(3, altitudeChain + 1);
+                const score = altitudeChain * 50;
+                addBonus(score, `${zone < 0 ? "pond skimmer" : "ridin high"}! +${score}`, 3 /* ScoreMessagePriority.StuntBonus */);
+            }
+        }
+        else
+            altitudeTime = altitudeChain = 0;
+        altitudeZone = zone;
+        distance += scroll;
+        const step = (distance / (worldSpeed * rowSpacing)) | 0;
+        if (step !== lastStep) {
+            lastStep = step;
+            const asters = asteroids[step % asteroids.length];
+            for (let lane = 0; lane < laneCount; lane++) {
+                const note = asters[step & 1 ? 4 - lane : lane];
+                const x = (lane - 2) * 12;
+                if (note > "@")
+                    spawnAsteroid(x, note, step);
+                else if (note == "+") {
+                    let kind = enemies.shift();
+                    if (kind != undefined) {
+                        spawnEnemy(kind, x);
+                    }
+                }
+            }
+            // detect level end when no more to spawn and no more alive
+            if (enemies.length == 0 && !areAnyEnemiesAlive()) {
+                completeLevel();
+            }
+        }
+    }
+};const animalMeshes = [butterfly, toad, whale, hawk, unicorn];
+const animalAnims = [butterflyAnim, toadAnim, whaleAnim, hawkAnim, unicornAnim];
+const tempColor = v3();
+const setWorldFlight = (enabled) => setFlightTransform(enabled, flightPosition.x, flightPosition.y, flightPitch, flightYaw, flightRoll);
+const depthMask = (e) => gl.depthMask(e);
+const drawView = (projectionMatrix, viewMatrix) => {
+    gl.uniformMatrix4fv(projection$1, false, projectionMatrix);
+    gl.uniform1f(worldScrollUniform, worldDistance);
+    gl.uniformMatrix4fv(view$1, false, viewMatrix);
+    // sky
+    setWorldFlight(true);
+    setKind(0 /* MeshKind.Sky */);
+    setColorVec(skySet[0]);
+    depthMask(false);
+    drawGrid(1.5, 1);
+    depthMask(true);
+    // terrain reflection
+    gl.enable(2884 /* GL.CULL_FACE */);
+    gl.frontFace(2304 /* GL.CW */);
+    setKind(1 /* MeshKind.Floor */);
+    setColorVec(skySet[2]);
+    setModelTS(0, 0, 0, 1, -1, 1);
+    drawGrid(100);
+    gl.disable(2884 /* GL.CULL_FACE */);
+    // asteroids, with built in reflections
+    setKind(7 /* MeshKind.Asteroid */);
+    setColorVec(skySet[4 /* EnvColor.Asteroid */]);
+    asteroids$1.map((asteroid) => {
+        if (asteroid.z < 99) {
+            shape(0, 0, 0, asteroid.seed);
+            setModelTS(asteroid.x, asteroid.y, asteroid.z, asteroid.rad, asteroid.heit, asteroid.rad);
+            drawGrid(24);
+        }
+    });
+    setKind(8 /* MeshKind.Splash */);
+    setPointScale();
+    setColorOKLCH(6, 0, 0);
+    splashes.map((s) => {
+        if (s.age < 1.5) {
+            setModelTRS(s.orgn.x, s.orgn.y, s.orgn.z);
+            let t = s.age / 1.5;
+            shape(1 - pow(1 - t, 2), (1 - t) * 2, 0.7 + max(0, 4 - t * 16), // brightness
+            pow(t, 2) * -11);
+            gl.uniform4fv(trailUniform, s.pnts);
+            drawPoints(particleCount);
+        }
+    });
+    setWorldFlight(false);
+    setKind(2 /* MeshKind.Carpet */);
+    setModelTS(0, 0, 0, 4, 1, 8);
+    setColorOKLCH(5, 5, 1);
+    drawGrid(100);
+    // Five paired capsulites form a tiny heart meter on the carpet ahead.
+    setKind(3 /* MeshKind.Capsulite */);
+    for (let heart = 0; heart < (level < 0 ? 0 : 5); heart++) {
+        const full = heart < health;
+        let x = (heart / 4 - 0.5) * 1.1;
+        let y = 0.3;
+        let z = -2;
+        const tilt = 1.1;
+        setColorOKLCH(full ? 4 : 1, full ? 7 : 1, 2);
+        shape(0.07, 0.01, 0.05, 1);
+        setModelTRS(x - 0.02, y, z, tilt, PI / 2, 0);
+        drawGrid(20);
+        setModelTRS(x + 0.02, y, z, PI - tilt, PI / 2, 0);
+        drawGrid(20);
+    }
+    // hands
+    for (let i = 0; i < hands.length; i += 3) {
+        if (!handBlobs[(i / 18) | 0] || i % 18 == 15 || handSides[(i / 18) | 0]) {
+            const palm = i % 18 == 15;
+            const rad = handRadius;
+            shape(rad, rad, 0, 1);
+            setModelTRS(hands[i], hands[i + 1], hands[i + 2]);
+            const finger = (i % 18) / 3;
+            const isRightFinger = handSides[(i / 18) | 0] && finger < 5;
+            if (palm && handSides[(i / 18) | 0])
+                setColorOKLCH(sighting ? 6 : 5, 8, sighting ? 2 : 15);
+            else if (isRightFinger)
+                setColorOKLCH(weaponLocks[finger].enemy ? 9 : 2, 0, 0);
+            else
+                setColorOKLCH(8, 9, 3);
+            drawGrid(12);
+        }
+    }
+    if (showFlightOrb) {
+        shape(0.07, 0.07, 0, 1);
+        setModelTRS(flightOrb.x, flightOrb.y, flightOrb.z);
+        setColorOKLCH(5, 7, 1);
+        drawGrid(20);
+    }
+    setWorldFlight(true);
+    setKind(4 /* MeshKind.Trail */);
+    setModelTS();
+    setColorOKLCH(7, 0, 0);
+    lasers.map((laser) => {
+        if (laser.tim <= 1.5) {
+            gl.uniform4fv(trailUniform, laser.pnts, 0, laser.pointsLength * 4);
+            drawGrid(laser.pointsLength - 1, 1);
+        }
+    });
+    // the tower
+    setKind(3 /* MeshKind.Capsulite */);
+    shape(15, 20, 100, 0.25);
+    setColorOKLCH(9, 0, 0);
+    setModelTRS(0, 0, -460, PI / 2, 0, 0);
+    drawGrid();
+    setModelTRS(0, 124, -460, PI / 2, 0, 0, 0.7);
+    drawGrid();
+    shape(10, 10, 1, 1);
+    setModelTRS(0, 224, -460);
+    drawGrid();
+    enemies$1.map((enemy, i) => {
+        if (enemy.stat != 0 /* EnemyState.inactive */) {
+            setModelTRS(enemy.pos.x, enemy.pos.y, enemy.pos.z, enemy.rot.x, enemy.rot.y, enemy.rot.z, enemy.rad);
+            if (enemy.knd < 5 /* EnemyKind.bubble */) {
+                renderCompound(animalMeshes[enemy.knd], animalAnims[enemy.knd], 20);
+            }
+            else if (enemy.knd === 5 /* EnemyKind.bubble */) {
+                setKind(3 /* MeshKind.Capsulite */);
+                shape(1, 1, 0.2, 1);
+                setColorOKLCH(9 + sin(clock.tim * 30) * 2, 8, 12);
+                drawGrid();
+            }
+            if (!gameOver && enemy.stat == 5 /* EnemyState.firing */) {
+                const t = enemy.unitTimer;
+                const it = 1 - enemy.unitTimer;
+                const pulse = sin(pow(t, 0.5) * 80);
+                if (enemy.knd == 0 /* EnemyKind.buttercorn */) {
+                    const r = butterflyBeamRadius * it;
+                    shape(r, r, 500, 1);
+                    setColorOKLCH(9 + pulse * 3 - t, 8, 29 + pulse * 3);
+                    setModelTRS(enemy.pos.x, enemy.pos.y, enemy.pos.z + 500);
+                    drawGrid(20);
+                }
+                if (enemy.knd == 3 /* EnemyKind.eaglicorn */) {
+                    let l = 20 * (1 + t * 30);
+                    shape(0.1, 30 * it, l, 1);
+                    setColorOKLCH(7 + pulse * 3, 8, 5);
+                    setModelTRS(enemy.pos.x + l * sin(enemy.rot.y), enemy.pos.y + eagleBeamHeightOffset, enemy.pos.z + l * cos(enemy.rot.y), 0, enemy.rot.y, 0, 1, 0.01, 1);
+                    drawGrid(20);
+                }
+                if (enemy.knd == 4 /* EnemyKind.unicorn */) {
+                    setKind(6 /* MeshKind.Color */);
+                    setColorOKLCH(8 + pulse, 8, 0);
+                    setModelTRS(unicornX * -enemy.cycle, -20, unicornZ, 0, enemy.rot.y, 0, 1, 40, 80);
+                    drawGrid(2, 1);
+                }
+            }
+        }
+    });
+    setKind(7 /* MeshKind.Asteroid */);
+    whaleSpouts.map((s) => {
+        if (s.age > 0) {
+            v3copy(tempColor, skySet[2 /* EnvColor.Terrain */]);
+            v3lerp(tempColor, v3(11, 0, 16), s.age);
+            setColorVec(tempColor);
+            setModelTS(s.pos.x, s.pos.y, s.pos.z, s.rad, s.hght, s.rad);
+            shape(0, 0, 0, s.pos.x + s.age * 80);
+            drawGrid(24);
+        }
+    });
+    // terrain above water, transparent floor
+    setKind(1 /* MeshKind.Floor */);
+    setModelTS();
+    setColorVec(skySet[2]);
+    drawGrid(100);
+    // terrain wireframe, for texture
+    setColorVec(skySet[3]);
+    drawGrid(100, 99, 3 /* GL.LINE_STRIP */);
+    setWorldFlight(false);
+    {
+        depthMask(false);
+        const b = startButton;
+        if (b.actv) {
+            const pulse = abs(sin(clock.tim * PI)) * b.pulse;
+            setKind(3 /* MeshKind.Capsulite */);
+            shape(0.05, 0.02, 0, b.squareness);
+            const scale = b.actv * b.scl * (1 + 0.1 * pulse);
+            setModelTS(b.x, buttonAnchor + b.y, b.z, scale, scale, 0.01);
+            lookAt();
+            setColorOKLCH(b.lum + pulse * 0.1, b.sat, b.hue);
+            drawGrid();
+            setKind(5 /* MeshKind.Label */);
+            setModelTS(b.x, buttonAnchor + b.y, b.z + 0.01, 0.025 * b.scl);
+            lookAt();
+            setColorOKLCH(b.lum + 2, b.sat - 3, b.hue);
+            label(b.labl);
+            setColorOKLCH(6, 9, 29);
+            setModelTS(0, 1.5 + sin(clock.tim) * 0.05, -2, 0.3);
+            label("PÄNZERCÖRN");
+            setModelTS(0, 1.3 + sin(clock.tim - 1) * 0.05, -2, 0.1);
+            label("(hold, aim, release)");
+        }
+        if (rush > 0.5) {
+            setKind(5 /* MeshKind.Label */);
+            setModelTS(0, 1.5 + sin(clock.tim) * 0.05, -2, 0.3);
+            setColorOKLCH(6, 9, 29);
+            label(`LEVEL ${level}`);
+        }
+    }
+    setKind(5 /* MeshKind.Label */);
+    if (playerScore > 0) {
+        depthMask(false);
+        setColorOKLCH(6, 8, 5);
+        setModelTS(0, 0.5, -2, 0.1);
+        label(`lv:${level} score:${(1e9 + playerScore + "").slice(1)} x${(1e2 + scoreMultiplier + "").slice(1)}`);
+        let scoreHeight = 0.54;
+        scoreMessages.map((m) => {
+            if (m.msg) {
+                setColorOKLCH(6 - m.timer * 2, 7, m.priority * 7);
+                scoreHeight += 0.03 + (1 - pow(1 - m.timer, 2)) * 0.05;
+                setModelTS(0, scoreHeight, -2, 0.1);
+                label(m.msg);
+            }
+        });
+    }
+    setWorldFlight(true);
+    setColorOKLCH(7 + 4 * sin(clock.tim * 28), 6, 2);
+    gl.disable(2929 /* GL.DEPTH_TEST */);
+    weaponLocks.map((l) => {
+        if (l.enemy) {
+            let p = l.enemy.pos;
+            let t = min(1, l.age);
+            setModelTS(p.x, p.y, p.z, 4 * (3 - 2 * t));
+            lookAt(((1 - t) * PI) / 2);
+            label("{ }");
+        }
+    });
+    if (hurt && !gameOver) {
+        setWorldFlight(false);
+        setKind(9 /* MeshKind.Hurt */);
+        shape(viewer.x, viewer.y, viewer.z, 0);
+        setColorOKLCH((pow(hurt, 2) + max(0, hurt - 0.8)) * 9, 0, 0);
+        drawGrid(1.5, 1);
+    }
+    gl.enable(2929 /* GL.DEPTH_TEST */);
+};let fingers = ["thumb"].concat(["index", "middle", "ring", "pinky"].map((s) => s + "-finger"));
+const tips = fingers.map((f) => f + "-tip");
+const palms = fingers.map((f) => f + "-metacarpal");
+let session;
+const isXRRunning = () => {
+    return !!session;
+};
+const enterXR = async (gl) => {
+    const xrSession = await navigator.xr.requestSession("immersive-vr", {
+        requiredFeatures: ["local-floor"],
+        optionalFeatures: ["hand-tracking"],
+    });
+    clearDesktopWeapon();
+    clearXrAimEyes();
+    session = xrSession;
+    await gl.makeXRCompatible();
+    const layer = new XRWebGLLayer(xrSession, gl);
+    xrSession.updateRenderState({
+        baseLayer: layer,
+        depthNear: 0.1,
+        depthFar: 700,
+    });
+    const space = await xrSession.requestReferenceSpace("local-floor");
+    xrSession.onend = () => {
+            session = undefined;
+            clearVrFlightControl();
+            clearXrAimEyes();
+        };
+    const drawXR = (time, frame) => {
+        updateClock(time);
+        v3set(touchInput, 0);
+        xrSession.requestAnimationFrame(drawXR);
+        const pose = frame.getViewerPose(space);
+        const viewPos = pose.transform.position;
+        v3copy(viewer, viewPos);
+        setButtonAnchor(viewPos.y, 0.01);
+        setXrAimEyes(pose.views[0].transform.position, pose.views[1]?.transform.position);
+        clearXRInputs();
+        setControllerWeapon(false);
+        clearControllerFlight();
+        for (const input of xrSession.inputSources) {
+            const side = input.handedness == "right" ? 1 : 0;
+            if (input.hand) {
+                hands.length;
+                handSides.push(side);
+                handBlobs.push(0);
+                const palm = [0, 0, 0];
+                for (let i = 0; i < 5; i++) {
+                    const tip = frame.getJointPose(input.hand.get(tips[i]), space)
+                        .transform.position;
+                    hands.push(tip.x, tip.y, tip.z);
+                    const p = frame.getJointPose(input.hand.get(palms[i]), space)
+                        .transform.position;
+                    palm[0] += p.x;
+                    palm[1] += p.y;
+                    palm[2] += p.z;
+                }
+                hands.push(palm[0] / 5, palm[1] / 5, palm[2] / 5);
+            }
+            else if (input.gamepad && (input.gripSpace || input.targetRaySpace)) {
+                const p = frame.getPose(input.gripSpace || input.targetRaySpace, space).transform.position;
+                handSides.push(side);
+                handBlobs.push(1);
+                for (let i = 0; i < 5; i++) {
+                    const d = i - 2;
+                    hands.push(p.x + d * 0.02, p.y + 0.04 - d * d * 0.007, p.z - 0.03 + d * d * 0.004);
+                }
+                hands.push(p.x, p.y, p.z);
+                if (side)
+                    setControllerWeapon(!!input.gamepad.buttons[0]?.pressed);
+                else {
+                    const axes = input.gamepad.axes;
+                    let x = 0, y = 0;
+                    for (let i = 0; i < axes.length; i += 2)
+                        if (abs(axes[i]) + abs(axes[i + 1]) > abs(x) + abs(y))
+                            ((x = axes[i]), (y = axes[i + 1]));
+                    setControllerFlight(x, -y);
+                }
+            }
+        }
+        updateVrFlightControl(viewPos);
+        updateStartButton();
+        updateLevel();
+        gl.bindFramebuffer(36160 /* GL.FRAMEBUFFER */, layer.framebuffer);
+        gl.depthMask(true);
+        gl.clear(16384 /* GL.COLOR_BUFFER_BIT */ | 256 /* GL.DEPTH_BUFFER_BIT */);
+        for (const view of pose.views) {
+            const viewport = layer.getViewport(view);
+            gl.viewport(viewport.x, viewport.y, viewport.width, viewport.height);
+            drawView(view.projectionMatrix, view.transform.inverse.matrix);
+        }
+    };
+    xrSession.requestAnimationFrame(drawXR);
+};let left = 0, right = 0, up = 0, down = 0, held = 0, wid = 9, hei = 9;
+const focal = 2;
+const desktopPlayerHeight = 1.2;
+// prettier-ignore
+const view = f32([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -desktopPlayerHeight, 0, 1]);
+// prettier-ignore
+const projection = f32([
+    focal, 0, 0, 0, 0, focal, 0, 0, 0, 0, -700.1 / 699.9, -1, 0, 0, -140 / 699.9, 0,
+]);
+const resize = () => {
+    wid = cvs.clientWidth;
+    hei = cvs.clientHeight;
+    const ratio = Math.min(devicePixelRatio || 1, 1.15);
+    cvs.width = Math.max(1, Math.round(wid * ratio));
+    cvs.height = Math.max(1, Math.round(hei * ratio));
+    const aspect = wid / Math.max(hei, 1);
+    projection[5] = focal * Math.min(1, aspect / 0.84);
+    projection[0] = projection[5] / Math.max(aspect, 0.01);
+    gl.viewport(0, 0, cvs.width, cvs.height);
+};
+const draw = (time) => {
+    if (!isXRRunning()) {
+        updateClock(time);
+        updateLevel();
+        gl.clear(16384 /* GL.COLOR_BUFFER_BIT */ | 256 /* GL.DEPTH_BUFFER_BIT */);
+        drawView(projection, view);
+        requestAnimationFrame(draw);
+    }
+};
+const startDesktopRenderer = () => {
+    clearVrFlightControl();
+    viewer.y = desktopPlayerHeight;
+    setButtonAnchor(viewer.y, desktopPlayerHeight - 1);
+    addEventListener("resize", resize, { passive: true });
+    new ResizeObserver(resize).observe(cvs);
+    resize();
+    onkeydown = onkeyup = (event) => {
+        const pressed = +(event.type == "keydown"), key = event.key;
+        if (key == "a")
+            left = pressed;
+        if (key == "d")
+            right = pressed;
+        if (key == "w")
+            up = pressed;
+        if (key == "s")
+            down = pressed;
+        setDesktopFlight(right - left, up - down);
+    };
+    const aim = (event, active) => {
+        const x = ((event.clientX / wid) * 2 - 1) / projection[0];
+        const y = (1 - (event.clientY / hei) * 2) / projection[5];
+        const touch = event.pointerType == "touch" ? 2 : 0;
+        v3set(touchInput, x * touch, y * touch, x / 2);
+        if (held || active) {
+            if (active && pressStart(x, y, -1)) {
+                held = 0;
+            }
+            else {
+                setDesktopWeapon(!!active, x, y);
+                if (!active) {
+                    touch && v3set(touchInput, 0);
+                    fireDesktopWeapon();
+                }
+            }
+        }
+        held = active;
+        return false;
+    };
+    let pointer = null;
+    cvs.onpointerdown = (event) => {
+        if (event.button !== 0 || pointer !== null)
+            return;
+        pointer = event.pointerId;
+        cvs.setPointerCapture(pointer);
+        aim(event, 1);
+    };
+    cvs.onpointermove = (event) => {
+        if (event.pointerId === pointer || pointer === null && event.pointerType === "mouse")
+            aim(event, held);
+    };
+    cvs.onpointerup = (event) => {
+        if (event.pointerId !== pointer)
+            return;
+        aim(event, 0);
+        pointer = null;
+    };
+    const cancel = () => {
+        pointer = null;
+        held = left = right = up = down = 0;
+        v3set(touchInput, 0);
+        setDesktopFlight(0, 0);
+        cancelDesktopWeapon();
+    };
+    cvs.onpointercancel = cancel;
+    cvs.onlostpointercapture = () => { if (pointer !== null)
+        cancel(); };
+    addEventListener("blur", cancel);
+    requestAnimationFrame(draw);
+};window.Wavedash?.init();
+startDesktopRenderer();
+let once = true;
+cvs.onclick = () => {
+    if (once) {
+        once = false;
+        revealStartButton();
+        document.dispatchEvent(new Event("panzercorn:ready"));
+        initializeAudio();
+        if (level < 0)
+            setSong(1 /* Song.Menu */);
+        if (navigator.xr)
+            enterXR(gl).catch(() => { });
+    }
+};</script>
+</body>
+</html>
