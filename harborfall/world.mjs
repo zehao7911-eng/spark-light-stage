@@ -1,6 +1,6 @@
 const T=window.THREE;
 export function makeWorld(scene){
- const palettes={sand:0xe9d4a2,stone:0xd3d5c5,grass:0x83b968,grassDark:0x578d58,red:0xde6250,cream:0xf8efd5,navy:0x294755,wood:0xaa7350,darkWood:0x76503a,roof:0x3b7180,metal:0x405b61,glass:0x80c6d2,gold:0xfbd074};
+ const palettes={sand:0xe9d4a2,stone:0xc8cfc9,grass:0x99c96a,grassDark:0x578d58,red:0xe34435,cream:0xf1f1e8,navy:0x273942,wood:0xaa7350,darkWood:0x76503a,roof:0x3b7180,metal:0x405b61,glass:0x80c6d2,gold:0xfbd074};
  const mats={};for(const [k,c]of Object.entries(palettes))mats[k]=new T.MeshStandardMaterial({color:c,roughness:k==='metal'?.42:.85});
  const boxG=new T.BoxGeometry(1,1,1),sphereG=new T.SphereGeometry(1,10,8),cylG=new T.CylinderGeometry(1,1,1,12),coneG=new T.ConeGeometry(1,1,8);
  const batches=new Map(),colliders=[],cameraBlocks=[],floors=[],burnables=[],coins=[],trees=[],lamps=[];let roofGroup;
@@ -22,7 +22,7 @@ export function makeWorld(scene){
  // Lighthouse: eight-sided shell, side entrance and an exterior switchback stair.
  const tower=new T.Group();scene.add(tower);
  for(let i=0;i<8;i++){const a=i*Math.PI/4;const x=6+Math.sin(a)*2.35,z=-7+Math.cos(a)*2.35;if(i===0){solid(x-1.05,1.65,z,.7,3.3,.38,'cream');solid(x+1.05,1.65,z,.7,3.3,.38,'cream');box(x,3.1,z,2.6,.5,.4,'cream');}else {const m=box(x,1.7,z,2,3.4,.38,'cream',a);colliders.push({x,z,y:0,w:1.7,d:1.2,h:3.4,active:true});}box(x,4.1,z,2,1.4,.38,'red',a);box(x,5.65,z,2,1.7,.38,'cream',a);box(x,7,z,2,1,.4,'red',a);}
- cyl(6,.12,-7,2.8,.25,'stone');cyl(6,7.6,-7,3.35,.32,'cream');floor(6,-7,6.5,6.5,7.76);
+ cyl(6,.12,-7,2.8,.25,'stone');cyl(6,7.6,-7,3.35,.32,'cream');floor(6,-7,6.5,6.5,7.76);floors[floors.length-1].radius=3.3;
  cyl(6,8.6,-7,1.6,1.7,'glass');colliders.push({x:6,z:-7,y:7.76,w:3.25,d:3.25,h:2.2,active:true});for(let i=0;i<8;i++){const a=i*Math.PI/4;box(6+Math.cos(a)*1.6,8.6,-7+Math.sin(a)*1.6,.16,2,.16,'navy');}
  shape(coneG,'red',6,10,-7,2.35,1.5,2.35);cyl(6,10.9,-7,.09,.9,'gold');ball(6,11.4,-7,.18,.18,.18,'gold');
  const beacon=new T.Group();beacon.position.set(6,8.7,-7);scene.add(beacon);box(0,0,0,.65,.7,.7,'gold',0,beacon);
@@ -35,6 +35,11 @@ export function makeWorld(scene){
  // final walkway back to gallery.
  box(9,7.64,.2,8.2,.24,1.6,'cream');floor(9,.2,8.2,1.6,7.76);box(6,7.64,-1.9,2,.24,4.8,'cream');floor(6,-1.9,2,4.8,7.76);for(let x=5;x<=13;x++){box(x,8.25,1,.075,1,.075,'navy');box(x,8.72,1,1,.08,.08,'navy');}for(let x of [10,12])box(x,3.7,.2,.18,7.4,.18,'navy');
  text('LIGHTHOUSE',6,3,-4.2,2,.48);
+ for(const x of [5.62,6.38])box(x,3.95,-3.98,.07,7.9,.08,'metal');for(let y=.23;y<7.9;y+=.29)box(6,y,-3.98,.8,.055,.09,'metal');
+ for(let i=0;i<20;i++){const a=i/20*Math.PI*2,b=(i+1)/20*Math.PI*2,m=(a+b)/2;box(6+Math.sin(m)*3.12,8.58,-7+Math.cos(m)*3.12,1,.08,.08,'navy',m);}
+ for(const z of [-10.5,-8,-5.5,-3,.2])box(12.1,Math.max(1,7.5-(z+.2)*.12)/2,z,.16,Math.max(1,7.5-(z+.2)*.12),.16,'navy');
+ for(let z=-11;z<11;z+=3){box(-16,.48,z,.18,.95,.18,'cream');box(16,.48,z,.18,.95,.18,'cream');}
+
  // Internal furniture visible through doorway.
  box(6,.4,-7,1.6,.8,1.2,'wood');box(6,.85,-7,1.8,.13,1.3,'cream');cyl(5,1,-8,.28,.6,'gold');
  function cottage(x,z,w,d,col,label,burnAt){const g=new T.Group();g.position.set(x,0,z);scene.add(g);const parts=[];
@@ -48,7 +53,7 @@ export function makeWorld(scene){
  // Interior table, crates and a rug; the house is genuinely enterable.
  piece(0,.21,0,w*.55,.04,d*.5,0xd49a6a);piece(-w*.25,.9,-d*.15,1.1,.15,.9,'wood');piece(-w*.25,.45,-d*.15,.12,.9,.12,'darkWood');piece(w*.25,.5,-d*.27,.8,1,.8,'wood');
  const roofCollider={x,z,y:2.9,w:w+.5,d:d+.5,h:1.2,active:true};cameraBlocks.push(roofCollider);const cs=[roofCollider];for(const [dx,dz,cw,cd]of [[-w/2,0,.3,d],[w/2,0,.3,d],[0,-d/2,w,.3],[-w*.33,d/2,w*.34,.3],[w*.33,d/2,w*.34,.3]]){let c={x:x+dx,z:z+dz,y:0,w:cw,d:cd,h:2.9,active:true};colliders.push(c);cs.push(c);}
- floor(x,z,w,d,.34);let b={x,z,w,d,g,parts,colliders:cs,burnAt,collapsed:false,collapseT:0};for(const p of parts)p.rot.copy(p.m.rotation);burnables.push(b);return b;}
+ floor(x,z,w,d,.34);let b={x,z,w,d,g,parts,colliders:cs,burnAt,collapsed:false,collapseT:0};const materialCopies=new Map();for(const p of parts){p.rot.copy(p.m.rotation);if(!materialCopies.has(p.m.material))materialCopies.set(p.m.material,p.m.material.clone());p.m.material=materialCopies.get(p.m.material);}burnables.push(b);return b;}
  cottage(-8,-4,5.5,5,0xe4ae77,'KEEPER’S HOUSE',21);cottage(-9,6,4.5,4.2,0x7bacb7,'COASTAL SUPPLIES',4);cottage(11,8,4,4,0xf1ce89,'BOATHOUSE',38);
  // Cottage chimneys / roofs have layered edge trim rather than featureless cubes.
  for(const p of [[-9,-5],[11,7]]){box(p[0],4,p[1],.7,2,.7,'cream');box(p[0],5.05,p[1],.9,.18,.9,'stone');}
@@ -78,28 +83,34 @@ export function makeWorld(scene){
  const ripples=new T.Group();scene.add(ripples);for(let i=0;i<95;i++){let x=Math.sin(i*4.34)*65,z=Math.cos(i*3.77)*65;if(Math.abs(x)<19&&Math.abs(z)<25)continue;box(x,-1.02,z,1+(i%4)*.6,.012,.055,0x9adbd7,0,ripples);}
  // Batches dramatically reduce mobile draw calls while preserving prop details.
  for(const {g,m,items}of batches.values()){const inst=new T.InstancedMesh(g,m,items.length);items.forEach((v,i)=>inst.setMatrixAt(i,v));inst.castShadow=true;inst.receiveShadow=true;scene.add(inst);}
- function height(x,z,feet=0,maxStep=.32){let h=-20;for(let f of floors){if(f.active&&Math.abs(x-f.x)<=f.w/2&&Math.abs(z-f.z)<=f.d/2&&f.y<=feet+maxStep)h=Math.max(h,f.y);}return h;}
- function blocked(x,z,y,r=.31,forCamera=false){for(let c of forCamera?[...colliders,...cameraBlocks]:colliders){if(c.active&&y+.1<c.y+c.h&&y+1.65>c.y&&Math.abs(x-c.x)<c.w/2+r&&Math.abs(z-c.z)<c.d/2+r)return true;}return false;}
- function reset(){for(let c of coins){c.taken=false;c.g.visible=true;}for(let b of burnables){b.collapsed=false;b.collapseT=0;for(let c of b.colliders)c.active=true;for(let p of b.parts){p.m.position.copy(p.base);p.m.rotation.copy(p.rot);}}exit.visible=false;boat.position.set(0,-.15,30);}
+ function height(x,z,feet=0,maxStep=.32){let h=-20;for(let f of floors){if(f.active&&(f.radius?Math.hypot(x-f.x,z-f.z)<=f.radius:Math.abs(x-f.x)<=f.w/2&&Math.abs(z-f.z)<=f.d/2)&&f.y<=feet+maxStep)h=Math.max(h,f.y);}return h;}
+ const cameraCollision=[...colliders,...cameraBlocks];function blocked(x,z,y,r=.31,forCamera=false){for(let c of forCamera?cameraCollision:colliders){if(c.active&&(forCamera?y-r<c.y+c.h&&y+r>c.y:y+.1<c.y+c.h&&y+1.65>c.y)&&Math.abs(x-c.x)<c.w/2+r&&Math.abs(z-c.z)<c.d/2+r)return true;}return false;}
+ function reset(){for(let c of coins){c.taken=false;c.g.visible=true;}for(let b of burnables){b.collapsed=false;b.collapseT=0;for(let c of b.colliders)c.active=true;for(let p of b.parts){p.m.position.copy(p.base);p.m.rotation.copy(p.rot);if(p.baseColor)p.m.material.color.copy(p.baseColor);if(p.m.material.emissive)p.m.material.emissiveIntensity=0;}}exit.visible=false;boat.position.set(0,-.15,30);}
  return{box,ball,mat,text,colliders,floors,burnables,coins,beacon,boat,exit,flag,ripples,height,blocked,reset,scene};
 }
 
-// Articulated islanders: bevelled limbs, layered clothing and modeled hair.
-export function character(scene,{shirt=0xd98b57,hair=0x674130,skin=0xf1c49c,hat=false}={}){const T=window.THREE,g=new T.Group(),materials=new Map();
- function material(c){if(!materials.has(c))materials.set(c,new T.MeshStandardMaterial({color:c,roughness:.8}));return materials.get(c);}
- function rounded(w,h,d,r=.07){const s=new T.Shape(),x=-w/2,y=-h/2;s.moveTo(x+r,y);s.lineTo(x+w-r,y);s.quadraticCurveTo(x+w,y,x+w,y+r);s.lineTo(x+w,y+h-r);s.quadraticCurveTo(x+w,y+h,x+w-r,y+h);s.lineTo(x+r,y+h);s.quadraticCurveTo(x,y+h,x,y+h-r);s.lineTo(x,y+r);s.quadraticCurveTo(x,y,x+r,y);const geo=new T.ExtrudeGeometry(s,{depth:Math.max(.01,d-r*2),bevelEnabled:true,bevelSegments:2,steps:1,bevelSize:r*.45,bevelThickness:r,curveSegments:3});geo.translate(0,0,-d/2+r);return geo;}
- function part(parent,x,y,z,w,h,d,c,r=.04){let m=new T.Mesh(rounded(w,h,d,r),material(c));m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;parent.add(m);return m;}
- const torso=part(g,0,1.08,0,.63,.63,.36,shirt,.06);part(g,0,.8,0,.64,.12,.39,0x234451);part(g,0,1.2,.203,.07,.4,.02,0xe5c89c);part(g,-.17,1.12,.207,.16,.15,.03,0xc8794d);part(g,-.17,1.18,.225,.17,.035,.02,0xf1c982);part(g,0,.81,.22,.12,.1,.03,0xe6c480);
- const head=new T.Group();head.position.y=1.62;g.add(head);part(head,0,0,0,.48,.49,.45,skin,.09);part(head,-.24,-.015,0,.075,.15,.15,skin);part(head,.24,-.015,0,.075,.15,.15,skin);
- for(let side of [-1,1]){part(head,side*.095,.03,.235,.048,.065,.018,0x253b45,.01);part(head,side*.095,.09,.237,.074,.018,.02,hair,.005);}part(head,0,-.065,.257,.065,.065,.06,skin,.015);part(head,0,-.135,.238,.105,.018,.02,0x815146,.005);
- part(head,0,.24,-.04,.53,.13,.45,hair,.06);part(head,-.225,.09,-.01,.08,.22,.35,hair,.04);part(head,.225,.11,-.04,.08,.18,.3,hair,.04);for(let i=0;i<5;i++){let tuft=part(head,-.2+i*.09,.24+Math.sin(i*.9)*.06,.15,.12,.18,.18,hair,.04);tuft.rotation.z=-.35+i*.12;}part(head,0,.1,-.21,.5,.28,.1,hair);
- if(hat){part(head,0,.29,0,.6,.17,.52,0xf1c95f);part(head,0,.22,.17,.65,.07,.6,0xf1c95f);}
- const limbs=[];for(let side of [-1,1]){let arm=new T.Group();arm.position.set(side*.44,1.32,0);g.add(arm);part(arm,0,-.19,0,.22,.4,.27,shirt);part(arm,0,-.44,0,.2,.15,.25,skin);limbs.push(arm);let leg=new T.Group();leg.position.set(side*.18,.77,0);g.add(leg);part(leg,0,-.24,0,.26,.47,.3,0x294956);part(leg,0,-.57,.045,.29,.18,.41,0x273c46);part(leg,0,-.64,.045,.3,.045,.42,0xe4dfc9);limbs.push(leg);}
- // Canvas-free backpack with straps, rolled blanket and brass buckle.
- part(g,0,1.1,-.27,.44,.46,.22,0x436c67,.07);part(g,0,.98,-.4,.29,.15,.08,0x355854);part(g,0,1.38,-.29,.46,.13,.19,0xd7c69b);part(g,0,1.12,-.405,.07,.1,.025,0xe9c678);
- const shadow=new T.Mesh(new T.CircleGeometry(.46,24),new T.MeshBasicMaterial({color:0x173c42,transparent:true,opacity:.18,depthWrite:false}));shadow.rotation.x=-Math.PI/2;shadow.position.y=.015;scene.add(shadow);scene.add(g);
- return{g,head,limbs,shadow,animate(t,speed,air=false){const swing=Math.sin(t*11)*Math.min(1,speed)*.65;limbs[0].rotation.x=air?-1.2:swing;limbs[2].rotation.x=air?-.8:-swing;limbs[1].rotation.x=air?.2:-swing;limbs[3].rotation.x=air?-.35:swing;head.rotation.z=Math.sin(t*2)*.025;torso.rotation.z=speed?Math.sin(t*11)*.025:0;shadow.position.x=g.position.x;shadow.position.z=g.position.z;shadow.position.y=Math.max(.04,g.position.y-.04);shadow.scale.setScalar(air?.7:1);}};
+// Original block-proportioned streetwear characters, with a separately damped visual rig.
+export function character(scene,{shirt=0x26313d,hair=0x925026,skin=0xf0c69e,hat=false}={}){
+ const T=window.THREE,g=new T.Group(),rig=new T.Group(),materials=new Map();g.add(rig);
+ function material(c){if(!materials.has(c))materials.set(c,new T.MeshStandardMaterial({color:c,roughness:.78}));return materials.get(c);}
+ function geo(w,h,d,r=.035){const s=new T.Shape(),x=-w/2,y=-h/2;s.moveTo(x+r,y);s.lineTo(x+w-r,y);s.quadraticCurveTo(x+w,y,x+w,y+r);s.lineTo(x+w,y+h-r);s.quadraticCurveTo(x+w,y+h,x+w-r,y+h);s.lineTo(x+r,y+h);s.quadraticCurveTo(x,y+h,x,y+h-r);s.lineTo(x,y+r);s.quadraticCurveTo(x,y,x+r,y);const z=new T.ExtrudeGeometry(s,{depth:d-2*r,bevelEnabled:true,bevelSegments:2,steps:1,bevelSize:r*.4,bevelThickness:r,curveSegments:3});z.translate(0,0,-d/2+r);return z;}
+ function part(parent,x,y,z,w,h,d,c,r=.035){const m=new T.Mesh(geo(w,h,d,r),material(c));m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;parent.add(m);return m;}
+ const torso=part(rig,0,1.13,0,.72,.7,.39,shirt);part(rig,0,.83,0,.73,.09,.41,shirt);part(rig,0,1.43,.08,.28,.08,.27,skin);part(rig,0,1.36,-.14,.5,.24,.22,shirt,.06);
+ for(let side of [-1,1])part(rig,side*.12,1.32,.218,.018,.19,.025,0xe6e9df,.006);
+ part(rig,0,1.01,.219,.36,.16,.035,shirt,.015);part(rig,0,.94,.241,.29,.013,.01,0x49515b,.004);
+ const head=new T.Group();head.position.y=1.72;rig.add(head);part(head,0,0,0,.5,.48,.45,skin,.07);for(let side of [-1,1]){part(head,side*.252,-.015,-.015,.065,.13,.13,skin,.025);part(head,side*.1,.015,.234,.044,.067,.02,0x202832,.008);part(head,side*.1,.084,.235,.078,.016,.02,hair,.005);}
+ const smile=new T.QuadraticBezierCurve3(new T.Vector3(-.1,-.105,.24),new T.Vector3(0,-.185,.26),new T.Vector3(.1,-.105,.24));head.add(new T.Mesh(new T.TubeGeometry(smile,10,.009,5,false),material(0x855a45)));
+ part(head,0,.23,-.04,.53,.12,.44,hair,.06);part(head,0,.1,-.22,.51,.25,.08,hair,.025);
+ for(let i=0;i<9;i++){const a=i*.53;const tuft=part(head,-.24+i*.055,.245+Math.sin(a)*.06,.12,.105,.16,.27,i%3?hair:0xab6936,.035);tuft.rotation.z=-.55+i*.08;tuft.rotation.x=.18+Math.sin(a)*.15;}
+ for(let s of [-1,1]){const side=part(head,s*.235,.08,-.035,.08,.24,.32,hair,.03);side.rotation.z=s*.12;}
+ if(hat){part(head,0,.31,-.02,.57,.15,.48,0xe8b846);part(head,0,.26,.2,.6,.05,.5,0xe8b846,.02);}
+ const limbs=[],knees=[];for(let s of [-1,1]){
+  const arm=new T.Group();arm.position.set(s*.49,1.4,0);rig.add(arm);part(arm,0,-.22,0,.25,.47,.3,shirt);part(arm,0,-.46,0,.255,.07,.31,0x3c4651);part(arm,0,-.57,.012,.235,.16,.28,skin);limbs.push(arm);
+  const leg=new T.Group();leg.position.set(s*.195,.8,0);rig.add(leg);part(leg,0,-.18,0,.3,.37,.34,0x293c50);const knee=new T.Group();knee.position.y=-.35;leg.add(knee);part(knee,0,-.15,0,.285,.3,.33,0x293c50);part(knee,0,-.35,.05,.315,.16,.44,0xf0f0e6);part(knee,0,-.41,.05,.32,.045,.45,0x3c4c56,.015);part(knee,0,-.30,.185,.23,.025,.1,0xadb6b7,.008);limbs.push(leg);knees.push(knee);
+ }
+ const shadow=new T.Mesh(new T.CircleGeometry(.48,24),new T.MeshBasicMaterial({color:0x173c42,transparent:true,opacity:.17,depthWrite:false}));shadow.rotation.x=-Math.PI/2;scene.add(shadow);scene.add(g);
+ let phase=0,blend=0,lastT=null;const approach=(a,b,k)=>a+(b-a)*k;
+ return{g,rig,head,limbs,shadow,animate(t,speed,air=false,dt=null,vertical=0,landing=0,climbing=false){dt=dt??Math.min(.05,Math.max(0,lastT===null?1/60:t-lastT));lastT=t;blend=approach(blend,Math.min(1,speed),1-Math.exp(-dt*12));phase+=dt*(climbing?7:10)*Math.max(.12,blend);const swing=Math.sin(phase)*blend*.65,k=1-Math.exp(-dt*18);
+ const poses=climbing?[-1.7+Math.sin(phase)*.45,Math.sin(phase)*.55,-1.7-Math.sin(phase)*.45,-Math.sin(phase)*.55]:air?[-.8-Math.min(.3,vertical*.04),.23,-.8-Math.min(.3,vertical*.04),-.28]:[swing,-swing,-swing,swing];limbs.forEach((m,i)=>m.rotation.x=approach(m.rotation.x,poses[i],k));knees.forEach((m,i)=>m.rotation.x=approach(m.rotation.x,climbing?-.5:air?-.4:Math.min(0,Math.sin(phase+(i?Math.PI:0)))*blend*.42,k));
+ rig.position.y=air?0:Math.abs(Math.sin(phase))*blend*.035-landing*.07;rig.scale.y=1-landing*.055;rig.scale.x=1+landing*.025;rig.rotation.x=approach(rig.rotation.x,climbing?.1:air?-.04:blend*.07,k);head.rotation.z=Math.sin(t*1.8)*.015*(1-blend);shadow.position.set(g.position.x,Math.max(.025,g.position.y-.02),g.position.z);shadow.scale.setScalar(air?.72:1);}};
 }
-
-
-

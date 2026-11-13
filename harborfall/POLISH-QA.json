@@ -1,0 +1,21 @@
+{
+  "checks": [
+    "Acceleration and stop damping",
+    "Jump arc, gravity and landing",
+    "Ladder hold / checkpoint restore / climb to gallery",
+    "Camera obstruction contraction",
+    "Reel alignment / selected disaster actually starts",
+    "Tornado damages and moves the player",
+    "Meteor impact / destruction / persisted destruction",
+    "fire rescue and result",
+    "tornado rescue and result",
+    "meteor rescue and result",
+    "320x568 reel and controls fit",
+    "390x844 reel and controls fit",
+    "430x932 reel and controls fit",
+    "844x390 reel and controls fit"
+  ],
+  "errors": [],
+  "peak": 1.1102777777777781,
+  "scope": "Native desktop Chrome controls, emulated phone viewports, and controlled saved-state fixtures. Not physical handset or actual GameWave host."
+}
