@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#10232a">
+<link rel="icon" href="data:,">
 <meta name="description" content="Drive an original 3D railway across Glanne Valley.">
 <title>Glanne Valley Railway</title>
 <style>
@@ -378,7 +379,8 @@ class RailwayView {
     this.map=map;
     this.sample=sample;
     this.renderer=new T.WebGLRenderer({canvas, antialias:true, alpha:false, powerPreference:"high-performance"});
-    this.renderer.setPixelRatio(Math.min(devicePixelRatio,1.45));
+    this.pixelRatio=Math.min(devicePixelRatio,1.35);
+    this.renderer.setPixelRatio(this.pixelRatio);
     this.renderer.toneMapping=T.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure=.92;
     if(T.SRGBColorSpace) this.renderer.outputColorSpace=T.SRGBColorSpace;
@@ -433,6 +435,11 @@ class RailwayView {
 
     this.materials=[this.opaque,this.glass,this.glow,this.brick];
     this.chunks=new Map();
+    this.frustum=new T.Frustum();
+    this.projection=new T.Matrix4();
+    this.boundMin=new T.Vector3();
+    this.boundMax=new T.Vector3();
+    this.slowFrames=0;
     this.vehicles=["Train_1A_Meridian","Train_2B_Harbour"].map(name => map.stock[name].map(vehicle=>{
       const model=this.meshes(vehicle.parts);
       this.scene.add(model);
@@ -456,6 +463,8 @@ class RailwayView {
   key(x,z) {return Math.floor(x/96)+":"+Math.floor(z/96);}
 
   setSize(width,height) {
+    this.width=width;
+    this.height=height;
     this.renderer.setSize(width,height,false);
     this.camera.aspect=width/Math.max(1,height);
     this.camera.fov=width>height?47:60;
@@ -551,6 +560,19 @@ class RailwayView {
     return marker;
   }
 
+  measureChunk(rows) {
+    const box=new this.T.Box3();
+    for(const row of rows){
+      const [x,y,z,w,h,d,,,,,a,b,c,e,f,g,i,j,k]=row;
+      const hx=(Math.abs(a*w)+Math.abs(b*h)+Math.abs(c*d))*.5;
+      const hy=(Math.abs(e*w)+Math.abs(f*h)+Math.abs(g*d))*.5;
+      const hz=(Math.abs(i*w)+Math.abs(j*h)+Math.abs(k*d))*.5;
+      box.expandByPoint(this.boundMin.set(x-hx,y-hy,z-hz));
+      box.expandByPoint(this.boundMax.set(x+hx,y+hy,z+hz));
+    }
+    return box;
+  }
+
   nearby(x,z,budget=2) {
     const cx=Math.floor(x/96),cz=Math.floor(z/96);
     const wanted=[];
@@ -560,11 +582,14 @@ class RailwayView {
     }
     wanted.sort((a,b)=>a.d-b.d);
     const set=new Set(wanted.map(entry=>entry.key));
-    for(const [key,group] of this.chunks) group.visible=set.has(key);
+    for(const [key,group] of this.chunks) group.visible=set.has(key)&&this.frustum.intersectsBox(group.userData.bounds);
     for(const {key} of wanted){
       if(this.chunks.has(key)) continue;
       if(budget--<=0) break;
-      const group=this.meshes(this.map.chunks[key]);
+      const rows=this.map.chunks[key];
+      const group=this.meshes(rows);
+      group.userData.bounds=this.measureChunk(rows);
+      group.visible=this.frustum.intersectsBox(group.userData.bounds);
       for(const sign of this.signs.get(key)||[]) group.add(this.makeSign(sign));
       this.chunks.set(key,group);
       this.world.add(group);
@@ -600,7 +625,7 @@ class RailwayView {
 
   draw(run, mode, dt, initial=false) {
     const at=this.sample(this.map.points,run.s);
-    this.nearby(at.x,at.z,initial?8:2);
+
     this.placeStock(this.vehicles[0],run.s,run.direction);
     this.placeStock(this.vehicles[1],this.secondaryDistance,1,-12);
     const aheadX=Math.cos(at.heading)*run.direction,aheadZ=Math.sin(at.heading)*run.direction;
@@ -620,6 +645,10 @@ class RailwayView {
     if(reset) this.camera.position.copy(this.position);
     else this.camera.position.lerp(this.position,Math.min(1,dt*9));
     this.camera.lookAt(this.target);
+    this.camera.updateMatrixWorld();
+    this.projection.multiplyMatrices(this.camera.projectionMatrix,this.camera.matrixWorldInverse);
+    this.frustum.setFromProjectionMatrix(this.projection);
+    this.nearby(at.x,at.z,initial?8:2);
     this.aimed=true;
     this.previousMode=mode;
     this.previousDirection=run.direction;
@@ -631,6 +660,15 @@ class RailwayView {
     this.marker.rotation.y=-m.heading-Math.PI/2+(signSide<0?Math.PI:0);
     this.marker.visible=Math.abs(stop.stop-run.s)<180 && run.phase==="moving";
     this.renderer.render(this.scene,this.camera);
+  }
+
+  adapt(frameGap) {
+    if(frameGap<.053){this.slowFrames=Math.max(0,this.slowFrames-1);return;}
+    if(++this.slowFrames<20||this.pixelRatio<=.8)return;
+    this.slowFrames=0;
+    this.pixelRatio=Math.max(.8,this.pixelRatio*.85);
+    this.renderer.setPixelRatio(this.pixelRatio);
+    this.renderer.setSize(this.width,this.height,false);
   }
 }
 
@@ -1008,7 +1046,7 @@ function animate(){
   let last=performance.now(),lastDraw=0,acc=0,lastUI=0;
   function tick(now){
     requestAnimationFrame(tick);
-    const dt=Math.min(.11,(now-last)/1000);
+    const dt=Math.min(.22,(now-last)/1000);
     last=now;
     if(hidden)return;
     if(!paused&&!needsResume&&run.phase==="moving"){
@@ -1022,6 +1060,7 @@ function animate(){
     }else acc=0;
     if(now-lastUI>90){render();audio.drive(run,paused);lastUI=now;}
     if(forceRender||!paused&&now-lastDraw>=32){
+      if(!firstFrame&&!forceRender)view.adapt((now-lastDraw)/1000);
       view.draw(run,mode,dt,firstFrame);
       firstFrame=false;
       forceRender=false;
