@@ -345,7 +345,10 @@ function drive(map, run, dt) {
 }
 
 function depart(run) {
-  if(run.phase==="boarding") run.target=run.lastStop+run.direction;
+  if(run.phase==="boarding") {
+    run.target=run.lastStop+run.direction;
+    run.gear=run.direction;
+  }
   if(run.phase!=="ready" && run.phase!=="boarding" && run.phase!=="moving") return false;
   run.phase="moving";
   run.lever="power";
@@ -366,8 +369,7 @@ function reverse(run) {
 }
 
 function canCorrect(map, run) {
-  return run.phase==="moving" && Math.abs(run.v)<.2 && Math.abs(remaining(map,run))>NEAR_STOP &&
-    (remaining(map,run)<0 || run.gear!==run.direction);
+  return run.phase==="moving" && Math.abs(run.v)<.16 && remaining(map,run)<-NEAR_STOP;
 }
 
 return {clamp,SAVE_KEY,routeSample,profileFrom,mergeProfile,freshRun,restoreRun,speedLimit,stoppingDistance,remaining,drive,depart,setLever,reverse,canCorrect};
