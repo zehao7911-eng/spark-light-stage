@@ -1,0 +1,12 @@
+{
+  "report": [
+    "Native touch movement / jump / pause",
+    "Checkpoint / confirmed rewards / duplicate guards / no fake start on reload",
+    "Four viewport bounds and 44px touch targets",
+    "Actual fire damage / healing / consumed first aid",
+    "Defeat / genuine end / clean replay",
+    "Native rescue trigger / boarding cinematic / real SDK end / saved victory"
+  ],
+  "errors": [],
+  "limits": "Desktop Chrome touch emulation and controlled saved-state fixtures; not a physical phone or actual GameWave host."
+}
