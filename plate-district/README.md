@@ -12,7 +12,7 @@ Tap buttons on mobile. Minimize the panel to explore: tap the ground to walk, dr
 
 ## Content
 
-Four regions, five rarity classes, patterned mirror/sequence/triple/perfect-series plates, six upgrade tracks, 12–36 garage slots, computer display, six claims, guaranteed ten-roll milestone and optional cosmetic host rewards. Showroom income is capped at one hour offline. This is a single-player reconstruction, not a server market or real player leaderboard. Unlike the reference, it does not implement auctions, trading, timed leases, consumable crafting or multiplayer.
+Four regions, five rarity classes, patterned mirror/sequence/triple/perfect-series plates, six upgrade tracks, 12–36 garage slots, computer display, six claims, guaranteed ten-roll milestone and optional cosmetic host rewards. Showroom income is capped at one hour offline. This is a single-player reconstruction, not a server market or real player leaderboard. Unlike the reference, it does not implement auctions, trading, timed leases or multiplayer.
 
 ## Persistence and GameWave
 
@@ -32,3 +32,13 @@ Closer interior workshop camera when panels are open, exterior exploration when 
 
 ## Recording layout and collision revision 3
 Removed the invented car, stamp machine and tool workshop. Scene follows the visible recording: empty concrete garage, plaster side walls, brick entry, green doors, right-side computer desk, yellow operating ring and facing garage facades. Hairless black-shirt/blue-stripe character retained. Walking to the ring opens the generator. Tap-to-walk routes around walls, rotated door panels and desks; WASD/arrows also work while exploring. Swept motion uses a 0.95-unit radius covering animated arms, feet clear floor thresholds, and camera ray collision prevents passage through walls, doors and the monitor. Panel changes no longer move the camera through the garage. Save schema, economy and SDK events are preserved. Only visible recording details were reconstructed; this is not verified as the complete original Roblox economy, auctions, crafting or multiplayer.
+
+
+## Recording polish revision 4
+Camera-relative left/right is corrected. Tap paths are simplified using collision-checked line of sight. Movement accelerates smoothly, waypoint motion is capped to prevent overshoot, and limbs follow distance travelled rather than absolute time. Opening the generator disables walking. Mobile exploration has an independent left thumb stick and right camera drag, including cancellation/blur cleanup; characters remain hairless. Existing swept collision and camera clipping remain active.
+
+Collection adds persistent favorite protection, value/newest sorting, favorite filtering and best-value display. Automatic generation sells Standard/Uncommon results and stops on Rare+, insufficient credits, page navigation or hiding the game. Each automatic generation/settlement uses the same real SDK round as manual play. The six existing upgrade tracks now have connected hexagonal presentation without silently changing saved upgrade costs or requirements.
+
+Inventory adds Luck I (+15% relative non-Standard odds for 15 minutes), Luck II (+35%), and 10-to-1 crafting. One introductory potion and one per new ten-generation milestone provide a single-player acquisition loop; this reward schedule is an adaptation, not a claim about the original server economy. Boosts cannot stack, consumed inventory and expiry survive reload, and Standard probability is reduced to keep the total at 100%. Existing profiles retain their plates, balance, upgrades and saved progress.
+
+Verified in desktop Chrome mobile emulation: actual two-pointer movement plus camera, cancel release, direction correction, protected sales/reload, auto sale/rare stop, inventory/crafting, legacy profile migration, no-SDK gameplay and mocked SDK lifecycle/rewards. Physical mobile hardware and actual GameWave-host import remain pending. Official SDK documentation retrieval was attempted again, but the linked Feishu page was inaccessible. No claim of complete original Roblox networking or original-source parity.
