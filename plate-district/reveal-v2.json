@@ -1,0 +1,10 @@
+{
+  "forcedRNGVisualTest": true,
+  "hiddenValuationDuringRoll": true,
+  "rollingColumns": true,
+  "legendaryReveal": true,
+  "fiveRarityPips": true,
+  "settledValueAccurate": true,
+  "particlesReclaimed": true,
+  "errors": []
+}
