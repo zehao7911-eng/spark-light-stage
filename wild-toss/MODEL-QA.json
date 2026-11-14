@@ -2,7 +2,8 @@
   "models": [
     {
       "index": 0,
-      "variant": "Normal",
+      "name": "Frog",
+      "zone": 0,
       "size": [
         1.68,
         1,
@@ -12,7 +13,8 @@
     },
     {
       "index": 1,
-      "variant": "Normal",
+      "name": "Bunny",
+      "zone": 0,
       "size": [
         1.016,
         2.153608654338213,
@@ -22,7 +24,8 @@
     },
     {
       "index": 2,
-      "variant": "Normal",
+      "name": "Kookaburra",
+      "zone": 0,
       "size": [
         1.5250029366150728,
         2.0302,
@@ -32,7 +35,8 @@
     },
     {
       "index": 3,
-      "variant": "Normal",
+      "name": "Fox",
+      "zone": 1,
       "size": [
         1.02,
         1.8501323839284154,
@@ -42,7 +46,8 @@
     },
     {
       "index": 4,
-      "variant": "Normal",
+      "name": "Deer",
+      "zone": 1,
       "size": [
         1.2535785234523111,
         3.0149999999999997,
@@ -52,7 +57,8 @@
     },
     {
       "index": 5,
-      "variant": "Normal",
+      "name": "Panda",
+      "zone": 1,
       "size": [
         1.016,
         1.8501323839284154,
@@ -62,7 +68,8 @@
     },
     {
       "index": 6,
-      "variant": "Normal",
+      "name": "Hyena",
+      "zone": 2,
       "size": [
         1.04,
         2.4569466808508214,
@@ -72,7 +79,8 @@
     },
     {
       "index": 7,
-      "variant": "Normal",
+      "name": "Giraffe",
+      "zone": 2,
       "size": [
         0.895,
         3.5,
@@ -82,7 +90,8 @@
     },
     {
       "index": 8,
-      "variant": "Normal",
+      "name": "Scorpion",
+      "zone": 2,
       "size": [
         2.056910208676313,
         1.6602000000000001,
@@ -92,7 +101,8 @@
     },
     {
       "index": 9,
-      "variant": "Normal",
+      "name": "Penguin",
+      "zone": 3,
       "size": [
         1.5250029366150728,
         2.0302,
@@ -102,7 +112,8 @@
     },
     {
       "index": 10,
-      "variant": "Normal",
+      "name": "Polar Bear",
+      "zone": 3,
       "size": [
         1.4223999999999999,
         1.9501323839284155,
@@ -112,7 +123,8 @@
     },
     {
       "index": 11,
-      "variant": "Normal",
+      "name": "Ice Dragon",
+      "zone": 3,
       "size": [
         2.591494422422332,
         1.975,
@@ -121,44 +133,464 @@
       "parts": 25
     },
     {
-      "index": 6,
-      "variant": "Gold",
+      "index": 12,
+      "name": "Squirrel",
+      "zone": 0,
       "size": [
-        1.88,
+        0.8160000000000001,
+        1.4801059071427323,
+        2.5920000000000005
+      ],
+      "parts": 27
+    },
+    {
+      "index": 13,
+      "name": "Hedgehog",
+      "zone": 0,
+      "size": [
+        0.9956799999999999,
+        1.3650926687498908,
+        1.8655
+      ],
+      "parts": 39
+    },
+    {
+      "index": 14,
+      "name": "Duck",
+      "zone": 0,
+      "size": [
+        1.5250029366150728,
+        2.0302,
+        2.175
+      ],
+      "parts": 21
+    },
+    {
+      "index": 15,
+      "name": "Turtle",
+      "zone": 0,
+      "size": [
+        1.68,
+        1.22,
+        1.9524999999999997
+      ],
+      "parts": 24
+    },
+    {
+      "index": 16,
+      "name": "Raccoon",
+      "zone": 1,
+      "size": [
+        1.02,
+        1.8501323839284154,
+        3.24
+      ],
+      "parts": 28
+    },
+    {
+      "index": 17,
+      "name": "Wolf",
+      "zone": 1,
+      "size": [
+        1.04,
+        2.75,
+        2.95
+      ],
+      "parts": 38
+    },
+    {
+      "index": 18,
+      "name": "Boar",
+      "zone": 1,
+      "size": [
+        1.4223999999999999,
+        1.9501323839284155,
+        2.665
+      ],
+      "parts": 26
+    },
+    {
+      "index": 19,
+      "name": "Owl",
+      "zone": 1,
+      "size": [
+        1.5250029366150728,
+        2.0302,
+        2.0300000000000002
+      ],
+      "parts": 24
+    },
+    {
+      "index": 20,
+      "name": "Camel",
+      "zone": 2,
+      "size": [
+        1.2535785234523111,
+        3.0149999999999997,
+        2.665
+      ],
+      "parts": 28
+    },
+    {
+      "index": 21,
+      "name": "Elephant",
+      "zone": 2,
+      "size": [
+        1.43,
+        1.9501323839284155,
+        2.936520994986023
+      ],
+      "parts": 29
+    },
+    {
+      "index": 22,
+      "name": "Cobra",
+      "zone": 2,
+      "size": [
+        1.5387612969211182,
+        1.7552,
+        2.615
+      ],
+      "parts": 16
+    },
+    {
+      "index": 23,
+      "name": "Walrus",
+      "zone": 3,
+      "size": [
+        2.10458435172348,
+        1.9501323839284155,
+        2.986520994986023
+      ],
+      "parts": 31
+    },
+    {
+      "index": 24,
+      "name": "Seal",
+      "zone": 3,
+      "size": [
+        2.10458435172348,
+        0.6604000000000001,
+        2.665
+      ],
+      "parts": 17
+    },
+    {
+      "index": 25,
+      "name": "Snowy Owl",
+      "zone": 3,
+      "size": [
+        1.5250029366150728,
+        2.0302,
+        2.0300000000000002
+      ],
+      "parts": 24
+    },
+    {
+      "index": 26,
+      "name": "Mammoth",
+      "zone": 4,
+      "size": [
+        1.5278460931777955,
+        1.9501323839284155,
+        2.936520994986023
+      ],
+      "parts": 39
+    },
+    {
+      "index": 27,
+      "name": "Sabertooth",
+      "zone": 4,
+      "size": [
+        1.05,
         2.4569466808508214,
         2.7649999999999997
       ],
-      "parts": 35
+      "parts": 45
     },
     {
-      "index": 7,
-      "variant": "Gold",
+      "index": 28,
+      "name": "Triceratops",
+      "zone": 4,
       "size": [
-        1.88,
-        3.5,
-        2.665
+        1.4,
+        1.815,
+        3.8644125743946134
+      ],
+      "parts": 28
+    },
+    {
+      "index": 29,
+      "name": "Stegosaurus",
+      "zone": 4,
+      "size": [
+        1.1176000000000001,
+        2,
+        3.762101103026912
       ],
       "parts": 32
     },
     {
-      "index": 0,
-      "variant": "Gold",
+      "index": 30,
+      "name": "Ankylosaurus",
+      "zone": 4,
       "size": [
-        1.88,
-        1.3,
-        2.0275
+        1.8810218606261344,
+        1.5250000000000001,
+        4.2250000000000005
       ],
-      "parts": 20
+      "parts": 36
     },
     {
-      "index": 11,
-      "variant": "Rainbow",
+      "index": 31,
+      "name": "Pteranodon",
+      "zone": 4,
       "size": [
-        2.591494422422332,
-        1.975,
-        2.665
+        4.269327604746344,
+        1.1969166741770858,
+        3.3449999999999998
+      ],
+      "parts": 13
+    },
+    {
+      "index": 32,
+      "name": "Tyrannosaurus",
+      "zone": 5,
+      "size": [
+        1.1176000000000001,
+        2.2802,
+        3.658795486268895
       ],
       "parts": 25
+    },
+    {
+      "index": 33,
+      "name": "Spinosaurus",
+      "zone": 5,
+      "size": [
+        1.1176000000000001,
+        2.87868872535455,
+        3.658795486268895
+      ],
+      "parts": 31
+    },
+    {
+      "index": 34,
+      "name": "Brachiosaurus",
+      "zone": 5,
+      "size": [
+        0.895,
+        3.5,
+        3.1580991854437253
+      ],
+      "parts": 33
+    },
+    {
+      "index": 35,
+      "name": "Velociraptor",
+      "zone": 5,
+      "size": [
+        0.8382000000000001,
+        2.49375,
+        3.319412926296842
+      ],
+      "parts": 27
+    },
+    {
+      "index": 36,
+      "name": "Archaeopteryx",
+      "zone": 5,
+      "size": [
+        4.269327604746344,
+        1.1969166741770858,
+        3.3449999999999998
+      ],
+      "parts": 21
+    },
+    {
+      "index": 37,
+      "name": "Dimetrodon",
+      "zone": 5,
+      "size": [
+        1.1176000000000001,
+        2.42868872535455,
+        3.658795486268895
+      ],
+      "parts": 30
+    },
+    {
+      "index": 38,
+      "name": "Servo Hound",
+      "zone": 6,
+      "size": [
+        1.65,
+        2.645,
+        3.1149999999999998
+      ],
+      "parts": 43
+    },
+    {
+      "index": 39,
+      "name": "Circuit Cat",
+      "zone": 6,
+      "size": [
+        1.08,
+        2.08,
+        3.216105074043254
+      ],
+      "parts": 31
+    },
+    {
+      "index": 40,
+      "name": "Hover Ray",
+      "zone": 6,
+      "size": [
+        3.8757379223785513,
+        1.1752,
+        4.115
+      ],
+      "parts": 19
+    },
+    {
+      "index": 41,
+      "name": "Mecha Crab",
+      "zone": 6,
+      "size": [
+        2.35,
+        1.215,
+        2.615
+      ],
+      "parts": 27
+    },
+    {
+      "index": 42,
+      "name": "Drone Owl",
+      "zone": 6,
+      "size": [
+        2.7,
+        2.545,
+        2.0300000000000002
+      ],
+      "parts": 34
+    },
+    {
+      "index": 43,
+      "name": "Chrome Rhino",
+      "zone": 6,
+      "size": [
+        1.48,
+        2.145,
+        2.966066692067974
+      ],
+      "parts": 27
+    },
+    {
+      "index": 44,
+      "name": "Photon Fox",
+      "zone": 7,
+      "size": [
+        1.7034821124165407,
+        2.07,
+        3.25387485715277
+      ],
+      "parts": 32
+    },
+    {
+      "index": 45,
+      "name": "Plasma Manta",
+      "zone": 7,
+      "size": [
+        3.8757379223785513,
+        1.1752,
+        4.415
+      ],
+      "parts": 23
+    },
+    {
+      "index": 46,
+      "name": "Quantum Stag",
+      "zone": 7,
+      "size": [
+        1.56,
+        3.5500000000000003,
+        2.665
+      ],
+      "parts": 35
+    },
+    {
+      "index": 47,
+      "name": "Rocket Penguin",
+      "zone": 7,
+      "size": [
+        1.5250029366150728,
+        2.57,
+        2.0300000000000002
+      ],
+      "parts": 29
+    },
+    {
+      "index": 48,
+      "name": "Star Tortoise",
+      "zone": 7,
+      "size": [
+        1.68,
+        1.55,
+        1.975
+      ],
+      "parts": 35
+    },
+    {
+      "index": 49,
+      "name": "Nova Dragon",
+      "zone": 7,
+      "size": [
+        3.5895397365422106,
+        2.2616134788404767,
+        3.2649999999999997
+      ],
+      "parts": 38
+    }
+  ],
+  "pools": [
+    {
+      "zone": 0,
+      "count": 7,
+      "expected": 7
+    },
+    {
+      "zone": 1,
+      "count": 7,
+      "expected": 7
+    },
+    {
+      "zone": 2,
+      "count": 6,
+      "expected": 6
+    },
+    {
+      "zone": 3,
+      "count": 6,
+      "expected": 6
+    },
+    {
+      "zone": 4,
+      "count": 6,
+      "expected": 6
+    },
+    {
+      "zone": 5,
+      "count": 6,
+      "expected": 6
+    },
+    {
+      "zone": 6,
+      "count": 6,
+      "expected": 6
+    },
+    {
+      "zone": 7,
+      "count": 6,
+      "expected": 6
     }
   ],
   "errors": []

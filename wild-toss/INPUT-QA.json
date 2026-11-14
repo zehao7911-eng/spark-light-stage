@@ -2,7 +2,7 @@
   "multiTouchMoveAndLook": true,
   "cancelStops": true,
   "jumpLands": true,
-  "maxWristDrift": 4.440892098500626e-16,
+  "maxWristDrift": 1.831026719408895e-15,
   "smallPortraitAndLandscape": true,
   "fiveFoodIcons": true,
   "errors": [],
