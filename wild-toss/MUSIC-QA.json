@@ -1,0 +1,14 @@
+{
+  "gestureGate": true,
+  "mutePersistence": true,
+  "backgroundPauseResume": true,
+  "state": {
+    "unlocked": true,
+    "ready": true,
+    "duration": 68.57141666666666,
+    "volume": 0.25,
+    "context": "running",
+    "error": null
+  },
+  "errors": []
+}
