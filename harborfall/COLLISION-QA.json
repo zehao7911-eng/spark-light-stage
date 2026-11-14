@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "jump and land 10,1.35,0 w",
+    "jump and land 10,2.8,-3.5 s",
+    "jump and land 12.1,5,-4.3 s",
+    "jump and land 12.1,6.6,-1.4 w",
+    "first-flight rail stops sideways movement",
+    "upper lighthouse wall blocks airborne entry",
+    "midair stairs checkpoint lands safely",
+    "reel locks and hazard announcement appears"
+  ],
+  "errors": []
+}

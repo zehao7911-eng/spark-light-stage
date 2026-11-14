@@ -3,7 +3,7 @@ export function makeWorld(scene){
  const palettes={sand:0xe9d4a2,stone:0xc8cfc9,grass:0x99c96a,grassDark:0x578d58,red:0xe34435,cream:0xf1f1e8,navy:0x273942,wood:0xaa7350,darkWood:0x76503a,roof:0x3b7180,metal:0x405b61,glass:0x80c6d2,gold:0xfbd074};
  const mats={};for(const [k,c]of Object.entries(palettes))mats[k]=new T.MeshStandardMaterial({color:c,roughness:k==='metal'?.42:.85});
  const boxG=new T.BoxGeometry(1,1,1),sphereG=new T.SphereGeometry(1,10,8),cylG=new T.CylinderGeometry(1,1,1,12),coneG=new T.ConeGeometry(1,1,8);
- const batches=new Map(),colliders=[],cameraBlocks=[],floors=[],burnables=[],coins=[],trees=[],lamps=[];let roofGroup;
+ const batches=new Map(),colliders=[],cameraBlocks=[],ramps=[],floors=[],burnables=[],coins=[],trees=[],lamps=[];let roofGroup;
  function mat(c){if(mats[c])return mats[c];const key=String(c);return mats[key]??(mats[key]=new T.MeshStandardMaterial({color:c,roughness:.8}));}
  function shape(g,c,x,y,z,sx,sy,sz,rx=0,ry=0,rz=0,parent=null){const m=mat(c);if(parent){const mesh=new T.Mesh(g,m);mesh.position.set(x,y,z);mesh.scale.set(sx,sy,sz);mesh.rotation.set(rx,ry,rz);mesh.castShadow=true;mesh.receiveShadow=true;parent.add(mesh);return mesh;}const key=g.uuid+m.uuid;if(!batches.has(key))batches.set(key,{g,m,items:[]});const o=new T.Object3D();o.position.set(x,y,z);o.scale.set(sx,sy,sz);o.rotation.set(rx,ry,rz);o.updateMatrix();batches.get(key).items.push(o.matrix.clone());}
  const box=(x,y,z,w,h,d,c='cream',ry=0,parent=null)=>shape(boxG,c,x,y,z,w,h,d,0,ry,0,parent);
@@ -21,7 +21,7 @@ export function makeWorld(scene){
  for(let z=-9;z<15;z+=1.1){box(-1.85,.12,z,.17,.2,1.04,'cream');box(1.85,.12,z,.17,.2,1.04,'cream');}
  // Lighthouse: eight-sided shell, side entrance and an exterior switchback stair.
  const tower=new T.Group();scene.add(tower);
- for(let i=0;i<8;i++){const a=i*Math.PI/4;const x=6+Math.sin(a)*2.35,z=-7+Math.cos(a)*2.35;if(i===0){solid(x-1.05,1.65,z,.7,3.3,.38,'cream');solid(x+1.05,1.65,z,.7,3.3,.38,'cream');box(x,3.1,z,2.6,.5,.4,'cream');}else {const m=box(x,1.7,z,2,3.4,.38,'cream',a);colliders.push({x,z,y:0,w:1.7,d:1.2,h:3.4,active:true});}box(x,4.1,z,2,1.4,.38,'red',a);box(x,5.65,z,2,1.7,.38,'cream',a);box(x,7,z,2,1,.4,'red',a);}
+ for(let i=0;i<8;i++){const a=i*Math.PI/4;const x=6+Math.sin(a)*2.35,z=-7+Math.cos(a)*2.35;if(i===0){solid(x-1.05,1.65,z,.7,3.3,.38,'cream');solid(x+1.05,1.65,z,.7,3.3,.38,'cream');box(x,3.1,z,2.6,.5,.4,'cream');colliders.push({x,z,y:2.85,w:2.6,d:.4,h:4.65,active:true});}else {const m=box(x,1.7,z,2,3.4,.38,'cream',a);colliders.push({x,z,y:0,w:2,d:.38,h:7.5,ry:a,active:true});}box(x,4.1,z,2,1.4,.38,'red',a);box(x,5.65,z,2,1.7,.38,'cream',a);box(x,7,z,2,1,.4,'red',a);}
  cyl(6,.12,-7,2.8,.25,'stone');cyl(6,7.6,-7,3.35,.32,'cream');floor(6,-7,6.5,6.5,7.76);floors[floors.length-1].radius=3.3;
  cyl(6,8.6,-7,1.6,1.7,'glass');colliders.push({x:6,z:-7,y:7.76,w:3.25,d:3.25,h:2.2,active:true});for(let i=0;i<8;i++){const a=i*Math.PI/4;box(6+Math.cos(a)*1.6,8.6,-7+Math.sin(a)*1.6,.16,2,.16,'navy');}
  shape(coneG,'red',6,10,-7,2.35,1.5,2.35);cyl(6,10.9,-7,.09,.9,'gold');ball(6,11.4,-7,.18,.18,.18,'gold');
@@ -29,15 +29,19 @@ export function makeWorld(scene){
  const beam=new T.Mesh(new T.ConeGeometry(2,18,16,1,true),new T.MeshBasicMaterial({color:0xffedb0,transparent:true,opacity:.055,side:T.DoubleSide,depthWrite:false}));beam.rotation.z=Math.PI/2;beam.position.x=9;beacon.add(beam);
  for(let i=0;i<20;i++){let a=i/20*Math.PI*2;box(6+Math.sin(a)*3.12,8.2,-7+Math.cos(a)*3.12,.09,.8,.09,'navy');}
  // two generously sized climbing flights, clear heights and matching collision treads.
- for(let i=0;i<16;i++){const y=(i+1)*.24,z=3-i*.58;box(10,y/2,z,2,y,.59,'stone');floor(10,z,2,.6,y);box(11.04,y+.52,z,.075,1.05,.075,'navy');}
+ for(let i=0;i<16;i++){const y=(i+1)*.24,z=3-i*.58;box(10,y/2,z,2,y,.59,'stone');/* continuous flight below */box(11.04,y+.52,z,.075,1.05,.075,'navy');}
  box(11,3.72,-6.1,4.2,.24,2,'stone');floor(11,-6.1,4.2,2,3.84);
- for(let i=0;i<16;i++){const y=3.84+(i+1)*.245,z=-6.1+i*.42;box(12.1,y-.12,z,2,.24,.44,'cream');floor(12.1,z,2,.46,y);box(13.15,y+.5,z,.075,1,.075,'navy');}
+ for(let i=0;i<16;i++){const y=3.84+(i+1)*.245,z=-6.1+i*.42;box(12.1,y-.12,z,2,.24,.44,'cream');/* continuous flight below */box(13.15,y+.5,z,.075,1,.075,'navy');}
+ ramps.push({x:10,w:2,z0:3.3,z1:-5.7,y0:.12,y1:3.84,base:0},{x:12.1,w:2,z0:-6.32,z1:.45,y0:3.96,y1:7.76,base:3.6});
+ // Collision rails follow the slope and stop sideways falls during ordinary movement.
+ for(const ramp of ramps)for(const side of [-1,1])for(let i=4;i<18;i++){const t=(i+.5)/24,z=ramp.z0+(ramp.z1-ramp.z0)*t,y=ramp.y0+(ramp.y1-ramp.y0)*t;const x=ramp.x+side*1.06;box(x,y+.78,z,.09,.09,Math.abs(ramp.z1-ramp.z0)/24+.04,'navy');colliders.push({x,z,y:y+.12,w:.09,d:Math.abs(ramp.z1-ramp.z0)/24+.03,h:.72,active:true});}
  // final walkway back to gallery.
- box(9,7.64,.2,8.2,.24,1.6,'cream');floor(9,.2,8.2,1.6,7.76);box(6,7.64,-1.9,2,.24,4.8,'cream');floor(6,-1.9,2,4.8,7.76);for(let x=5;x<=13;x++){box(x,8.25,1,.075,1,.075,'navy');box(x,8.72,1,1,.08,.08,'navy');}for(let x of [10,12])box(x,3.7,.2,.18,7.4,.18,'navy');
+ box(8.1,7.64,.2,6.4,.24,1.6,'cream');floor(8.1,.2,6.4,1.6,7.76);box(12.2,7.64,.7,1.8,.24,.6,'cream');floor(12.2,.7,1.8,.6,7.76);box(6,7.64,-1.9,2,.24,4.8,'cream');floor(6,-1.9,2,4.8,7.76);for(let x=5;x<=13;x++){box(x,8.25,1,.075,1,.075,'navy');box(x,8.72,1,1,.08,.08,'navy');}for(let x of [8.65,13.25])box(x,3.7,.2,.18,7.4,.18,'navy');
+ for(const [x,z,ww,dd]of [[9,1,8.2,.08],[9,-.6,3.8,.08],[5,-2.4,.08,3.4],[7,-2.4,.08,3.4]]){box(x,8.58,z,ww,.08,dd,'navy');colliders.push({x,z,y:7.8,w:ww,d:dd,h:.8,active:true});}
  text('LIGHTHOUSE',6,3,-4.2,2,.48);
  for(const x of [5.62,6.38])box(x,3.95,-3.98,.07,7.9,.08,'metal');for(let y=.23;y<7.9;y+=.29)box(6,y,-3.98,.8,.055,.09,'metal');
- for(let i=0;i<20;i++){const a=i/20*Math.PI*2,b=(i+1)/20*Math.PI*2,m=(a+b)/2;box(6+Math.sin(m)*3.12,8.58,-7+Math.cos(m)*3.12,1,.08,.08,'navy',m);}
- for(const z of [-10.5,-8,-5.5,-3,.2])box(12.1,Math.max(1,7.5-(z+.2)*.12)/2,z,.16,Math.max(1,7.5-(z+.2)*.12),.16,'navy');
+ for(let i=0;i<20;i++){if(i===0||i===19)continue;const a=i/20*Math.PI*2,b=(i+1)/20*Math.PI*2,m=(a+b)/2;box(6+Math.sin(m)*3.12,8.58,-7+Math.cos(m)*3.12,1,.08,.08,'navy',m);colliders.push({x:6+Math.sin(m)*3.12,z:-7+Math.cos(m)*3.12,y:7.8,w:1,d:.08,h:.8,ry:m,active:true});}
+ for(const z of [-10.5,-8,-5.5,-3,.2])box(13.25,Math.max(1,7.5-(z+.2)*.12)/2,z,.16,Math.max(1,7.5-(z+.2)*.12),.16,'navy');
  for(let z=-11;z<11;z+=3){box(-16,.48,z,.18,.95,.18,'cream');box(16,.48,z,.18,.95,.18,'cream');}
 
  // Internal furniture visible through doorway.
@@ -50,13 +54,14 @@ export function makeWorld(scene){
  for(let xx of [-w*.32,w*.32]){piece(xx,1.6,d/2+.14,w*.2,1.2,.1,'cream');piece(xx,1.62,d/2+.21,w*.16,.9,.06,'glass');piece(xx,1.62,d/2+.25,.055,.9,.07,'navy');piece(xx,1.62,d/2+.25,w*.16,.055,.07,'navy');piece(xx,.85,d/2+.3,w*.25,.25,.45,'wood');for(let k=0;k<4;k++)ball(xx-.3+k*.2,1.03,d/2+.3,.13,.16,.13,'grassDark',g);}
  piece(-.65,1.1,d/2+.18,.09,2.2,.14,'cream');piece(.65,1.1,d/2+.18,.09,2.2,.14,'cream');piece(0,2.15,d/2+.18,1.4,.12,.14,'cream');
  const sign=text(label,0,2.95,d/2+.3,w*.75,.52,'#fff1cf','#294755',0,g);parts.push({m:sign,base:sign.position.clone(),rot:sign.rotation.clone()});
+ piece(-w*.28,3.85,-d*.25,.55,1.5,.55,'cream');piece(-w*.28,4.62,-d*.25,.75,.12,.75,'stone');
  // Interior table, crates and a rug; the house is genuinely enterable.
  piece(0,.21,0,w*.55,.04,d*.5,0xd49a6a);piece(-w*.25,.9,-d*.15,1.1,.15,.9,'wood');piece(-w*.25,.45,-d*.15,.12,.9,.12,'darkWood');piece(w*.25,.5,-d*.27,.8,1,.8,'wood');
- const roofCollider={x,z,y:2.9,w:w+.5,d:d+.5,h:1.2,active:true};cameraBlocks.push(roofCollider);const cs=[roofCollider];for(const [dx,dz,cw,cd]of [[-w/2,0,.3,d],[w/2,0,.3,d],[0,-d/2,w,.3],[-w*.33,d/2,w*.34,.3],[w*.33,d/2,w*.34,.3]]){let c={x:x+dx,z:z+dz,y:0,w:cw,d:cd,h:2.9,active:true};colliders.push(c);cs.push(c);}
- floor(x,z,w,d,.34);let b={x,z,w,d,g,parts,colliders:cs,burnAt,collapsed:false,collapseT:0};const materialCopies=new Map();for(const p of parts){p.rot.copy(p.m.rotation);if(!materialCopies.has(p.m.material))materialCopies.set(p.m.material,p.m.material.clone());p.m.material=materialCopies.get(p.m.material);}burnables.push(b);return b;}
+ const roofCollider={x,z,y:2.9,w:w+.5,d:d+.5,h:1.2,active:true};cameraBlocks.push(roofCollider);colliders.push(roofCollider);const cs=[roofCollider];for(const [dx,dz,cw,cd]of [[-w/2,0,.3,d],[w/2,0,.3,d],[0,-d/2,w,.3],[-w*.33,d/2,w*.34,.3],[w*.33,d/2,w*.34,.3]]){let c={x:x+dx,z:z+dz,y:0,w:cw,d:cd,h:2.9,active:true};colliders.push(c);cs.push(c);}
+ for(const [dx,dz,cw,cd,ch] of [[-w*.25,-d*.15,1.1,.9,.98],[w*.25,-d*.27,.8,.8,1]]){const c={x:x+dx,z:z+dz,y:.34,w:cw,d:cd,h:ch-.34,active:true};colliders.push(c);cs.push(c);}floor(x,z,w,d,.34);let b={x,z,w,d,g,parts,colliders:cs,burnAt,collapsed:false,collapseT:0};for(const m of g.children)if(m.isMesh&&!parts.some(p=>p.m===m))parts.push({m,base:m.position.clone(),rot:m.rotation.clone()});const materialCopies=new Map();for(const p of parts){p.rot.copy(p.m.rotation);if(!materialCopies.has(p.m.material))materialCopies.set(p.m.material,p.m.material.clone());p.m.material=materialCopies.get(p.m.material);}burnables.push(b);return b;}
  cottage(-8,-4,5.5,5,0xe4ae77,'KEEPER’S HOUSE',21);cottage(-9,6,4.5,4.2,0x7bacb7,'COASTAL SUPPLIES',4);cottage(11,8,4,4,0xf1ce89,'BOATHOUSE',38);
  // Cottage chimneys / roofs have layered edge trim rather than featureless cubes.
- for(const p of [[-9,-5],[11,7]]){box(p[0],4,p[1],.7,2,.7,'cream');box(p[0],5.05,p[1],.9,.18,.9,'stone');}
+ // Chimneys belong to each destructible cottage, so they fall with it.
  // Harbour railings, plank dock and bollards.
  box(0,-.12,20,4.5,.35,9,'darkWood');floor(0,20,4.5,9,.055);for(let z=16;z<24.5;z+=.42)box(0,.1,z,4.5,.14,.36,'wood');
  for(let z=16;z<25;z+=2){for(let s of [-1,1]){cyl(s*2.25,-.5,z,.17,2.3,'darkWood');ball(s*2.25,.72,z,.2,.12,.2,'cream');if(z<22)box(s*2.25,.55,z+1,.09,.1,2,'cream');}}
@@ -71,7 +76,7 @@ export function makeWorld(scene){
  // Lamps, benches, barrels, ropes and mooring details.
  for(const [x,z]of [[-2.7,9],[2.7,5],[-2.7,-5],[3,-11]]){cyl(x,1.3,z,.065,2.6,'navy');box(x,2.65,z,.43,.55,.43,'cream');box(x,2.95,z,.6,.13,.6,'navy');shape(coneG,'navy',x,3.1,z,.42,.3,.42);}
  for(let side of [-1,1]){let x=side*4,z=10;for(let k=0;k<3;k++)box(x,.65,z+k*.2,2,.1,.16,'wood');for(let a of [-.8,.8]){box(x+a,.3,z+.2,.12,.6,.5,'navy');box(x+a,1.1,z-.15,.1,.95,.1,'navy');}box(x,1.35,z-.15,2,.25,.1,'wood');}
- for(const [x,z]of [[-5,6],[-12,3],[13,10],[9,-3]]){cyl(x,.5,z,.4,1,'wood');cyl(x,.18,z,.42,.08,'navy');cyl(x,.8,z,.42,.08,'navy');}
+ for(const [x,z]of [[-5,6],[-12,3],[13,10],[9,-3]]){colliders.push({x,z,y:0,w:.75,d:.75,h:1,active:true});cyl(x,.5,z,.4,1,'wood');cyl(x,.18,z,.42,.08,'navy');cyl(x,.8,z,.42,.08,'navy');}
  // A small flag ripples, the lighthouse beam rotates, gulls circle above.
  cyl(-3,2.5,12,.055,5,'cream');const flag=new T.Mesh(new T.PlaneGeometry(1.6,.8,8,2),new T.MeshStandardMaterial({color:0xe2644c,side:T.DoubleSide}));flag.position.set(-2.2,4.4,12);scene.add(flag);
  const boat=new T.Group();boat.position.set(0,-.15,30);scene.add(boat);box(0,0,0,3,.6,5.6,'cream',0,boat);box(0,-.25,0,2.6,.4,5,'red',0,boat);box(0,.45,-.4,2.4,.35,3,'wood',0,boat);box(0,1.15,-.9,2,1.2,1.8,'cream',0,boat);box(0,1.25,.02,1.5,.6,.04,'glass',0,boat);box(0,1.8,-.9,2.3,.16,2,'roof',0,boat);for(let s of [-1,1])for(let z of [-2,1.9])ball(s*1.4,.2,z,.18,.32,.3,'navy',boat);cyl(0,2.1,-1.6,.04,.7,'navy',boat);
@@ -83,10 +88,14 @@ export function makeWorld(scene){
  const ripples=new T.Group();scene.add(ripples);for(let i=0;i<95;i++){let x=Math.sin(i*4.34)*65,z=Math.cos(i*3.77)*65;if(Math.abs(x)<19&&Math.abs(z)<25)continue;box(x,-1.02,z,1+(i%4)*.6,.012,.055,0x9adbd7,0,ripples);}
  // Batches dramatically reduce mobile draw calls while preserving prop details.
  for(const {g,m,items}of batches.values()){const inst=new T.InstancedMesh(g,m,items.length);items.forEach((v,i)=>inst.setMatrixAt(i,v));inst.castShadow=true;inst.receiveShadow=true;scene.add(inst);}
- function height(x,z,feet=0,maxStep=.32){let h=-20;for(let f of floors){if(f.active&&(f.radius?Math.hypot(x-f.x,z-f.z)<=f.radius:Math.abs(x-f.x)<=f.w/2&&Math.abs(z-f.z)<=f.d/2)&&f.y<=feet+maxStep)h=Math.max(h,f.y);}return h;}
- const cameraCollision=[...colliders,...cameraBlocks];function blocked(x,z,y,r=.31,forCamera=false){for(let c of forCamera?cameraCollision:colliders){if(c.active&&(forCamera?y-r<c.y+c.h&&y+r>c.y:y+.1<c.y+c.h&&y+1.65>c.y)&&Math.abs(x-c.x)<c.w/2+r&&Math.abs(z-c.z)<c.d/2+r)return true;}return false;}
- function reset(){for(let c of coins){c.taken=false;c.g.visible=true;}for(let b of burnables){b.collapsed=false;b.collapseT=0;for(let c of b.colliders)c.active=true;for(let p of b.parts){p.m.position.copy(p.base);p.m.rotation.copy(p.rot);if(p.baseColor)p.m.material.color.copy(p.baseColor);if(p.m.material.emissive)p.m.material.emissiveIntensity=0;}}exit.visible=false;boat.position.set(0,-.15,30);}
- return{box,ball,mat,text,colliders,floors,burnables,coins,beacon,boat,exit,flag,ripples,height,blocked,reset,scene};
+ function rampAt(r,x,z){if(Math.abs(x-r.x)>r.w/2+.08||z<Math.min(r.z0,r.z1)||z>Math.max(r.z0,r.z1))return null;return r.y0+(r.y1-r.y0)*(z-r.z0)/(r.z1-r.z0);}
+ function height(x,z,feet=0,maxStep=.32){let h=-20;for(const f of floors){if(f.active&&(f.radius?Math.hypot(x-f.x,z-f.z)<=f.radius:Math.abs(x-f.x)<=f.w/2+.035&&Math.abs(z-f.z)<=f.d/2+.035)&&f.y<=feet+maxStep)h=Math.max(h,f.y);}for(const r of ramps){const y=rampAt(r,x,z);if(y!==null&&y<=feet+maxStep)h=Math.max(h,y);}return h;}
+ function overlaps(c,x,z,r){const a=c.ry||0,dx=x-c.x,dz=z-c.z,u=dx*Math.cos(a)-dz*Math.sin(a),v=dx*Math.sin(a)+dz*Math.cos(a);return Math.abs(u)<c.w/2+r&&Math.abs(v)<c.d/2+r;}
+ const cameraCollision=[...new Set([...colliders,...cameraBlocks])];function blocked(x,z,y,r=.52,forCamera=false){for(const c of forCamera?cameraCollision:colliders){if(c.active&&(forCamera?y-r<c.y+c.h&&y+r>c.y:y+.12<c.y+c.h&&y+1.95>c.y)&&overlaps(c,x,z,r))return true;}if(forCamera){for(const ramp of ramps){if(Math.abs(x-ramp.x)>ramp.w/2+r)continue;const top=rampAt(ramp,ramp.x,z);if(top!==null&&y-r<top&&y+r>(ramp.base===0?0:top-.24))return true;}for(const f of floors){if(f.y>1&&y-r<f.y&&y+r>f.y-.25&&(f.radius?Math.hypot(x-f.x,z-f.z)<f.radius+r:Math.abs(x-f.x)<f.w/2+r&&Math.abs(z-f.z)<f.d/2+r))return true;}}if(!forCamera)for(const ramp of ramps){if(Math.abs(x-ramp.x)>ramp.w/2+r)continue;const top=rampAt(ramp,ramp.x,z);if(top!==null&&y+.52<top&&y+1.95>ramp.base)return true;}return false;}
+ function recover(p){for(const r of ramps){const top=rampAt(r,r.x,p.z);if(top!==null&&p.y+.52<top&&p.y+1.95>r.base&&Math.abs(p.x-r.x)<r.w/2+.53)p.x=r.x+(p.x<r.x?-1:1)*(r.w/2+.54);}}
+ function ceiling(x,z,feet,next){let result=next;for(const c of colliders){if(c.active&&overlaps(c,x,z,.35)&&feet+1.95<=c.y+.02&&next+1.95>=c.y)result=Math.min(result,c.y-1.95);}return result;}
+ function reset(){for(let c of coins){c.taken=false;c.g.visible=true;}for(let b of burnables){if(b.rubble){b.g.remove(b.rubble);b.rubble.children.forEach(m=>m.dispose?.());b.rubble=null;}b.parts.forEach(p=>p.m.visible=true);b.collapsed=false;b.collapseT=0;for(let c of b.colliders)c.active=true;for(let p of b.parts){p.m.position.copy(p.base);p.m.rotation.copy(p.rot);if(p.baseColor)p.m.material.color.copy(p.baseColor);if(p.m.material.emissive)p.m.material.emissiveIntensity=0;}}exit.visible=false;boat.position.set(0,-.15,30);}
+ return{box,ball,mat,text,colliders,floors,burnables,coins,beacon,boat,exit,flag,ripples,height,blocked,ceiling,recover,reset,scene};
 }
 
 // Original block-proportioned streetwear characters, with a separately damped visual rig.
@@ -98,10 +107,10 @@ export function character(scene,{shirt=0x26313d,hair=0x925026,skin=0xf0c69e,hat=
  const torso=part(rig,0,1.13,0,.72,.7,.39,shirt);part(rig,0,.83,0,.73,.09,.41,shirt);part(rig,0,1.43,.08,.28,.08,.27,skin);part(rig,0,1.36,-.14,.5,.24,.22,shirt,.06);
  for(let side of [-1,1])part(rig,side*.12,1.32,.218,.018,.19,.025,0xe6e9df,.006);
  part(rig,0,1.01,.219,.36,.16,.035,shirt,.015);part(rig,0,.94,.241,.29,.013,.01,0x49515b,.004);
- const head=new T.Group();head.position.y=1.72;rig.add(head);part(head,0,0,0,.5,.48,.45,skin,.07);for(let side of [-1,1]){part(head,side*.252,-.015,-.015,.065,.13,.13,skin,.025);part(head,side*.1,.015,.234,.044,.067,.02,0x202832,.008);part(head,side*.1,.084,.235,.078,.016,.02,hair,.005);}
+ const head=new T.Group();head.position.y=1.72;head.scale.set(1.08,1.06,1.08);rig.add(head);part(head,0,0,0,.5,.48,.45,skin,.07);for(let side of [-1,1]){part(head,side*.252,-.015,-.015,.065,.13,.13,skin,.025);part(head,side*.1,.015,.234,.044,.067,.02,0x202832,.008);part(head,side*.1,.084,.235,.078,.016,.02,hair,.005);}
  const smile=new T.QuadraticBezierCurve3(new T.Vector3(-.1,-.105,.24),new T.Vector3(0,-.185,.26),new T.Vector3(.1,-.105,.24));head.add(new T.Mesh(new T.TubeGeometry(smile,10,.009,5,false),material(0x855a45)));
  part(head,0,.23,-.04,.53,.12,.44,hair,.06);part(head,0,.1,-.22,.51,.25,.08,hair,.025);
- for(let i=0;i<9;i++){const a=i*.53;const tuft=part(head,-.24+i*.055,.245+Math.sin(a)*.06,.12,.105,.16,.27,i%3?hair:0xab6936,.035);tuft.rotation.z=-.55+i*.08;tuft.rotation.x=.18+Math.sin(a)*.15;}
+ for(let i=0;i<7;i++){const a=i*.65;const tuft=part(head,-.23+i*.075,.245+Math.sin(a)*.06,.12,.14,.18,.29,i%3?hair:0xab6936,.035);tuft.rotation.z=-.55+i*.08;tuft.rotation.x=.18+Math.sin(a)*.15;}
  for(let s of [-1,1]){const side=part(head,s*.235,.08,-.035,.08,.24,.32,hair,.03);side.rotation.z=s*.12;}
  if(hat){part(head,0,.31,-.02,.57,.15,.48,0xe8b846);part(head,0,.26,.2,.6,.05,.5,0xe8b846,.02);}
  const limbs=[],knees=[];for(let s of [-1,1]){

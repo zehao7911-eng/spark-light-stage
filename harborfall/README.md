@@ -34,4 +34,6 @@ The supplied official Feishu SDK URL was rechecked but could not be fetched duri
 
 ## Verification scope
 
+Version 1.2 improves the same island with continuous staircase support, swept landing, rotated full-height lighthouse walls, solid roof undersides and furniture, and climb-route guardrails. The HUD uses stronger outlines and brighter health and jump controls. The disaster reel highlights passing cards and the locked selection, then shows a brief hazard-specific warning. Meteor impacts generate pooled expanding shockwaves. Save keys and the three existing disasters are retained.
+
 Desktop Chrome with emulated native touch; portrait 320×568, 390×844 and 430×932; landscape 844×390. Native movement, jumping, full lighthouse climb and escape route, fire damage, first aid, defeat/retry, checkpoint/reload, saved victory and SDK event logic checked. Some branch tests use controlled saved-state fixtures. This is not a physical handset performance certification or a quality rating from the reference platform.
