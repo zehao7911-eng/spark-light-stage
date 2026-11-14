@@ -1,0 +1,30 @@
+[
+  {
+    "width": 320,
+    "height": 568,
+    "coreActionsVisibleWithoutScrolling": true,
+    "advancedMenu": true,
+    "atlasEmbedded": true
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "coreActionsVisibleWithoutScrolling": true,
+    "advancedMenu": true,
+    "atlasEmbedded": true
+  },
+  {
+    "width": 844,
+    "height": 390,
+    "coreActionsVisibleWithoutScrolling": false,
+    "advancedMenu": true,
+    "atlasEmbedded": true
+  },
+  {
+    "width": 1280,
+    "height": 800,
+    "coreActionsVisibleWithoutScrolling": false,
+    "advancedMenu": true,
+    "atlasEmbedded": true
+  }
+]

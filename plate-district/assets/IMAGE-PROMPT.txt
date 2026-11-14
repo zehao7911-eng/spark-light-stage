@@ -1,0 +1,6 @@
+Tool: built-in image_gen (no API/CLI fallback)
+Output: ui-icons-v5.png
+Usage: CSS background windows; no painted labels or buttons. Both standalone HTML entry points embed the atlas.
+
+Final prompt:
+Create a production game UI icon atlas on a transparent background, square canvas, exactly a 3 column by 2 row grid of 6 equally sized icons, each perfectly centered in its cell with generous 20 percent transparent padding, no overlap. Premium Roblox garage number-plate collector interface, restrained clean beveled enamel 3D icons, soft studio light top left, readable small silhouettes, not busy. Row 1 left: blue small garage building with open dark entrance and white license plate. Row 1 center: violet upward upgrade arrow with a small cog at base. Row 1 right: green checklist clipboard with two crisp check marks. Row 2 left: amber work toolbox with spanner. Row 2 center: mint green luck potion bottle with ivory cork and white four-point star. Row 2 right: silver-white car license plate with dark blank embossed bars, a mint circular refresh arrow curving around it. No words, no letters, no numerals, no labels, no background plates, no frames, no watermark. Consistent lighting, outline thickness, proportions, restrained highlights and charcoal edge shadows, polished mobile game asset sheet. All six icons are separate reusable images in one exact regular grid.
