@@ -1,0 +1,15 @@
+{
+  "gestureGated": true,
+  "musicSchedules": true,
+  "musicTogglePersisted": true,
+  "masterMuteSuspends": true,
+  "simulatedVisibilityPauseResume": true,
+  "rareDucking": true,
+  "threeNPCs": true,
+  "boundedFeed": true,
+  "noNPCSaveMutations": true,
+  "navigationWithNPCObstacles": true,
+  "errors": [],
+  "physicalPhone": false,
+  "realGameWaveHost": false
+}

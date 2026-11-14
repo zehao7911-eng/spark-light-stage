@@ -56,3 +56,13 @@ The hairless avatar now has a curved face decal conforming to its cylinder head,
 Actual rare results highlight locked glyphs, add a short rising tone before the final column, and reveal with a tier-colored banner, two expanding rings, graded confetti and value count-up. Dark numerals remain readable on white plates. Keep/Sell trigger distinct bounded transfer animations to the collection/balance; all particles are reclaimed and reduced-motion settings suppress them. No odds, balances, progression or SDK round definitions were changed. Audio uses the existing gesture/mute lifecycle.
 
 Verified: actual navigation and camera collision, touch movement plus camera/cancellation, auto-generation lifecycle, rare reveal/cleanup, reduced motion, profile reload, full gameplay and SDK mocks. Official SDK document retrieval was retried but inaccessible. Physical mobile devices and actual GameWave host tests remain pending.
+
+
+## Neighborhood and music revision 7
+Six new icons were generated with built-in image_gen using the supplied recording frame as a style reference. The atlas and exact prompt are under assets/ui-icons-v7.png and assets/IMAGE-PROMPT-v7.txt. All actionable labels remain native English HTML. Panel highlights and button states now use a consistent blue/mint palette.
+
+Original BGM: "After Hours Plates", 104 BPM, sixteen bars (about 37 seconds), synthesized at runtime using Web Audio. Bass, kick, high percussion, chords and two melodic variations loop without an external audio/CDN dependency. Playback begins only after a gesture; More options contains a persistent music toggle, while the master sound button silences music and SFX. Music ducks during player rolling/reveal and suspends when hidden. Each scheduled voice ends and disconnects. No commercial recording or copied Roblox audio is used.
+
+Three clearly labelled NPC collectors periodically roll and display independently simulated plates/values, with idle/rolling/celebration poses and in-world nameplates. The bounded neighborhood feed mirrors their visible outcomes. NPC RNG, displayed values and events never modify player balance, inventory, roll count or SDK rounds. NPC positions have collision obstacles and do not block the main exit. The scene remains single-player; these are not live users or multiplayer transactions.
+
+Evidence: Chrome touch-emulated flow, independent NPC progression, bounded feed, gesture unlock, music mute/reload, ducking, synthetic visibility pause/resume, collision navigation, SDK mocks, and byte-for-byte published entry/archive checks. Physical phones and real GameWave host import remain unverified.
