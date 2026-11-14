@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#151c28"><title>Plate District — Collector's Garage</title><link rel="icon" href="icon.svg"><link rel="stylesheet" href="style.css"></head><body>
+<canvas id="world" aria-label="Interactive 3D garage"></canvas><div class="vignette"></div>
+<header><div class="brand"><i>PD</i><span>PLATE DISTRICT<small>COLLECTOR'S GARAGE</small></span></div><button id="audio" class="square" aria-label="Toggle sound"></button><button id="help" class="square" aria-label="How to play">?</button></header>
+<div id="event"><span class="pulse"></span><span id="eventText">Every 10th plate is Rare or better</span></div>
+<nav id="nav"></nav><div id="sceneTip">Drag to look around</div>
+<main id="panel" class="panel"><div class="panelHead"><span id="panelTitle">PLATE GENERATOR</span><button id="minimize" class="square" aria-label="Minimize panel">−</button></div><div id="body"></div></main>
+<button id="open" hidden>OPEN GENERATOR</button><div id="toast" role="status" aria-live="polite"></div><div id="sparks"></div>
+<footer><div class="profileBadge">P</div><div class="balance"><small>BALANCE</small><strong id="cash">5,000</strong></div><div class="footerStat"><small>GARAGE</small><strong id="count">0 / 12</strong></div><button id="rent" title="Collect showroom income"></button></footer>
+<div id="modal" hidden><div class="dialog"><button id="close" class="square" aria-label="Close dialog">×</button><div id="modalBody"></div></div></div>
+<script src="vendor/three.min.js"></script><script type="module" src="main.mjs"></script></body></html>

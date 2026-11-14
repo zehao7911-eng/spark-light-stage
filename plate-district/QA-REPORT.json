@@ -1,0 +1,22 @@
+{
+  "generationDistribution": true,
+  "tenRollGuarantee": true,
+  "touchRollKeepSell": true,
+  "missionClaim": true,
+  "upgrade": true,
+  "workShift": true,
+  "pendingReload": true,
+  "inventorySaleReload": true,
+  "mutePersistence": true,
+  "scopedSave": true,
+  "SDKActualRounds": true,
+  "duplicateRewardGuards": true,
+  "viewports": [
+    "320x568",
+    "390x844",
+    "844x390"
+  ],
+  "errors": [],
+  "physicalPhone": false,
+  "actualGameWaveHost": false
+}
