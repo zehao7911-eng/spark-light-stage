@@ -46,3 +46,13 @@ Verified in desktop Chrome mobile emulation: actual two-pointer movement plus ca
 
 ## Clearer interface revision 5
 The generator now teaches two actions: Generate, then Keep or Sell. Outcome buttons state immediate credits versus income per minute. Advanced potion and automatic generation controls moved into More options; collection, upgrades, tasks and earning remain labelled. A six-icon enamel atlas made using the built-in image tool is saved in assets/ui-icons-v5.png, with the exact prompt in assets/IMAGE-PROMPT.txt. The atlas is embedded in both standalone HTML files, while all labels, values, controls and hit areas remain native HTML. It is an interpretation of the recorded hierarchy, not copied original Roblox UI assets. Portrait 320x568 and 390x844 core actions are checked fully visible without scrolling; landscape and desktop menus are exercised. Existing economy, favorite protection, potion timers, movement, save key and SDK lifecycle are preserved. Physical phone and real GameWave host remain unverified.
+
+
+## Recording detail revision 6
+Navigation uses the recorded colored-outline approach rather than the heavier generated enamel buttons; inventory retains its reusable potion artwork. The generator title is centered, with a compact right-hand district selector on desktop. Native English text and portrait core-action visibility remain intact.
+
+The hairless avatar now has a curved face decal conforming to its cylinder head, an original blue shirt motif, belt, trouser seams and shoe soles/laces. Arm swing is reduced to stay inside the swept movement envelope. Garage floor, plaster and wood use seeded procedural texture detail; keyboard, mouse and monitor status details stay inside the existing desk bounds. Camera drag has a seven-pixel threshold to distinguish taps from orbit gestures.
+
+Actual rare results highlight locked glyphs, add a short rising tone before the final column, and reveal with a tier-colored banner, two expanding rings, graded confetti and value count-up. Dark numerals remain readable on white plates. Keep/Sell trigger distinct bounded transfer animations to the collection/balance; all particles are reclaimed and reduced-motion settings suppress them. No odds, balances, progression or SDK round definitions were changed. Audio uses the existing gesture/mute lifecycle.
+
+Verified: actual navigation and camera collision, touch movement plus camera/cancellation, auto-generation lifecycle, rare reveal/cleanup, reduced motion, profile reload, full gameplay and SDK mocks. Official SDK document retrieval was retried but inaccessible. Physical mobile devices and actual GameWave host tests remain pending.

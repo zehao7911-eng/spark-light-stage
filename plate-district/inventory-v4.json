@@ -1,8 +1,0 @@
-{
-  "migration": true,
-  "oddsNormalized": true,
-  "useOnce": true,
-  "timedBoostPersists": true,
-  "craftConsumesTen": true,
-  "strongPotion": true
-}
