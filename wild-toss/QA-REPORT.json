@@ -1,7 +1,9 @@
 {
-  "mobile_touch": "Chrome 390x844 touch: three-throw round, discoveries, upgrade, reload, album passed",
-  "SDK_mocks": "absent, partial, late, async failure/cleanup, callbacks, duplicate guards passed; actual game lifecycle/save isolation passed",
-  "actual_GameWave_App": "not tested",
-  "physical_phone": "not tested",
-  "reference_native_play": "server/window blocked; not claimed 1:1"
+  "touchThrow": true,
+  "catch": true,
+  "penIncome": true,
+  "train": true,
+  "saveReload": true,
+  "hostMocks": true,
+  "errors": []
 }

@@ -1,19 +1,21 @@
-# Wild Toss — Snack Safari
+# Wild Toss — Animal Tycoon (recording-driven revision)
 
-English, portrait-first WebGL game. Hold the burger button, release to throw. Slide sideways while holding to adjust aim. Feed animals, collect coins, upgrade range, and discover nine friends. Three throws form a safari; the collection and upgrades persist. Sound starts only after an interaction. All content is local and the standalone entry has no network dependencies.
+This revision is based on the user's 223-second desktop recording of Roblox Throw Food For Animals, captured 2026-11-14. Official reference: https://www.roblox.com/games/120219252362013/Throw-Food-For-Animals (universe 10766972131). Native Roblox inspection returned connection error 279; the user recording supplied observable reference evidence. This is independently authored HTML5, not extracted Roblox source and not a full original-game reproduction.
 
-## Files
-`index.html` in the release ZIP is the self-contained playable entry, identical to `standalone.html`. Open it directly or serve over HTTPS. `index-source.html`, modules, styles, assets and the Three.js MIT license are included for editing.
+## Play
+Use the thumbstick / WASD to walk. Drag the world to turn the camera; tap the arrow / Space to jump. The green context button walks to the throw line, starts aiming, throws, or interacts with nearby stations. Tap when the vertical slider is high. After the reveal, take your animal home, walk into the pen and place it. Placed animals generate cash each second. Train on the pull-up stand to gain levels and Throw Power; upgrade the stand and buy better food with earned cash. Inventory allows placing, storing and selling animals. No payment or Robux required.
 
-## Reference and assets
-Inspired by the user's Roblox recommendation screenshot and the publicly described food-throwing/animal-collection concept of Feed the Animals (Roblox place 10766972131). The native reference server did not finish joining during inspection. This is an independently implemented HTML5 game, not a Roblox project export or a verified 1:1 reproduction. Animal meshes, world, animation and controls are authored here. Four UI icons were generated together with OpenAI image generation for a coherent atlas.
+## Observed changes
+Replaced the old fixed animal lane / three-throw safari with free movement, a fenced home pen, pull-up training, food purchases, capture reveals and passive income. Rebuilt block avatar, hair, articulated locomotion, studded/checkered floor, canyon walls, geometric trees, colored regions, outlined type, side HUD and vertical power meter. HUD atlas was generated to follow the reference icon treatment. Models, UI and code are reconstructions, not the original assets.
 
-## Save and host integration
-Only `wild-toss.profile.v1` is used in localStorage. Cloud envelope: `{game:'wild-toss',v:1,profile:{coins,power,best,found,rounds,rewards,sound}}`. Collection, maximum power, best throw and claimed cosmetic flags merge monotonically; a higher completed-safari counter is authoritative for cloud coins. This is device/profile persistence, not server-authoritative multiplayer currency.
+Current scope: 12 species, four regions, five foods, six training bars, Normal/Gold/Rainbow variants, nine pen slots, inventory, selling, index, touch controls, camera and save persistence. The original full animal roster, exact numerical economy, multiplayer, live events, premium shop and all original regions are not replicated. Only the shown interaction structure is the reference target; do not advertise 100% original fidelity.
 
-Optional `window.neonlib`: gameStart on first committed throw of each safari/session, gameOver at the third throw's completed result. Standalone operation never awaits host discovery. Positive like unlocks golden trail; direct comment (including image-only empty content) unlocks purple reward bursts. Flags prevent repeated rewards within the supported save scope. Unlike gives no reward. Listener registration, late SDK, failures and cleanup are guarded.
+## Package
+Release ZIP root `index.html` and `standalone.html` are identical self-contained HTML. No external scripts/CDN/font/image requests. Source files are also included: `index-source.html`, `main.mjs`, `scene.mjs`, `sdk.mjs`, `ui-v2.css`, assets, Three.js and its MIT license. WebGL is required. UI is English, portrait-first with landscape support.
 
-Official SDK URL rechecked 2026-11-14 but inaccessible to the web reader; implemented against workspace GAMEWAVE-SDK-PROMPT.md. Browser/mobile viewport tests and mock SDK tests are not real physical-device or actual GameWave App certification. A supported GameWave host import must still be tested by the importer.
+## Persistence / GameWave
+Existing localStorage key `wild-toss.profile.v1` is preserved. Internal schema version 2 migrates old coins/power/found/reward flags, retains legacy discovery values and names, and maps legacy animals to the current model roster. `pets`, `discovered`, `soldIds`, `level`, `xp`, `bar`, `food`, `foodOwned`, timestamps and cosmetic flags are saved. At most one hour of offline pen income is credited. Cloud envelope remains `{game:'wild-toss',v:1,profile:...}`. Newer timestamp profile supplies currency; discovery/unlock/reward sets merge; sold IDs prevent late-cloud resurrection. No other game's localStorage is read, uploaded or cleared.
 
-## Scope
-Nine animal discoveries, power upgrades, repeated three-throw safaris, local synthesized feedback. No paid currency, accounts or online multiplayer. Needs WebGL; tested in Chrome desktop mobile emulation. Original Roblox assets/code are not included.
+Each committed throw starts a host round; accepting its captured animal ends the round once. Movement, shop browsing and training do not fake round events. A pending throw is abandoned on reload; banked inventory/progression remain. Optional current-player positive-like callback unlocks golden trail; direct-comment callback including empty content unlocks colored catch particles. Rewards use durable per-profile flags, and unlike grants nothing. SDK is optional; absent, partial, late, rejected and asynchronous cleanup paths are handled. Supported callbacks are not replayed from historical engagement.
+
+Official SDK document rechecked November 14 but inaccessible to web reader. Implementation follows GAMEWAVE-SDK-PROMPT.md. Mock SDK tests and browser touch emulation passed; actual supported GameWave App import/callbacks and physical iOS/Android devices remain unverified. Do not present browser emulation as real-device certification.
