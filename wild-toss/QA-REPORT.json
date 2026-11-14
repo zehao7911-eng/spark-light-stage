@@ -1,4 +1,6 @@
 {
+  "boundedParticles": true,
+  "carriedAnimal": true,
   "touchThrow": true,
   "catch": true,
   "penIncome": true,
