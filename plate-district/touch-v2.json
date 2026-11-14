@@ -1,6 +1,0 @@
-{
-  "CDPMultiTouchCamera": true,
-  "cancelClearsPointer": true,
-  "touchUIAfterCancel": true,
-  "physicalPhone": false
-}

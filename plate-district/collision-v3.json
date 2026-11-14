@@ -1,0 +1,7 @@
+{
+  "pathSteps": 1008,
+  "wallDoorDeskNavigation": true,
+  "sweptMovementDirections": 1000,
+  "cameraRayDirections": 1000,
+  "avatarRadius": 0.95
+}
