@@ -56,7 +56,7 @@ function makeWorld(scene){
  shape(coneG,'red',6,10,-7,2.35,1.5,2.35);cyl(6,10.9,-7,.09,.9,'gold');ball(6,11.4,-7,.18,.18,.18,'gold');
  const beacon=new T.Group();beacon.position.set(6,8.7,-7);scene.add(beacon);box(0,0,0,.65,.7,.7,'gold',0,beacon);
  const beam=new T.Mesh(new T.ConeGeometry(2,18,16,1,true),new T.MeshBasicMaterial({color:0xffedb0,transparent:true,opacity:.055,side:T.DoubleSide,depthWrite:false}));beam.rotation.z=Math.PI/2;beam.position.x=9;beacon.add(beam);
- for(let i=0;i<20;i++){let a=i/20*Math.PI*2;box(6+Math.sin(a)*3.12,8.2,-7+Math.cos(a)*3.12,.09,.8,.09,'navy');}
+ for(let i=1;i<20;i++){let a=i/20*Math.PI*2;box(6+Math.sin(a)*3.12,8.2,-7+Math.cos(a)*3.12,.09,.8,.09,'navy');}
  // two generously sized climbing flights, clear heights and matching collision treads.
  for(let i=0;i<16;i++){const y=(i+1)*.24,z=3-i*.58;box(10,y/2,z,2,y,.59,'stone');/* continuous flight below */box(11.04,y+.52,z,.075,1.05,.075,'navy');}
  box(11,3.72,-6.1,4.2,.24,2,'stone');floor(11,-6.1,4.2,2,3.84);
