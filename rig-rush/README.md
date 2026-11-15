@@ -1,4 +1,15 @@
-# RIG RUSH
+# RIG RUSH — PET FRONTIER
+
+## Current release: PET FRONTIER
+
+This section supersedes the historical hatchery notes below. POCKET FARM opens one scrolling, connected 2D world with ten regions: Grassland, Badlands, Icefield, Jungle, Plaguelands, Alien, High Tech, Future Tech, Doomsday Tech and Cosmos. Return an egg to HOME to unlock the next region. Tap or drag to move; WASD/arrows also work. Take an egg, escape its guardian, return to one of six nests, wait for growth, then hatch and equip. No FPS purchase is required.
+
+There are 60 new pets, six per region, plus all nine legacy pets. Six rarities use base odds 40/27/17/9/5/2 percent. Every fifth egg guarantees Rare or better; every twentieth guarantees Mythic. Five standard roles boost movement, training, computer income, hatch speed or provide a protective shield. Each region's Mythic has a distinct implemented skill: dash, concealment, rescue freeze, snare, decoy, extended pickup radius, temporary double income, time freeze, two shields or two-egg carrying. Exact values and timing are displayed in the collection and defined in core.mjs/frontier.mjs. One pet is equipped at a time. Equipment changes are blocked while carrying eggs. Timers, region progress, cargo, collection and pending hatches save to the existing game-specific profile.
+
+New artwork consists of an original 60-pet atlas and continuous ten-region background generated from the approved art direction. WebP copies are lossless and decoded pixel equality was checked. The HTML embeds all runtime art, character model and code. Farm pets have movement/bobbing rather than independent multi-frame sprite animations. The home/table displays up to twelve owned species at once; all owned pets remain in the collection. This is an authored expansion, not extracted Roblox assets or an exact original-game economy.
+
+Validation: browser touch take/return, actual two-region traversal, real-time 45-second hatch/equip, reload, all 60 collection entries, mobile viewport layout, controlled tests of all ten Mythic effects and standard bonuses, legacy migration and game-specific cloud save mocks. See QA files. Physical Android/iOS performance and actual GameWave App import/host callbacks remain pending. This release does not certify other games.
+
 
 An English, portrait-friendly 3D browser computer workshop. Collect individual components, fit eight different categories into one computer for passive FPS income, walk onto the treadmill to train automatically, and explore three circuits.
 

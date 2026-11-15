@@ -1,0 +1,4 @@
+Original generated artwork for PET FRONTIER.
+Pet atlas: six columns by ten rows, 60 distinct pixel-art pets; region rows Grassland through Cosmos, rarity columns Common through Mythic. Transparent background. Consistent silhouette, lighting and pixel density.
+World: continuous vertical pixel-art environment, Cosmos at top to Grassland/home at bottom, connected central route, no baked UI or text.
+Both generated PNG originals are retained in the working project; shipped WebP versions are lossless with decoded pixels verified identical.

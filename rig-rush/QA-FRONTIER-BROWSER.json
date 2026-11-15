@@ -1,0 +1,15 @@
+{
+  "twoConnectedRegions": true,
+  "realTakeEscapeDeliver": true,
+  "actual45SecondHatch": true,
+  "reloadGrowth": true,
+  "equipNewPet": true,
+  "sixtyCollectionEntries": true,
+  "viewports": [
+    390,
+    320,
+    844
+  ],
+  "sdkRounds": true,
+  "errors": []
+}
