@@ -100,3 +100,7 @@ Tests: complete real-time take/escape/plant/45-second/hatch/equip flow, reload, 
 
 ## Startup update
 The GitHub Pages entry is a lightweight HTML shell with a versioned runtime. Workshop resources load first; farm world and pet atlases load when needed. A loading/retry panel replaces a blank startup. The ZIP root index.html remains the fully embedded standalone build for offline use and GameWave import. Saves and gameplay events are unchanged. Desktop Chromium touch emulation is not physical-phone or GameWave-host validation.
+
+## Open frontier update
+All ten regions can be entered and their eggs taken from the start. There is no return-to-unlock barrier. Each region retains its biome and has three times its former area (both axes scaled by sqrt(3)); character size is unchanged. Guardian speed rises from 180 to 432 across regions. Player farm speed is 205 + 0.6 * training speed (before pet bonuses), making training and pets useful for escaping deeper regions. Guards chase after an egg is taken; empty-handed exploration remains safe. Red edge warnings indicate close pursuit.
+Existing frontierVersion 1 coordinates are scaled once into version 2, preserving cargo, pets, growing eggs, PCs and all other progress. Legacy frontierUnlocked is retained as historical progression, not used for access. GameWave round semantics are unchanged. Official SDK document was inaccessible on recheck; actual host and physical-phone tests remain pending.

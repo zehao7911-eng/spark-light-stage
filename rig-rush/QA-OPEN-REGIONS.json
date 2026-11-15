@@ -1,0 +1,73 @@
+{
+  "area": 2.9999999999999996,
+  "regions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "low": {
+    "seconds": 2.3,
+    "caught": true,
+    "delivered": []
+  },
+  "high": {
+    "seconds": 8.199999999999982,
+    "caught": false,
+    "delivered": [
+      12
+    ]
+  },
+  "starter": {
+    "seconds": 0.39999999999999997,
+    "caught": false,
+    "delivered": [
+      3
+    ]
+  },
+  "starts": 3,
+  "ends": 4,
+  "events": [
+    "region",
+    "region",
+    "region",
+    "region",
+    "region",
+    "region",
+    "region",
+    "region",
+    "region",
+    "pick",
+    "region",
+    "caught",
+    "region",
+    "pick",
+    "region",
+    "region",
+    "region",
+    "region",
+    "region",
+    "region",
+    "region",
+    "region",
+    "region",
+    "safe",
+    "pick",
+    "safe"
+  ],
+  "migration": {
+    "y": 346.41016151377545,
+    "again": 346.41016151377545,
+    "cargo": [
+      12
+    ]
+  },
+  "allEggs": true,
+  "errors": []
+}
