@@ -1,0 +1,14 @@
+{
+  "pickupEscapePlant": true,
+  "real45SecondIncubation": true,
+  "reload": true,
+  "noFPSPurchase": true,
+  "claimEquip": true,
+  "sdkLifecycle": true,
+  "mobileViewports": [
+    390,
+    320,
+    844
+  ],
+  "errors": []
+}
