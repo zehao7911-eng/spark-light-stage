@@ -1,18 +1,21 @@
 {
-  "errors": [],
-  "actualFirstRun": null,
-  "firstCircuitWins": 1,
-  "sdkMock": {
-    "start": 3,
-    "end": 3,
-    "saves": 41
-  },
+  "catalog": 160,
+  "categories": 8,
+  "modelsPerCategory": 20,
+  "legacyMigration": true,
+  "realWalkOnTraining": true,
+  "walkOffStops": true,
+  "podiumCollision": true,
+  "rollReloadEquip": true,
+  "runReloadComplete": true,
+  "callbacks": true,
   "viewports": [
     390,
     320,
     844,
     1280
   ],
-  "actualMobileHardware": false,
+  "errors": [],
+  "actualPhone": false,
   "actualGameWaveHost": false
 }

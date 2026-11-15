@@ -1,0 +1,11 @@
+{
+  "actualTouchJoystick": true,
+  "autoStopDuringReveal": true,
+  "viewports": [
+    390,
+    320,
+    844,
+    1280
+  ],
+  "errors": []
+}
