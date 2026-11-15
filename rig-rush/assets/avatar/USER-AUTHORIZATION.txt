@@ -1,0 +1,1 @@
+2026-11-15: User explicitly confirmed separate authorization to include this Silver Wolf model in the public GitHub / GameWave game and downloadable archive. Preserve the original model license and credits. Model edit: 神帝宇; coat physics: XPRAMT; character copyright: miHoYo. This records user confirmation, not an independently verified license document.
