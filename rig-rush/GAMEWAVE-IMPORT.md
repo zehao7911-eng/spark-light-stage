@@ -25,3 +25,15 @@ New artwork consists of an original 60-pet atlas and continuous ten-region backg
 
 Validation: browser touch take/return, actual two-region traversal, real-time 45-second hatch/equip, reload, all 60 collection entries, mobile viewport layout, controlled tests of all ten Mythic effects and standard bonuses, legacy migration and game-specific cloud save mocks. See QA files. Physical Android/iOS performance and actual GameWave App import/host callbacks remain pending. This release does not certify other games.
 
+
+
+## Animation and enclosure refinement
+
+Pets now use runtime articulated sprite animation: alternating limb pieces, flapping wing pieces, hopping or undulating body segments. These are procedural cutout rigs using the existing approved artwork, not sixty separately hand-drawn frame sets. The farm, pet collection, hatch reveal and 3D tabletop share the renderer. Row crop bounds were corrected to prevent neighboring sprite fragments. Legacy pets retain their saved identities and hatch results.
+
+Hatching shows staged cracks, shell fragments, a rarity-colored glow and the animated pet. Farm character pixel art now echoes the authorized avatar's silver ponytail, goggles, purple clothing and asymmetric coat, with front/back walking poses. Ten guardian variants have biome-specific accessories and animated limbs. Boundary vegetation/stone/light blending softens the connected route. Map titles are moved into the HUD; active effects show countdowns, shields and pickup range; training and income HUDs explicitly show equipped pet boosts. Hatch-speed reduction is indicated at nests.
+
+Mobile supports both tap-to-walk and a lower-left drag joystick, with release/cancel/blur clearing movement. The canvas preserves its 3:5 aspect ratio. All twenty case models use realistic enclosure families, panels, glass side, feet, airflow slots, USB and power controls. Component thumbnails are re-rendered from these models; the assembled inspection camera opens toward the glass side. Existing economy, pet skills, save key, SDK bridge, character model and 160 part identities are retained.
+
+Validation: 60 animation poses differ across sampled phases; visual inspection of animation/guardians/hero/hatching; all 160 geometries remain distinct; 2,400 component/case bounding checks; touch joystick movement and release; real farm take/return/growth/hatch; PC training/exploration regression; cloud mocks and SDK lifecycle/error tests. Boundary tests do not prove zero mesh overlap everywhere. Physical phones and actual GameWave host import/callbacks remain untested. Official Feishu reference could not be accessed on recheck.
+

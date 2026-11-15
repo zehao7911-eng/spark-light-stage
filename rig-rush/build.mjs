@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 const root=new URL('./',import.meta.url),read=n=>fs.readFileSync(new URL(n,root),'utf8');
-let script=['frontier.mjs','farm2d.mjs','farm.mjs','avatar.mjs','parts.mjs','core.mjs','sdk.mjs','scene.mjs','main.mjs'].map(n=>read(n).replace(/^import .*;\s*$/gm,'').replace(/\bexport /g,'')).join('\n');
+let script=['frontier.mjs','pet-animation.mjs','farm2d.mjs','farm.mjs','avatar.mjs','parts.mjs','core.mjs','sdk.mjs','scene.mjs','main.mjs'].map(n=>read(n).replace(/^import .*;\s*$/gm,'').replace(/\bexport /g,'')).join('\n');
 script=script.replace("const farmAtlasURL='assets/pets.png';",()=>`const farmAtlasURL=(()=>{const span=document.createElement('span');span.className='petPicture';span.hidden=true;const i=document.createElement('i');span.append(i);document.body.append(span);const url=getComputedStyle(i).backgroundImage;span.remove();return url.slice(5,-2)})();`);
 script=script.replace("const frontierAtlasURL='assets/frontier-pets.webp';",()=>`const frontierAtlasURL=(()=>{const s=document.createElement('span');s.className='frontierPicture';s.hidden=true;const i=document.createElement('i');s.append(i);document.body.append(s);const u=getComputedStyle(i).backgroundImage;s.remove();return u.slice(5,-2)})();`);
 script=script.replace("const frontierWorldURL='assets/frontier-world.webp';",()=>"const frontierWorldURL='data:image/webp;base64,"+fs.readFileSync(new URL('assets/frontier-world.webp',root)).toString('base64')+"';");

@@ -24,14 +24,33 @@ function fins(w,h,d,x,y,z,count){for(let i=0;i<count;i++)box(w/count*.4,h,d,meta
 function port(x,y,z){box(.16,.1,.05,metal,x,y,z);box(.1,.05,.06,dark,x,y,z-.03)}
 switch(item.type){
 case 0:{
-const w=[1+v*.17,1.75+v*.18,1.4+v*.16,1.15+v*.18,1.3+v*.18][q],h=[1.6+v*.28,.85+v*.17,1.7+v*.16,1.7+v*.24,2+v*.18][q],d=[.9,1.2,1.15,.85,1][q]+v*.07;
-// The removable shell is always first; frames remain when assembled.
-const shell=box(w,h,d,dark,0,h/2,0);if(q>=3){shell.material=shell.material.clone();shell.material.transparent=true;shell.material.opacity=.13;shell.material.depthWrite=false;}for(const x of [-w/2,w/2])for(const z of [-d/2,d/2])box(.085,h,.085,c,x,h/2,z);for(const y of [0,h])box(w+.12,.09,d+.12,c,0,y,0);
-if(q===0){for(let i=0;i<1+v;i++)fan(0,.3+i*(h-.6)/Math.max(1,v),-d/2-.055,Math.min(.25,w*.25));box(w*.8,.12,.08,metal,0,h-.14,-d/2-.06)}
-if(q===1){for(let i=0;i<2+v;i++)fan(-w*.36+i*w*.72/(1+v),h*.48,-d/2-.05,.22);for(let i=0;i<3;i++)box(w*.7,.04,.05,metal,0,h-.15-i*.09,-d/2-.08)}
-if(q===2){box(.07,h,d,metal,w*.15,h/2,0);box(w*.27,h*.8,.07,c,w*.33,h/2,-d/2-.06);for(let i=0;i<2+v%2;i++)fan(-w*.2,.4+i*.52,-d/2-.08,.22);box(w*.6,.1,d*.6,metal,-w*.1,h+.12,0)}
-if(q===3){for(const side of [-1,1]){const brace=box(.08,h*1.1,.1,metal,side*w*.28,h/2,-d/2);brace.rotation.z=side*.28}for(let i=0;i<1+v;i++)fan(0,.35+i*.48,-d/2-.08,.21);box(w*.7,.08,.13,c,0,h+.2,0)}
-if(q===4){for(let i=0;i<3+v;i++){box(w*1.08,.09,d*1.08,metal,0,.2+i*(h-.4)/(2+v),0)}fan(0,h*.55,-d/2-.1,w*.31);for(const side of [-1,1])box(.13,h*.9,.13,c,side*(w/2+.15),h*.5,0)}break}
+// Real enclosure families: office mini tower, horizontal SFF, mesh tower, glass mid-tower, dual chamber.
+const w=[.88,1.5,1.0,1.12,1.45][q]+v*.045,h=[1.65,.75,1.9,1.95,1.9][q]+v*.07,d=[1.35,1.35,1.55,1.6,1.7][q]+v*.035;
+const finish=[0xc7c9c9,0x39414a,0x303a42,0xe4e7e7,0x414a52][q],trim=v%2?0xaeb8bc:0x202934;
+// First child carries interior dimensions for the assembled fit, and is removed in assembled view.
+const shell=box(w,h,d,dark,0,h/2,0);shell.visible=false;
+box(w,.055,d,finish,0,.035,0);box(w,.055,d,finish,0,h-.025,0);box(w,h,.045,finish,0,h/2,d/2-.022);
+box(.045,h,d,finish,w/2-.022,h/2,0);
+for(const x of[-w/2+.04,w/2-.04])for(const z of[-d/2+.04,d/2-.04])box(.045,h,.045,trim,x,h/2,z);
+// Glass left side gives a readable view of actual fitted components.
+const panel=box(.025,h-.18,d-.16,0x8daeb9,-w/2-.005,h/2,0);panel.material=panel.material.clone();panel.material.transparent=true;panel.material.opacity=q<2?.14:.22;panel.material.depthWrite=false;
+for(const y of[.1,h-.1])for(const z of[-d*.4,d*.4]){const screw=cyl(.018,.035,metal,-w/2-.025,y,z);screw.rotation.z=Math.PI/2}
+box(w-.08,h-.12,.055,finish,0,h/2,-d/2+.025);
+const count=q===1?2:q===0?1:2+(v%2),radius=Math.min(w*.32,(h-.35)/(count*2.2));
+for(let i=0;i<count;i++){const xx=q===1?(i-.5)*w*.48:0,yy=q===1?h*.48:.2+radius+i*(h-.4-2*radius)/Math.max(1,count-1);fan(xx,yy,-d/2-.035,radius);}
+if(q===0){for(let i=0;i<2;i++)box(w*.77,.12,.035,trim,0,h-.18-i*.16,-d/2-.045)}
+// Fine front mesh, top airflow slots, USB-A / USB-C and recessed power switch.
+if(q>=2)for(let j=0;j<13;j++)box(w*.88,.009,.012,trim,0,.15+j*(h-.3)/12,-d/2-.105);
+for(let i=0;i<7+v;i++)box(w*.65,.009,.022,dark,0,h+.006,-d*.25+i*d*.065);
+for(let i=0;i<2;i++){box(.105,.009,.045,metal,-w*.25+i*.17,h+.012,d*.31);box(.07,.011,.025,dark,-w*.25+i*.17,h+.015,d*.31)}
+cyl(.045,.018,metal,w*.28,h+.014,d*.31);cyl(.027,.02,v%2?0x94d8d5:0x8ba9e4,w*.28,h+.022,d*.31);
+box(.07,.01,.025,dark,.1,h+.015,d*.31);
+for(const x of[-w*.36,w*.36])for(const z of[-d*.35,d*.35])box(.13,.09,.17,0x23262c,x,-.045,z);
+// Back expansion slot covers and rear I/O rather than fictional protruding fins.
+for(let i=0;i<4;i++)box(w*.5,.035,.018,metal,0,.25+i*.09,d/2+.025);
+for(let i=0;i<3;i++)port(-w*.25+i*.17,h*.75,d/2+.03);
+if(q===4)box(w*.19,h-.12,d-.12,trim,w*.31,h/2,0);
+break}
 case 1:{
 const w=[1.05,1.3,1.7,1.85,1.6][q]+v*.12,d=[1.2,1.6,1.55,1.9,2.1][q]+v*.08;box(w,.075,d,pcb,0,.06,0);const sockets=q===3?2:1;for(let i=0;i<sockets;i++){box(.48,.07,.48,metal,-w*.17,.14,-d*.18+i*.7);box(.33,.025,.33,dark,-w*.17,.19,-d*.18+i*.7)}for(let i=0;i<2+v;i++)box(.07,.14,d*.55,c,w*.2+i*.1,.18,-d*.08);for(let i=0;i<1+q;i++)box(w*.62,.07,.07,metal,-w*.13,.15,d*.15+i*.12);if(q>=2){box(w*.2,.24,d*.7,c,-w*.38,.22,0);fins(w*.18,.13,d*.5,-w*.38,.4,0,4+v)}if(q===4){box(w*.85,.1,d*.23,metal,0,.24,d*.35);fan(-w*.28,.28,-d*.36,.18)}for(let i=0;i<3+v;i++)port(-w*.4+i*.18,.22,-d/2-.03);break}
 case 2:{
@@ -69,7 +88,6 @@ if(q===4){screen(-w*.49,1,0,w*.93,h,.18);screen(w*.49,1,0,w*.93,h,-.18);box(w*1.
 }
 // Four structural layouts inside each family, not four paint jobs.
 const bounds=new T.Box3().setFromObject(g),sx=bounds.max.x,sy=bounds.max.y,sz=bounds.max.z;
-if(item.type===0){if(v===1){box(sx*1.25,.09,.14,metal,0,sy+.25,0);for(const x of [-sx*.62,sx*.62])box(.09,.3,.14,c,x,sy+.1,0)}if(v===2){box(.3,sy*.65,sz*1.5,metal,sx+.2,sy*.4,0);for(let i=0;i<3;i++)box(.35,.06,sz*1.55,dark,sx+.2,.3+i*.25,0)}if(v===3){for(const x of [-sx,sx])box(.18,.3,sz*1.8,metal,x,-.12,0);box(sx*1.5,.18,sz,c,0,sy+.18,0)}}
 if(item.type===1){if(v===1)box(sx*.9,.5,.1,metal,0,.32,sz*.7);if(v===2){box(.5,.1,.5,metal,sx*.55,.2,sz*.42);box(.36,.025,.36,c,sx*.55,.27,sz*.42)}if(v===3){for(const side of [-1,1]){const plate=box(.18,.43,sz*1.3,c,side*sx*.8,.3,0);plate.rotation.z=side*.22}}}
 if(item.type===2){if(v===1){fins(.35,.4,.5,sx+.16,.4,0,4)}if(v===2){for(const x of [-sx-.1,sx+.1]){cyl(.07,sy+.25,gold,x,(sy+.25)/2,0);box(.1,.1,sz*1.7,metal,x,sy+.23,0)}}if(v===3){for(const side of [-1,1])box(.22,sy*.6,sz*1.2,c,side*(sx+.17),sy*.4,0);box(sx*2,.09,.18,metal,0,sy+.2,0)}}
 if(item.type===3){if(v===1)box(.12,.46,.5,metal,sx,.28,0);if(v===2)fins(sx*1.8,.4,.2,0,.34,-sz-.15,7);if(v===3){box(sx*1.8,.07,sz*1.5,pcb,0,sy+.25,0);for(const x of [-sx*.7,sx*.7])box(.09,.32,.1,gold,x,sy+.1,0)}}
