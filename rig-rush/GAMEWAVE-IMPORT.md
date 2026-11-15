@@ -37,3 +37,15 @@ Mobile supports both tap-to-walk and a lower-left drag joystick, with release/ca
 
 Validation: 60 animation poses differ across sampled phases; visual inspection of animation/guardians/hero/hatching; all 160 geometries remain distinct; 2,400 component/case bounding checks; touch joystick movement and release; real farm take/return/growth/hatch; PC training/exploration regression; cloud mocks and SDK lifecycle/error tests. Boundary tests do not prove zero mesh overlap everywhere. Physical phones and actual GameWave host import/callbacks remain untested. Official Feishu reference could not be accessed on recheck.
 
+
+
+## Sequential computer builds and office placement
+
+BUILD A COMPUTER now draws Case, Mainboard, CPU, SSD, RAM, Power Supply, Graphics Card and Monitor in that order. Each result is saved before its reveal and installed into a separate eight-part draft. Auto advances through the sequence; Pause stops advancement and Continue resumes it. Each component retains the existing cost and rarity rules. Insufficient funds pauses until the player resumes. Refresh preserves installed draft parts and any unclaimed result. The category strip is now a progress display; existing inventory remains available for manual upgrades.
+
+After eight parts, PLACE COMPUTER opens four physical office desks with keyboards, mice and chairs. Desk 1 uses the existing equipped main computer, preserving old saves and income. Desks 2–4 store independently drawn complete computers. Placement or explicit REPLACE commits a complete snapshot and clears the draft once. Stored component inventory is preserved. All occupied desks contribute to FPS and existing pet income bonuses. Browsing the office focuses the selected desk. Office placement is not fake multiplayer or a decoration-only preview.
+
+Reference observed in the user recording Desktop 2026.11.15 - 03.15.20.03.mp4: assembled counter 1/8 around 65s, 3/8 around 95s, 5/8 around 125s, 7/8 around 155s, and completed computers on rear desks. Four desk capacity, animation timing and retained project economy are authored implementation choices, not assertions about unseen original rules.
+
+SDK lifecycle follows the committed build sequence and ends on placement; a resumed visit begins on its next real action. Core tests cover ordered types, reload after each draw, duplicate roll/claim/place guards, office income and legacy migration. Browser tests cover actual automatic eight-part build, mid-build reload, placement, persistence and viewport layout. Actual GameWave App import and physical-phone performance remain unverified. Official Feishu documentation was inaccessible on recheck.
+

@@ -6,7 +6,7 @@
   "realWalkOnTraining": true,
   "walkOffStops": true,
   "podiumCollision": true,
-  "rollReloadEquip": true,
+  "rollReloadEquip": "covered by office.json",
   "runReloadComplete": true,
   "callbacks": true,
   "viewports": [
