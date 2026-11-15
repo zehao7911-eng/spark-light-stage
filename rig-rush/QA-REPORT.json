@@ -1,0 +1,18 @@
+{
+  "errors": [],
+  "actualFirstRun": null,
+  "firstCircuitWins": 1,
+  "sdkMock": {
+    "start": 3,
+    "end": 3,
+    "saves": 41
+  },
+  "viewports": [
+    390,
+    320,
+    844,
+    1280
+  ],
+  "actualMobileHardware": false,
+  "actualGameWaveHost": false
+}

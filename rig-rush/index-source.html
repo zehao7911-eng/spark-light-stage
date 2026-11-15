@@ -1,0 +1,9 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#5fb5d6"><title>RIG RUSH — Build. Train. Explore.</title><link rel="icon" href="icon.svg"><link rel="stylesheet" href="style.css"></head><body>
+<canvas id="world" aria-label="Three dimensional computer workshop"></canvas><header><div class="brand">RIG<span>RUSH</span></div><button id="sound" aria-label="Toggle sound">♫</button><button id="help" aria-label="Help">?</button></header>
+<div id="stats"><span class="speedStat">➜ <b id="speed">8</b><small>SPEED</small></span><span class="fpsStat">▣ <b id="fps">180</b><small>FPS <em id="income">+2 / s</em></small></span></div>
+<div id="objective">BUILD YOUR FIRST PC</div><aside id="neighbors"></aside>
+<nav><button data-page="index">▣<small>INDEX</small></button><button data-page="upgrades">⇧<small>UPGRADE</small></button><button data-page="pets">♟<small>PETS</small></button></nav>
+<div id="result" hidden></div><div id="actions"></div><div id="pad" hidden><i></i></div><button id="jump" hidden>↟<small>JUMP</small></button>
+<div id="toast" role="status" aria-live="polite"></div><div id="fx"></div>
+<div id="modal" hidden><section class="sheet"><button id="close" aria-label="Close">×</button><h2 id="title"></h2><div id="body"></div></section></div>
+<script src="vendor/three.min.js"></script><script type="module" src="main.mjs"></script></body></html>
