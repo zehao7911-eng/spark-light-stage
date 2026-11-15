@@ -1,0 +1,8 @@
+{
+  "visibleHatchButton": true,
+  "walkOnOpens": true,
+  "closeDoesNotReopen": true,
+  "counterCollision": true,
+  "avatarUnchanged": true,
+  "errors": []
+}
