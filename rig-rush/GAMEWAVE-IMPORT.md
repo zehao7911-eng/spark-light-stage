@@ -49,3 +49,6 @@ Reference observed in the user recording Desktop 2026.11.15 - 03.15.20.03.mp4: a
 
 SDK lifecycle follows the committed build sequence and ends on placement; a resumed visit begins on its next real action. Core tests cover ordered types, reload after each draw, duplicate roll/claim/place guards, office income and legacy migration. Browser tests cover actual automatic eight-part build, mid-build reload, placement, persistence and viewport layout. Actual GameWave App import and physical-phone performance remain unverified. Official Feishu documentation was inaccessible on recheck.
 
+
+## Startup update
+The GitHub Pages entry is a lightweight HTML shell with a versioned runtime. Workshop resources load first; farm world and pet atlases load when needed. A loading/retry panel replaces a blank startup. The ZIP root index.html remains the fully embedded standalone build for offline use and GameWave import. Saves and gameplay events are unchanged. Desktop Chromium touch emulation is not physical-phone or GameWave-host validation.

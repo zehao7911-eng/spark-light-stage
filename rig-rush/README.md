@@ -97,3 +97,6 @@ Observed reference: user recording Desktop 2026.11.15 - 03.15.20.03.mp4, approxi
 A stolen-egg attempt emits an SDK start; returning or being caught emits end. Leaving the farm pauses the carried attempt and ends that active lifecycle; resuming starts a new active segment without granting an egg. Actual hatching retains its separate lifecycle. Farm browsing and merely opening collection UI do not fabricate rewards. Only this game's existing profile key is saved. Three.js drawing is skipped while the 2D farm covers the workshop.
 
 Tests: complete real-time take/escape/plant/45-second/hatch/equip flow, reload, caught outcome, reward deduplication, legacy pets, desktop keyboard and touch emulation. Real physical-phone and actual GameWave host verification remain pending. Official Feishu reference was rechecked and inaccessible; supported bridge contract and mock checks are retained.
+
+## Startup update
+The GitHub Pages entry is a lightweight HTML shell with a versioned runtime. Workshop resources load first; farm world and pet atlases load when needed. A loading/retry panel replaces a blank startup. The ZIP root index.html remains the fully embedded standalone build for offline use and GameWave import. Saves and gameplay events are unchanged. Desktop Chromium touch emulation is not physical-phone or GameWave-host validation.

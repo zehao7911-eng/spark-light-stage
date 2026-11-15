@@ -1,0 +1,8 @@
+{
+  "readyMs": 651,
+  "lazyWorld": true,
+  "office": true,
+  "farm": true,
+  "retryOnNetworkFailure": true,
+  "errors": []
+}
