@@ -13,3 +13,7 @@ nav{top:178px;gap:8px}nav button{background:linear-gradient(#51d8f1,#2195d5);wid
 .compact{font-size:10px;padding:8px;margin:0 0 12px;min-height:44px}#partbar{overflow-x:auto;scrollbar-width:none}#partbar button{min-width:44px}.card .partIcon{filter:drop-shadow(0 3px 3px #0b1c2d)}
 
 #modal{backdrop-filter:none;background:#091e39b5}@media(max-width:350px){#partbar{display:grid;grid-template-columns:repeat(4,1fr)}#partbar button{min-width:0}nav{display:flex;top:164px;gap:6px}nav button{width:44px;height:49px}#neighbors{display:none}#assemblyQuick{top:222px}#pad{bottom:205px}#jump{bottom:219px}.runMode #pad{bottom:120px}.runMode #jump{bottom:135px}}
+
+.modelThumb{display:inline-block;width:88px;height:88px;background-image:url('assets/components.png');background-size:2000% 800%;background-repeat:no-repeat;filter:drop-shadow(0 4px 3px #091c35)}.slots .modelThumb{width:52px;height:52px;flex-shrink:0;margin-right:5px}.card{background:radial-gradient(ellipse at top,#365674,#192c45 85%)}.card .partIcon{height:98px;display:grid;place-items:center}.badge{font-weight:900}.card b{font-size:12px}body[data-reveal="3"] #result,body[data-reveal="4"] #result{box-shadow:0 0 40px var(--tier),0 0 90px #eee5}#result{border-width:3px}.sheet{border-color:#8bd6eb}.gain{font-size:21px}@media(max-width:350px){.slots .modelThumb{width:40px;height:44px}.modelThumb{width:80px;height:80px}}
+
+button{transition:transform .1s}button:hover{filter:none}

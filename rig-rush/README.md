@@ -23,3 +23,6 @@ Original procedural models, canvas textures, interface, music and game logic cre
 
 ## Existing saves
 The storage key is unchanged. Profile schema 2 retains prior currency, speed, upgrades, completed circuits, companions, legacy PC inventory and unclaimed legacy PC. Prior installed PC income is retained separately. Claim any saved legacy result in Your Computer. Initial base components are provided. No other game saves are accessed.
+
+## Model / motion refinement (2026-11-15)
+All 160 entries now use color-independent geometry differences. Five structural families per category include compact/desktop/dual-chamber/open-frame/segmented cases, bare/fin/radial/twin-tower/liquid CPU packages, and single-fan/blower/dual-fan/water-block/triple-fan GPUs. Four layouts per family add physical modules, daughterboards, cooling pipes, kit arrangements or stands. Inventory thumbnails are rendered from the same 3D models, not generic category icons. Assembled components are fitted to their selected case dimensions. Ground-height integration keeps jumps continuous when leaving the treadmill. Collision clearance accounts for avatar arms. Tests exercise 2,400 component/case bounds, actual walking and touch control; these do not establish universal collision freedom or physical-phone performance.
