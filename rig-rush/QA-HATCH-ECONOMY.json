@@ -1,0 +1,10 @@
+{
+  "purchaseOnce": true,
+  "pendingReload": true,
+  "claimOnce": true,
+  "guaranteeEveryFifth": true,
+  "duplicatesLevelAndRefund": true,
+  "incomeTrainingLuck": true,
+  "unlocks": true,
+  "legacyPreserved": true
+}

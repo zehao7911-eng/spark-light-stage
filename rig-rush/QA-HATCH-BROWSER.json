@@ -1,0 +1,11 @@
+{
+  "purchaseCrackClaim": true,
+  "reloadMidHatch": true,
+  "actualTrainingBonus": true,
+  "singleEquip": true,
+  "sdkResumedRound": true,
+  "closeResume": true,
+  "errors": [],
+  "physicalPhone": false,
+  "actualHost": false
+}
