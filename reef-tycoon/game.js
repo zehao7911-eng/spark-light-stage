@@ -22,7 +22,7 @@ function setPhase(p){phase=p;elapsed=0}function trip(base){atBase=base;goal=new 
 $('index').onclick=()=>panel('Fish Index · '+data.seen.length+'/12',names.map((n,i)=>'<span class="card" style="border-color:#'+colors[i].toString(16)+'">'+(data.seen.includes(i)?n:'???')+'<br>$'+rates[i]+'/s</span>').join(''));
 $('shop').onclick=()=>{panel('Harbor Shop',['gear','rod','speed'].map((k,i)=>'<button data-k="'+k+'">'+['Weights','Fishing rod','Swim speed'][i]+' Lv.'+data[k]+'<br>$'+(data[k]*25)+'</button>').join('')+'<button id="train">Lift weights</button>');document.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{let k=b.dataset.k,c=data[k]*25;if(data.coins<c)return say('Collect cash at your base');data.coins-=c;data[k]++;save();tone(700);$('shop').click()});$('train').onclick=()=>{data.strength+=data.gear;hero.rotation.z=.14;say('+'+data.gear+' casting power');tone(260);save()}}
 $('base').onclick=()=>{if(phase==='idle')trip(!atBase)};
-$('act').onclick=()=>{tone(360+taps*12);if(phase==='idle'){if(atBase){if(data.bag.length){let i=data.pads.indexOf(null);if(i<0)i=data.pads.indexOf(Math.min(...data.pads));if(i>=0&&data.pads[i]!==null&&rates[data.pads[i]]>=rates[data.bag[0]]){data.coins+=rates[data.bag.shift()]*5;say('Fish sold')}else{data.pads[i]=data.bag.shift();data.levels[i]=1;syncPads();say('Display earning cash!')}}else{data.coins+=Math.floor(data.bank);data.bank-=Math.floor(data.bank);say('Cash collected!')}save();return}goal=null;taps=luck=0;catchId=Math.min(11,Math.floor(Math.random()*(3+data.rod)));sdk.prepare();sdk.start();setPhase('cast')}else if(phase==='swirl'){luck++;say('+'+luck+' Luck')}else if(phase==='reel'){taps++;if(taps>=required()){setPhase('reveal');data.bag.push(catchId);if(!data.seen.includes(catchId))data.seen.push(catchId);save();sdk.end();tone(960);say(names[catchId]+' · $'+rates[catchId]+'/s')}}};
+$('act').onclick=()=>{tone(360+taps*12);if(phase==='idle'){if(atBase){if(data.bag.length){let i=data.pads.indexOf(null);if(i<0)i=data.pads.indexOf(Math.min(...data.pads));if(i>=0&&data.pads[i]!==null&&rates[data.pads[i]]>=rates[data.bag[0]]){data.coins+=rates[data.bag.shift()]*5;say('Fish sold')}else{data.pads[i]=data.bag.shift();data.levels[i]=1;syncPads();say('Display earning cash!')}}else{data.coins+=Math.floor(data.bank);data.bank-=Math.floor(data.bank);say('Cash collected!')}save();return}goal=null;taps=luck=0;catchId=Math.min(11,Math.floor(Math.random()*(3+data.rod)));sdk.prepare();sdk.start();setPhase('cast')}else if(phase==='swirl'){luck++;say('+'+luck+' Luck')}else if(phase==='reel'){taps++;if(taps>=required()){startEscape()}}else if(phase==='escape'){escapeKick=Math.min(1,escapeKick+.48);tone(480)}};
 const portraits=new Map();
 function portrait(id){
  if(portraits.has(id))return portraits.get(id);
@@ -45,8 +45,23 @@ $('shop').onclick=()=>{openShop();const labels=['Weights','Fishing rod','Swim sp
  const k=button.dataset.k,level=data[k];
  button.className='shopCard';button.innerHTML='<b>'+labels[i]+'</b><i class="tool tool'+i+'"></i><small>Lv. '+level+'</small><strong>$'+(level*25)+'</strong>';
  });};
+let hunter=null,lead=0,shore=0,escapeKick=0;
+function startEscape(){
+ setPhase('escape');lead=3.6;shore=8;escapeKick=.75;
+ hunter=fish(9);hunter.scale.set(2.2,1.6,1.7);
+ say('Shark! Swim to shore');
+}
+function finishEscape(won){
+ scene.remove(hunter);hunter=null;sdk.end();
+ if(won){
+  data.bag.push(catchId);if(!data.seen.includes(catchId))data.seen.push(catchId);
+  save();setPhase('reveal');tone(960);say(names[catchId]+' · $'+rates[catchId]+'/s');
+ }else{
+  scene.remove(prize);prize=null;setPhase('idle');tone(140);say('The shark took your fish!');
+ }
+}
 function required(){return Math.max(4,7+catchId-Math.floor(data.strength/30))}
-renderer.domElement.onpointerdown=e=>{if(phase!=='idle'){if(phase==='swirl'||phase==='reel')$('act').click();return}let ray=new T.Raycaster();ray.setFromCamera({x:e.clientX/innerWidth*2-1,y:1-e.clientY/innerHeight*2},camera);let p=new T.Vector3();if(ray.ray.intersectPlane(new T.Plane(new T.Vector3(0,1,0),0),p)){p.x=Math.max(-25,Math.min(25,p.x));p.z=Math.max(3,Math.min(27,p.z));goal=p}};
+renderer.domElement.onpointerdown=e=>{if(phase!=='idle'){if(phase==='swirl'||phase==='reel'||phase==='escape')$('act').click();return}let ray=new T.Raycaster();ray.setFromCamera({x:e.clientX/innerWidth*2-1,y:1-e.clientY/innerHeight*2},camera);let p=new T.Vector3();if(ray.ray.intersectPlane(new T.Plane(new T.Vector3(0,1,0),0),p)){p.x=Math.max(-25,Math.min(25,p.x));p.z=Math.max(3,Math.min(27,p.z));goal=p}};
 $('daily').onclick=()=>{
  const day=Math.floor(Date.now()/86400000),claimed=data.claimDay===day;
  const step=claimed?data.streak:data.claimDay===day-1?data.streak%7+1:1;
@@ -73,5 +88,15 @@ function splash(active){
 }
 function frame(now){requestAnimationFrame(frame);let dt=Math.min(.06,(now-prev)/1000);prev=now;if(document.hidden)return;clock+=dt;elapsed+=dt;flash-=dt;if(flash<=0)$('spark').textContent='';let income=data.pads.reduce((sum,id,i)=>sum+(id===null?0:rates[id]*data.levels[i]),0);data.bank+=income*dt;if((autoSave+=dt)>8){autoSave=0;if(income)save()}walking=false;if(goal){let d=goal.clone().sub(hero.position),dist=d.length();if(dist<.15){goal=null;if(phase==='walk')setPhase('idle')}else{walking=true;hero.rotation.y=Math.atan2(-d.x,-d.z);hero.position.addScaledVector(d.normalize(),Math.min(dist,dt*(5+data.speed)));atBase=hero.position.z>12}}hero.rotation.z*=.9;legs.forEach((l,i)=>l.rotation.x=walking?Math.sin(clock*12+i*Math.PI)*.55:0);swimmers.forEach((g,i)=>{g.position.set(Math.sin(clock*.23+i*3)*10,-.05+Math.sin(clock*2+i)*.18,-6-(i%5)*3);g.rotation.y=Math.cos(clock*.23+i*3)<0?Math.PI:0});display.forEach((g,i)=>g.rotation.y=Math.sin(clock+i)*.3);
 let fishing=!['idle','walk'].includes(phase),cx=hero.position.x,cz=hero.position.z;hook.visible=line.visible=ring.visible=fishing;let view=new T.Vector3(cx+2.8,4.7,cz+8),look=new T.Vector3(cx,1,cz-2);if(fishing){let x=cx,z=-7-data.rod*.65-Math.min(8,data.strength*.02);if(phase==='cast'){let t=Math.min(1,elapsed/.9);hook.position.set(x,1+Math.sin(t*Math.PI)*5,(cz-1)*(1-t)+z*t);if(t===1)setPhase('swirl')}else hook.position.set(x,.42+Math.sin(clock*6)*.16,z);if(phase==='swirl'&&elapsed>2.3){catchId=Math.min(11,catchId+Math.floor(Math.random()*(luck+1)/2));prize=fish(catchId);setPhase('reel')}if(prize){prize.position.copy(hook.position);prize.position.y+=phase==='reveal'?2+Math.sin(elapsed*3)*.6:1;prize.rotation.y=clock*(phase==='reveal'?3:1);prize.rotation.z=Math.sin(clock*9)*.16}if(phase==='reveal'&&elapsed>2){scene.remove(prize);prize=null;trip(true)}view.set(x+1,phase==='cast'?5:2.5,z+6);look.copy(hook.position);look.y+=.7;let pos=line.geometry.attributes.position;pos.setXYZ(0,cx+.7,2.4,cz-1);pos.setXYZ(1,...hook.position.toArray());pos.needsUpdate=true;line.frustumCulled=false;ring.position.set(x,.17,z);let t=(clock*1.5)%1;ring.scale.setScalar(.5+t*2.6);ring.material.opacity=1-t}
-splash(fishing&&phase!=='cast');camera.position.lerp(view,1-Math.exp(-dt*5));camera.lookAt(look);$('meter').hidden=phase!=='reel';$('needle').style.transform='rotate('+(-85+170*taps/required())+'deg)';$('hint').textContent=({cast:'Casting…',swirl:'Tap the splash for luck!',reel:names[catchId]+' · $'+rates[catchId]+'/s',reveal:'Catch landed!',walk:'Follow the path',idle:atBase?(data.bag.length?'Place your fish on a stand':'Collect your earnings'):'Cast into the lagoon'})[phase];$('act').textContent=({idle:atBase?(data.bag.length?'Place fish':'Collect $'+Math.floor(data.bank)):'Cast line',cast:'Casting…',swirl:'+ Luck',reel:'Reel! '+taps+'/'+required(),reveal:'Caught!',walk:'Walking…'})[phase];$('base').textContent=atBase?'Lagoon':'My Base';$('stands').hidden=!atBase||phase!=='idle';for(let id of ['shop','base','index','daily'])$(id).hidden=fishing||phase==='walk';$('wallet').innerHTML='$'+Math.floor(data.coins)+'<br>+'+income+'/s';renderer.render(scene,camera)}
+if(phase==='escape'){
+ const swim=1.2+escapeKick*2.8+Math.min(10,data.speed)*.12;
+ escapeKick=Math.max(0,escapeKick-dt*.95);shore-=swim*dt;lead+=(swim-2.85)*dt;
+ const z=2-shore;hero.position.z=z;hero.rotation.y=Math.PI;
+ legs.forEach((leg,i)=>leg.rotation.x=Math.sin(clock*11+i*Math.PI)*.65);
+ hunter.position.set(cx+.3,.32,z-lead);hunter.rotation.y=-Math.PI/2+Math.sin(clock*8)*.08;
+ prize.position.set(cx+.7,1.25,z);view.set(cx+4,3.6,z+6);look.set(cx,.8,z-1.2);
+ line.visible=hook.visible=false;ring.position.set(cx,.18,z);ring.visible=true;
+ if(shore<=0||lead<=.45){hero.position.z=4;finishEscape(shore<=0)}
+}
+splash(fishing&&phase!=='cast');camera.position.lerp(view,1-Math.exp(-dt*5));camera.lookAt(look);$('meter').hidden=phase!=='reel';$('needle').style.transform='rotate('+(-85+170*taps/required())+'deg)';$('hint').textContent=({escape:'Shark behind you! Tap to swim',cast:'Casting…',swirl:'Tap the splash for luck!',reel:names[catchId]+' · $'+rates[catchId]+'/s',reveal:'Catch landed!',walk:'Follow the path',idle:atBase?(data.bag.length?'Place your fish on a stand':'Collect your earnings'):'Cast into the lagoon'})[phase];$('act').textContent=({idle:atBase?(data.bag.length?'Place fish':'Collect $'+Math.floor(data.bank)):'Cast line',cast:'Casting…',escape:'Swim! '+Math.max(0,Math.ceil(shore))+' m',swirl:'+ Luck',reel:'Reel! '+taps+'/'+required(),reveal:'Caught!',walk:'Walking…'})[phase];$('base').textContent=atBase?'Lagoon':'My Base';$('stands').hidden=!atBase||phase!=='idle';for(let id of ['shop','base','index','daily'])$(id).hidden=fishing||phase==='walk';$('wallet').innerHTML='$'+Math.floor(data.coins)+'<br>+'+income+'/s';renderer.render(scene,camera)}
 requestAnimationFrame(frame);addEventListener('pagehide',()=>{local();sdk.end();sdk.stop()});
