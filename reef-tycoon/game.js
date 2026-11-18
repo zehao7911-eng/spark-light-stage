@@ -23,6 +23,28 @@ $('index').onclick=()=>panel('Fish Index · '+data.seen.length+'/12',names.map((
 $('shop').onclick=()=>{panel('Harbor Shop',['gear','rod','speed'].map((k,i)=>'<button data-k="'+k+'">'+['Weights','Fishing rod','Swim speed'][i]+' Lv.'+data[k]+'<br>$'+(data[k]*25)+'</button>').join('')+'<button id="train">Lift weights</button>');document.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{let k=b.dataset.k,c=data[k]*25;if(data.coins<c)return say('Collect cash at your base');data.coins-=c;data[k]++;save();tone(700);$('shop').click()});$('train').onclick=()=>{data.strength+=data.gear;hero.rotation.z=.14;say('+'+data.gear+' casting power');tone(260);save()}}
 $('base').onclick=()=>{if(phase==='idle')trip(!atBase)};
 $('act').onclick=()=>{tone(360+taps*12);if(phase==='idle'){if(atBase){if(data.bag.length){let i=data.pads.indexOf(null);if(i<0)i=data.pads.indexOf(Math.min(...data.pads));if(i>=0&&data.pads[i]!==null&&rates[data.pads[i]]>=rates[data.bag[0]]){data.coins+=rates[data.bag.shift()]*5;say('Fish sold')}else{data.pads[i]=data.bag.shift();data.levels[i]=1;syncPads();say('Display earning cash!')}}else{data.coins+=Math.floor(data.bank);data.bank-=Math.floor(data.bank);say('Cash collected!')}save();return}goal=null;taps=luck=0;catchId=Math.min(11,Math.floor(Math.random()*(3+data.rod)));sdk.prepare();sdk.start();setPhase('cast')}else if(phase==='swirl'){luck++;say('+'+luck+' Luck')}else if(phase==='reel'){taps++;if(taps>=required()){setPhase('reveal');data.bag.push(catchId);if(!data.seen.includes(catchId))data.seen.push(catchId);save();sdk.end();tone(960);say(names[catchId]+' · $'+rates[catchId]+'/s')}}};
+const portraits=new Map();
+function portrait(id){
+ if(portraits.has(id))return portraits.get(id);
+ const studio=new T.Scene(), key=new T.DirectionalLight(0xffffff,1.2);
+ key.position.set(-2,4,5);studio.add(key,new T.HemisphereLight(0xfff5ce,0x7aa2c0,1.25));
+ const model=fish(id);studio.add(model);model.rotation.y=-.35;
+ const cam=new T.PerspectiveCamera(42,1,.1,20);cam.position.set(0,.4,3.6);cam.lookAt(0,0,0);
+ const previous=renderer.getSize(new T.Vector2());renderer.setSize(96,96,false);
+ studio.background=new T.Color(0x33485c);renderer.render(studio,cam);
+ const image=renderer.domElement.toDataURL();renderer.setSize(previous.x,previous.y,false);portraits.set(id,image);return image;
+}
+$('index').onclick=()=>{
+ panel('Fish Index · '+data.seen.length+'/12',names.map((name,id)=>{
+ const owned=data.seen.includes(id);
+ return '<span class="fishCard"><img style="filter:'+ (owned?'none':'brightness(.12)')+'" src="'+portrait(id)+'"><b>'+(owned?name:'???')+'</b><small>$'+rates[id]+'/s</small></span>';
+ }).join(''));
+};
+const openShop=$('shop').onclick;
+$('shop').onclick=()=>{openShop();const labels=['Weights','Fishing rod','Swim speed'];document.querySelectorAll('[data-k]').forEach((button,i)=>{
+ const k=button.dataset.k,level=data[k];
+ button.className='shopCard';button.innerHTML='<b>'+labels[i]+'</b><i class="tool tool'+i+'"></i><small>Lv. '+level+'</small><strong>$'+(level*25)+'</strong>';
+ });};
 function required(){return Math.max(4,7+catchId-Math.floor(data.strength/30))}
 renderer.domElement.onpointerdown=e=>{if(phase!=='idle'){if(phase==='swirl'||phase==='reel')$('act').click();return}let ray=new T.Raycaster();ray.setFromCamera({x:e.clientX/innerWidth*2-1,y:1-e.clientY/innerHeight*2},camera);let p=new T.Vector3();if(ray.ray.intersectPlane(new T.Plane(new T.Vector3(0,1,0),0),p)){p.x=Math.max(-25,Math.min(25,p.x));p.z=Math.max(3,Math.min(27,p.z));goal=p}};
 $('daily').onclick=()=>{
