@@ -42,35 +42,88 @@ const roster=regions.flatMap((region,r)=>region.groups.flatMap(([band,list],tier
  return {id,name,band,tier,r,slot,form:anatomy[name]||forms.find(f=>name.toLowerCase().includes(f))||'fin'};
 })));
 const byId=new Map(roster.map(rec=>[rec.id,rec]));
-function shoalFish(id){
- const rec=byId.get(id),g=group(),c=colors[id],accent=new T.Color(c).lerp(new T.Color(0xfff0ae),.55).getHex();
- const piece=(geo,col,x,y,z,w,h,d)=>shape(g,geo,col,x,y,z,w,h,d);
- const oval=(...args)=>piece(ball,...args);
- const fin=(x,y,z,w,h,d,rot=0)=>{let m=piece(cone,accent,x,y,z,w,h,d);m.rotation.z=rot;return m};
- let eyeX=.58,eyeY=.1,eyeZ=.32;
- if(['eel','serpent'].includes(rec.form)){
-  for(let j=0;j<8;j++){let k=1-j*.09;oval(c,.7-j*.25,Math.sin(j*.85)*.18,0,.32*k,.32*k,.31*k)}eyeX=.79;eyeZ=.26;
- }else if(['ray','sole','flatfish'].includes(rec.form)){
-  oval(c,0,0,0,.84,.2,.68);for(const k of [-1,1]){let wing=fin(0,0,k*.65,.62,.95,.15);wing.rotation.x=k*1.25}fin(-1,0,0,.13,1.1,.15,Math.PI/2);eyeY=.17;eyeZ=.22;
- }else if(['jelly','squid','octopus','nautilus'].includes(rec.form)){
-  oval(c,0,.25,0,.67,.58,.56);for(let k=0;k<8;k++){let a=k*Math.PI/4;const arm=oval(accent,Math.cos(a)*.42,-.33,Math.sin(a)*.38,.085,.42+(k%3)*.1,.085);arm.rotation.z=Math.cos(a)*.23}eyeX=.26;eyeZ=.49;
- }else if(rec.form==='seahorse'){
-  oval(c,0,-.05,0,.32,.7,.28);oval(c,.15,.56,0,.4,.31,.27);oval(accent,.54,.48,0,.27,.11,.14);oval(c,-.18,-.68,0,.29,.17,.19);eyeX=.27;eyeY=.6;eyeZ=.24;
- }else{
-  const round=rec.form==='puffer',long=['shark','gar','pike','marlin','whale','dolphin'].includes(rec.form);
-  const h=round?.68:long?.33:.4+(id%4)*.07,w=round?.69:long?1.12:.85;
-  oval(c,0,0,0,w,h,.41);fin(-w-.18,0,0,.46,.58,.22,-Math.PI/2);fin(-.14,h+.07,0,.3,rec.form==='sail'?.85:.4,.14);
-  for(let k of [-1,1]){let m=fin(-.1,0,k*.37,.2,.45,.12);m.rotation.x=k*1.1}
-  if(round)for(let j=0;j<9;j++)fin(Math.cos(j*.7)*.6,Math.sin(j*.7)*.6,.19,.09,.25,.1,-j*.7);
-  if(rec.form==='marlin'||rec.form==='pike')fin(w+.2,.04,0,.1,.7,.13,-Math.PI/2);
-  if(['angler','lantern'].includes(rec.form)){oval(accent,.54,h+.27,0,.08,.32,.08);oval(0xffef91,.61,h+.53,0,.14,.14,.14)}
-  eyeX=w*.65;eyeZ=.32;
+const reefSurfaces=new Map();
+const reefSkin=new T.MeshStandardMaterial({vertexColors:true,roughness:.63,metalness:.04});
+// Sweep a succession of elliptical cross sections along a hand-drawn centerline.
+// Sections use local normal and binormal axes, so bent fins keep their thickness.
+function reefSweep(parent,key,path,paint){
+ let geo=reefSurfaces.get(key);
+ if(!geo){
+  const positions=[],colors=[],indices=[],sides=14;
+  for(let i=0;i<path.length;i++){
+   const [x,y,z,h,d]=path[i],a=path[Math.max(0,i-1)],b=path[Math.min(path.length-1,i+1)];
+   const tangent=new T.Vector3(b[0]-a[0],b[1]-a[1],b[2]-a[2]).normalize();
+   const ref=Math.abs(tangent.z)>.98?new T.Vector3(0,1,0):new T.Vector3(0,0,1);
+   const up=new T.Vector3().crossVectors(ref,tangent).normalize(),side=new T.Vector3().crossVectors(tangent,up);
+   for(let j=0;j<sides;j++){
+    const angle=j*2*Math.PI/sides,co=Math.cos(angle),si=Math.sin(angle);
+    positions.push(x+up.x*h*co+side.x*d*si,y+up.y*h*co+side.y*d*si,z+up.z*h*co+side.z*d*si);
+    const c=paint(i/(path.length-1),co,si);colors.push(c.r,c.g,c.b);
+    if(i){const k=(i-1)*sides+j,n=(i-1)*sides+(j+1)%sides;indices.push(k,n,n+sides,k,n+sides,k+sides)}
+   }
+  }
+  geo=new T.BufferGeometry();geo.setAttribute('position',new T.Float32BufferAttribute(positions,3));geo.setAttribute('color',new T.Float32BufferAttribute(colors,3));geo.setIndex(indices);geo.computeVertexNormals();reefSurfaces.set(key,geo);
  }
- for(let k of [-1,1]){oval(0xfaf6e1,eyeX,eyeY,k*eyeZ,.115,.13,.07);oval(0x1b2538,eyeX+.025,eyeY,k*(eyeZ+.055),.068,.08,.035)}
+ const mesh=new T.Mesh(geo,reefSkin);parent.add(mesh);return mesh;
+}
+function shoalFish(id){
+ const rec=byId.get(id),f=rec.form,g=group(),base=new T.Color(colors[id]),cream=new T.Color(0xffefcd),dark=new T.Color(0x153044);
+ const pigment=(u,y,z)=>base.clone().lerp(y<-.25?cream:dark,y<-.25?.35-.32*y:.08+.19*Math.max(0,y)).lerp(cream,Math.max(0,Math.cos(u*(4+id%5)*Math.PI*2+z*.8)-.68)*.63);
+ let serial=0;
+ function sculpt(path,x=0,y=0,z=0,ink=pigment){const mesh=reefSweep(g,id+'/'+serial++,path,ink);mesh.position.set(x,y,z);return mesh}
+ const finInk=(u,y)=>base.clone().lerp(cream,.22+.55*u).lerp(dark,.13*(1-y));
+ const fin=(path,x,y,z)=>sculpt(path,x,y,z,finInk);
+ function eyes(x,y,z,s=.10){for(const k of [-1,1]){
+  shape(g,ball,0xfff0bc,x,y,k*z,s*1.27,s*1.27,s*.51);
+  shape(g,ball,0x172c39,x+.014,y,k*(z+s*.34),s,s,s*.47);
+  shape(g,ball,0xffffff,x+.038,y+.035,k*(z+s*.74),s*.31,s*.31,s*.16);
+ }}
+ const profile=(rows)=>rows.map(([x,y,h,d])=>[x,y,0,h,d]);
+ if(id===0||f==='star'){
+  shape(g,ball,colors[id],0,0,0,.4,.38,.19);
+  for(let i=0;i<5;i++){let arm=sculpt(profile([[.18,0,.21,.17],[.45,.03,.23,.18],[.68,.08,.16,.12],[.88,.17,.08,.07],[.97,.24,.003,.003]]));arm.rotation.z=i*Math.PI*.4+.28}
+  return g;
+ }
+ if(['eel','serpent','seahorse'].includes(f)){
+  const horse=f==='seahorse';
+  const path=horse?[[-.22,-.46,.008,.008],[-.41,-.43,.05,.06],[-.46,-.61,.08,.08],[-.29,-.72,.11,.11],[.02,-.57,.15,.14],[.09,-.26,.26,.24],[-.07,.12,.29,.23],[-.12,.44,.18,.17],[.02,.64,.23,.21],[.24,.64,.22,.2],[.43,.52,.09,.1],[.63,.48,.081,.09],[.65,.48,.004,.003]]:[[-1.36,-.02,.003,.003],[-1.13,-.04,.063,.07],[-.88,0,.12,.11],[-.55,.09,.16,.14],[-.18,.1,.2,.18],[.18,.05,.23,.22],[.49,.02,.27,.25],[.74,.04,.22,.21],[.94,.05,.11,.13],[1,.03,.003,.004]];
+  const spine=sculpt(profile(path));if(!horse){
+   const geo=spine.geometry;
+   if(!geo.morphAttributes.position){
+    geo.morphTargetsRelative=true;
+    const verts=geo.attributes.position;
+    geo.morphAttributes.position=[0,Math.PI/2].map(offset=>{
+     const delta=new Float32Array(verts.count*3);
+     for(let j=0;j<verts.count;j++){const back=Math.max(0,.53-verts.getX(j));delta[j*3+2]=.20*back*Math.sin(2.7*back+offset)}
+     return new T.BufferAttribute(delta,3);
+    });
+   }
+   spine.updateMorphTargets();
+  }
+  eyes(horse?.21:.67,horse?.70:.13,horse?.18:.21,.087);return g;
+ }
+ const soft=['jelly','squid','octopus','nautilus'].includes(f);
+ if(soft){
+  const shell=f==='nautilus',dart=f==='squid';
+  const mantle=sculpt(profile([[-.72,0,.005,.005],[-.53,0,.28,.25],[-.26,.03,.47,.42],[.05,.04,.54,.47],[.32,.02,.48,.42],[.47,0,.30,.32],[.52,0,.006,.006]]));
+  if(!shell)mantle.rotation.z=dart?-1.24:-1.56;
+  for(let i=0;i<8;i++){const a=i*Math.PI/4,r=.31;
+   const arm=fin(profile([[0,0,.10,.09],[.18,.02,.096,.082],[.37,.06,.074,.06],[.56,.02,.055,.045],[.73,-.09,.024,.023],[.84,-.16,.002,.002]]),shell?.35+Math.cos(a)*.19:Math.cos(a)*r,-.18,Math.sin(a)*r);
+   arm.rotation.order='YXZ';arm.rotation.y=-a;arm.rotation.z=-1.04+.15*Math.sin(i+id);
+  }eyes(shell?.34:.12,-.02,shell?.36:.43);return g;
+ }
+ const ray=['ray','flatfish','sole'].includes(f),round=f==='puffer',pred=['marlin','pike','gar','shark','dolphin','whale'].includes(f);
+ const h=ray?.16:round?.67:pred?.31:.36+(id%5)*.036,d=ray?.44:round?.54:.28+(id%4)*.036;
+ const snout=pred?1.17:round?.71:.84;
+ sculpt(profile([[-.96,0,.007,.008],[-.84,.01,h*.22,d*.22],[-.62,.01,h*.43,d*.53],[-.35,.04,h*.83,d*.82],[-.07,.05,h,d],[.21,.04,h,d],[.44,.03,h*.87,d*.94],[.64,.01,h*.59,d*.72],[snout,-.018,.015,.021]]));
+ for(const k of [-1,1]){
+  const lobe=fin(profile([[0,0,.08,.075],[-.14,k*.11,.13,.065],[-.33,k*.23,.16,.045],[-.51,k*.36,.105,.028],[-.63,k*.47,.003,.004]]),-.82,0,0);if(f==='whale'||f==='dolphin')lobe.rotation.x=1.57;
+  const wing=fin([[0,0,0,.072,.14],[-.08,.03,.2*k,.094,.17],[-.23,.015,.43*k,.068,.13],[-.35,-.045,.61*k,.038,.075],[-.46,-.085,.71*k,.002,.003]],.08,-h*.22,k*d*.72);if(ray)wing.scale.set(1.65,1.3,1.45);
+ }
+ fin(profile([[0,0,.055,.065],[-.12,.14,.14,.058],[-.23,.32,.12,.043],[-.32,.52,.055,.025],[-.36,.59,.002,.003]]),-.13,h*.83,0);
+ eyes(.46,.04+h*.21,d*.86,round?.13:.09);
  return g;
 }
-
-function starModel(){let g=group(),c=colors[0];{shape(g,ball,c,0,0,0,.55,.5,.24);for(let i=0;i<5;i++){let a=i*Math.PI*.4;shape(g,cone,c,-Math.sin(a)*.55,Math.cos(a)*.55,0,.37,.9,.3).rotation.z=a}}return g}
 /* Species art direction follows the catalogue order within each tier.
    A profile combines a silhouette detail, proportions and a swimming gait. */
 const designs=[
@@ -96,7 +149,7 @@ const jewelGeo=new T.OctahedronGeometry(1);
 const haloGeo=new T.TorusGeometry(.52,.055,5,18);
 function fish(id){
  const rec=byId.get(id), art=artProfiles.get(id);
- const body=id===0?starModel():shoalFish(id);
+ const body=shoalFish(id);
  const accent=new T.Color(colors[id]).lerp(new T.Color(0xffdfa0),.56).getHex();
  const dorsal=['ray','sole','flatfish'].includes(rec.form)?.17:rec.form==='seahorse'?.77:.48;
  const part=(geo,x,y,z,w,h,d,shade=accent)=>shape(body,geo,shade,x,y,z,w,h,d);
@@ -143,7 +196,7 @@ function swim(model,time,intensity=1){
  body.position.y=(pulse?w*.22:wide?Math.cos(t)*.08:Math.sin(t*.65)*art.depth*.35)*intensity;
  body.position.x=(surge*.29+(g==='jet'?.21*Math.max(0,w):0))*intensity;
  body.scale.y=art.height*(1+(pulse?w*.12:0));
- for(const p of limbs){
+ for(const p of limbs){if(p.o.morphTargetInfluences){p.o.morphTargetInfluences[0]=Math.cos(t)*intensity;p.o.morphTargetInfluences[1]=Math.sin(t)*intensity}
   const back=Math.min(1,Math.max(0,-p.x)),bend=Math.sin(t+2*back);
   p.o.position.z=p.z+intensity*bend*back*(wave?.51:.16);
   p.o.rotation.y=p.ry+bend*back*(wave?.53:.27);
