@@ -1,4 +1,4 @@
-const $=id=>document.getElementById(id),T=THREE,scene=new T.Scene(),camera=new T.PerspectiveCamera(53,1,.1,200),renderer=new T.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(1.7,devicePixelRatio));document.body.prepend(renderer.domElement);scene.background=new T.Color(0x88dcff);scene.fog=new T.FogExp2(0xace8ff,.012);scene.add(new T.HemisphereLight(0xfff9da,0x84a2b6,1.15));let sun=new T.DirectionalLight(0xffedd4,1.1);sun.position.set(-9,18,8);scene.add(sun);
+const $=id=>document.getElementById(id),T=THREE,scene=new T.Scene(),camera=new T.PerspectiveCamera(53,1,.1,200),renderer=new T.WebGLRenderer({antialias:true,alpha:true});renderer.setPixelRatio(Math.min(1.7,devicePixelRatio));document.body.prepend(renderer.domElement);scene.background=new T.Color(0x88dcff);scene.fog=new T.FogExp2(0xace8ff,.012);scene.add(new T.HemisphereLight(0xfff9da,0x84a2b6,1.15));let sun=new T.DirectionalLight(0xffedd4,1.1);sun.position.set(-9,18,8);scene.add(sun);
 const box=new T.BoxGeometry(),ball=new T.SphereGeometry(1,12,9),cone=new T.ConeGeometry(1,1,5),materials=new Map();
 function shape(parent,geo,color,x,y,z,w,h,d){if(!materials.has(color))materials.set(color,new T.MeshStandardMaterial({color,roughness:.76}));const o=new T.Mesh(geo,materials.get(color));o.scale.set(w,h,d);o.position.set(x,y,z);parent.add(o);return o}
 const block=(...a)=>shape(a[0],box,...a.slice(1));function group(parent=scene){let g=new T.Group();parent.add(g);return g}
@@ -38,7 +38,8 @@ const forms=['eel','ray','shark','puffer','squid','jelly','octopus','seahorse','
 const roster=regions.flatMap((region,r)=>region.groups.flatMap(([band,list],tier)=>list.split('|').map((name,slot)=>{
  let id=names.indexOf(name);
  if(id<0){id=names.length;names.push(name);const observed={Doodle:[230000,245000,260000,278000,295000],Moon:[80000,129000,195000,250000,320000],Beast:[34000,40000,45000,55000,55000],Common:[2,4,5,7,9]};rates.push(observed[band]?.[slot]??Math.round((r+1)**3*(tier+1)*7*(1+slot*.22)));colors.push(new T.Color().setHSL(((id*.137+r*.1)%1),.72,.52).getHex())}
- return {id,name,band,tier,r,slot,form:forms.find(f=>name.toLowerCase().includes(f))||'fin'};
+ const anatomy={'Kraken':'octopus','Leviathan':'serpent','Sea Deity':'serpent','Ribbon Marlin':'marlin','Chalk Ray':'ray','Viperfish':'pike','Coffinfish':'angler'};
+ return {id,name,band,tier,r,slot,form:anatomy[name]||forms.find(f=>name.toLowerCase().includes(f))||'fin'};
 })));
 const byId=new Map(roster.map(rec=>[rec.id,rec]));
 function shoalFish(id){
@@ -69,7 +70,93 @@ function shoalFish(id){
  return g;
 }
 
-function fish(id){if(id>=12)return shoalFish(id);let g=group(),c=colors[id];if(id===0){shape(g,ball,c,0,0,0,.55,.5,.24);for(let i=0;i<5;i++){let a=i*Math.PI*.4;shape(g,cone,c,-Math.sin(a)*.55,Math.cos(a)*.55,0,.37,.9,.3).rotation.z=a}}else{let h=[.55,.72,.8,.6,.66,.94,.55,.23,.59,.56,.85,.73][id];shape(g,ball,c,0,0,0,1,h,id===7?.92:.48);let t=shape(g,cone,c,-1.03,0,0,.62,.82,.32);t.rotation.z=-Math.PI/2;shape(g,cone,c,-.15,h,0,.31,.52,.17);if(id===2||id===6)for(let i=0;i<7;i++)shape(g,cone,0xffdf8d,Math.cos(i)*.8,Math.sin(i)*h,.23,.11,.29,.1);if(id===3||id===8)for(let x of [-.4,.23])shape(g,ball,0xffe7c5,x,0,0,.12,h+.01,.49)}for(let k of [-1,1])shape(g,ball,0x1c2538,id===0?k*.2:.54,.12,id===0?.24:k*.38,.1,.12,.08);return g}
+function starModel(){let g=group(),c=colors[0];{shape(g,ball,c,0,0,0,.55,.5,.24);for(let i=0;i<5;i++){let a=i*Math.PI*.4;shape(g,cone,c,-Math.sin(a)*.55,Math.cos(a)*.55,0,.37,.9,.3).rotation.z=a}}return g}
+/* Species art direction follows the catalogue order within each tier.
+   A profile combines a silhouette detail, proportions and a swimming gait. */
+const designs=[
+ 'dots:wheel crest:bank barb:cruise fork:dart stripe:dart spots:school twin:cruise fringe:skim',
+ 'spikes:bob bands:bank moss:rest crown:hover fan:bank ribbon:wave beak:bite armor:rest',
+ 'fang:bite crescent:flap ribbon:glide crown:prowl spiral:jet ridge:sound sail:glide barb:dart',
+ 'brush:dart pencil:cruise fringe:flap brush:wave stencil:prowl pencil:dart ink:jet dots:bob ribbon:skim fan:bank',
+ 'crystal:glide shard:dart crest:bank shard:flap gem:glide crystal:wave gem:hover shard:jet crystal:prowl sail:dart',
+ 'lamp:hover fang:bite jaw:wave ribbon:prowl ridge:wave cloak:jet dome:rest fang:dart',
+ 'halo:hover lamp:bite ears:jet keel:skim fork:glide fringe:flap spiral:rest jaw:rest',
+ 'crown:jet ridge:wave armor:prowl tusk:flap armor:cruise jaw:bite saw:wave spikes:bob horns:bite ridge:sound flame:jet fork:dart moss:rest horns:dart crown:wave trident:hover',
+ 'halo:pulse crescent:flap crescent:prowl halo:wave gem:bob shard:glide star:hover dots:jet',
+ 'pennant:bank ribbon:dart crown:school wreath:glide',
+ 'spark:flap hammer:prowl drops:cruise ribbon:wave cloud:bob sail:dart',
+ 'ice:cruise rays:bank shard:dart bands:school veil:pulse halo:sound'
+].join(' ').split(' ');
+const artProfiles=new Map(roster.map((fish,index)=>{
+ const [mark,gait]=designs[index].split(':');
+ return [fish.id,{mark,gait,length:.79+(index*17%37)/57,height:.78+(index*13%29)/46,
+   beat:1.8+(index*23%41)/13,phase:index*2.399,depth:.08+(index*7%17)/55}];
+}));
+const jewelGeo=new T.OctahedronGeometry(1);
+const haloGeo=new T.TorusGeometry(.52,.055,5,18);
+function fish(id){
+ const rec=byId.get(id), art=artProfiles.get(id);
+ const body=id===0?starModel():shoalFish(id);
+ const accent=new T.Color(colors[id]).lerp(new T.Color(0xffdfa0),.56).getHex();
+ const dorsal=['ray','sole','flatfish'].includes(rec.form)?.17:rec.form==='seahorse'?.77:.48;
+ const part=(geo,x,y,z,w,h,d,shade=accent)=>shape(body,geo,shade,x,y,z,w,h,d);
+ function blade(x,y,z,w,h,d,angle=0){const mesh=part(cone,x,y,z,w,h,d);mesh.rotation.z=angle;return mesh}
+ const m=art.mark;
+ if(['halo','crescent','spiral','wreath'].includes(m)){
+  const hoop=part(haloGeo,m==='spiral'?-.1:0,m==='spiral'?.18:dorsal+.14,m==='spiral'?.42:0,1,m==='crescent'?.55:1,1);
+  if(m!=='spiral')hoop.rotation.x=1.12;
+ }else if(['lamp','dome','hammer','jaw','beak','tusk','fang','pencil','trident','barb'].includes(m)){
+  if(m==='hammer')part(ball,.65,.13,0,.26,.19,.88);
+  else if(m==='lamp'){part(ball,.46,dorsal+.19,0,.06,.31,.06);part(ball,.49,dorsal+.5,0,.16,.16,.16,0xaaffcf)}
+  else if(m==='dome')part(ball,.38,dorsal,.01,.44,.37,.39,0x9cdadd);
+  else if(m==='jaw'||m==='beak')part(ball,.78,-.13,0,.48,m==='jaw'?.27:.16,.32);
+  else for(const side of [-1,1])blade(.76,m==='fang'?-.21:.04,side*.22,.095,m==='pencil'?.96:.54,.09,m==='fang'?2.9:-1.1);
+ }else if(['dots','spots','bands','stripe','stencil','ink','drops','gem'].includes(m)){
+  const count=3+id%4;
+  for(let i=0;i<count;i++)for(const side of [-1,1]){
+   const x=(i/(count-1)-.5)*1.22;
+   part(m==='gem'?jewelGeo:ball,x,id===0?Math.sin(i*1.5)*.25:.1*Math.cos(i),side*(id===0?.24:.4*Math.sqrt(1-x*x)),m==='bands'?.10:.065+(i%2)*.045,m==='bands'||m==='stripe'?.37:.09,.055);
+  }
+ }else if(['ribbon','fringe','veil','brush','cloak','fan','fork','twin','ears'].includes(m)){
+  for(let i=0;i<3+id%3;i++){const a=(i-2)*.31;
+   blade(m==='ears'?0:-.76,dorsal*.3+Math.sin(a)*.34,Math.sin(a)*.31,.16,m==='veil'||m==='ribbon'?.99:.61,.13,1.55+a)}
+ }else{
+  const count=['sail','pennant','keel'].includes(m)?2:3+id%4;
+  for(let i=0;i<count;i++){const x=.5-i*.95/Math.max(1,count-1),h=.26+.44*Math.sin((i+1)*Math.PI/(count+1));
+   if(['moss','cloud','armor'].includes(m))part(m==='armor'?jewelGeo:ball,x,dorsal*.86,0,.24,h*.45,.29);
+   else {const geom=['shard','ice','crystal','star'].includes(m)?jewelGeo:cone;
+    part(geom,x,dorsal+h*.24,Math.sin(i*2)*.11,.12+(m==='sail'?.17:0),h,.13).rotation.z=.18+i*.07}}
+ }
+ const wrapper=group();wrapper.add(body);body.scale.set(art.length,art.height,.9+(id%5)*.075);
+ const limbs=body.children.map(o=>({o,x:o.position.x,y:o.position.y,z:o.position.z,rx:o.rotation.x,ry:o.rotation.y,rz:o.rotation.z}));
+ wrapper.userData={id,body,limbs,art};
+ return wrapper;
+}
+function swim(model,time,intensity=1){
+ if(!model)return;
+ const {art,body,limbs}=model.userData;
+ const t=time*art.beat+art.phase,w=Math.sin(t),g=art.gait;
+ const pulse=['jet','pulse','bob'].includes(g),wide=g==='flap'||g==='skim',wave=g==='wave';
+ const surge=g==='dart'||g==='bite'?Math.max(0,Math.sin(t))**5:0;
+ body.rotation.z=(g==='wheel'?t*.3:g==='sound'?w*.19:g==='hover'?Math.sin(t*.7)*.14:w*.055+surge*.2)*intensity;
+ body.rotation.x=wide?w*.16:g==='bank'||g==='school'?Math.sin(t*.7)*.26:0;
+ body.position.y=(pulse?w*.22:wide?Math.cos(t)*.08:Math.sin(t*.65)*art.depth*.35)*intensity;
+ body.position.x=(surge*.29+(g==='jet'?.21*Math.max(0,w):0))*intensity;
+ body.scale.y=art.height*(1+(pulse?w*.12:0));
+ for(const p of limbs){
+  const back=Math.min(1,Math.max(0,-p.x)),bend=Math.sin(t+2*back);
+  p.o.position.z=p.z+intensity*bend*back*(wave?.51:.16);
+  p.o.rotation.y=p.ry+bend*back*(wave?.53:.27);
+  p.o.rotation.x=p.rx+(wide?Math.sign(p.z)*Math.abs(p.z)*w*.79:pulse&&p.y<0?Math.cos(t+p.x)*.24:0);
+  p.o.rotation.z=p.rz+(g==='wheel'?Math.sin(t+p.x*4)*.07:0);
+ }
+}
+function roam(model,i,time){
+ const a=model.userData.art,t=time*(.17+a.beat*.024)+a.phase,spread=6+i%4;
+ model.position.set(Math.sin(t)*spread,-.08+Math.sin(t*2)*a.depth,-6-(i%5)*3+Math.cos(t)*(1+a.depth*3));
+ model.rotation.y=Math.atan2(Math.sin(t)*(1+a.depth*3),Math.cos(t)*spread);
+ swim(model,time);
+}
 const swimmers=names.slice(0,8).map((_,i)=>fish(i)),hook=group();shape(hook,ball,0xf94946,0,.18,0,.25,.35,.25);shape(hook,ball,0xfff4cc,0,.37,0,.19,.15,.19);
 const line=new T.Line(new T.BufferGeometry().setFromPoints([new T.Vector3(),new T.Vector3()]),new T.LineBasicMaterial({color:0x473a49}));scene.add(line);
 let ring=new T.Mesh(new T.RingGeometry(.93,1,44),new T.MeshBasicMaterial({color:0xbffaff,transparent:true,side:T.DoubleSide}));ring.rotation.x=-Math.PI/2;scene.add(ring);
@@ -80,19 +167,19 @@ function setPhase(p){phase=p;elapsed=0}function trip(base){atBase=base;goal=new 
 $('index').onclick=()=>panel('Fish Index · '+data.seen.length+'/12',names.map((n,i)=>'<span class="card" style="border-color:#'+colors[i].toString(16)+'">'+(data.seen.includes(i)?n:'???')+'<br>$'+rates[i]+'/s</span>').join(''));
 $('shop').onclick=()=>{panel('Harbor Shop',['gear','rod','speed'].map((k,i)=>'<button data-k="'+k+'">'+['Weights','Fishing rod','Swim speed'][i]+' Lv.'+data[k]+'<br>$'+(data[k]*25)+'</button>').join('')+'<button id="train">Lift weights</button>');document.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{let k=b.dataset.k,c=data[k]*25;if(data.coins<c)return say('Collect cash at your base');data.coins-=c;data[k]++;save();tone(700);$('shop').click()});$('train').onclick=()=>{data.strength+=data.gear;hero.rotation.z=.14;say('+'+data.gear+' casting power');tone(260);save()}}
 $('base').onclick=()=>{if(phase==='idle')trip(!atBase)};
-$('act').onclick=()=>{tone(360+taps*12);if(phase==='idle'){if(atBase){if(data.bag.length){let i=data.pads.indexOf(null);if(i<0)i=data.pads.reduce((best,id,j)=>rates[id]<rates[data.pads[best]]?j:best,0);if(i>=0&&data.pads[i]!==null&&rates[data.pads[i]]>=rates[data.bag[0]]){data.coins+=rates[data.bag.shift()]*5;say('Fish sold')}else{data.pads[i]=data.bag.shift();data.levels[i]=1;syncPads();say('Display earning cash!')}}else{data.coins+=Math.floor(data.bank);data.bank-=Math.floor(data.bank);say('Cash collected!')}save();return}goal=null;taps=luck=0;catchId=Math.min(11,Math.floor(Math.random()*(3+data.rod)));sdk.prepare();sdk.start();setPhase('cast')}else if(phase==='swirl'){luck++;say('+'+luck+' Luck')}else if(phase==='reel'){taps++;if(taps>=required()){startEscape()}}else if(phase==='escape'){escapeKick=Math.min(1,escapeKick+.48);tone(480)}};
+$('act').onclick=()=>{tone(360+taps*12);if(phase==='idle'){if(atBase){if(data.bag.length){let i=data.pads.indexOf(null);if(i<0)i=data.pads.reduce((best,id,j)=>rates[id]<rates[data.pads[best]]?j:best,0);if(i>=0&&data.pads[i]!==null&&rates[data.pads[i]]>=rates[data.bag[0]]){data.coins+=rates[data.bag.shift()]*5;say('Fish sold')}else{data.pads[i]=data.bag.shift();data.levels[i]=1;syncPads();say('Display earning cash!')}}else{data.coins+=Math.floor(data.bank);data.bank-=Math.floor(data.bank);say('Cash collected!')}save();return}goal=null;taps=luck=0;catchId=Math.min(11,Math.floor(Math.random()*(3+data.rod)));sdk.prepare();sdk.start();setPhase('cast')}else if(phase==='swirl'){luck++;say('+'+luck+' Luck')}else if(phase==='reel'){reelImpulse=1;taps++;if(taps>=required()){startEscape()}}else if(phase==='escape'){escapeKick=Math.min(1,escapeKick+.48);tone(480)}};
 const portraits=new Map();
 function portrait(id){
  if(portraits.has(id))return portraits.get(id);
  const studio=new T.Scene(), key=new T.DirectionalLight(0xffffff,1.2);
  key.position.set(-2,4,5);studio.add(key,new T.HemisphereLight(0xfff5ce,0x7aa2c0,1.25));
- const model=fish(id);studio.add(model);model.rotation.y=-.35;
+ const model=fish(id);studio.add(model);model.rotation.y=-.42;swim(model,.25,.4);
  const cam=new T.PerspectiveCamera(42,1,.1,20);cam.position.set(0,.4,3.6);cam.lookAt(0,0,0);
  const previous=renderer.getSize(new T.Vector2());renderer.setSize(96,96,false);
- studio.background=null;renderer.setClearColor(0x758782,1);renderer.render(studio,cam);
+ studio.background=null;renderer.setClearColor(0x000000,0);renderer.render(studio,cam);
  const image=renderer.domElement.toDataURL();renderer.setSize(previous.x,previous.y,false);portraits.set(id,image);return image;
 }
-const priceLabel=value=>value>=1000?(value/1000)+'K':String(value);
+const priceLabel=value=>value>=1000?Number((value/1000).toFixed(1))+'K':String(value);
 const liveHabitats=group();
 function travel(r){
  liveHabitats.clear();data.region=r;const region=regions[r];scene.background.setHex(region.sky);scene.fog.color.setHex(region.sky);materials.get(0x46cfee).color.setHex(region.water);
@@ -108,7 +195,7 @@ let indexGroup=0;
 function openBook(r=data.region||0,tier=0){
  const region=regions[r],cards=roster.filter(f=>f.r===r&&f.tier===tier),tabs=regions.map((v,i)=>'<button class="fieldTab" aria-pressed="'+(r===i)+'" data-region="'+i+'">'+v.name+'</button>').join('');
  const groups=region.groups.map(([band],i)=>'<option value="'+i+'" '+(tier===i?'selected':'')+'>'+band+'</option>').join('');
- panel('Fish Index · '+data.seen.length+'/100','<div class="fieldLayout"><nav>'+tabs+'</nav><article class="fieldBody"><select id="band">'+groups+'</select><div class="entries">'+cards.map(f=>'<div class="entry"><b>'+(data.seen.includes(f.id)?f.name:'???')+'</b><img alt="" style="filter:'+(data.seen.includes(f.id)?'none':'brightness(.18)')+'" src="'+portrait(f.id)+'"><strong>$'+priceLabel(rates[f.id])+'/s</strong></div>').join('')+'</div></article></div><div class="fieldFooter"><button id="sail">Fish '+region.name+'</button></div>');
+ panel('Fish Index · '+data.seen.length+'/100','<div class="fieldLayout"><nav>'+tabs+'</nav><article class="fieldBody"><select id="band">'+groups+'</select><b class=bandCount>'+cards.filter(f=>data.seen.includes(f.id)).length+'/'+cards.length+'</b><div class="entries">'+cards.map(f=>'<div class="entry"><b>'+(data.seen.includes(f.id)?f.name:'???')+'</b><img alt="" style="filter:'+(data.seen.includes(f.id)?'none':'brightness(.18)')+'" src="'+portrait(f.id)+'"><strong>$'+priceLabel(rates[f.id])+'/s</strong></div>').join('')+'</div></article></div><div class="fieldFooter"><button id="sail">Fish '+region.name+'</button></div>');
  document.querySelectorAll('[data-region]').forEach(b=>b.onclick=()=>openBook(+b.dataset.region));$('band').onchange=e=>openBook(r,+e.target.value);
  $('sail').onclick=()=>{if(phase!=='idle')return;travel(r);save();$('panel').hidden=true;trip(false);say(region.name)};
 }
@@ -126,7 +213,7 @@ $('shop').onclick=()=>{openShop();const labels=['Weights','Fishing rod','Swim sp
  const k=button.dataset.k,level=data[k];
  button.className='shopCard';button.innerHTML='<b>'+labels[i]+'</b><i class="tool tool'+i+'"></i><small>Lv. '+level+'</small><strong>$'+(level*25)+'</strong>';
  });};
-let hunter=null,lead=0,shore=0,escapeKick=0;
+let reelImpulse=0;let hunter=null,lead=0,shore=0,escapeKick=0;
 function startEscape(){
  setPhase('escape');lead=3.6;shore=8;escapeKick=.75;
  hunter=fish(9);hunter.scale.set(2.2,1.6,1.7);
@@ -166,7 +253,7 @@ function splash(active){
   wave.visible=active;
   if(!active)return;
   const age=(clock*(phase==='swirl'?1.5:1)+i/3)%1;
-  const center=phase==='escape'?hero.position:phase==='reveal'?hero.position:hook.position;
+  const center=phase==='escape'&&i===1&&hunter?hunter.position:phase==='escape'||phase==='reveal'?hero.position:hook.position;
   wave.position.set(center.x,.175+i*.008,center.z);
   wave.scale.setScalar(.3+age*(phase==='escape'?1.1:2.4));
   wave.material.opacity=(1-age)*.72;
@@ -176,7 +263,8 @@ function splash(active){
     if(!active)return;
     const age=(clock*(phase==='reveal'?1.4:.85)+i*.137)%1;
     const angle=i*2.4, radius=age*(phase==='reveal'?3:1.3);
-    drop.position.set(hook.position.x+Math.cos(angle)*radius,.28+Math.sin(age*Math.PI)*(1+i%4*.4),hook.position.z+Math.sin(angle)*radius);
+    const source=phase==='escape'&&hunter?(i%2?hunter.position:hero.position):phase==='reveal'&&prize?prize.position:hook.position;
+    drop.position.set(source.x+Math.cos(angle)*radius,.28+Math.sin(age*Math.PI)*(1+i%4*.4),source.z+Math.sin(angle)*radius);
     drop.scale.setScalar((1-age)*.12+.02);
   });
 }
@@ -201,7 +289,7 @@ function stickMove(e){
  const x=(e.clientX-rect.left-radius)/radius,y=(e.clientY-rect.top-radius)/radius,length=Math.max(1,Math.hypot(x,y));
  stickX=x/length;stickY=y/length;joystick.firstChild.style.transform='translate('+stickX*19+'px,'+stickY*19+'px)';
 }
-joystick.onpointerdown=e=>{e.preventDefault();stickId=e.pointerId;joystick.setPointerCapture(stickId);stickMove(e)};
+joystick.onpointerdown=e=>{if(stickId!==null)return;e.preventDefault();stickId=e.pointerId;joystick.setPointerCapture(stickId);stickMove(e)};
 joystick.onpointermove=e=>{if(e.pointerId===stickId)stickMove(e)};
 joystick.onlostpointercapture=()=>{stickId=null;stickX=stickY=0;joystick.firstChild.style.transform='none';if(phase==='idle')goal=null};
 
@@ -227,27 +315,38 @@ for(let i=0;i<4;i++)block(scene,0x765436,17.6+i%2*2.8,-.1,3-Math.floor(i/2)*3.8,
 
 function frame(now){requestAnimationFrame(frame);let dt=Math.min(.06,(now-prev)/1000);prev=now;if(document.hidden)return;clock+=dt;elapsed+=dt;flash-=dt;if(flash<=0)$('spark').textContent='';let income=data.pads.reduce((sum,id,i)=>sum+(id===null?0:rates[id]*data.levels[i]),0);data.bank+=income*dt;if((autoSave+=dt)>8){autoSave=0;if(income)save()}joystick.hidden=phase!=='idle'||!$('panel').hidden;
  if(stickId!==null&&!joystick.hidden)goal=new T.Vector3(Math.max(-25,Math.min(25,hero.position.x+stickX*2)),0,Math.max(3,Math.min(27,hero.position.z+stickY*2)));
- walking=false;if(goal){let d=goal.clone().sub(hero.position),dist=d.length();if(dist<.15){goal=null;if(phase==='walk')setPhase('idle')}else{walking=true;hero.rotation.y=Math.atan2(-d.x,-d.z);hero.position.addScaledVector(d.normalize(),Math.min(dist,dt*(5+data.speed)));atBase=hero.position.z>12}}hero.rotation.z*=.9;legs.forEach((l,i)=>l.rotation.x=walking?Math.sin(clock*12+i*Math.PI)*.55:0);swimmers.forEach((g,i)=>{g.position.set(Math.sin(clock*.23+i*3)*10,-.05+Math.sin(clock*2+i)*.18,-6-(i%5)*3);g.rotation.y=Math.cos(clock*.23+i*3)<0?Math.PI:0});display.forEach((g,i)=>g.rotation.y=Math.sin(clock+i)*.3);
-let fishing=!['idle','walk'].includes(phase),cx=hero.position.x,cz=hero.position.z;hook.visible=line.visible=ring.visible=fishing;let view=new T.Vector3(cx+2.8,4.7,cz+8),look=new T.Vector3(cx,1,cz-2);if(fishing){let x=cx,z=-castDepth();if(phase==='cast'){let t=Math.min(1,elapsed/.9);hook.position.set(x,1+Math.sin(t*Math.PI)*5,(cz-1)*(1-t)+z*t);if(t===1)setPhase('swirl')}else hook.position.set(x,.42+Math.sin(clock*6)*.16,z);if(phase==='swirl'&&elapsed>2.9){catchId=rollInWater();prize=fish(catchId);setPhase('reel')}if(prize){prize.position.copy(hook.position);prize.position.y+=phase==='reveal'?2+Math.sin(elapsed*3)*.6:1;prize.rotation.y=clock*(phase==='reveal'?3:1);prize.rotation.z=Math.sin(clock*9)*.16}if(phase==='reveal'&&elapsed>2){scene.remove(prize);prize=null;trip(true)}look.copy(hook.position);look.y+=.7;
+ walking=false;if(goal){let d=goal.clone().sub(hero.position),dist=d.length();if(dist<.15){goal=null;if(phase==='walk')setPhase('idle')}else{walking=true;hero.rotation.y=Math.atan2(-d.x,-d.z);hero.position.addScaledVector(d.normalize(),Math.min(dist,dt*(5+data.speed)));atBase=hero.position.z>12}}hero.rotation.z*=.9;legs.forEach((l,i)=>l.rotation.x=walking?Math.sin(clock*12+i*Math.PI)*.55:0);swimmers.forEach((g,i)=>roam(g,i,clock));display.forEach((g,i)=>{g.rotation.y=Math.sin(clock*.55+i)*.25;swim(g,clock,.65)});
+ let fishing=!['idle','walk'].includes(phase),cx=hero.position.x,cz=hero.position.z;hook.visible=line.visible=ring.visible=fishing;let view=new T.Vector3(cx+2.8,4.7,cz+8),look=new T.Vector3(cx,1,cz-2);if(fishing){let x=cx,z=-castDepth();if(phase==='cast'){let t=Math.min(1,elapsed/.9);hook.position.set(x,1+Math.sin(t*Math.PI)*5,(cz-1)*(1-t)+z*t);if(t===1)setPhase('swirl')}else hook.position.set(x,.42+Math.sin(clock*6)*.16,z);if(phase==='swirl'&&elapsed>2.9){catchId=rollInWater();prize=fish(catchId);setPhase('reel')}if(prize){swim(prize,clock*1.6);prize.position.copy(hook.position);prize.position.y+=phase==='reveal'?2+Math.sin(elapsed*3)*.6:1;prize.rotation.y=clock*(phase==='reveal'?3:1);prize.rotation.z=Math.sin(clock*9)*.16}if(phase==='reveal'&&elapsed>2){scene.remove(prize);prize=null;trip(true)}look.copy(hook.position);look.y+=.7;reelImpulse=Math.max(0,reelImpulse-dt*4);
  if(phase==='cast'){
    const travel=Math.min(1,elapsed/.9);view.set(x+6*(1-travel),3.5+Math.sin(travel*Math.PI)*4,cz+5+(z-cz)*travel);
  }else if(phase==='reveal'){
    prize?.position.set(cx+.7,3.4+Math.sin(elapsed*3)*.22,cz);
    view.set(cx+2.5,1.1,cz+5);look.set(cx,2.4,cz);
- }else{view.set(x+.25,1.65,z+5.3);look.y+=phase==='reel'?.35:0}
+ }else{if(phase==='reel'){
+   view.set(x+.45+reelImpulse*.1,1.22,z+4.9-reelImpulse*.45);look.y+=.33;
+   prize.position.y+=Math.sin(clock*7)*.12+reelImpulse*.38;
+ }else{
+   const impact=Math.max(0,1-elapsed/.48);
+   view.set(x+.26,1.38+impact*.45,z+4.8+impact*.8);
+ }}
  let pos=line.geometry.attributes.position;pos.setXYZ(0,cx+.7,2.4,cz-1);pos.setXYZ(1,...hook.position.toArray());pos.needsUpdate=true;line.frustumCulled=false;ring.position.set(x,.17,z);let t=(clock*1.5)%1;ring.scale.setScalar(.5+t*2.6);ring.material.opacity=1-t}
 if(phase==='escape'){
- const swim=1.2+escapeKick*2.8+Math.min(10,data.speed)*.12;
- escapeKick=Math.max(0,escapeKick-dt*.95);shore-=swim*dt;lead+=(swim-2.85)*dt;
+ const swimSpeed=1.2+escapeKick*2.8+Math.min(10,data.speed)*.12;
+ escapeKick=Math.max(0,escapeKick-dt*.95);shore-=swimSpeed*dt;lead+=(swimSpeed-2.85)*dt;
  const z=2-shore;hero.position.z=z;hero.rotation.y=Math.PI;
  legs.forEach((leg,i)=>leg.rotation.x=Math.sin(clock*11+i*Math.PI)*.65);
- hunter.position.set(cx+.3,.32,z-lead);hunter.rotation.y=-Math.PI/2+Math.sin(clock*8)*.08;
- prize.position.set(cx+.7,1.25,z);view.set(cx+2.4+Math.sin(clock*7)*.07,1.9,z+5.3);look.set(cx,.8,z-1.2);
+ swim(hunter,clock*1.35);hunter.position.set(cx+.3,.32,z-lead);hunter.rotation.y=-Math.PI/2+Math.sin(clock*8)*.10;
+ prize.position.set(cx+.7,1.25,z);const risk=Math.max(0,1-lead/3.6);
+ view.set(cx+2.1+Math.sin(clock*9)*.09*risk,1.56+risk*.42,z+5.5);
+ look.set(cx,.8,z-1.2-risk*.6);
  line.visible=hook.visible=false;ring.position.set(cx,.18,z);ring.visible=true;
  if(shore<=0||lead<=.45){hero.position.z=4;finishEscape(shore<=0)}
 }
 $('luckBar').hidden=phase!=='swirl';
  if(phase==='swirl')$('luckFill').style.width=Math.min(100,12+luck*8)+'%';
+ document.body.dataset.phase=phase;
+ $('gaugeRead').textContent=taps+' / '+required();
+ $('dangerEdge').style.opacity=phase==='escape'?String(Math.min(.75,Math.max(0,(3.6-lead)/3.6))):'0';
  document.body.classList.toggle('reading',!$('panel').hidden);
  splash(fishing&&phase!=='cast');camera.position.lerp(view,1-Math.exp(-dt*5));camera.lookAt(look);const targetFov=phase==='escape'?66:phase==='reveal'?43:53;
  camera.fov+=(targetFov-camera.fov)*(1-Math.exp(-dt*7));camera.updateProjectionMatrix();$('meter').hidden=phase!=='reel';$('needle').style.transform='rotate('+(-85+170*taps/required())+'deg)';$('hint').textContent=({escape:'Shark behind you! Tap to swim',cast:'Casting…',swirl:waterBands[castBand()]+' water · Tap for luck!',reel:names[catchId]+' · $'+rates[catchId]+'/s',reveal:'Catch landed!',walk:'Follow the path',idle:atBase?(data.bag.length?'Place your fish on a stand':'Collect your earnings'):'Cast into the lagoon'})[phase];$('act').textContent=({idle:atBase?(data.bag.length?'Place fish':'Collect $'+Math.floor(data.bank)):'Cast line',cast:'Casting…',escape:'Swim! '+Math.max(0,Math.ceil(shore))+' m',swirl:'Tap · + Luck',reel:'Reel! '+taps+'/'+required(),reveal:'Caught!',walk:'Walking…'})[phase];$('base').textContent=atBase?'Lagoon':'My Base';$('stands').hidden=!atBase||phase!=='idle';for(let id of ['shop','base','index','daily'])$(id).hidden=fishing||phase==='walk';$('wallet').innerHTML='$'+Math.floor(data.coins)+'<br>+'+income+'/s';updateCastTrail();updateCatchGlints();renderer.render(scene,camera)}
