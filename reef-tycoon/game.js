@@ -224,10 +224,10 @@ $('act').onclick=()=>{tone(360+taps*12);if(phase==='idle'){if(atBase){if(data.ba
 const portraits=new Map();
 function portrait(id){
  if(portraits.has(id))return portraits.get(id);
- const studio=new T.Scene(), key=new T.DirectionalLight(0xffffff,1.2);
- key.position.set(-2,4,5);studio.add(key,new T.HemisphereLight(0xfff5ce,0x7aa2c0,1.25));
+ const studio=new T.Scene(), key=new T.DirectionalLight(0xffffff,.87);
+ key.position.set(-2,4,5);studio.add(key,new T.HemisphereLight(0xfff5ce,0x7aa2c0,.92));
  const model=fish(id);studio.add(model);model.rotation.y=-.42;swim(model,.25,.4);
- const cam=new T.PerspectiveCamera(42,1,.1,20);cam.position.set(0,.4,3.6);cam.lookAt(0,0,0);
+ const cam=new T.PerspectiveCamera(42,1,.1,20);const bounds=new T.Box3().setFromObject(model),center=bounds.getCenter(new T.Vector3()),size=bounds.getSize(new T.Vector3());const distance=Math.max(size.x,size.y)*1.50+size.z*.5;cam.position.copy(center).add(new T.Vector3(0,distance*.14,distance));cam.lookAt(center);
  const previous=renderer.getSize(new T.Vector2());renderer.setSize(96,96,false);
  studio.background=null;renderer.setClearColor(0x000000,0);renderer.render(studio,cam);
  const image=renderer.domElement.toDataURL();renderer.setSize(previous.x,previous.y,false);portraits.set(id,image);return image;
