@@ -237,6 +237,8 @@ function fieldSpecies(c,f,a,b,k,t){
 function playfulBay(c,w,h,time){
  const y=h*.47;
  c.save();c.translate(w*.79,y*.62);const rad=Math.min(42,w*.08);for(let i=0;i<4;i++){c.beginPath();c.arc(0,0,rad-i*3,Math.PI,2*Math.PI);c.lineWidth=3;c.strokeStyle=['#fc9984','#ffda74','#95d7b8','#9dbfea'][i];c.stroke()}c.restore();
+ if(data.seen.length){c.save();c.translate(w*.12,h*.846);const step=Math.sin(time*5);for(let i=0;i<3;i++){line(c,-4,0,-11-i,-3+i*3+step,'#ad5843',1.5);line(c,4,0,11+i,-3+i*3-step,'#ad5843',1.5)}dot(c,0,0,9,5,'#ff805f');for(const sign of [-1,1]){dot(c,sign*10,-6+sign*step,4,3,'#ff9c65');dot(c,sign*3,-4,1.4,2,'#303f53')}c.restore()}
+ if(new Set(data.seen.map(id=>byId.get(id)?.r)).size>=3){c.save();c.translate(w*.59+Math.sin(time*.7)*12,h*.36+Math.sin(time*3)*3);dot(c,0,0,9,6,'#35495e');dot(c,3,1,5,5,'#fff0cf');path(c,'#ff9c61','M7 -2 l7 3 -7 2Z');path(c,'#35495e','M-3 0 q-14 -14 -17 -8 l13 12Z');c.restore()}
  const hop=Math.max(0,buddyUntil-time),jump=hop?Math.abs(Math.sin(hop*6))*22:0;
  c.save();c.translate(w*.78,h*.71+Math.sin(time*2)*2-jump);c.rotate(Math.sin(time*2)*.06);
  dot(c,0,5,20,4,'#216b81');dot(c,0,0,16,9,'#ffa942');dot(c,7,-9,9,10,'#ffd765');path(c,'#ee8050','M14 -10 l9 3 -10 3Z');dot(c,10,-11,1.6,2,'#263f54');dot(c,-4,0,8,4,'#ffe181');path(c,'#315e79','M-1 -16 h16 l-3 -5 -9 1Z');c.restore();
