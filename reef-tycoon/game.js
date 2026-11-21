@@ -17,11 +17,11 @@ function build(){
  W=innerWidth;H=innerHeight;const d=Math.min(devicePixelRatio||1,1.65);
  canvas.width=Math.round(W*d);canvas.height=Math.round(H*d);ctx.setTransform(d,0,0,d,0,0);
  if(!waters[data.region])data.region=0;
- plate=document.createElement('canvas');plate.width=canvas.width;plate.height=canvas.height;const g=plate.getContext('2d');g.scale(d,d);paintedSet(g,W,H,data.region);g.globalAlpha=.52;g.fillStyle=g.createPattern(paperFiber,'repeat');g.fillRect(0,0,W,H);
+ plate=document.createElement('canvas');plate.width=canvas.width;plate.height=canvas.height;const g=plate.getContext('2d');g.scale(d,d);paintedSet(g,W,H,data.region);g.globalAlpha=.04;g.fillStyle=g.createPattern(paperFiber,'repeat');g.fillRect(0,0,W,H);
  depthWash=document.createElement('canvas');depthWash.width=Math.ceil(W*.65);depthWash.height=Math.ceil(H*.65);
  const wash=depthWash.getContext('2d');wash.scale(.65,.65);const rand=paintSeed(72+data.region);
  wash.globalAlpha=.055;for(let i=0;i<85;i++)pigment(wash,rand,rand()*W,rand()*H,18+rand()*90,6+rand()*35,i%3?waters[data.region][4]:'#f8e8b3');
- wash.globalAlpha=.35;wash.fillStyle=wash.createPattern(paperFiber,'repeat');wash.fillRect(0,0,W,H);
+ wash.globalAlpha=.025;wash.fillStyle=wash.createPattern(paperFiber,'repeat');wash.fillRect(0,0,W,H);
  school=roster.filter(f=>f.r===data.region);$('place').textContent=waters[data.region][0];
 }
 function stage(p){phase=p;age=0;held=false;document.body.classList.toggle('deep',['bite','reel','run'].includes(p));updateUI()}
