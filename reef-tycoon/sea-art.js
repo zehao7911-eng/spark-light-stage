@@ -1,5 +1,5 @@
 const waters=[
- ['Apricot Sound','#b1d6cb','#ffe0af','#8cae9c','#4f8076','#3f9e97','#145466'],
+ ['Apricot Sound','#89dff2','#ffedac','#8cae9c','#4f8076','#45ceb8','#267ea2'],
  ['Glasswater Keys','#c4d9e5','#ffd6be','#a5adc1','#728499','#559db2','#295269'],
  ['The Blue Hollow','#90a3b5','#eac6b2','#687f94','#465e79','#34778b','#193850'],
  ['Copper Narrows','#edc7ac','#ffd9a2','#c19d82','#946f65','#689d88','#285964'],
@@ -232,4 +232,13 @@ function fieldSpecies(c,f,a,b,k,t){
  path(c,null,'M19 -7 Q14 0 19 6',k,.9);dot(c,25,-6,3.2,3.2,'#ffeabf');dot(c,26,-6,1.9,2,k);
  if(name.includes('cod'))path(c,null,'M28 9 q1 7 -2 8',k,1.4);
  c.restore();return true
+}
+
+function playfulBay(c,w,h,time){
+ const y=h*.47;
+ c.save();c.translate(w*.79,y*.62);const rad=Math.min(42,w*.08);for(let i=0;i<4;i++){c.beginPath();c.arc(0,0,rad-i*3,Math.PI,2*Math.PI);c.lineWidth=3;c.strokeStyle=['#fc9984','#ffda74','#95d7b8','#9dbfea'][i];c.stroke()}c.restore();
+ const hop=Math.max(0,buddyUntil-time),jump=hop?Math.abs(Math.sin(hop*6))*22:0;
+ c.save();c.translate(w*.78,h*.71+Math.sin(time*2)*2-jump);c.rotate(Math.sin(time*2)*.06);
+ dot(c,0,5,20,4,'#216b81');dot(c,0,0,16,9,'#ffa942');dot(c,7,-9,9,10,'#ffd765');path(c,'#ee8050','M14 -10 l9 3 -10 3Z');dot(c,10,-11,1.6,2,'#263f54');dot(c,-4,0,8,4,'#ffe181');path(c,'#315e79','M-1 -16 h16 l-3 -5 -9 1Z');c.restore();
+ if(hop){for(let i=0;i<4;i++){const x=w*.78+Math.sin(i*3+hop)*24,yy=h*.71-25-(1.7-hop)*18-i*4;dot(c,x,yy,2,2,'#fff1ab')}}
 }

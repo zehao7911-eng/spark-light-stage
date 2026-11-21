@@ -3,7 +3,7 @@ const $=id=>document.getElementById(id),canvas=$('sea'),ctx=canvas.getContext('2
 const key='reef-tycoon.save.v1',initial={region:0,seen:[],bag:[],pads:Array(6).fill(null),levels:Array(6).fill(1),coins:0,bank:0,rod:1,speed:1,gear:1,strength:0,rewards:{},updated:0};
 let data={...initial};try{data={...initial,...JSON.parse(localStorage.getItem(key))}}catch{}
 let phase='harbor',t=0,age=0,target=0,tension=.24,progress=0,held=false,drift=0,lane=0,hits=0,avoided=0,muted=false,ac,last=0,W=0,H=0,plate,school=[],rings=[],castX=.64,catchLength=0,toast='',toastUntil=0,currentPage='',saving=0;
-let luck=0,pulls=0,pullsNeeded=8,lead=0,shore=0,kick=0,pulse=0;
+let buddyUntil=0;let luck=0,pulls=0,pullsNeeded=8,lead=0,shore=0,kick=0,pulse=0;
 const paperFiber=grainPlate(816);
 let depthWash;
 let selectedStand=-1,exhibitAt=-1;
@@ -27,7 +27,7 @@ function build(){
 function stage(p){phase=p;age=0;held=false;document.body.classList.toggle('deep',['bite','reel','run'].includes(p));updateUI()}
 function updateUI(){
  const free=phase==='harbor',pull=phase==='reel',swim=phase==='run',roll=phase==='bite';
- $('book').hidden=$('pier').hidden=!free;$('meter').hidden=!(pull||swim||roll);
+ $('pack').hidden=!free;$('book').hidden=$('pier').hidden=!free;$('meter').hidden=!(pull||swim||roll);
  $('act').hidden=phase==='landed';$('act').disabled=!$('sheet').hidden||['cast','landed','reveal'].includes(phase);
  const act=free?'Cast line':roll?'Tap for luck':pull?'Pull!':swim?'Swim!':phase==='cast'?'Casting…':'Coming ashore';
  const hint=t<toastUntil?toast:free?'Tap the water to cast':phase==='cast'?'Follow the float':roll?'Luck +'+luck:pull?names[target]+' · '+rates[target]+' shells/s':swim?Math.ceil(shore)+' m to shore':'Catch secured';
@@ -64,7 +64,7 @@ function release(){held=false;updateUI()}
 $('act').onpointerup=$('act').onpointercancel=$('act').onlostpointercapture=release;
 $('act').onclick=e=>{if(e.detail===0)act()};
 addEventListener('keydown',e=>{if(e.code==='Space'&&$('sheet').hidden){e.preventDefault();if(!e.repeat)act()}});addEventListener('keyup',e=>{if(e.code==='Space')release()});
-canvas.onpointerdown=e=>{if(phase==='harbor')cast(e.clientX/W);else if(['bite','reel','run'].includes(phase)){canvas.setPointerCapture(e.pointerId);act()}};canvas.onpointerup=canvas.onpointercancel=release;
+canvas.onpointerdown=e=>{if(phase==='harbor'&&Math.hypot(e.clientX-W*.78,e.clientY-H*.71)<35){buddyUntil=t+1.7;splash(W*.78,H*.71);chime();return}if(phase==='harbor')cast(e.clientX/W);else if(['bite','reel','run'].includes(phase)){canvas.setPointerCapture(e.pointerId);act()}};canvas.onpointerup=canvas.onpointercancel=release;
 $('audio').onclick=()=>{muted=!muted;$('audio').textContent=muted?'♫ ×':'♪';$('audio').setAttribute('aria-label',muted?'Enable sound':'Mute sound');if(!muted)tone(660)};
 function sheet(html,kind){currentPage=kind;$('page').innerHTML=html;$('sheet').hidden=false;$('act').disabled=true;$('close').focus()}
 function closeSheet(){if(phase==='landed')stage('harbor');$('sheet').hidden=true;currentPage='';updateUI();$('act').focus()}
@@ -102,6 +102,7 @@ function ledger(){
  $('workshop').onclick=workshop;refreshBank()
 }
 function refreshBank(){const e=$('bank');if(e){const value='Ready to collect · '+Math.floor(data.bank)+' shells';if(e.textContent!==value)e.textContent=value}}
+$('pack').onclick=()=>{sheet('<h2>Skipper’s pack</h2><button class="paperAction" id="album">Fish album</button><button class="paperAction" id="exhibit">Exhibit pier</button><button class="paperAction" id="music"></button>','pack');$('album').onclick=()=>journal();$('exhibit').onclick=ledger;const sound=$('music');sound.textContent=muted?'Sound off':'Sound on';sound.onclick=()=>{$('audio').click();sound.textContent=muted?'Sound off':'Sound on'}};
 function workshop(){
  sheet('<h2>Harbor outfitters</h2><p class="note">'+Math.floor(data.coins)+' shells · '+data.strength+' casting power</p><div id="tools"></div><button class="paperAction" id="train">Lift weights · +'+data.gear+' power</button><button class="paperAction" id="back">Exhibit pier</button>','shop');
  for(const [key,title] of [['gear','Weights'],['rod','Fishing rod'],['speed','Swim fins']]){
@@ -138,7 +139,7 @@ function surface(){
  ctx.drawImage(plate,0,0,W,H);const h=H*.47,bx=W*.32,by=h+(H-h)*.25,k=Math.min(W/340,H/470,1.9);
  for(let i=0;i<28;i++){const x=((i*103+t*(2+i%4))%(W+40))-20,y=h+4+(i*31%(H*.43));path(ctx,null,'M'+x+' '+y+' q7 2 14 0 t14 0','#e0efe044',1.1)}
  for(let i=0;i<4;i++){const x=(W*.77+i*21+t*3)%W,y=h*.68+Math.sin(i)*12;path(ctx,null,'M'+x+' '+y+' q4 -4 8 0 q5 -3 8 -1','#4e6c70',1.3)}
- harborDetail(ctx,W,H,t);cutter(ctx,bx,by,k,t,phase==='cast');
+ playfulBay(ctx,W,H,t);harborDetail(ctx,W,H,t);cutter(ctx,bx,by,k,t,phase==='cast');
  const fx=W*castX,fy=H*.64;if(phase==='cast'){const u=Math.min(1,age/.72),x=bx+64*k+(fx-bx-64*k)*u,y=by-54*k+(fy-by+54*k)*u-Math.sin(u*Math.PI)*H*.19;path(ctx,null,'M'+(bx+64*k)+' '+(by-54*k)+' Q'+((bx+x)/2)+' '+(y-10)+' '+x+' '+y,'#e4ead2',1);dot(ctx,x,y,4,5,'#e98e5b')}
  if(phase==='harbor'){const x=W*.65,y=H*.65;for(let i=0;i<3;i++){const a=(t*.34+i/3)%1;ctx.strokeStyle='rgba(254,235,175,'+(.65*(1-a))+')';ctx.beginPath();ctx.ellipse(x,y,12+a*28,4+a*9,0,0,Math.PI*2);ctx.stroke()}}
 }
