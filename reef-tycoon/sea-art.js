@@ -12,8 +12,8 @@ function dot(c,x,y,rx,ry,col){c.fillStyle=col;c.beginPath();c.ellipse(x,y,rx,ry,
 function line(c,x,y,X,Y,col,w=1){c.strokeStyle=col;c.lineWidth=w;c.beginPath();c.moveTo(x,y);c.lineTo(X,Y);c.stroke()}
 function gradient(c,top,bottom,a,b){const g=c.createLinearGradient(0,top,0,bottom);g.addColorStop(0,a);g.addColorStop(1,b);return g}
 function fishArt(c,f,x,y,size,t=0,facing=1){
- const [a,b,k]=inks[(f.id+f.r)%inks.length],s=Math.sin(t*3+f.id),type=f.form;
- c.save();c.translate(x,y);c.scale(size*facing,size);c.rotate(s*.034);
+ const [a,b]=inks[(f.id+f.r)%inks.length],k='#292622',s=Math.sin(t*3+f.id),type=f.form;
+ c.save();c.translate(x,y);c.scale(size*facing*(1+.045*s),size*(1-.045*s));c.lineJoin="round";c.rotate(s*.034);
  if(naturalistFish(c,f,a,b,k,t)||fieldSpecies(c,f,a,b,k,t)){c.restore();return}
  if(type==='star'||f.name==='Starfish'){
   for(let i=0;i<5;i++){c.rotate(2*Math.PI/5);path(c,a,'M-11 6 Q-8 -17 0 -35 Q7 -38 12 1 Q10 12 -11 6Z',k,1.4);for(let j=0;j<3;j++)dot(c,2,-10-j*6,2,1.5,b)}
@@ -35,7 +35,7 @@ function fishArt(c,f,x,y,size,t=0,facing=1){
   c.scale(long?1.17:round?.79:1,round?1.32:long?.7:.86+(f.id%4)*.09);
   c.save();c.translate(-24,0);c.scale(.84+.15*s,1);path(c,b,'M4 -3 Q-9 -9 -22 -21 L-17 -1 -23 18 Q-9 13 4 3Z',k,1.7);c.restore();
   path(c,a,'M-22 -8 Q-9 -18 -6 -31 Q6 -25 10 -15Z',k,1.5);
-  path(c,gradient(c,-21,18,a,b),'M-28 -1 C-12 -24 17 -27 33 -9 Q45 -1 37 4 Q24 22 -1 18 Q-17 16 -28 3Z',k,2);
+  path(c,a,'M-28 -1 C-12 -24 17 -27 33 -9 Q45 -1 37 4 Q24 22 -1 18 Q-17 16 -28 3Z',k,2);
   path(c,b,'M-23 5 Q2 18 34 4 Q18 23 -2 17 Q-17 14 -23 5Z');
   c.save();c.clip(new Path2D('M-24 0 Q-4 -30 25 -11 Q22 10 -19 9Z'));for(let i=0;i<3+f.id%4;i++){const xx=-21+i*8;if(f.id%2)path(c,null,'M'+xx+' -18 q7 9 4 17',b,2.7);else dot(c,xx,-7+Math.sin(i*2)*3,2.5,2,b)}c.restore();
   path(c,a,'M3 1 Q-4 16 -13 16 Q-12 7 -8 2Z',k,1);path(c,null,'M19 -6 Q13 0 18 7',k,1.2);dot(c,27,-5,4,4,'#fff0bd');dot(c,28,-5,2.3,2.7,k);
@@ -201,7 +201,7 @@ function naturalistFish(c,f,a,b,k,t){
  const s=Math.sin(t*3+f.id),ray=f.form==='shark',whale=['whale','dolphin'].includes(f.form),puffer=f.form==='puffer';
  if(!ray&&!whale&&!puffer)return false;
  const outline=puffer?'M-25 2 C-30 -26 0 -34 21 -24 Q35 -18 36 -5 L40 -1 35 3 Q33 24 10 26 Q-16 32 -25 2Z':whale?'M-34 1 C-17 -4 -14 -18 12 -19 Q35 -22 41 -12 Q47 4 30 12 Q11 19 -8 12 Q-24 3 -34 6Z':'M-34 2 Q-19 -1 -11 -9 L-5 -12 -8 -28 Q1 -24 7 -12 Q24 -13 43 -3 L47 0 Q32 3 27 7 Q14 15 -7 10 L-33 5Z';
- const skin=gradient(c,-24,25,a,b);
+ const skin=a;
  if(puffer){path(c,b,'M-21 -3 L-42 -15 Q-36 -3 -42 13 L-21 4Z',k,1.4)}
  else{c.save();c.translate(-32,3);c.rotate(s*.14);path(c,a,whale?'M4 -1 Q-12 -18 -28 -15 Q-23 -5 -12 1 Q-26 5 -30 13 Q-10 15 4 4Z':'M4 -1 Q-13 -7 -21 -23 Q-23 -13 -15 0 L-23 13 Q-9 11 4 4Z',k,1.5);c.restore()}
  path(c,skin,outline,k,1.65);c.save();c.clip(new Path2D(outline));
@@ -222,7 +222,7 @@ function fieldSpecies(c,f,a,b,k,t){
  const body=disk?'M-26 -1 Q-19 -24 0 -24 Q22 -22 29 -9 L34 -4 30 0 Q17 20 -1 22 Q-17 18 -26 4Z':heavy?'M-29 0 Q-11 -19 14 -15 Q27 -16 35 -6 L32 -1 39 0 Q33 11 20 14 Q-4 20 -29 3Z':'M-31 0 Q-10 -13 8 -13 Q23 -13 37 -4 L42 -2 34 2 Q10 16 -7 11 Q-21 6 -31 3Z';
  c.save();c.translate(-25,1);c.rotate(.14*Math.sin(t*3+f.id));path(c,disk?'#ebb956':b,heavy?'M3 -2 Q-13 -13 -19 -8 Q-22 0 -18 10 Q-9 12 3 3Z':'M2 -2 L-22 -16 -15 -1 -23 14 2 3Z',k,1.2);c.restore();
  if(heavy){path(c,skin,'M-19 -9 l2 -9 4 3 3 -6 3 4 4 -6 3 4 4 -3 7 8Z',k,1.2)}else path(c,b,disk?'M-17 -12 Q-9 -29 10 -26 L18 -16Z':'M-9 -8 L1 -22 8 -11Z',k,1.1);
- path(c,gradient(c,-19,19,skin,b),body,k,1.45);
+ path(c,skin,body,k,1.45);
  c.save();c.clip(new Path2D(body));
  if(disk){for(let i=0;i<3;i++)path(c,null,'M'+(-21+14*i)+' -26 q11 18 0 47',name.includes('clown')?'#fff0cf':'#315565',name.includes('clown')?6:2.5)}
  else if(heavy){for(let i=0;i<18;i++)dot(c,-20+i*19%51,-12+i*7%18,1.5+i%2,.9,k)}
@@ -247,11 +247,11 @@ function leviathanHarbor(c,w,h,time){
  const scale=Math.min(w/357,h/545,2.05),water=h*.47;
  c.save();c.translate(w*.51,water+Math.sin(time*.65)*1.5);c.scale(scale,scale);
  // The harbor is built on the back of a sleeping pilot whale.
- const ink='#293f54',edge='#47677b',ivory='#fff0bc';
+ const ink='#292622',edge='#47677b',ivory='#fff0bc';
  dot(c,0,6,110,5,'#9ce2c2');dot(c,-4,7,88,3,'#447e83');
  c.save();c.translate(-70,-18);c.rotate(Math.sin(time*.9)*.045);
  path(c,'#589da9','M9 12 Q-11 10 -19 -6 Q-34 -10 -40 -31 Q-23 -30 -15 -19 Q-14 -41 -5 -48 Q2 -32 -3 -16 Q-3 -1 16 2Z',ink,2);path(c,null,'M-33 -26 Q-19 -20 -10 -9 M-5 -38 Q-7 -23 -10 -14','#a0cbb7',1.6);c.restore();
- path(c,gradient(c,-50,9,'#59999f','#427287'),'M-82 -17 Q-61 -15 -53 -32 Q-37 -57 -2 -54 Q38 -55 65 -39 Q93 -28 98 -11 Q102 -2 91 3 Q66 13 23 11 Q-37 13 -64 3 Q-80 -3 -82 -17Z',ink,2.3);
+ path(c,'#738c84','M-82 -17 Q-61 -15 -53 -32 Q-37 -57 -2 -54 Q38 -55 65 -39 Q93 -28 98 -11 Q102 -2 91 3 Q66 13 23 11 Q-37 13 -64 3 Q-80 -3 -82 -17Z',ink,2.3);
  path(c,'#f1ce9c','M-20 4 Q15 6 42 -2 Q62 -8 95 -8 Q102 4 77 8 Q35 16 -13 10Z');
  for(let j=0;j<9;j++)path(c,null,'M'+(13+j*8)+' 1 q2 4 -3 8','#ad927d',.8);
  path(c,'#50889b','M-27 -1 Q-33 9 -58 15 Q-51 5 -44 -3Z',ink,1.4);
@@ -266,4 +266,44 @@ function leviathanHarbor(c,w,h,time){
  c.save();c.translate(x,y);c.scale(k,k);path(c,wall,'M-8 0 V-12 L0 -19 9 -13 V0Z',ink,1.4);path(c,roof,'M-11 -12 L-1 -22 12 -14 10 -11 -1 -17 -8 -10Z',ink,1.2);c.fillStyle=ink;c.fillRect(-4,-8,3,4);c.fillRect(3,-8,3,8);c.restore()}
  c.save();c.translate(7,-52);path(c,'#ffecb7','M-8 1 L-5 -38 5 -38 9 1Z',ink,1.5);path(c,'#dd6651','M-6 -28 H6 L7 -19 H-7Z');path(c,'#355969','M-7 -38 V-48 H7 V-38Z',ink,1);path(c,'#ffd586','M-4 -40 V-46 H4 V-40Z');path(c,'#dd6e59','M-9 -48 L0 -55 9 -48Z',ink,1);line(c,0,-55,0,-65,ink,1);path(c,'#ffba60','M1 -65 q7 -3 13 0 l-5 2 4 1 -12 1Z');c.restore();
  for(let i=0;i<4;i++){const v=(time*.35+i*.24)%1;c.globalAlpha=(1-v)*.56;dot(c,-14-v*7,-66-v*12,1.5+v*3,1+v*2,'#fff4ce')}c.restore();
+}
+const cel={ink:'#292622',paper:'#f4e2bb',sun:'#e8b363',rust:'#ba5c49',sea:'#678b80',deep:'#3e655f',mist:'#bdbaa3'};
+function paintedSet(c,w,h,r){
+ const horizon=h*.47,rand=paintSeed(399+r),sky=['#d8c9a9','#d0c6b5','#aaa9a4','#dfbd9d','#c8b7b6','#c1c7b7'][r];
+ c.fillStyle=gradient(c,0,horizon,sky,cel.paper);c.fillRect(0,0,w,horizon+1);
+ dot(c,w*.72,horizon*.46,Math.min(44,w*.10),Math.min(44,w*.10),'#efd09a');
+ for(let j=0;j<7;j++){const x=rand()*w,y=horizon*(.19+rand()*.44),k=.55+rand()*.72;c.save();c.translate(x,y);c.scale(k,k);path(c,'#f2e4c9','M-39 5 Q-45 -1 -29 -2 Q-28 -12 -15 -9 Q-6 -26 6 -13 Q21 -16 24 -5 Q42 -6 46 2 Q23 7 -39 5Z');c.restore()}
+ for(let band=0;band<3;band++){const step=w/12;let d='M-10 '+horizon;for(let i=-1;i<14;i++){const x=i*step,y=horizon-(.09+.18*Math.abs(Math.sin(i*.64+r+band*1.7)))*(1-band*.24)*horizon;d+=' Q'+x+' '+(y-13)+' '+(x+step*.5)+' '+y}path(c,['#bfb8a0','#a4aa94','#858f7e'][band],d+' L'+(w+40)+' '+horizon+' H-10Z')}
+ // Dry horizontal brush marks stay behind actors.
+ c.fillStyle=gradient(c,horizon,h,cel.sea,cel.deep);c.fillRect(0,horizon,w,h-horizon);
+ for(let i=0;i<380;i++){const x=rand()*w,y=horizon+rand()*(h-horizon);line(c,x,y,x+3+rand()*24,y+rand()*1.5,i%4?'#e5d9b829':'#314c4940',.6+rand()*1.4)}
+ for(let k=0;k<2;k++){c.save();if(k){c.translate(w,0);c.scale(-1,1)}const span=w*(k?.18:.24);path(c,'#797f6c','M0 '+(horizon-40)+' Q'+span*.4+' '+(horizon-35)+' '+span+' '+horizon+' H0Z');for(let j=0;j<14;j++)tree(c,span*j/15,horizon-2-22*(1-j/15),6+rand()*12,'#646f60');c.restore()}
+}
+function deckhand(c,x,y,t,cast){
+ c.save();c.translate(x,y);const bounce=Math.sin(t*3.7),wind=cast?Math.sin(Math.min(age/.5,1)*Math.PI):0;
+ c.scale(1+.045*bounce+.10*wind,1-.045*bounce-.12*wind);c.lineCap='round';c.lineJoin='round';
+ const I=cel.ink;
+ path(c,null,'M-6 -6 Q-16 -4 -13 2 L-20 3 M5 -6 Q12 -3 9 2 L15 2',I,4);
+ path(c,cel.rust,'M-11 -11 Q-12 -23 -2 -26 Q12 -26 13 -12 Q11 -4 -3 -4 Q-9 -4 -11 -11Z',I,2);
+ path(c,cel.paper,'M-15 -35 Q-14 -48 0 -48 Q14 -49 16 -36 Q26 -35 20 -29 Q18 -20 5 -20 Q-11 -19 -15 -35Z',I,2.2);
+ for(const [xx,yy] of [[4,-37],[12,-36]]){dot(c,xx,yy,3.8,6.1,I);path(c,cel.paper,'M'+xx+' '+yy+' l4 -3 -4 -1Z')}
+ path(c,null,'M7 -26 q6 3 10 -2',I,1.5);
+ path(c,cel.sun,'M-17 -40 Q-22 -46 -14 -49 Q-13 -58 -3 -54 Q8 -58 11 -48 L17 -45 Q4 -39 -17 -40Z',I,2);
+ path(c,I,'M-13 -43 Q0 -48 14 -46 L18 -44 Q6 -41 -13 -41Z');
+ path(c,null,'M-8 -17 Q-17 -8 -5 -7 Q4 -6 8 -11 M9 -17 Q17 -10 22 -18',I,3.6);
+ dot(c,22,-18,4,3.6,cel.paper);line(c,22,-18,37+10*wind,-53+wind*9,I,1.8);c.restore()
+}
+function pictureBoat(c,x,y,k,t,cast){
+ c.save();c.translate(x,y+Math.sin(t*1.5)*2);c.scale(k,k);c.rotate(.014*Math.sin(t));const I=cel.ink;
+ dot(c,-2,12,73,5,'#45675d');path(c,cel.rust,'M-68 -10 Q-19 -3 65 -14 Q56 7 39 13 Q-17 21 -49 11Z',I,2.8);
+ path(c,cel.paper,'M-61 -5 Q-5 2 59 -10 L55 -5 Q-9 8 -57 0Z',I,1);
+ for(let j=0;j<3;j++){dot(c,-33+j*13,5,3.2,3.2,I);dot(c,-33+j*13,4.6,1.6,1.5,cel.sun)}
+ path(c,cel.sun,'M-48 -9 L-43 -30 -17 -32 -7 -7Z',I,2);path(c,I,'M-40 -26 h9 v10 h-12Z M-28 -27 h8 l4 10 h-12Z');
+ path(c,cel.paper,'M-50 -29 L-46 -34 -18 -37 -12 -32Z',I,2);path(c,cel.rust,'M-39 -34 L-41 -46 -34 -47 -30 -35Z',I,1.6);
+ for(let j=0;j<3;j++){const q=(t*.53+j/3)%1;c.globalAlpha=.55*(1-q);dot(c,-38-q*15,-48-q*17,3+4*q,2.4+3*q,cel.paper)}c.globalAlpha=1;
+ deckhand(c,22,-8,t,cast);c.restore()
+}
+function inkBurst(c,x,y,power){
+ if(power<=.08)return;c.save();c.translate(x,y);c.globalAlpha=power;
+ for(let j=0;j<6;j++){c.rotate(Math.PI/3);path(c,cel.paper,'M27 -2 l9 -2 -7 5Z',cel.ink,.9)}c.restore()
 }
