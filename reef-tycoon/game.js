@@ -3,6 +3,8 @@ const $=id=>document.getElementById(id),canvas=$('sea'),ctx=canvas.getContext('2
 const key='reef-tycoon.save.v1',initial={region:0,seen:[],bag:[],pads:Array(6).fill(null),levels:Array(6).fill(1),coins:0,bank:0,rod:1,speed:1,gear:1,strength:0,rewards:{},updated:0};
 let data={...initial};try{data={...initial,...JSON.parse(localStorage.getItem(key))}}catch{}
 let phase='harbor',t=0,age=0,target=0,tension=.24,progress=0,held=false,drift=0,lane=0,hits=0,avoided=0,muted=false,ac,last=0,W=0,H=0,plate,school=[],rings=[],castX=.64,catchLength=0,toast='',toastUntil=0,currentPage='',saving=0;
+let luck=0,pulls=0,pullsNeeded=8,lead=0,shore=0,kick=0,pulse=0;
+let selectedStand=-1,exhibitAt=-1;
 function store(){try{localStorage.setItem(key,JSON.stringify(data))}catch{}}
 const sdk=bridge({read:()=>data,write:(p,cloud)=>{if(cloud&&(phase!=='harbor'||p.updated<=data.updated))return;data={...initial,...p};store();if(cloud)build()},changed:e=>{if(e.type==='reward')notify('Harbor badge earned')}});
 function save(){data.updated=Date.now();store();sdk.save()}
@@ -18,25 +20,45 @@ function build(){
 }
 function stage(p){phase=p;age=0;held=false;document.body.classList.toggle('deep',['bite','reel','run'].includes(p));updateUI()}
 function updateUI(){
- const free=phase==='harbor',deep=phase==='reel',run=phase==='run';$('book').hidden=!free;
- $('meter').hidden=!deep;$('act').hidden=phase==='landed';$('act').disabled=['cast','bite','landed'].includes(phase);
- const act=free?'Cast line':phase==='cast'?'Line away…':phase==='bite'?'A bite!':deep?(held?'Release to cool':'Hold to reel'):run?'Switch wake':'Catch landed';
- if($('act').textContent!==act)$('act').textContent=act;
- const hint=t<toastUntil?toast:free?'Tap farther out for rarer fish':phase==='cast'?'Watch the float':phase==='bite'?'Get ready to reel':deep?(tension>.73?'Ease off · high tension':Math.round(progress*100)+'% aboard · watch tension'):run?'Dodge the red wake · '+avoided+'/3':'Logged in your journal';
- if($('hud').textContent!==hint)$('hud').textContent=hint;
- if(deep){$('fill').style.width=tension*100+'%';$('fill').style.background=tension>.73?'#ff8260':'#83ddc0'}
+ const free=phase==='harbor',pull=phase==='reel',swim=phase==='run',roll=phase==='bite';
+ $('book').hidden=$('pier').hidden=!free;$('meter').hidden=!(pull||swim||roll);
+ $('act').hidden=phase==='landed';$('act').disabled=!$('sheet').hidden||['cast','landed','reveal'].includes(phase);
+ const act=free?'Cast line':roll?'Tap for luck':pull?'Pull!':swim?'Swim!':phase==='cast'?'Casting…':'Coming ashore';
+ const hint=t<toastUntil?toast:free?'Tap the water to cast':phase==='cast'?'Follow the float':roll?'Luck +'+luck:pull?names[target]+' · '+rates[target]+' shells/s':swim?Math.ceil(shore)+' m to shore':'Catch secured';
+ if($('act').textContent!==act)$('act').textContent=act;if($('hud').textContent!==hint)$('hud').textContent=hint;
+ const fill=$('fill');fill.style.width=(pull?100*pulls/pullsNeeded:swim?100*Math.max(0,lead)/6:luck*10)+'%';fill.style.background=swim&&lead<2?'#ff8b72':'#86dfbd';
 }
 function splash(x,y,n=12){for(let i=0;i<n;i++)rings.push({x,y,vx:Math.cos(i*2.4)*(8+i*3),vy:-35-i*3,life:.55+i%3*.12})}
-function cast(x){if(phase!=='harbor'||!$('sheet').hidden)return;castX=Math.max(.22,Math.min(.87,x));const tier=Math.min(regions[data.region].groups.length-1,Math.floor(castX*regions[data.region].groups.length));const pool=Math.random()<.78?school.filter(f=>f.tier===tier):school;
- target=pool[Math.floor(Math.random()*pool.length)].id;catchLength=Math.round((12+(target*17%75))*(.8+Math.random()*.42));tension=.24;progress=0;drift=0;lane=0;hits=avoided=0;
- sdk.prepare();sdk.start();stage('cast');tone(310,.20,'triangle')}
-function act(){if(phase==='harbor')cast(.64);else if(phase==='reel'){held=true;tone(220,.08)}else if(phase==='run'){lane=1-lane;tone(320+lane*100,.1)}updateUI()}
+function cast(x){
+ if(phase!=='harbor'||!$('sheet').hidden)return;
+ castX=Math.max(.22,Math.min(.87,x));luck=pulls=progress=kick=pulse=0;toastUntil=0;
+ sdk.prepare();sdk.start();stage('cast');tone(310,.20,'triangle');
+}
+function hookFish(){
+ const power=Math.min(.22,Math.log1p(data.strength||0)*.028);
+ const score=Math.min(.999,castX*.44+Math.random()*.53+luck*.033+power);
+ const bands=regions[data.region].groups.length;
+ const tier=Math.min(bands-1,Math.floor(score*bands));
+ const pool=school.filter(f=>f.tier===tier);
+ target=pool[Math.floor(Math.random()*pool.length)].id;catchLength=Math.round((12+(target*17%75))*(.8+Math.random()*.42));
+ pullsNeeded=Math.max(4,8+byId.get(target).tier*2-Math.min(5,data.rod-1));
+ stage('reel');pulse=1;tone(660,.20);
+}
+function act(){
+ if(!$('sheet').hidden)return;
+ if(phase==='harbor')cast(.64);
+ else if(phase==='bite'&&luck<10){luck++;pulse=1;tone(400+luck*38,.09);splash(W*castX,H*.64,7)}
+ else if(phase==='reel'){pulls++;progress=pulls/pullsNeeded;pulse=1;tone(240+progress*260,.1,'triangle');
+ if(pulls>=pullsNeeded){lead=3.2;shore=17;kick=.6;stage('run');tone(147,.44,'triangle')}}
+ else if(phase==='run'){kick=Math.min(1.4,kick+.48);pulse=1;tone(310,.09)}
+ updateUI()
+}
 $('act').onpointerdown=e=>{if(e.button!==0)return;e.preventDefault();$('act').setPointerCapture(e.pointerId);act()};
 function release(){held=false;updateUI()}
 $('act').onpointerup=$('act').onpointercancel=$('act').onlostpointercapture=release;
-$('act').onclick=e=>{if(e.detail===0&&phase!=='reel')act()};
+$('act').onclick=e=>{if(e.detail===0)act()};
 addEventListener('keydown',e=>{if(e.code==='Space'&&$('sheet').hidden){e.preventDefault();if(!e.repeat)act()}});addEventListener('keyup',e=>{if(e.code==='Space')release()});
-canvas.onpointerdown=e=>{if(phase==='harbor')cast(e.clientX/W);else if(phase==='reel'||phase==='run'){canvas.setPointerCapture(e.pointerId);act()}};canvas.onpointerup=canvas.onpointercancel=release;
+canvas.onpointerdown=e=>{if(phase==='harbor')cast(e.clientX/W);else if(['bite','reel','run'].includes(phase)){canvas.setPointerCapture(e.pointerId);act()}};canvas.onpointerup=canvas.onpointercancel=release;
 $('audio').onclick=()=>{muted=!muted;$('audio').textContent=muted?'♫ ×':'♪';$('audio').setAttribute('aria-label',muted?'Enable sound':'Mute sound');if(!muted)tone(660)};
 function sheet(html,kind){currentPage=kind;$('page').innerHTML=html;$('sheet').hidden=false;$('act').disabled=true;$('close').focus()}
 function closeSheet(){if(phase==='landed')stage('harbor');$('sheet').hidden=true;currentPage='';updateUI();$('act').focus()}
@@ -49,30 +71,52 @@ function journal(r=data.region){
  $('region').onchange=e=>journal(+e.target.value);$('sail').onclick=()=>{data.region=r;save();build();closeSheet();tone(520)};$('quay').onclick=ledger;
 }
 function ledger(){
- const price=25*data.rod;
- sheet('<h2>Harbor ledger</h2><p class="note">'+Math.floor(data.coins)+' shells · Rod level '+data.rod+'</p><p>Exhibit earnings: '+Math.floor(data.bank)+' shells</p><p class="note">'+data.pads.filter(id=>id!==null).map(id=>names[id]).join(' · ')+'</p><button class="paperAction" id="collect">Collect earnings</button>'+(data.bag.length?'<button class="paperAction" id="unload">Unload catch</button>' : '')+'<button class="paperAction" id="upgrade">Tune reel · '+price+'</button><button class="paperAction" id="back">Journal</button>','ledger');
- if($('unload'))$('unload').onclick=()=>{const id=data.bag.shift(),slot=data.pads.indexOf(null);if(slot>=0)data.pads[slot]=id;else data.coins+=5*rates[id];save();ledger()};
- $('collect').onclick=()=>{const n=Math.floor(data.bank);data.bank-=n;data.coins+=n;save();ledger()};$('upgrade').disabled=data.coins<price;$('upgrade').onclick=()=>{if(data.coins>=price){data.coins-=price;data.rod++;save();chime();ledger()}};$('back').onclick=()=>journal()
+ const next=data.bag[0],carrying=next!==undefined;
+ sheet('<h2>Exhibit pier</h2><p class="note">'+(carrying?'Choose a stand for '+names[next]:Math.floor(data.coins)+' shells in your purse')+'</p><div id="stands"></div><p class="note" id="bank"></p><button class="paperAction" id="collect">Collect earnings</button><button class="paperAction" id="workshop">Outfitters</button>','ledger');
+ for(let i=0;i<6;i++){
+  const id=data.pads[i],button=document.createElement('button');button.className='stand';button.dataset.slot=i;
+  if(id!==null){const c=document.createElement('canvas');specimen(c,byId.get(id));button.append(c)}
+  const text=id===null?'Empty stand':names[id];button.append(document.createTextNode(selectedStand===i&&carrying?'Confirm exchange':text));
+  button.title=id===null?'Place catch':text+' · '+rates[id]+' shells/s';
+  button.onclick=()=>{if(!carrying)return;
+   if(id!==null&&selectedStand!==i){selectedStand=i;ledger();return}
+   data.pads[i]=data.bag.shift();data.levels[i]=1;if(id!==null)data.bag.push(id);
+   selectedStand=-1;exhibitAt=i;save();chime();ledger()};
+  if(i===exhibitAt)button.classList.add('placed');$('stands').append(button)
+ }
+ $('collect').onclick=()=>{const n=Math.floor(data.bank);data.bank-=n;data.coins+=n;save();tone(740);ledger()};
+ $('workshop').onclick=workshop;refreshBank()
 }
+function refreshBank(){const e=$('bank');if(e){const value='Ready to collect · '+Math.floor(data.bank)+' shells';if(e.textContent!==value)e.textContent=value}}
+function workshop(){
+ sheet('<h2>Harbor outfitters</h2><p class="note">'+Math.floor(data.coins)+' shells · '+data.strength+' casting power</p><div id="tools"></div><button class="paperAction" id="train">Lift weights · +'+data.gear+' power</button><button class="paperAction" id="back">Exhibit pier</button>','shop');
+ for(const [key,title] of [['gear','Weights'],['rod','Fishing rod'],['speed','Swim fins']]){
+  const b=document.createElement('button'),price=25*data[key];b.className='paperAction';b.disabled=data.coins<price;b.textContent=title+' '+data[key]+' → '+(data[key]+1)+' · '+price;
+  b.onclick=()=>{if(data.coins<price)return;data.coins-=price;data[key]++;save();chime();workshop()};$('tools').append(b)
+ }
+ $('train').onclick=()=>{data.strength+=data.gear;save();tone(280,.12,'triangle');workshop()};$('back').onclick=ledger
+}
+$('pier').onclick=()=>{selectedStand=-1;exhibitAt=-1;ledger()};
+
 $('book').onclick=()=>journal();
 function land(){
  const f=byId.get(target),fresh=!data.seen.includes(target);if(fresh)data.seen.push(target);const gain=5+f.r*3+f.tier*3+Math.floor(catchLength/12);data.coins+=gain;
- const slot=data.pads.indexOf(null);if(slot>=0)data.pads[slot]=target;else{const weak=data.pads.reduce((best,id,i)=>rates[id]<rates[data.pads[best]]?i:best,0);if(rates[target]>rates[data.pads[weak]]){data.pads[weak]=target;data.levels[weak]=1}}
- save();sdk.end();stage('landed');chime();sheet('<div id="result"><p class="note">'+(fresh?'New field record':'Catch recorded')+'</p><canvas></canvas><h3>'+f.name+'</h3><p class="note">'+catchLength+' cm · '+f.band+' · +'+gain+' shells</p><button class="paperAction" id="again">Back to the water</button></div>','catch');specimen($('result').querySelector('canvas'),f);$('again').onclick=closeSheet;
+ data.bag.push(target);save();sdk.end();stage('landed');chime();sheet('<div id="result"><p class="note">'+(fresh?'New field record':'Catch recorded')+'</p><canvas></canvas><h3>'+f.name+'</h3><p class="note">'+catchLength+' cm · '+rates[target]+' shells/s · +'+gain+' shells</p><button class="paperAction" id="again">Place at the pier</button></div>','catch');specimen($('result').querySelector('canvas'),f);
+ $('again').onclick=()=>{stage('harbor');selectedStand=-1;exhibitAt=-1;ledger()};
 }
+
 function lose(message){sdk.end();stage('harbor');notify(message);tone(135,.35,'triangle')}
 function step(dt){
- t+=dt;if(!$('sheet').hidden)return;age+=dt;data.bank+=data.pads.reduce((n,id,i)=>n+(id===null?0:(rates[id]||0)*(data.levels[i]||1)),0)*dt;saving+=dt;if(saving>15){saving=0;save()}
- if(phase==='cast'&&age>1.25){splash(W*castX,H*.64);tone(195,.13);stage('bite')}
- else if(phase==='bite'&&age>1.10){stage('reel');tone(620,.12)}
- else if(phase==='reel'){
-  tension=Math.max(.08,tension+(held?.225+.065*Math.sin(age*2):- .52)*dt);
-  progress=Math.max(0,progress+(held?.195+Math.min(data.rod,12)*.008:-.014)*dt);
-  if(tension>=1)lose('The line snapped · try a shorter pull');else if(progress>=1){stage('run');tone(155,.4,'triangle')}
- }else if(phase==='run'&&age>=1.85){
-  if(lane===riskLane()){hits++;tone(155,.26,'triangle');notify('Close call!')}else tone(680,.14);
-  avoided++;age=0;if(hits>=2)lose('The shark took the catch · cast again');else if(avoided===3)land()
- }
+ t+=dt;pulse=Math.max(0,pulse-dt*3);data.bank+=data.pads.reduce((n,id,i)=>n+(id===null?0:(rates[id]||0)*(data.levels[i]||1)),0)*dt;
+ saving+=dt;if(saving>15){saving=0;save()}
+ if(!$('sheet').hidden){refreshBank();return}age+=dt;
+ if(phase==='cast'&&age>.84){splash(W*castX,H*.64,24);tone(195,.13);stage('bite')}
+ else if(phase==='bite'&&age>2.45)hookFish();
+ else if(phase==='run'){kick=Math.max(0,kick-dt*1.12);const speed=Math.min(data.speed-1,12)*.13;
+ shore=Math.max(0,shore-dt*(1.8+kick*2.8+speed));lead=Math.min(6,lead+dt*(kick*1.6-.78+speed*.18));
+ if(shore<=0){stage('reveal');chime()}else if(lead<=0)lose('The shark caught up · cast again')}
+ else if(phase==='reveal'&&age>1.25)land();
+
  for(const p of rings){p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=130*dt}rings=rings.filter(p=>p.life>0);updateUI()
 }
 function riskLane(){return (avoided+target)%2}
@@ -88,22 +132,22 @@ function underwater(){
  const p=waters[data.region];ctx.fillStyle=gradient(ctx,0,H,p[5],p[6]);ctx.fillRect(0,0,W,H);
  for(let i=0;i<8;i++){const x=(i+.3)*W/7+Math.sin(t*.22+i)*8;path(ctx,'#e8ffd50c','M'+x+' 0 l'+(-W*.24)+' '+H+' h'+(W*.08)+' L'+(x+10)+' 0Z')}
  for(let i=0;i<38;i++){const x=i*91%W,y=H-((t*(6+i%5)+i*39)%H);dot(ctx,x+Math.sin(t+i)*4,y,1+i%3,1+i%3,'#dcf5da59')}
+ reefRelief(ctx,W,H,data.region,t);
  for(let i=0;i<35;i++){const x=i*W/34,hh=H*(.06+.11*Math.abs(Math.sin(i*7)));path(ctx,null,'M'+x+' '+H+' q-11 '+(-hh*.45)+' 2 '+(-hh*.68)+' t'+(3*Math.sin(t+i))+' '+(-hh*.36),i%2?'#1c5257':'#2d6965',2+i%4)}
- if(phase==='run'){
-  const gap=Math.min(W*.27,140),y=H*.58,route=n=>W/2+(n?gap:-gap),danger=route(riskLane());
-  for(let i=0;i<2;i++){ctx.strokeStyle=i===riskLane()?'#ffad85':'#a3dfcd';ctx.globalAlpha=.42;ctx.setLineDash([5,10]);line(ctx,route(i),H*.27,route(i),H*.86,ctx.strokeStyle,2);ctx.setLineDash([]);ctx.globalAlpha=1}
-  const z=Math.min(1,age/1.85);dot(ctx,danger,y,22+z*10,9,'#f8b792');fishArt(ctx,roster.find(f=>f.form==='shark'),danger,y+H*.42*(1-z),.8+z*.52,t,-1);
-  fishArt(ctx,byId.get(target),W/2+(drift*2-1)*gap,y,Math.min(W/245,1.65),t);return
- }
+ if(phase==='run'){drawPursuit(ctx);return}
+
  const x=W*(.51+Math.sin(t*1.9)*.08),y=H*(.55+Math.cos(t*1.3)*.034-progress*.14);
  for(let i=0;i<4;i++){ctx.globalAlpha=.18;fishArt(ctx,school[(i*3+2)%school.length],((t*(8+i)+i*W*.29)%(W+100))-50,H*(.37+.08*i),.45,t+i);ctx.globalAlpha=1}
  path(ctx,null,'M'+W*.52+' 0 Q'+(W*.48+(held?4:18))+' '+H*.25+' '+x+' '+y,'#e4efd27a',1.5);
- fishArt(ctx,byId.get(target),x,y,Math.min(W/145,H/240,3),t*(held?1.9:1));
+ fishArt(ctx,byId.get(target),x,y-pulse*9,Math.min(W/145,H/240,3)*(1+pulse*.04),t+progress*3);
 }
 function frame(now){
  const dt=Math.min(.045,(now-(last||now))/1000);last=now;
- if(!document.hidden){step(dt);drift+=(lane-drift)*(1-Math.exp(-dt*10));if(['bite','run','reel'].includes(phase))underwater();else surface();
- if(phase==='bite'){ctx.fillStyle='rgba(223,243,214,'+Math.max(0,.6-age)+')';ctx.fillRect(0,0,W,H)}
+ if(!document.hidden){step(dt);drift+=(lane-drift)*(1-Math.exp(-dt*10));if(['reel','run'].includes(phase)){
+ ctx.save();const zoom=1+.08*Math.exp(-age*3);ctx.translate(W/2,H*.5);ctx.scale(zoom,zoom);ctx.translate(-W/2,-H*.5);underwater();ctx.restore();
+ if(phase==='reel')drawDial(ctx);foamWipe(ctx,age)
+ }else{surface();if(phase==='bite')drawWhirlpool(ctx);if(phase==='reveal')drawArrival(ctx)}
+
  for(const p of rings)dot(ctx,p.x,p.y,2,3,'#e6f0d8')}
  requestAnimationFrame(frame)
 }

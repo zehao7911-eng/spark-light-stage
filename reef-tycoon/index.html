@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#102e40"><title>Tidekeeper · Reef Tycoon</title><style>
 *{box-sizing:border-box}body{margin:0;background:#103343;color:#fff4d7;font:600 15px "Trebuchet MS",system-ui,sans-serif}canvas#sea{width:100vw;height:100dvh;display:block;touch-action:none}button,select{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}button{border:0}header{position:absolute;inset:max(16px,env(safe-area-inset-top)) 5vw auto;display:flex;justify-content:space-between;align-items:flex-start;color:#113849;pointer-events:none}h1,h2,h3,p{margin:0}h1,h2,h3{font-family:Georgia,serif}h1{font-size:clamp(30px,4.7vw,68px);font-weight:normal;letter-spacing:-.055em;line-height:1}#place{font-size:12px;letter-spacing:.13em;text-transform:uppercase;display:block;margin-top:8px}nav{display:flex;gap:6px;pointer-events:auto}nav button,.pill{background:#fbefd9;color:#173b46;border:1px solid #143e4944;border-radius:20px;min-height:44px;padding:0 13px}#dock{position:absolute;bottom:max(16px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:min(92vw,460px);text-align:center}#hud{display:inline-block;background:#0c3543e8;color:#fff6d8;border-radius:14px;padding:8px 14px;margin-bottom:8px;font-size:14px}#act{display:block;width:100%;background:#ffca78;color:#253541;font:bold 21px Georgia,serif;border-radius:16px;min-height:56px;box-shadow:0 4px #9e653f;touch-action:none;user-select:none;-webkit-user-select:none}#act:active{transform:translateY(2px);box-shadow:0 2px #9e653f}#meter{margin:0 auto 10px;width:75%;height:12px;border:2px solid #f8edca;background:#224353;border-radius:12px;overflow:hidden}#fill{height:100%;background:#7de4c9;width:0}#sheet{position:absolute;inset:0;background:#082b3c88;display:grid;place-items:center;padding:14px}#sheet[hidden],[hidden]{display:none!important}article{background:#fbefd9;color:#153c48;border:2px solid #174452;width:min(620px,100%);max-height:86dvh;overflow:auto;border-radius:20px;padding:20px;box-shadow:0 12px 50px #05263555}article h2{font-size:32px;font-weight:normal}#close{float:right;font-size:22px}select{max-width:100%;background:#234e59;border:0;padding:10px 12px;border-radius:10px;color:white;margin:12px 0}#cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(86px,1fr));gap:6px}.card{background:#e9dfc7;border-radius:8px;text-align:center;padding:4px;font-size:11px}.card canvas{display:block;width:100%;height:52px;object-fit:contain}.paperAction{min-height:46px;margin:10px 5px 0 0;padding:0 16px;background:#164654;color:#fff4d7;border-radius:10px}.note{margin:8px 0;color:#44626a}#result{text-align:center}#result canvas{width:min(100%,320px);height:auto}#result h3{font-size:30px}body.deep header{color:#fff3d5}@media(max-height:480px){#dock{width:min(42vw,400px)}header{top:8px}h1{font-size:28px}}
-</style></head><body><canvas id="sea" aria-label="Fishing waters"></canvas><header><div><h1>Tidekeeper</h1><span id="place"></span></div><nav><button id="book">Journal</button><button id="audio" aria-label="Mute sound">♪</button></nav></header><div id="dock"><div id="hud" role="status"></div><div id="meter" hidden><div id="fill"></div></div><button id="act">Cast line</button></div><section id="sheet" hidden role="dialog" aria-modal="true"><article><button id="close" class="pill" aria-label="Close">×</button><div id="page"></div></article></section><script>// Optional host integration. Gameplay never awaits SDK discovery or registration.
+#stands{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.stand{min-height:84px;color:#224853;background:linear-gradient(#dfefdf,#c2d9c8 80%,#b99965 81%);border-radius:9px;padding:6px;font-size:12px}.stand canvas{display:block;width:100%;height:47px;object-fit:contain}.placed,#result canvas{animation:dockIn .44s ease-out}@keyframes dockIn{from{transform:translateY(-14px) scale(.88);opacity:.3}to{transform:none;opacity:1}}#tools{display:grid}.paperAction:disabled{opacity:.55}@media(max-width:370px){header{inset-inline:10px}nav{gap:3px}nav button{padding:0 8px}}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style></head><body><canvas id="sea" aria-label="Fishing waters"></canvas><header><div><h1>Tidekeeper</h1><span id="place"></span></div><nav><button id="pier">Pier</button><button id="book">Journal</button><button id="audio" aria-label="Mute sound">♪</button></nav></header><div id="dock"><div id="hud" role="status"></div><div id="meter" hidden><div id="fill"></div></div><button id="act">Cast line</button></div><section id="sheet" hidden role="dialog" aria-modal="true"><article><button id="close" class="pill" aria-label="Close">×</button><div id="page"></div></article></section><script>// Optional host integration. Gameplay never awaits SDK discovery or registration.
 function bridge({host=()=>globalThis.neonlib,read,write,changed=()=>{},schedule=setTimeout,cancel=clearTimeout,timeout=5000}){
  const game='reef-tycoon';let alive=true,epoch=0,sdk=null,started=false,ended=false,startHost=null,loadStarted=false,cloudReady=false,cloudBase={},dirty=false,saving=false,timers=new Set(),entries=new Map(),support={like:false,comment:false};
  const later=(fn,ms)=>{let id=schedule(()=>{timers.delete(id);fn();},ms);timers.add(id);return id;};
@@ -181,11 +181,80 @@ function harborDetail(c,W,H,t){
  for(const [x,y] of [[12,0],[72,17]]){path(c,'#725940','M'+(x-4)+' '+(y-20)+' h8 v36 l-8 1Z');dot(c,x,y-20,4,2,'#d2af7d');line(c,x-4,y-13,x+4,y-12,'#d8c691',2)}
  path(c,null,'M12 -13 Q41 11 72 5','#d8c691',2);c.restore()
 }
+function foamWipe(c,seconds){
+ if(seconds>.58)return;
+ const v=seconds/.58,y=H*(v*1.3-.16);
+ c.save();c.globalAlpha=(1-v)*.75;c.fillStyle=gradient(c,y-68,y+14,'#d4ffe000','#eaffde');c.beginPath();c.moveTo(0,y-68);c.lineTo(W,y-68);
+ for(let x=W;x>=-6;x-=6)c.lineTo(x,y+8*Math.sin(x*.034+v*5)+4*Math.sin(x*.088));c.closePath();c.fill();c.restore()
+}
+function drawWhirlpool(c){
+ const x=castX*W,y=H*.64,k=Math.min(1.7,W/350);
+ c.save();c.translate(x,y);c.scale(k,k*.43);
+ for(let i=0;i<6;i++){const v=(age*.78+i/6)%1;c.globalAlpha=(1-v)*.95;c.beginPath();c.ellipse(0,0,9+46*v,9+46*v,0,t*3+i,t*3+i+4.8);c.strokeStyle=i%2?'#d6ffe1':'#81cfdd';c.lineWidth=2.4;c.stroke()}
+ c.restore();dot(c,x,y-5,5,7,'#ec845a');dot(c,x,y-10,4,3,'#fff3c9');
+ for(let i=0;i<6;i++){const a=i+t*2;dot(c,x+Math.cos(a)*29*k,y+Math.sin(a)*9*k-8,2,2,'#fff2a0')}
+}
+function drawDial(c){
+ const x=W*.5,y=H*.73,r=Math.min(W*.098,H*.104,51);
+ c.save();c.translate(x,y);c.lineCap='round';c.lineWidth=9;
+ for(const [start,end,color] of [[0,.5,'#7ed8b5'],[.53,.76,'#f7d386'],[.79,1,'#ec8e6b']]){
+ c.strokeStyle=color;c.beginPath();c.arc(0,0,r,Math.PI*(1+start),Math.PI*(1+end));c.stroke()}
+ const a=Math.PI*(1+progress);line(c,0,0,Math.cos(a)*r,Math.sin(a)*r,'#f9edd8',3);dot(c,0,0,5,5,'#ffce80');
+ c.fillStyle='#fff5d9';c.font='bold 13px system-ui';c.textAlign='center';c.fillText(pulls+' / '+pullsNeeded,0,19);c.restore()
+}
+function drawPursuit(c){
+ const water=H*.58,scale=Math.min(W/420,H/560,1.55),x=W*.64,y=water+3*Math.sin(t*5);
+ const sharkX=x-W*(.12+.049*lead);
+ // Forward scrolling foam and a receding headland give the sprint a direction.
+ for(let i=0;i<11;i++){const xx=W-((t*(24+kick*25)+i*83)%(W+70));line(c,xx,y+22+i*H*.016,xx+18+i,y+22+i*H*.016,'#d4f1db62',1.6)}
+ c.save();c.translate(sharkX,y+18*scale);c.scale(scale,scale);
+ const sway=Math.sin(t*6)*4;
+ path(c,'#284e61','M-19 -6 Q-37 -20 -55 '+(-20+sway)+' L-46 0 -58 '+(20+sway)+' Q-39 15 -19 8Z','#1e4855',1.4);
+ path(c,'#486f7c','M-32 0 Q-20 -13 -8 -12 L-15 -35 Q0 -31 7 -14 Q29 -14 42 -3 Q33 12 9 13 Q-14 16 -32 3Z','#24495b',1.7);
+ path(c,'#b5c5b9','M-21 5 Q5 11 37 0 Q25 15 6 13 Q-12 15 -21 5Z');
+ path(c,'#243e4b','M18 3 Q28 8 37 0 Q31 12 20 9Z');dot(c,26,-5,2.3,2,'#f1cf81');c.restore();
+ c.save();c.translate(x,y);c.scale(scale,scale);const stroke=Math.sin(t*(5+kick*4));
+ path(c,'#d3924f','M-24 1 Q-14 -8 1 -7 L10 0 Q-2 8 -21 6Z');dot(c,8,-8,7,7,'#ce986c');path(c,'#284858','M0 -9 Q2 -22 13 -16 L15 -11 19 -10Z');
+ path(c,null,'M-5 0 Q'+(2+stroke*7)+' '+(-9-stroke*8)+' 17 '+(-1-stroke*5),'#e0ad7c',4);
+ fishArt(c,byId.get(target),-20,10,.42,t,-1);c.restore();
+ for(let i=0;i<9;i++){const v=(t*(1+kick*.6)+i/9)%1;dot(c,x-10*scale-v*42*scale,y+4*scale-Math.sin(v*Math.PI)*10*scale,3*(1-v)+.4,1.8,'#def7df')}
+ if(lead<2){c.fillStyle='rgba(177,61,48,'+((2-lead)*.08)+')';c.fillRect(0,0,W,H)}
+}
+function drawArrival(c){
+ const v=Math.min(1,age/1.25),x=W*.52,y=H*(.55-.16*Math.sin(v*Math.PI));
+ for(let i=0;i<14;i++){const a=i*Math.PI/7+t*.35,dist=(20+v*72)*Math.min(W/360,1.6);c.save();c.translate(x+Math.cos(a)*dist,y+Math.sin(a)*dist*.65);c.rotate(a);path(c,'#ffe5a3','M0 -4 L1 -1 4 0 1 1 0 4 -1 1 -4 0 -1 -1Z');c.restore()}
+ fishArt(c,byId.get(target),x,y,Math.min(W/155,H/275,2.8)*(.8+.2*Math.sin(v*Math.PI)),t);
+ if(age<.58)foamWipe(c,age)
+}
+function reefRelief(c,w,h,region,time){
+ const flow=phase==='run'?Math.min(52,(17-shore)*3):Math.sin(time*.3)*3;
+ const p=waters[region];c.save();
+ // Two reefs recede at different speeds, with small cutouts between the spires.
+ for(let layer=0;layer<2;layer++){
+  const y=h*(.81+layer*.08),stride=44-layer*9,offset=flow*(layer?.9:.34);
+  c.beginPath();c.moveTo(-stride,h);
+  for(let i=-2;i<w/stride+4;i++){
+   const x=i*stride-offset,n=Math.sin(i*8.74+region+layer),height=(10+Math.abs(n)*26)*(layer?1:.7);
+   c.lineTo(x,y-3*n);c.lineTo(x+stride*.23,y-height*.35);c.lineTo(x+stride*.38,y-height);c.lineTo(x+stride*.62,y-height*1.03);c.lineTo(x+stride*.76,y-height*.54)
+  }c.lineTo(w+stride,h);c.closePath();c.fillStyle=layer?'#224f5b':p[4];c.globalAlpha=layer?.64:.27;c.fill();c.globalAlpha=1
+ }
+ const scale=Math.min(w/370,h/540,1.65);
+ for(let j=0;j<5;j++){
+  c.save();c.translate((j+.17)*w/4-flow*.5,h*(.89+.025*Math.cos(j*10)));c.scale(scale,scale);c.rotate(Math.sin(time*.8+j)*.035);
+  const ink=['#bd9176','#87ac95','#ab838e'][(j+region)%3];
+  for(let i=-2;i<=2;i++){
+   const xx=i*7,yy=-21-(2-Math.abs(i))*6;path(c,null,'M0 0 Q'+xx+' -9 '+xx+' '+yy,ink,3.4);path(c,null,'M'+xx+' '+(yy+7)+' q-7 -2 -8 -9 M'+xx+' '+(yy+13)+' q7 -3 7 -9',ink,2.4)
+  }c.restore()
+ }
+ c.restore()
+}
 </script><script>'use strict';
 const $=id=>document.getElementById(id),canvas=$('sea'),ctx=canvas.getContext('2d');
 const key='reef-tycoon.save.v1',initial={region:0,seen:[],bag:[],pads:Array(6).fill(null),levels:Array(6).fill(1),coins:0,bank:0,rod:1,speed:1,gear:1,strength:0,rewards:{},updated:0};
 let data={...initial};try{data={...initial,...JSON.parse(localStorage.getItem(key))}}catch{}
 let phase='harbor',t=0,age=0,target=0,tension=.24,progress=0,held=false,drift=0,lane=0,hits=0,avoided=0,muted=false,ac,last=0,W=0,H=0,plate,school=[],rings=[],castX=.64,catchLength=0,toast='',toastUntil=0,currentPage='',saving=0;
+let luck=0,pulls=0,pullsNeeded=8,lead=0,shore=0,kick=0,pulse=0;
+let selectedStand=-1,exhibitAt=-1;
 function store(){try{localStorage.setItem(key,JSON.stringify(data))}catch{}}
 const sdk=bridge({read:()=>data,write:(p,cloud)=>{if(cloud&&(phase!=='harbor'||p.updated<=data.updated))return;data={...initial,...p};store();if(cloud)build()},changed:e=>{if(e.type==='reward')notify('Harbor badge earned')}});
 function save(){data.updated=Date.now();store();sdk.save()}
@@ -201,25 +270,45 @@ function build(){
 }
 function stage(p){phase=p;age=0;held=false;document.body.classList.toggle('deep',['bite','reel','run'].includes(p));updateUI()}
 function updateUI(){
- const free=phase==='harbor',deep=phase==='reel',run=phase==='run';$('book').hidden=!free;
- $('meter').hidden=!deep;$('act').hidden=phase==='landed';$('act').disabled=['cast','bite','landed'].includes(phase);
- const act=free?'Cast line':phase==='cast'?'Line away…':phase==='bite'?'A bite!':deep?(held?'Release to cool':'Hold to reel'):run?'Switch wake':'Catch landed';
- if($('act').textContent!==act)$('act').textContent=act;
- const hint=t<toastUntil?toast:free?'Tap farther out for rarer fish':phase==='cast'?'Watch the float':phase==='bite'?'Get ready to reel':deep?(tension>.73?'Ease off · high tension':Math.round(progress*100)+'% aboard · watch tension'):run?'Dodge the red wake · '+avoided+'/3':'Logged in your journal';
- if($('hud').textContent!==hint)$('hud').textContent=hint;
- if(deep){$('fill').style.width=tension*100+'%';$('fill').style.background=tension>.73?'#ff8260':'#83ddc0'}
+ const free=phase==='harbor',pull=phase==='reel',swim=phase==='run',roll=phase==='bite';
+ $('book').hidden=$('pier').hidden=!free;$('meter').hidden=!(pull||swim||roll);
+ $('act').hidden=phase==='landed';$('act').disabled=!$('sheet').hidden||['cast','landed','reveal'].includes(phase);
+ const act=free?'Cast line':roll?'Tap for luck':pull?'Pull!':swim?'Swim!':phase==='cast'?'Casting…':'Coming ashore';
+ const hint=t<toastUntil?toast:free?'Tap the water to cast':phase==='cast'?'Follow the float':roll?'Luck +'+luck:pull?names[target]+' · '+rates[target]+' shells/s':swim?Math.ceil(shore)+' m to shore':'Catch secured';
+ if($('act').textContent!==act)$('act').textContent=act;if($('hud').textContent!==hint)$('hud').textContent=hint;
+ const fill=$('fill');fill.style.width=(pull?100*pulls/pullsNeeded:swim?100*Math.max(0,lead)/6:luck*10)+'%';fill.style.background=swim&&lead<2?'#ff8b72':'#86dfbd';
 }
 function splash(x,y,n=12){for(let i=0;i<n;i++)rings.push({x,y,vx:Math.cos(i*2.4)*(8+i*3),vy:-35-i*3,life:.55+i%3*.12})}
-function cast(x){if(phase!=='harbor'||!$('sheet').hidden)return;castX=Math.max(.22,Math.min(.87,x));const tier=Math.min(regions[data.region].groups.length-1,Math.floor(castX*regions[data.region].groups.length));const pool=Math.random()<.78?school.filter(f=>f.tier===tier):school;
- target=pool[Math.floor(Math.random()*pool.length)].id;catchLength=Math.round((12+(target*17%75))*(.8+Math.random()*.42));tension=.24;progress=0;drift=0;lane=0;hits=avoided=0;
- sdk.prepare();sdk.start();stage('cast');tone(310,.20,'triangle')}
-function act(){if(phase==='harbor')cast(.64);else if(phase==='reel'){held=true;tone(220,.08)}else if(phase==='run'){lane=1-lane;tone(320+lane*100,.1)}updateUI()}
+function cast(x){
+ if(phase!=='harbor'||!$('sheet').hidden)return;
+ castX=Math.max(.22,Math.min(.87,x));luck=pulls=progress=kick=pulse=0;toastUntil=0;
+ sdk.prepare();sdk.start();stage('cast');tone(310,.20,'triangle');
+}
+function hookFish(){
+ const power=Math.min(.22,Math.log1p(data.strength||0)*.028);
+ const score=Math.min(.999,castX*.44+Math.random()*.53+luck*.033+power);
+ const bands=regions[data.region].groups.length;
+ const tier=Math.min(bands-1,Math.floor(score*bands));
+ const pool=school.filter(f=>f.tier===tier);
+ target=pool[Math.floor(Math.random()*pool.length)].id;catchLength=Math.round((12+(target*17%75))*(.8+Math.random()*.42));
+ pullsNeeded=Math.max(4,8+byId.get(target).tier*2-Math.min(5,data.rod-1));
+ stage('reel');pulse=1;tone(660,.20);
+}
+function act(){
+ if(!$('sheet').hidden)return;
+ if(phase==='harbor')cast(.64);
+ else if(phase==='bite'&&luck<10){luck++;pulse=1;tone(400+luck*38,.09);splash(W*castX,H*.64,7)}
+ else if(phase==='reel'){pulls++;progress=pulls/pullsNeeded;pulse=1;tone(240+progress*260,.1,'triangle');
+ if(pulls>=pullsNeeded){lead=3.2;shore=17;kick=.6;stage('run');tone(147,.44,'triangle')}}
+ else if(phase==='run'){kick=Math.min(1.4,kick+.48);pulse=1;tone(310,.09)}
+ updateUI()
+}
 $('act').onpointerdown=e=>{if(e.button!==0)return;e.preventDefault();$('act').setPointerCapture(e.pointerId);act()};
 function release(){held=false;updateUI()}
 $('act').onpointerup=$('act').onpointercancel=$('act').onlostpointercapture=release;
-$('act').onclick=e=>{if(e.detail===0&&phase!=='reel')act()};
+$('act').onclick=e=>{if(e.detail===0)act()};
 addEventListener('keydown',e=>{if(e.code==='Space'&&$('sheet').hidden){e.preventDefault();if(!e.repeat)act()}});addEventListener('keyup',e=>{if(e.code==='Space')release()});
-canvas.onpointerdown=e=>{if(phase==='harbor')cast(e.clientX/W);else if(phase==='reel'||phase==='run'){canvas.setPointerCapture(e.pointerId);act()}};canvas.onpointerup=canvas.onpointercancel=release;
+canvas.onpointerdown=e=>{if(phase==='harbor')cast(e.clientX/W);else if(['bite','reel','run'].includes(phase)){canvas.setPointerCapture(e.pointerId);act()}};canvas.onpointerup=canvas.onpointercancel=release;
 $('audio').onclick=()=>{muted=!muted;$('audio').textContent=muted?'♫ ×':'♪';$('audio').setAttribute('aria-label',muted?'Enable sound':'Mute sound');if(!muted)tone(660)};
 function sheet(html,kind){currentPage=kind;$('page').innerHTML=html;$('sheet').hidden=false;$('act').disabled=true;$('close').focus()}
 function closeSheet(){if(phase==='landed')stage('harbor');$('sheet').hidden=true;currentPage='';updateUI();$('act').focus()}
@@ -232,30 +321,52 @@ function journal(r=data.region){
  $('region').onchange=e=>journal(+e.target.value);$('sail').onclick=()=>{data.region=r;save();build();closeSheet();tone(520)};$('quay').onclick=ledger;
 }
 function ledger(){
- const price=25*data.rod;
- sheet('<h2>Harbor ledger</h2><p class="note">'+Math.floor(data.coins)+' shells · Rod level '+data.rod+'</p><p>Exhibit earnings: '+Math.floor(data.bank)+' shells</p><p class="note">'+data.pads.filter(id=>id!==null).map(id=>names[id]).join(' · ')+'</p><button class="paperAction" id="collect">Collect earnings</button>'+(data.bag.length?'<button class="paperAction" id="unload">Unload catch</button>' : '')+'<button class="paperAction" id="upgrade">Tune reel · '+price+'</button><button class="paperAction" id="back">Journal</button>','ledger');
- if($('unload'))$('unload').onclick=()=>{const id=data.bag.shift(),slot=data.pads.indexOf(null);if(slot>=0)data.pads[slot]=id;else data.coins+=5*rates[id];save();ledger()};
- $('collect').onclick=()=>{const n=Math.floor(data.bank);data.bank-=n;data.coins+=n;save();ledger()};$('upgrade').disabled=data.coins<price;$('upgrade').onclick=()=>{if(data.coins>=price){data.coins-=price;data.rod++;save();chime();ledger()}};$('back').onclick=()=>journal()
+ const next=data.bag[0],carrying=next!==undefined;
+ sheet('<h2>Exhibit pier</h2><p class="note">'+(carrying?'Choose a stand for '+names[next]:Math.floor(data.coins)+' shells in your purse')+'</p><div id="stands"></div><p class="note" id="bank"></p><button class="paperAction" id="collect">Collect earnings</button><button class="paperAction" id="workshop">Outfitters</button>','ledger');
+ for(let i=0;i<6;i++){
+  const id=data.pads[i],button=document.createElement('button');button.className='stand';button.dataset.slot=i;
+  if(id!==null){const c=document.createElement('canvas');specimen(c,byId.get(id));button.append(c)}
+  const text=id===null?'Empty stand':names[id];button.append(document.createTextNode(selectedStand===i&&carrying?'Confirm exchange':text));
+  button.title=id===null?'Place catch':text+' · '+rates[id]+' shells/s';
+  button.onclick=()=>{if(!carrying)return;
+   if(id!==null&&selectedStand!==i){selectedStand=i;ledger();return}
+   data.pads[i]=data.bag.shift();data.levels[i]=1;if(id!==null)data.bag.push(id);
+   selectedStand=-1;exhibitAt=i;save();chime();ledger()};
+  if(i===exhibitAt)button.classList.add('placed');$('stands').append(button)
+ }
+ $('collect').onclick=()=>{const n=Math.floor(data.bank);data.bank-=n;data.coins+=n;save();tone(740);ledger()};
+ $('workshop').onclick=workshop;refreshBank()
 }
+function refreshBank(){const e=$('bank');if(e){const value='Ready to collect · '+Math.floor(data.bank)+' shells';if(e.textContent!==value)e.textContent=value}}
+function workshop(){
+ sheet('<h2>Harbor outfitters</h2><p class="note">'+Math.floor(data.coins)+' shells · '+data.strength+' casting power</p><div id="tools"></div><button class="paperAction" id="train">Lift weights · +'+data.gear+' power</button><button class="paperAction" id="back">Exhibit pier</button>','shop');
+ for(const [key,title] of [['gear','Weights'],['rod','Fishing rod'],['speed','Swim fins']]){
+  const b=document.createElement('button'),price=25*data[key];b.className='paperAction';b.disabled=data.coins<price;b.textContent=title+' '+data[key]+' → '+(data[key]+1)+' · '+price;
+  b.onclick=()=>{if(data.coins<price)return;data.coins-=price;data[key]++;save();chime();workshop()};$('tools').append(b)
+ }
+ $('train').onclick=()=>{data.strength+=data.gear;save();tone(280,.12,'triangle');workshop()};$('back').onclick=ledger
+}
+$('pier').onclick=()=>{selectedStand=-1;exhibitAt=-1;ledger()};
+
 $('book').onclick=()=>journal();
 function land(){
  const f=byId.get(target),fresh=!data.seen.includes(target);if(fresh)data.seen.push(target);const gain=5+f.r*3+f.tier*3+Math.floor(catchLength/12);data.coins+=gain;
- const slot=data.pads.indexOf(null);if(slot>=0)data.pads[slot]=target;else{const weak=data.pads.reduce((best,id,i)=>rates[id]<rates[data.pads[best]]?i:best,0);if(rates[target]>rates[data.pads[weak]]){data.pads[weak]=target;data.levels[weak]=1}}
- save();sdk.end();stage('landed');chime();sheet('<div id="result"><p class="note">'+(fresh?'New field record':'Catch recorded')+'</p><canvas></canvas><h3>'+f.name+'</h3><p class="note">'+catchLength+' cm · '+f.band+' · +'+gain+' shells</p><button class="paperAction" id="again">Back to the water</button></div>','catch');specimen($('result').querySelector('canvas'),f);$('again').onclick=closeSheet;
+ data.bag.push(target);save();sdk.end();stage('landed');chime();sheet('<div id="result"><p class="note">'+(fresh?'New field record':'Catch recorded')+'</p><canvas></canvas><h3>'+f.name+'</h3><p class="note">'+catchLength+' cm · '+rates[target]+' shells/s · +'+gain+' shells</p><button class="paperAction" id="again">Place at the pier</button></div>','catch');specimen($('result').querySelector('canvas'),f);
+ $('again').onclick=()=>{stage('harbor');selectedStand=-1;exhibitAt=-1;ledger()};
 }
+
 function lose(message){sdk.end();stage('harbor');notify(message);tone(135,.35,'triangle')}
 function step(dt){
- t+=dt;if(!$('sheet').hidden)return;age+=dt;data.bank+=data.pads.reduce((n,id,i)=>n+(id===null?0:(rates[id]||0)*(data.levels[i]||1)),0)*dt;saving+=dt;if(saving>15){saving=0;save()}
- if(phase==='cast'&&age>1.25){splash(W*castX,H*.64);tone(195,.13);stage('bite')}
- else if(phase==='bite'&&age>1.10){stage('reel');tone(620,.12)}
- else if(phase==='reel'){
-  tension=Math.max(.08,tension+(held?.225+.065*Math.sin(age*2):- .52)*dt);
-  progress=Math.max(0,progress+(held?.195+Math.min(data.rod,12)*.008:-.014)*dt);
-  if(tension>=1)lose('The line snapped · try a shorter pull');else if(progress>=1){stage('run');tone(155,.4,'triangle')}
- }else if(phase==='run'&&age>=1.85){
-  if(lane===riskLane()){hits++;tone(155,.26,'triangle');notify('Close call!')}else tone(680,.14);
-  avoided++;age=0;if(hits>=2)lose('The shark took the catch · cast again');else if(avoided===3)land()
- }
+ t+=dt;pulse=Math.max(0,pulse-dt*3);data.bank+=data.pads.reduce((n,id,i)=>n+(id===null?0:(rates[id]||0)*(data.levels[i]||1)),0)*dt;
+ saving+=dt;if(saving>15){saving=0;save()}
+ if(!$('sheet').hidden){refreshBank();return}age+=dt;
+ if(phase==='cast'&&age>.84){splash(W*castX,H*.64,24);tone(195,.13);stage('bite')}
+ else if(phase==='bite'&&age>2.45)hookFish();
+ else if(phase==='run'){kick=Math.max(0,kick-dt*1.12);const speed=Math.min(data.speed-1,12)*.13;
+ shore=Math.max(0,shore-dt*(1.8+kick*2.8+speed));lead=Math.min(6,lead+dt*(kick*1.6-.78+speed*.18));
+ if(shore<=0){stage('reveal');chime()}else if(lead<=0)lose('The shark caught up · cast again')}
+ else if(phase==='reveal'&&age>1.25)land();
+
  for(const p of rings){p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=130*dt}rings=rings.filter(p=>p.life>0);updateUI()
 }
 function riskLane(){return (avoided+target)%2}
@@ -271,22 +382,22 @@ function underwater(){
  const p=waters[data.region];ctx.fillStyle=gradient(ctx,0,H,p[5],p[6]);ctx.fillRect(0,0,W,H);
  for(let i=0;i<8;i++){const x=(i+.3)*W/7+Math.sin(t*.22+i)*8;path(ctx,'#e8ffd50c','M'+x+' 0 l'+(-W*.24)+' '+H+' h'+(W*.08)+' L'+(x+10)+' 0Z')}
  for(let i=0;i<38;i++){const x=i*91%W,y=H-((t*(6+i%5)+i*39)%H);dot(ctx,x+Math.sin(t+i)*4,y,1+i%3,1+i%3,'#dcf5da59')}
+ reefRelief(ctx,W,H,data.region,t);
  for(let i=0;i<35;i++){const x=i*W/34,hh=H*(.06+.11*Math.abs(Math.sin(i*7)));path(ctx,null,'M'+x+' '+H+' q-11 '+(-hh*.45)+' 2 '+(-hh*.68)+' t'+(3*Math.sin(t+i))+' '+(-hh*.36),i%2?'#1c5257':'#2d6965',2+i%4)}
- if(phase==='run'){
-  const gap=Math.min(W*.27,140),y=H*.58,route=n=>W/2+(n?gap:-gap),danger=route(riskLane());
-  for(let i=0;i<2;i++){ctx.strokeStyle=i===riskLane()?'#ffad85':'#a3dfcd';ctx.globalAlpha=.42;ctx.setLineDash([5,10]);line(ctx,route(i),H*.27,route(i),H*.86,ctx.strokeStyle,2);ctx.setLineDash([]);ctx.globalAlpha=1}
-  const z=Math.min(1,age/1.85);dot(ctx,danger,y,22+z*10,9,'#f8b792');fishArt(ctx,roster.find(f=>f.form==='shark'),danger,y+H*.42*(1-z),.8+z*.52,t,-1);
-  fishArt(ctx,byId.get(target),W/2+(drift*2-1)*gap,y,Math.min(W/245,1.65),t);return
- }
+ if(phase==='run'){drawPursuit(ctx);return}
+
  const x=W*(.51+Math.sin(t*1.9)*.08),y=H*(.55+Math.cos(t*1.3)*.034-progress*.14);
  for(let i=0;i<4;i++){ctx.globalAlpha=.18;fishArt(ctx,school[(i*3+2)%school.length],((t*(8+i)+i*W*.29)%(W+100))-50,H*(.37+.08*i),.45,t+i);ctx.globalAlpha=1}
  path(ctx,null,'M'+W*.52+' 0 Q'+(W*.48+(held?4:18))+' '+H*.25+' '+x+' '+y,'#e4efd27a',1.5);
- fishArt(ctx,byId.get(target),x,y,Math.min(W/145,H/240,3),t*(held?1.9:1));
+ fishArt(ctx,byId.get(target),x,y-pulse*9,Math.min(W/145,H/240,3)*(1+pulse*.04),t+progress*3);
 }
 function frame(now){
  const dt=Math.min(.045,(now-(last||now))/1000);last=now;
- if(!document.hidden){step(dt);drift+=(lane-drift)*(1-Math.exp(-dt*10));if(['bite','run','reel'].includes(phase))underwater();else surface();
- if(phase==='bite'){ctx.fillStyle='rgba(223,243,214,'+Math.max(0,.6-age)+')';ctx.fillRect(0,0,W,H)}
+ if(!document.hidden){step(dt);drift+=(lane-drift)*(1-Math.exp(-dt*10));if(['reel','run'].includes(phase)){
+ ctx.save();const zoom=1+.08*Math.exp(-age*3);ctx.translate(W/2,H*.5);ctx.scale(zoom,zoom);ctx.translate(-W/2,-H*.5);underwater();ctx.restore();
+ if(phase==='reel')drawDial(ctx);foamWipe(ctx,age)
+ }else{surface();if(phase==='bite')drawWhirlpool(ctx);if(phase==='reveal')drawArrival(ctx)}
+
  for(const p of rings)dot(ctx,p.x,p.y,2,3,'#e6f0d8')}
  requestAnimationFrame(frame)
 }
