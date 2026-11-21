@@ -139,7 +139,7 @@ function surface(){
  ctx.drawImage(plate,0,0,W,H);const h=H*.47,bx=W*.32,by=h+(H-h)*.25,k=Math.min(W/340,H/470,1.9);
  for(let i=0;i<28;i++){const x=((i*103+t*(2+i%4))%(W+40))-20,y=h+4+(i*31%(H*.43));path(ctx,null,'M'+x+' '+y+' q7 2 14 0 t14 0','#e0efe044',1.1)}
  for(let i=0;i<4;i++){const x=(W*.77+i*21+t*3)%W,y=h*.68+Math.sin(i)*12;path(ctx,null,'M'+x+' '+y+' q4 -4 8 0 q5 -3 8 -1','#4e6c70',1.3)}
- playfulBay(ctx,W,H,t);harborDetail(ctx,W,H,t);cutter(ctx,bx,by,k,t,phase==='cast');
+ leviathanHarbor(ctx,W,H,t);playfulBay(ctx,W,H,t);harborDetail(ctx,W,H,t);cutter(ctx,bx,by,k,t,phase==='cast');
  const fx=W*castX,fy=H*.64;if(phase==='cast'){const u=Math.min(1,age/.72),x=bx+64*k+(fx-bx-64*k)*u,y=by-54*k+(fy-by+54*k)*u-Math.sin(u*Math.PI)*H*.19;path(ctx,null,'M'+(bx+64*k)+' '+(by-54*k)+' Q'+((bx+x)/2)+' '+(y-10)+' '+x+' '+y,'#e4ead2',1);dot(ctx,x,y,4,5,'#e98e5b')}
  if(phase==='harbor'){const x=W*.65,y=H*.65;for(let i=0;i<3;i++){const a=(t*.34+i/3)%1;ctx.strokeStyle='rgba(254,235,175,'+(.65*(1-a))+')';ctx.beginPath();ctx.ellipse(x,y,12+a*28,4+a*9,0,0,Math.PI*2);ctx.stroke()}}
 }

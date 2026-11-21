@@ -59,8 +59,6 @@ function coastline(c,W,H,r){
  if(r===4){for(let i=0;i<3;i++){let x=-17+i*13;line(c,x,0,x-4,-29-i*6,p[4],3);for(let j=0;j<5;j++){const u=j*.68;path(c,null,'M'+(x-4)+' '+(-29-i*6)+' q'+(Math.cos(u)*14)+' -10 '+(Math.cos(u)*22)+' '+(Math.sin(u)*4),p[4],2)}}}
  if(r===5){path(c,'#c4dbd3','M-55 0 L-43 -17 -36 -12 -21 -42 -12 -29 -5 -40 15 -15 24 -21 41 0Z');path(c,'#81a4ac','M-21 -42 L-26 -10 -42 0 H-6Z M-5 -40 L-8 -11 13 0Z')}
  c.restore();
- // Whitewashed signal tower and keeper's cottage on the headland.
- c.save();c.translate(W*.16,y-8);c.scale(.8,.8);path(c,'#eee3c6','M-8 0 L-5 -48 6 -48 10 0Z','#41565a',1.5);path(c,'#bd594a','M-6 -28 H7 L8 -18 H-7Z');path(c,'#254654','M-8 -49 H8 V-58 H-8Z');path(c,'#f9cd7e','M-5 -51 H5 V-56 H-5Z');path(c,'#a95742','M-10 -59 L0 -67 10 -59Z');path(c,'#dcc6a0','M11 0 V-14 H39 V0Z');path(c,'#a9563e','M8 -14 L17 -24 36 -23 43 -14Z');c.restore();
  c.fillStyle=gradient(c,y,H,p[5],p[6]);c.fillRect(0,y,W,H-y);
  coastalWash(c,W,H,r);
  for(let i=0;i<190;i++){const depth=((i*79)%191)/191,xx=((i*137)%997)/997*W,yy=y+1+depth*(H-y);line(c,xx,yy,xx+3+depth*16,yy+(i%3-1)*.65,i%3?'#c3ecd72b':'#123f462b',1+depth)}
@@ -77,6 +75,7 @@ function cutter(c,x,y,scale,t,cast){
  for(let j=0;j<5;j++){const x=-46+j*17;line(c,x,3,x+8,2.2,'#f8c18f',.8);dot(c,x+1,6,1,1,'#6c5845')}
  for(let j=0;j<3;j++)line(c,-32+j*8,-21,-29+j*8,-23,'#e1dbab',1.1);
  c.strokeStyle='#d6b78b';c.lineWidth=1.5;for(let j=0;j<3;j++){c.beginPath();c.ellipse(3,-6-j*1.4,7,2,0,0,Math.PI*2);c.stroke()}
+ c.save();c.translate(-23,-52);path(c,'#ffe8af','M-2 1 L-2 25 -24 25 Q-11 15 -2 1Z','#6c664e',.8);path(c,'#e69271','M-5 8 L-5 25 -10 25Z');c.restore();
  line(c,31,-22,cast?64:54,cast?-54:-61,'#674632',2);c.restore()
 }
 function harborDetail(c,W,H,t){
@@ -243,4 +242,28 @@ function playfulBay(c,w,h,time){
  c.save();c.translate(w*.78,h*.71+Math.sin(time*2)*2-jump);c.rotate(Math.sin(time*2)*.06);
  dot(c,0,5,20,4,'#216b81');dot(c,0,0,16,9,'#ffa942');dot(c,7,-9,9,10,'#ffd765');path(c,'#ee8050','M14 -10 l9 3 -10 3Z');dot(c,10,-11,1.6,2,'#263f54');dot(c,-4,0,8,4,'#ffe181');path(c,'#315e79','M-1 -16 h16 l-3 -5 -9 1Z');c.restore();
  if(hop){for(let i=0;i<4;i++){const x=w*.78+Math.sin(i*3+hop)*24,yy=h*.71-25-(1.7-hop)*18-i*4;dot(c,x,yy,2,2,'#fff1ab')}}
+}
+function leviathanHarbor(c,w,h,time){
+ const scale=Math.min(w/357,h/545,2.05),water=h*.47;
+ c.save();c.translate(w*.51,water+Math.sin(time*.65)*1.5);c.scale(scale,scale);
+ // The harbor is built on the back of a sleeping pilot whale.
+ const ink='#293f54',edge='#47677b',ivory='#fff0bc';
+ dot(c,0,6,110,5,'#9ce2c2');dot(c,-4,7,88,3,'#447e83');
+ c.save();c.translate(-70,-18);c.rotate(Math.sin(time*.9)*.045);
+ path(c,'#589da9','M9 12 Q-11 10 -19 -6 Q-34 -10 -40 -31 Q-23 -30 -15 -19 Q-14 -41 -5 -48 Q2 -32 -3 -16 Q-3 -1 16 2Z',ink,2);path(c,null,'M-33 -26 Q-19 -20 -10 -9 M-5 -38 Q-7 -23 -10 -14','#a0cbb7',1.6);c.restore();
+ path(c,gradient(c,-50,9,'#59999f','#427287'),'M-82 -17 Q-61 -15 -53 -32 Q-37 -57 -2 -54 Q38 -55 65 -39 Q93 -28 98 -11 Q102 -2 91 3 Q66 13 23 11 Q-37 13 -64 3 Q-80 -3 -82 -17Z',ink,2.3);
+ path(c,'#f1ce9c','M-20 4 Q15 6 42 -2 Q62 -8 95 -8 Q102 4 77 8 Q35 16 -13 10Z');
+ for(let j=0;j<9;j++)path(c,null,'M'+(13+j*8)+' 1 q2 4 -3 8','#ad927d',.8);
+ path(c,'#50889b','M-27 -1 Q-33 9 -58 15 Q-51 5 -44 -3Z',ink,1.4);
+ for(let j=0;j<24;j++){const x=-48+j*17%100,y=-16-j*11%16;dot(c,x,y,1.8+j%3,1.3,'#9abbb0')}
+ const blink=time%4.8>4.35;
+ if(blink)path(c,null,'M60 -16 q5 4 10 -1',ink,2);
+ else{dot(c,65,-17,7,7,ivory);dot(c,67,-17,4.6,5.2,ink);dot(c,68,-19,1.4,1.4,'#fff8dd')}
+ path(c,null,'M72 -6 Q86 -3 94 -8',ink,1.5);dot(c,59,-10,4,1.7,'#eaa592');
+ path(c,'#486959','M-47 -36 Q-37 -54 -9 -57 Q19 -61 46 -47 L52 -40 Q9 -48 -25 -39Z',ink,1.4);
+ path(c,'#aabc76','M-45 -38 Q-24 -56 2 -54 Q26 -56 47 -44 Q15 -48 -8 -43Z');
+ for(const [x,y,k,wall,roof] of [[-29,-46,.76,'#f3c689','#cd675a'],[-15,-51,.85,'#fff1be','#558b95'],[24,-48,.82,'#ffdb97','#cf6554'],[38,-43,.56,'#eed49d','#477c88']]){
+ c.save();c.translate(x,y);c.scale(k,k);path(c,wall,'M-8 0 V-12 L0 -19 9 -13 V0Z',ink,1.4);path(c,roof,'M-11 -12 L-1 -22 12 -14 10 -11 -1 -17 -8 -10Z',ink,1.2);c.fillStyle=ink;c.fillRect(-4,-8,3,4);c.fillRect(3,-8,3,8);c.restore()}
+ c.save();c.translate(7,-52);path(c,'#ffecb7','M-8 1 L-5 -38 5 -38 9 1Z',ink,1.5);path(c,'#dd6651','M-6 -28 H6 L7 -19 H-7Z');path(c,'#355969','M-7 -38 V-48 H7 V-38Z',ink,1);path(c,'#ffd586','M-4 -40 V-46 H4 V-40Z');path(c,'#dd6e59','M-9 -48 L0 -55 9 -48Z',ink,1);line(c,0,-55,0,-65,ink,1);path(c,'#ffba60','M1 -65 q7 -3 13 0 l-5 2 4 1 -12 1Z');c.restore();
+ for(let i=0;i<4;i++){const v=(time*.35+i*.24)%1;c.globalAlpha=(1-v)*.56;dot(c,-14-v*7,-66-v*12,1.5+v*3,1+v*2,'#fff4ce')}c.restore();
 }
