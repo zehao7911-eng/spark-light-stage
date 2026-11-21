@@ -234,6 +234,7 @@ function journal(r=data.region){
 function ledger(){
  const price=25*data.rod;
  sheet('<h2>Harbor ledger</h2><p class="note">'+Math.floor(data.coins)+' shells · Rod level '+data.rod+'</p><p>Exhibit earnings: '+Math.floor(data.bank)+' shells</p><p class="note">'+data.pads.filter(id=>id!==null).map(id=>names[id]).join(' · ')+'</p><button class="paperAction" id="collect">Collect earnings</button>'+(data.bag.length?'<button class="paperAction" id="unload">Unload catch</button>' : '')+'<button class="paperAction" id="upgrade">Tune reel · '+price+'</button><button class="paperAction" id="back">Journal</button>','ledger');
+ if($('unload'))$('unload').onclick=()=>{const id=data.bag.shift(),slot=data.pads.indexOf(null);if(slot>=0)data.pads[slot]=id;else data.coins+=5*rates[id];save();ledger()};
  $('collect').onclick=()=>{const n=Math.floor(data.bank);data.bank-=n;data.coins+=n;save();ledger()};$('upgrade').disabled=data.coins<price;$('upgrade').onclick=()=>{if(data.coins>=price){data.coins-=price;data.rod++;save();chime();ledger()}};$('back').onclick=()=>journal()
 }
 $('book').onclick=()=>journal();
