@@ -4,6 +4,8 @@ const key='reef-tycoon.save.v1',initial={region:0,seen:[],bag:[],pads:Array(6).f
 let data={...initial};try{data={...initial,...JSON.parse(localStorage.getItem(key))}}catch{}
 let phase='harbor',t=0,age=0,target=0,tension=.24,progress=0,held=false,drift=0,lane=0,hits=0,avoided=0,muted=false,ac,last=0,W=0,H=0,plate,school=[],rings=[],castX=.64,catchLength=0,toast='',toastUntil=0,currentPage='',saving=0;
 let luck=0,pulls=0,pullsNeeded=8,lead=0,shore=0,kick=0,pulse=0;
+const paperFiber=grainPlate(816);
+let depthWash;
 let selectedStand=-1,exhibitAt=-1;
 function store(){try{localStorage.setItem(key,JSON.stringify(data))}catch{}}
 const sdk=bridge({read:()=>data,write:(p,cloud)=>{if(cloud&&(phase!=='harbor'||p.updated<=data.updated))return;data={...initial,...p};store();if(cloud)build()},changed:e=>{if(e.type==='reward')notify('Harbor badge earned')}});
@@ -15,7 +17,11 @@ function build(){
  W=innerWidth;H=innerHeight;const d=Math.min(devicePixelRatio||1,1.65);
  canvas.width=Math.round(W*d);canvas.height=Math.round(H*d);ctx.setTransform(d,0,0,d,0,0);
  if(!waters[data.region])data.region=0;
- plate=document.createElement('canvas');plate.width=canvas.width;plate.height=canvas.height;const g=plate.getContext('2d');g.scale(d,d);coastline(g,W,H,data.region);
+ plate=document.createElement('canvas');plate.width=canvas.width;plate.height=canvas.height;const g=plate.getContext('2d');g.scale(d,d);coastline(g,W,H,data.region);g.globalAlpha=.52;g.fillStyle=g.createPattern(paperFiber,'repeat');g.fillRect(0,0,W,H);
+ depthWash=document.createElement('canvas');depthWash.width=Math.ceil(W*.65);depthWash.height=Math.ceil(H*.65);
+ const wash=depthWash.getContext('2d');wash.scale(.65,.65);const rand=paintSeed(72+data.region);
+ wash.globalAlpha=.055;for(let i=0;i<85;i++)pigment(wash,rand,rand()*W,rand()*H,18+rand()*90,6+rand()*35,i%3?waters[data.region][4]:'#f8e8b3');
+ wash.globalAlpha=.35;wash.fillStyle=wash.createPattern(paperFiber,'repeat');wash.fillRect(0,0,W,H);
  school=roster.filter(f=>f.r===data.region);$('place').textContent=waters[data.region][0];
 }
 function stage(p){phase=p;age=0;held=false;document.body.classList.toggle('deep',['bite','reel','run'].includes(p));updateUI()}
@@ -63,11 +69,19 @@ $('audio').onclick=()=>{muted=!muted;$('audio').textContent=muted?'♫ ×':'♪'
 function sheet(html,kind){currentPage=kind;$('page').innerHTML=html;$('sheet').hidden=false;$('act').disabled=true;$('close').focus()}
 function closeSheet(){if(phase==='landed')stage('harbor');$('sheet').hidden=true;currentPage='';updateUI();$('act').focus()}
 $('close').onclick=closeSheet;addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('sheet').hidden)closeSheet()});
-function specimen(c,f){c.width=300;c.height=160;const g=c.getContext('2d');g.translate(150,80);fishArt(g,f,0,0,1.98)}
+function specimen(c,f,hidden=false){
+ c.width=320;c.height=166;const g=c.getContext('2d');g.save();g.translate(160,82);
+ const rand=paintSeed(481+f.id);g.globalAlpha=.09;
+ for(let i=0;i<5;i++)pigment(g,rand,rand()*16-8,rand()*8-4,95+rand()*16,40+rand()*10,waters[f.r][5]);
+ g.globalAlpha=1;if(hidden)g.clearRect(-160,-82,320,166);fishArt(g,f,0,-3,1.82);
+ if(hidden){g.globalCompositeOperation='source-in';g.fillStyle='#667b78';g.fillRect(-160,-82,320,166)}
+ g.restore();
+ g.strokeStyle='#9c917b';g.lineWidth=.8;for(let i=0;i<17;i++){const x=104+i*7;line(g,x,153,x,153-(i%4===0?6:3),'#9c917b',.8)}
+}
 function journal(r=data.region){
  const list=roster.filter(f=>f.r===r),known=list.filter(f=>data.seen.includes(f.id)).length;
  sheet('<h2>Field journal</h2><p class="note">'+data.seen.length+' of 100 recorded</p><select aria-label="Fishing region" id="region">'+waters.map((w,i)=>'<option value="'+i+'" '+(i===r?'selected':'')+'>'+w[0]+'</option>').join('')+'</select> <b>'+known+' / '+list.length+'</b><div id="cards"></div><button class="paperAction" id="sail">Fish these waters</button><button class="paperAction" id="quay">Harbor ledger</button>','journal');
- for(const f of list){const card=document.createElement('div');card.className='card';const art=document.createElement('canvas');specimen(art,f);if(!data.seen.includes(f.id))art.style.filter='brightness(.4) saturate(.45)';card.append(art,document.createTextNode(data.seen.includes(f.id)?f.name:f.band));$('cards').append(card)}
+ for(const f of list){const card=document.createElement('div');card.className='card';const art=document.createElement('canvas');specimen(art,f,!data.seen.includes(f.id));if(!data.seen.includes(f.id))card.classList.add('unseen');card.append(art,document.createTextNode(data.seen.includes(f.id)?f.name:f.band));$('cards').append(card)}
  $('region').onchange=e=>journal(+e.target.value);$('sail').onclick=()=>{data.region=r;save();build();closeSheet();tone(520)};$('quay').onclick=ledger;
 }
 function ledger(){
@@ -130,6 +144,7 @@ function surface(){
 }
 function underwater(){
  const p=waters[data.region];ctx.fillStyle=gradient(ctx,0,H,p[5],p[6]);ctx.fillRect(0,0,W,H);
+ ctx.drawImage(depthWash,0,0,W,H);
  for(let i=0;i<8;i++){const x=(i+.3)*W/7+Math.sin(t*.22+i)*8;path(ctx,'#e8ffd50c','M'+x+' 0 l'+(-W*.24)+' '+H+' h'+(W*.08)+' L'+(x+10)+' 0Z')}
  for(let i=0;i<38;i++){const x=i*91%W,y=H-((t*(6+i%5)+i*39)%H);dot(ctx,x+Math.sin(t+i)*4,y,1+i%3,1+i%3,'#dcf5da59')}
  reefRelief(ctx,W,H,data.region,t);
