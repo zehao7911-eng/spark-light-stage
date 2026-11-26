@@ -1,0 +1,34 @@
+const T=THREE,$=id=>document.getElementById(id),scene=new T.Scene(),camera=new T.OrthographicCamera(),renderer=new T.WebGLRenderer({antialias:true});
+document.body.prepend(renderer.domElement);renderer.setPixelRatio(Math.min(1.65,devicePixelRatio));scene.background=new T.Color(0xcbded2);
+scene.add(new T.HemisphereLight(0xfff1ce,0xc5d0d9,1.3));const sun=new T.DirectionalLight(0xffe3bc,.86);sun.position.set(-40,75,25);scene.add(sun);
+const materials=new Map(),cube=new T.BoxGeometry(),roof=[],doors=[],curtains=[],lamps=[],box=(x,y,z,w,h,d,color,parent=scene,geometry=cube)=>{if(!materials.has(color))materials.set(color,new T.MeshLambertMaterial({color,flatShading:true}));const m=new T.Mesh(geometry,materials.get(color));m.position.set(x,y,z);m.scale.set(w,h,d);parent.add(m);return m};
+const wedge=new T.BufferGeometry(),verts=[[-.5,-.5,-.5],[.5,-.5,-.5],[-.5,-.5,.5],[.5,-.5,.5],[-.5,.5,.5],[.5,.5,.5]];
+wedge.setAttribute('position',new T.Float32BufferAttribute([0,1,2,1,3,2,2,3,4,3,5,4,0,2,4,1,5,3,0,4,1,1,4,5].flatMap(i=>verts[i]),3));wedge.computeVertexNormals();
+const origin=parts.find(p=>p[0]==='Core/Floor')[1],walls=[];for(const [name,pos,size,rot,rgb,cl] of parts){
+ if(/Blocker|Sign|Detector/.test(name))continue;
+ const color=/Roof/.test(name)?0xba6752:/Walls/.test(name)?0xdacbab:/Curtain/.test(name)?0x529790:/Floor/.test(name)?0xc39066:(rgb[0]<<16|rgb[1]<<8|rgb[2]);
+ const m=box(...pos.map((v,i)=>v-origin[i]),...size,color,scene,cl==='WedgePart'?wedge:cube);const matrix=new T.Matrix4().set(...rot.slice(0,3),0,...rot.slice(3,6),0,...rot.slice(6,9),0,0,0,0,1);m.quaternion.setFromRotationMatrix(matrix);
+ if(/Roof/.test(name))roof.push(m);if(/Walls/.test(name))walls.push(m);if(/Curtain/.test(name))curtains.push(m);if(/Doors/.test(name)){doors.push(m);m.userData.rest=m.rotation.y}if(/Light/.test(name))lamps.push(m)
+}
+box(0,-1,0,62,1.8,60,0x91ac84);box(0,-2.4,0,64,1.5,62,0x937c60);box(0,-3.4,0,66,.5,64,0xb9c7b6);
+for(let i=0;i<9;i++)box(-23+i*5,.02,26,4.7,.18,3,0xd9ccaa);
+for(const [x,z] of [[-26,-22],[23,-24],[-26,14],[25,10]]){box(x,2,z,1,4,1,0x96724c);for(let k=0;k<2;k++)box(x,4+k*2,z,3.6-k,4.5,3.6-k, k?0x76a589:0x588674,scene,new T.ConeGeometry(1,1,6))}
+function sofa(x,z){box(x,1.2,z,8,2.3,3.5,0x42877c);box(x,2.7,z-1.6,8,2,1,0x346a69);for(const k of [-1,1])box(x+k*3.7,2,z,.8,1.6,3.7,0x39766d)}
+sofa(-8,-7);box(-8,.3,-.8,12,.15,8,0xd8a765);box(-8,1.6,0,5,.6,2.7,0x916b50);box(-8,.8,0,1.4,1.4,1.3,0x705844);
+box(10,1.1,-10,8,2.2,10,0x987657);box(10,2.5,-10,8,.8,10,0xd5bd95);box(10,3,-8,8,.45,5.5,0xc97565);box(10,3,-13,5,.7,2.2,0xefe4cb);
+const glow=new T.PointLight(0xffc46f,1,45);glow.position.set(0,9,0);scene.add(glow);
+const key='keyholder.property.v1',fresh=()=>({cash:5000,owned:false,count:0,settings:[false,false,false],order:null,rewards:{},updated:0});let state=fresh();try{Object.assign(state,JSON.parse(localStorage.getItem(key)))}catch{}
+const sdk=bridge({read:()=>state,write:(p,cloud)=>{if(cloud&&(state.order||p.updated<=state.updated))return;state={...fresh(),...p};persist();render()},changed:()=>{}});
+function persist(){try{localStorage.setItem(key,JSON.stringify(state))}catch{}}function save(){state.updated=Date.now();persist();sdk.save()}
+const names=['Night photographer','Weekend gardener','Visiting pianist','Travel writer','Sunday baker','Film editor'],labels=[['Locked','Open'],['Lights off','Lights on'],['Curtains up','Privacy']],keys=['Door','Light','Curtain'];let topView=false,angle=.72,lastX=null,msgTimer;
+function note(msg){$('note').textContent=msg;clearTimeout(msgTimer);msgTimer=setTimeout(()=>$('note').textContent='',2000)}
+function sound(f){try{const a=sound.a??=new AudioContext();a.resume();const o=a.createOscillator(),g=a.createGain();o.frequency.value=f;g.gain.setValueAtTime(.04,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.18);o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.2)}catch{}}
+function order(){const bits=(state.count*5+3)%8;state.order=[0,1,2].map(i=>Boolean(bits&(1<<i)));sdk.prepare();sdk.start();save();render()}
+function action(){if(!state.owned){if(state.cash<5000){note('Earn a moving bonus to buy again');state.cash+=500;save();render();return}state.cash-=5000;state.owned=true;order();sound(420);return}
+ if(!state.order){order();return}
+ if(state.order.some((v,i)=>v!==state.settings[i])){note('Match the three requests below');sound(180);return}
+ const fee=600+100*(state.count%6);state.cash+=fee;state.count++;state.order=null;sdk.end();save();render();sound(780);note('Lease signed · +$'+fee)}
+function render(){const active=Boolean(state.order);$('cash').textContent='$'+state.cash.toLocaleString();$('title').textContent=!state.owned?'The cedar bungalow':active?names[state.count%6]:'Lease signed';$('brief').textContent=!state.owned?'Buy the house and prepare it for each visitor.':active?'Requested: '+state.order.map((v,i)=>labels[i][+v]).join(' · '):state.count+' completed viewings';$('go').textContent=!state.owned?(state.cash>=5000?'Buy house · $5,000':'Moving job · +$500'):active?'Hand over keys':'Invite next visitor';$('controls').replaceChildren();if(active)keys.forEach((k,i)=>{let b=document.createElement('button');b.textContent=labels[i][+state.settings[i]];b.onclick=()=>{state.settings[i]=!state.settings[i];sound(320+i*90);save();render()};$('controls').append(b)});else if(state.owned){let b=document.createElement('button');b.textContent='Sell house · $2,500';b.onclick=()=>{state.cash+=2500;state.owned=false;state.settings=[false,false,false];save();render()};$('controls').append(b)}
+ roof.forEach(m=>m.visible=topView||!state.owned);walls.forEach(m=>{m.visible=topView||!state.owned||!(m.position.x>12||m.position.z>12)});curtains.forEach(m=>m.visible=state.settings[2]);doors.forEach(m=>m.rotation.y=m.userData.rest+(state.settings[0]?1.2:0));glow.intensity=state.settings[1]?1.8:0;lamps.forEach(m=>m.visible=state.settings[1]);$('view').textContent=topView?'Inside view':'Roof view'}
+$('go').onclick=action;$('view').onclick=()=>{topView=!topView;render()};renderer.domElement.onpointerdown=e=>{lastX=e.clientX;renderer.domElement.setPointerCapture(e.pointerId)};renderer.domElement.onpointermove=e=>{if(lastX!==null){angle-=(e.clientX-lastX)*.009;lastX=e.clientX}};renderer.domElement.onpointerup=renderer.domElement.onpointercancel=()=>lastX=null;
+function resize(){const a=innerWidth/innerHeight,span=Math.max(54,46/a);renderer.setSize(innerWidth,innerHeight);camera.left=-span*a;camera.right=span*a;camera.top=span;camera.bottom=-span;camera.near=.1;camera.far=400;camera.updateProjectionMatrix()}resize();onresize=resize;render();if(state.order){sdk.prepare();sdk.start()}function draw(){requestAnimationFrame(draw);if(document.hidden)return;camera.position.set(Math.sin(angle)*89,70,Math.cos(angle)*89);camera.lookAt(0,-4,0);renderer.render(scene,camera)}draw();addEventListener('pagehide',()=>{persist();sdk.end();sdk.stop()});
