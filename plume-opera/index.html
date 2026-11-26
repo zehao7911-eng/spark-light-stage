@@ -557,8 +557,8 @@ function begin(){
  sound.wake();sound.cue('open');opening=1;mode='aim';latched=false;
  sdk.start();updateUI();toast(guestNight?'One rose. Catch the crossing.':sets[level].note,2.7);
 }
-function beginAct(n){mode='cover';bookmark(false);prepare(n);begin();}
-function guestShow(){mode='cover';bookmark(false);prepare(5,true);begin();}
+function beginAct(n){mode='cover';bookmark(false);prepare(n);begin();opening=0;}
+function guestShow(){mode='cover';bookmark(false);prepare(5,true);begin();opening=0;}
 function launch(point){
  if(mode!=='aim'||!point||rosesLeft<=0)return;
  let {x,z}=point;const a=actors[point.actor??-1];if(a&&!a.hit){x=a.x;z=a.z;}
