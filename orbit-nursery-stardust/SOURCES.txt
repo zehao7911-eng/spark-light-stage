@@ -1,0 +1,2 @@
+Pairwise interaction and damped velocity update adapted from hunar4321/particle-life, particle_life_3d.html, MIT. https://github.com/hunar4321/particle-life
+Orbital constraints, perspective rendering, planet artwork, input, audio and stages created for Orbit Nursery.
