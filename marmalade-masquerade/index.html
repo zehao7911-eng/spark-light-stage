@@ -665,6 +665,22 @@ const view=(()=>{
  const scene=new THREE.Scene(),camera=new THREE.OrthographicCamera(-5,5,8,-8,.1,80),scratch=new THREE.Vector3();
  let guests=[],environment=null;let renderer=null,lite=null,room=null,chef=null,models=[],width=1,height=1,zoom=1,lookX=0,lookY=0,lookZ=0,angle=0,shadowClock=0,active=false,cache={},badges=[];
  const normalEye=[.05,12.9,17.8],normalTarget=[0,1.16,.13],table=1.045;
+ let trolley=null,arrival=0,quality=1.6,samples=0,frameSum=0;
+ function pace(interval){
+  if(!renderer||interval<=0||interval>220)return;
+  samples++;frameSum+=interval;if(samples<48)return;
+  const mean=frameSum/samples;samples=0;frameSum=0;
+  if(mean>38&&quality>.85){quality=Math.max(.85,quality-.25);resize();}
+ }
+ function tastingPlate(){
+  const root=g(),base=g(root);
+  turned(base,P.milk,0,0,0,[[.01,0],[.42,.015],[.49,.034],[.70,.10],[.69,.14],[.58,.11],[.46,.075],[.01,.075]]);
+  ring(base,brass,0,.137,0,.661,.011,Math.PI/2);
+  // A small three-tined cake fork sits on the right side.
+  rod(base,brass,[.35,.13,.32],[.50,.138,-.15],.022,.015);
+  for(let j=-1;j<=1;j++)rod(base,brass,[.50+j*.026,.142,-.13],[.55+j*.027,.15,-.26],.008);
+  finish(base);const cake=pastry(level);cake.position.y=.08;root.add(cake);return root;
+ }
  try{renderer=new THREE.WebGLRenderer({canvas:surface,antialias:true,alpha:false,powerPreference:'high-performance'});renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.02;
  renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.shadowMap.autoUpdate=false;}catch{const c=document.createElement('canvas');c.className='backup';surface.after(c);lite=c.getContext('2d');}
  scene.background=new THREE.Color(0x758985);
@@ -677,6 +693,7 @@ const view=(()=>{
  function stampMaterial(){return profile.rewards.like?0xffca54:profile.stamps.reduce((a,b)=>a+b,0)>=7?0xd79491:0xafc5ba;}
  function refreshCostume(){if(!active||!renderer)return;for(const m of models){if(m.fox&&!m.bonus&&profile.rewards.like){const pin=g(m.fox.userData.spine,-.12,.253,.28);egg(pin,gold,0,0,0,.058,.055,.018);finish(pin);m.bonus=true;}}}
  function clearCarts(){
+  if(trolley){Craft.remove(trolley);trolley=null;}arrival=0;
   for(const m of models){if(m.shadow)m.root.remove(m.shadow);Craft.remove(m.root);}models=[];
   $('#picks').replaceChildren();badges=[];
  }
@@ -699,7 +716,7 @@ const view=(()=>{
   populate();active=true;resize();
  }
  function resize(){
-  const r=main.getBoundingClientRect();width=Math.max(1,r.width);height=Math.max(1,r.height);const d=Math.min(devicePixelRatio||1,1.6);
+  const r=main.getBoundingClientRect();width=Math.max(1,r.width);height=Math.max(1,r.height);const d=Math.min(devicePixelRatio||1,renderer?quality:1.6);
   if(renderer){renderer.setPixelRatio(d);renderer.setSize(width,height,false);}
   if(lite){lite.canvas.width=Math.round(width*d);lite.canvas.height=Math.round(height*d);lite.setTransform(d,0,0,d,0,0);}
   fx.width=Math.round(width*d);fx.height=Math.round(height*d);ctx.setTransform(d,0,0,d,0,0);cam();
@@ -719,6 +736,9 @@ const view=(()=>{
    sprite('cart-'+(car.open>.77?'open':car.open>.4?'half':car.open>.14?'crack':'shut'),pt.x,pt.y-Math.sin(car.wiggle*Math.PI)*unit*.11,sw);
    if(car.open>.47){const f=project(car.x,table+(car.fox?.70:.37),car.z+.067),stamps=profile.stamps.reduce((a,b)=>a+b,0),costume=stamps>=8?'-glasses':stamps>=3?'-cap':'';sprite(car.fox?((car.alt?'fox-rose':'fox')+costume+(car.caught?['-happy','-cream','-note'][service]:'')):'sweet-'+level,f.x,f.y,unit*1.14*(car.fox?1.79:1.41));}
   }
+  if(state==='win'){const pt=project((1-ease(Math.min(arrival,1)))*3.29,.98,4.16),r=unit*.77;
+   c.beginPath();c.ellipse(pt.x,pt.y,r,r*.53,0,0,2*Math.PI);c.fillStyle='#f9e6be';c.fill();c.strokeStyle='#b7956c';c.stroke();
+   sprite('sweet-'+level,pt.x,pt.y-unit*.27,unit*1.52);}
  }
  function motionCamera(dt){
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches, cinematic=renderer&&!reduced;
@@ -736,8 +756,11 @@ const view=(()=>{
  }
  function draw(dt){
   if(!active)return;motionCamera(dt);
+  if(state==='win')arrival=Math.min(60,arrival+dt);
   if(renderer){
-   chefPose(chef,time,cheer,opinion);
+   if(state==='win'&&!trolley){trolley=tastingPlate();scene.add(trolley);}
+   if(trolley){trolley.visible=state==='win';const q=ease(Math.min(1,arrival));trolley.position.set((1-q)*3.29,.813,4.16);trolley.rotation.y=(1-q)*.30;}
+   chefPose(chef,time+arrival,state==='win'?.52+.16*Math.sin(arrival*3):cheer,opinion);
    room.userData.secondHand.rotation.z=-(Math.floor(time)+level*7)*Math.PI/30;
    if(picked>=0&&cheer>0){chef.userData.head.rotation.y+=cars[picked].x*.16*cheer;chef.userData.head.rotation.x+=cheer*.16;}
    for(const {moving,x,j,height:h} of room.userData.scenery){
@@ -760,13 +783,21 @@ const view=(()=>{
     }
     if(m.sweet){m.sweet.position.y=.112;m.sweet.visible=u>.18;}
    }
-   shadowClock-=dt;if(shadowClock<=0){renderer.shadowMap.needsUpdate=true;shadowClock=.085;}
+   shadowClock-=dt;if(shadowClock<=0){renderer.shadowMap.needsUpdate=true;shadowClock=quality<1.05?.16:.085;}
    renderer.render(scene,camera);
   }else if(lite)liteDraw();
   updateButtons();overlays();
  }
  function overlays(){
   ctx.clearRect(0,0,width,height);
+  // The little brass place marker points out the order before the lids close.
+  // Its position is deliberately never updated during the shuffle.
+  if(state==='peek'){for(const car of targets()){
+   const p=project(car.x,table+1.87,car.z),s=width/390;
+   ctx.save();ctx.translate(p.x,p.y+Math.sin(time*3)*2);ctx.scale(s,s);
+   ctx.beginPath();ctx.moveTo(-5,-4);ctx.lineTo(5,-4);ctx.lineTo(0,3);ctx.closePath();
+   ctx.strokeStyle='#73513d';ctx.lineWidth=2.1;ctx.stroke();ctx.fillStyle='#ffdc85';ctx.fill();ctx.restore();
+  }}
   if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
    // Two short whorls over the coffee cup curl above the saucer.
    const tea=project(3.09,.98,-2.944),size=width/390;ctx.save();ctx.translate(tea.x,tea.y);ctx.scale(size,size);
@@ -782,7 +813,7 @@ const view=(()=>{
    ctx.save();ctx.globalAlpha=Math.min(1,car.wiggle*4);ctx.font='italic bold '+Math.max(15,width*.044)+'px Georgia';ctx.textAlign='center';ctx.strokeStyle='#764338';ctx.lineWidth=3;ctx.strokeText(['Achoo!','Hee!','Psst!'][car.kind],p.x,p.y);ctx.fillStyle='#fff0bd';ctx.fillText(['Achoo!','Hee!','Psst!'][car.kind],p.x,p.y);ctx.restore();}
  }
  surface.addEventListener('webglcontextlost',e=>{e.preventDefault();if(!renderer)return;const c=document.createElement('canvas');c.className='backup';surface.after(c);lite=c.getContext('2d');renderer=null;zoom=1;lookX=lookY=lookZ=angle=0;resize();});
- return{draw,rebuild,populate,resize,project,refreshCostume,studio:()=>({renderer,scene,camera,room,chef,models,normalEye,normalTarget}),isLite:()=>!renderer};
+ return{draw,rebuild,populate,resize,pace,project,refreshCostume,studio:()=>({renderer,scene,camera,room,chef,models,normalEye,normalTarget}),isLite:()=>!renderer};
 })();
 
 
@@ -817,7 +848,7 @@ function updateUI(){
  }else if(state==='peek'){
   $('#prompt').textContent=guest?(nightScarf?'Watch the rose scarf':'Watch the green scarf'):targets().length===2?'Remember both foxes':'Remember the fox';aside.hidden=false;aside.textContent='Shuffle';aside.onclick=hide;
  }else if(state==='hide'||state==='beat'||state==='shuffle'){$('#prompt').textContent=slowTime>0?'Easy does it…':'Follow the cover';if((guest||level>=2)&&!usedBrake&&state!=='hide'){aside.textContent='Slow down';aside.hidden=false;aside.onclick=brake;}}
- else if(state==='hunt'){$('#prompt').textContent=fresh?'Find the other fox':'Tap the hiding place';aside.hidden=false;aside.textContent='Listen';aside.onclick=listen;}
+ else if(state==='hunt'){$('#prompt').textContent=guest?(nightScarf?'Find the rose scarf':'Find the green scarf'):fresh?'Find the other fox':'Tap the hiding place';aside.hidden=false;aside.textContent='Listen';aside.onclick=listen;}
  else if(state==='lift')$('#prompt').textContent=cars[picked].caught?['Caught with jam!','Cream moustache!','A little apology!'][service]:cars[picked].fox?'Wrong scarf!':spec.dessert+'!';
  else if(state==='served')sheet('SERVICE '+(service+1)+' COMPLETE',fresh===2?'Double trouble!':'There you are!',service===0?'The next tray is ready to roll.':'One last service before the train leaves.','Next service',advance);
  else if(state==='pause')sheet('TEA BREAK','A little pause','Your trays will stay right here.','Back to service',unpause,'Leave carriage',leave);
@@ -845,7 +876,7 @@ connectHost();hostSize();window.addEventListener('resize',hostSize);window.addEv
 if(location.protocol==='file:'){$('#source').href='CREDITS.txt';$('#source').removeAttribute('download');}
 else if(location.hostname.endsWith('.github.io'))$('#source').href='../MARMALADE-MASQUERADE.zip';
 new ResizeObserver(()=>view.resize()).observe($('#frame'));setup();
-function loop(ts){const dt=last?Math.min(.065,(ts-last)/1000):.016;last=ts;if(!document.hidden){tick(dt);audio.update(dt);view.draw(state==='pause'?0:dt);}requestAnimationFrame(loop);}requestAnimationFrame(loop);
+function loop(ts){const interval=last?ts-last:16;last=ts;if(!document.hidden){view.pace(interval);const dt=Math.min(.08,interval/1000);tick(dt);audio.update(dt);view.draw(state==='pause'?0:dt);}requestAnimationFrame(loop);}requestAnimationFrame(loop);
 
 </script><script type="text/plain" id="credits">MARMALADE MASQUERADE
 The Citrus Express dessert-car mystery
