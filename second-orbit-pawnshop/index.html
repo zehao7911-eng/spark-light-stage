@@ -78,6 +78,39 @@ dialog{width:min(calc(100% - 20px),445px);max-height:85dvh;padding:0;color:var(-
 #stampChoice{display:flex;gap:8px}#stampChoice button{flex:1;background:#334e49;color:#e5efcc}#stampChoice button:last-child{background:#4f3d34;color:#f2d7b6}
 
 #supplyFace.windowOpen{left:3.2%;top:36.5%;width:16.6%;height:23.8%}
+
+/* Counter instructions use the same object icons as the actions. */
+.counter-icon{display:inline-block;vertical-align:middle;flex:none}
+.pictureButton,.direction{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+#desk .pictureButton{font:700 19px/1.15 Consolas,'Courier New',monospace;min-height:52px;letter-spacing:0}
+#desk .pictureButton svg{width:26px;height:26px}
+#desk .slipTop{border:0;margin-bottom:10px;padding:0}
+#desk .direction{font:700 15px/1.1 Consolas,monospace;padding:6px 9px}
+.talkchip{min-height:44px;padding:2px 6px;border:0;background:transparent;box-shadow:none;color:#354a40;font:700 15px Consolas,monospace}
+.talkquote{padding:10px 5px;font:16px/1.4 Consolas,monospace}
+.actionMap{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;align-items:center;gap:4px;margin:1px 0 14px;padding:6px;background:#c7c7ad;border:1px solid #939f88}
+.actionMap.stops3{grid-template-columns:1fr 13px 1fr 13px 1fr}
+.actionMap.stops2{grid-template-columns:1fr 13px 1fr}
+.mapStop{display:flex;align-items:center;justify-content:center;gap:5px;min-height:40px;color:#46594d;font:700 15px/1 Consolas,monospace}
+.mapStop.now{background:#284f45;color:#fff1b9;box-shadow:inset 0 -3px #d5b46f}
+.mapStop.done{color:#34584b}.actionMap i{color:#4e6655;font:24px/1 monospace;text-align:center}
+#meters>div{display:flex;align-items:center;gap:4px}#meters span{margin:0;font-size:12px}
+#meters .counter-icon{color:#cfbd83}#desk .stockline{padding:8px;min-height:52px}#desk .stockline strong{font-size:16px}#desk .stockline small,.slipmath span{font-size:13px}
+.receiptHead,.bellCue{display:flex;align-items:center;gap:12px;color:#315b4c}.receiptHead{margin:6px 0 12px}.receiptHead h2{font-size:28px}.bellCue{margin:6px 0 14px}
+.bellCue>svg{background:#b4b79c;box-sizing:content-box;padding:12px}
+.wish{margin:0 0 8px;color:#354c40;font:700 14px Consolas,monospace}.marginline span,.offerline span{font-size:14px}
+.pictureManual{display:grid;gap:9px}.pictureManual>div{display:flex;gap:13px;align-items:center;font:700 16px/1.2 Consolas,monospace}
+.navGlyph{display:inline-flex;vertical-align:middle;margin-right:8px}#returnDeal,.dealtools button,#stampChoice button,nav button,.leavePractice,.bin,.stockline button,#desk .secondary,.row button{min-height:44px}
+#modalBody .tiny,#modalBody .row small{font-size:12px}#modalBody{gap:7px}
+.firstDeal #meters{justify-content:center}.firstDeal #world .channel,.firstDeal #world .shift{display:none}
+.firstDeal #cabinet>header{border-bottom:0}#world[data-focus=bell] #trayHit:after,#world[data-focus=loose] #looseItem:after,#world[data-focus=stamp] #trayHit:after{content:'';position:absolute;inset:8%;border:2px dashed #ffe494;pointer-events:none;animation:pointLight 1.8s ease-in-out infinite}
+.bin.requested:before{font-size:16px}.bin.requested{outline-width:3px}
+@keyframes pointLight{0%,100%{opacity:.55}50%{opacity:1}}
+@media(prefers-reduced-motion:reduce){#world[data-focus] button:after{animation:none}}
+@media(max-width:350px){.mapStop{gap:3px;font-size:14px}.mapStop .counter-icon{width:21px;height:21px}#meters>div{gap:2px}#meters .counter-icon{width:14px;height:14px}#meters span{font-size:11px}}
+@media(max-height:650px){#desk{padding-block:8px}.actionMap{margin-bottom:6px;padding:2px}.mapStop{min-height:35px}.bin{height:44px;min-height:44px}#desk .pictureButton{min-height:46px}#desk .slipTop{margin-bottom:4px}}
+.logDetail{padding:5px 8px;border:1px solid #62736b}.logDetail summary{min-height:42px;padding:10px 4px;cursor:pointer;font-weight:bold}
+@media(max-width:600px) and (max-height:670px){#drawer{order:1}#cabinet nav{order:2}.firstDeal #desk .actions{margin-top:5px}.firstDeal #meters{padding-block:4px}.firstDeal #desk .slipTop{margin-bottom:1px}.firstDeal #drawer{padding-top:2px}}
 </style></head><body>
 <main id="cabinet">
  <header><div class="brand"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#efba66" d="M10 6h11v3h4v4h2v7h-3v4h-4v2H10v-2H7v-4H5v-8h3V9h2z"/><path fill="#22323b" d="M17 6h5v3h3v5h-3v4h-4v3h-6v-3h4v-3h3v-5h-2z"/><path fill="#91e3c5" d="M1 21h5v-3h5v-2h7v-3h7v-3h6v4h-5v3h-6v3h-7v2H6v3H1z"/></svg><span>SECOND ORBIT</span></div>
@@ -85,7 +118,7 @@ dialog{width:min(calc(100% - 20px),445px);max-height:85dvh;padding:0;color:var(-
  <div id="world"><canvas id="shopArt" width="320" height="185" aria-label="The orbital pawnshop counter"></canvas><button id="looseItem" hidden aria-label="Place offered goods on the tray"></button><button id="trayHit" hidden aria-label="Examine the item on the counter"></button><div class="channel"><i></i><span id="sector">DOCK 09</span></div><div class="shift" id="time"></div><div id="delta" aria-live="polite"></div></div>
  <div id="meters"></div>
  <section id="desk" aria-label="Shop counter"></section>
- <nav><button id="shelf">▥ &nbsp;Shelf <span id="stockCount"></span></button><button id="ledger">≡ &nbsp;Ledger</button></nav>
+ <nav><button id="shelf">Shelf <span id="stockCount"></span></button><button id="ledger">Book</button></nav>
  <div id="drawer" aria-label="Display drawer"></div>
 </main>
 <dialog id="modal"><header><div><small id="modalKicker">SECOND ORBIT</small><h2 id="modalTitle"></h2></div><button id="dismiss" aria-label="Close">×</button></header><div id="modalBody"></div></dialog>
@@ -1158,38 +1191,26 @@ globalThis.CounterStamps=(()=>{
     if(!ctx)return;const pair=dies[itemId]||dies[0];ctx.save();ctx.fillStyle=ink;
     rows(ctx,Math.round(x),Math.round(y),pair[isFake?1:0],7,Math.max(1,Math.round(scale)));ctx.restore();
   }
-  function page(canvas,lot){
-    if(!canvas)return;if(canvas.width!==256)canvas.width=256;if(canvas.height!==66)canvas.height=66;
-    const ctx=canvas.getContext('2d');if(!ctx)return;
-    ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.imageSmoothingEnabled=false;
-    const id=Number.isInteger(lot?.item)&&dies[lot.item]?lot.item:0;
-    const code=(typeof SEALS!=='undefined'&&SEALS[id])||spares[id];
-    function r(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h);}
-    function lettering(x,y,text,c,s=1){
-      ctx.fillStyle=c;for(const ch of text){if(glyph[ch])rows(ctx,x,y,glyph[ch],5,s);x+=6*s;}
-    }
-    function line(x,y,ex,ey,c){const dx=Math.abs(ex-x),dy=-Math.abs(ey-y),sx=x<ex?1:-1,sy=y<ey?1:-1;let e=dx+dy;
-      while(true){r(x,y,1,1,c);if(x===ex&&y===ey)break;const a=2*e;if(a>=dy){e+=dy;x+=sx;}if(a<=dx){e+=dx;y+=sy;}}}
-    r(0,0,256,66,paper);
-    // Spine and punched binding. Thin hatch rules are printed with the same two inks.
-    r(0,0,3,66,ink);r(5,0,1,66,oxide);r(12,0,1,66,oxide);
-    for(const y of [13,48]){r(3,y,7,3,ink);r(4,y-1,5,1,ink);r(3,y,3,1,paper);}
-    r(17,4,234,1,ink);r(17,60,234,1,ink);r(249,6,1,53,ink);r(251,4,1,57,oxide);
-    // A squared-off seal proof with paper registration marks at every corner.
-    const cx=47,cy=32;
-    for(const [sx,sy] of [[-1,-1],[1,-1],[-1,1],[1,1]]){
-      const x=cx+sx*22,y=cy+sy*22;r(x+(sx<0?0:-5),y,6,1,oxide);r(x,y+(sy<0?0:-5),1,6,oxide);
-    }
-    drawMark(ctx,cx-14,cy-14,id,false,4);
-    // Factory serial in lead type. Inks share the specimen and the item plate.
-    r(78,10,1,45,oxide);lettering(88,13,'FACTORY SPECIMEN',oxide);lettering(88,29,code,ink,3);
-    // Side tab reads as a numbered drawer index even on a short phone screen.
-    r(192,27,47,25,oxide);r(194,29,43,21,paper);lettering(199,31,'PL.',oxide);
-    lettering(217,40,String(id+1).padStart(2,'0'),ink);
-    for(let x=202;x<234;x+=4)line(x,50,Math.min(x+2,235),48,oxide);
+  function drawCode(ctx,x,y,text,color,scale=1){
+    ctx.save();ctx.fillStyle=color;
+    for(const ch of String(text).toUpperCase()){if(glyph[ch])rows(ctx,x,y,glyph[ch],5,scale);x+=6*scale;}
     ctx.restore();
   }
-  return Object.freeze({drawMark,page});
+  function page(canvas,lot){
+    if(!canvas)return;canvas.width=256;canvas.height=66;
+    const ctx=canvas.getContext('2d');if(!ctx)return;
+    const id=dies[lot?.item]?lot.item:0, code=(typeof SEALS!=='undefined'&&SEALS[id])||spares[id];
+    ctx.imageSmoothingEnabled=false;
+    function r(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h);}
+    r(0,0,256,66,'#ddcba9');r(4,3,248,60,'#f3dfb7');r(4,60,248,3,'#cab48e');r(9,3,2,57,'#c6ae85');
+    for(const y of [15,44]){r(4,y,10,4,ink);r(7,y,6,1,'#a49a7b');}
+    drawCode(ctx,27,29,'GUIDE',ink,2);
+    r(100,16,1,35,'#bbaa85');
+    // Same left-to-right reading order as the metal badge under the glass.
+    drawMark(ctx,117,19,id,false,4);drawCode(ctx,161,24,code,ink,3);
+    canvas.setAttribute('aria-label','Guide. Factory seal '+code+'.');
+  }
+  return Object.freeze({drawMark,drawCode,page});
 })();
 </script><script>'use strict';
 
@@ -1222,41 +1243,83 @@ globalThis.CounterWindow = (() => {
   }
   return Object.freeze({featured,pin,preferred,recordSale});
 })();
-</script><script>/* Counter magnifier. The entire inspection is drawn on a low-resolution test tray.
-   The lens samples the very same pixels as the proof; no network textures. */
+</script><script>/* The counter loupe magnifies the same punched pixels as the printed handbook. */
 const AssayGlass=(()=>{
- function install(c,l,onRead){
-  const w=256,h=114,board=document.createElement('canvas');board.width=c.width=w;board.height=c.height=h;
-  const g=board.getContext('2d'),v=c.getContext('2d'),target={x:165+(l.id%3)*2,y:67+(l.item%3)*2};
-  let x=105,y=58,locked=!!l.sealRead;const mark=SEALS[l.item],stamped=l.fake?mark.slice(0,-1)+(Number(mark.at(-1))+2)%10:mark;
-  const tiny=(t,x,y,color='#8ba7a1',size=8)=>{g.fillStyle=color;g.font='bold '+size+'px monospace';g.fillText(t,x,y);};
-  function paint(){
-   g.fillStyle='#182933';g.fillRect(0,0,w,h);g.lineWidth=1;
-   for(let i=0;i<w;i+=8){g.fillStyle=i%32?'#213139':'#2d4045';g.fillRect(i,0,1,h);}
-   for(let j=0;j<h;j+=8){g.fillStyle=j%32?'#213139':'#2d4045';g.fillRect(0,j,w,1);}
-   g.fillStyle='#3a4d4d';g.fillRect(62,17,132,86);g.fillStyle='#73887b';g.fillRect(62,17,132,2);g.fillStyle='#263c3c';g.fillRect(65,21,126,78);
-   const icon=document.createElement('canvas');CounterArt.icon(icon,l.item);g.imageSmoothingEnabled=false;g.drawImage(icon,77,21,80,78);
-   if(l.grade===0){g.strokeStyle='#9a9a7d';for(let i=0;i<4;i++){let xx=92+i*7,yy=52+(l.item*3+i*8)%16;g.beginPath();g.moveTo(xx,yy);g.lineTo(xx+4,yy-3);g.stroke();}}
-   g.fillStyle='#ab9d75';g.fillRect(target.x-15,target.y-6,30,13);g.fillStyle='#dbd1a3';g.fillRect(target.x-14,target.y-5,28,10);CounterStamps.drawMark(g,target.x-13,target.y-4,l.item,l.fake===true,1);tiny(stamped,target.x-4,target.y+2,'#293d38',6);
-   for(let j=0;j<12;j++){g.fillStyle='#7c846c';g.fillRect(74+j*3,91,1+((j+l.item)%2),j%3?3:5);}
-   tiny(['G / III','G / II','G / I'][l.grade],155,92,'#9caa8d');
-   for(const [qx,qy] of [[67,24],[185,24],[67,93],[185,93]]){g.fillStyle='#879484';g.fillRect(qx,qy,3,3);g.fillStyle='#48574f';g.fillRect(qx,qy+1,2,1);}
-   tiny('ASSAY',6,12);tiny('2.5x',225,12);tiny('A-'+(100+l.id),6,104);tiny('M6',234,104);
-   for(let i=0;i<92;i+=4){g.fillStyle='#59716e';g.fillRect(5,17+i,i%12?3:6,1);}
+ const sessions=new WeakMap();
+ function install(c,lot,onRead){
+  if(!c)return;sessions.get(c)?.();
+  const width=256,height=114,board=document.createElement('canvas');board.width=c.width=width;board.height=c.height=height;
+  const plate=board.getContext('2d'),screen=c.getContext('2d');if(!plate||!screen)return;
+  const target={x:166+(lot.id%3),y:68+(lot.item%2)},start={x:99,y:51};
+  const real=SEALS[lot.item],code=lot.fake?real.slice(0,-1)+(Number(real.at(-1))+2)%10:real;
+  let x=start.x,y=start.y,locked=!!lot.sealRead,manual=false,frame=0;
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches,started=performance.now();
+  const rect=(ctx,x,y,w,h,color)=>{ctx.fillStyle=color;ctx.fillRect(x,y,w,h);};
+  function backdrop(){
+   rect(plate,0,0,256,114,'#14252c');rect(plate,8,7,240,101,'#0d1e25');
+   rect(plate,8,5,240,101,'#465d60');rect(plate,10,7,236,96,'#355053');
+   rect(plate,10,7,236,2,'#6c827b');rect(plate,12,100,231,2,'#223a40');
+   const icon=document.createElement('canvas');
+   if(lot.item===12&&globalThis.WaterArt)WaterArt.icon(icon,lot.grade);else CounterArt.icon(icon,lot.item);
+   plate.imageSmoothingEnabled=false;plate.drawImage(icon,28,13,93,87);
+   if(lot.grade===0){rect(plate,53,86,6,1,'#b4b2a0');rect(plate,58,85,3,1,'#b4b2a0');}
+   const left=target.x-16,top=target.y-17;
+   rect(plate,left-3,top-2,97,39,'#243436');rect(plate,left-2,top-3,96,39,'#937c59');
+   rect(plate,left,top,92,33,'#ebd9b3');rect(plate,left+1,top+1,90,1,'#fff1c9');
+   CounterStamps.drawMark(plate,target.x-10,target.y-10,lot.item,lot.fake,3);
+   CounterStamps.drawCode(plate,target.x+27,target.y-6,code,'#344338',2);
   }
-  function draw(){
-   v.imageSmoothingEnabled=false;v.drawImage(board,0,0);
-   v.strokeStyle=locked?'#a1dbac':'#dbba77';v.setLineDash([3,3]);v.strokeRect(target.x-18,target.y-10,36,20);v.setLineDash([]);
-   const lX=x,lY=y,r=23;v.save();v.strokeStyle='#182630';v.lineWidth=9;v.beginPath();v.moveTo(lX+15,lY+16);v.lineTo(lX+31,lY+34);v.stroke();v.strokeStyle='#9c9272';v.lineWidth=5;v.stroke();
-   v.beginPath();v.arc(lX,lY,r,0,Math.PI*2);v.clip();v.drawImage(board,lX-r/2.5,lY-r/2.5,2*r/2.5,2*r/2.5,lX-r,lY-r,2*r,2*r);v.fillStyle='#a3e4d00d';v.fillRect(lX-r,lY-r,2*r,2*r);v.restore();
-   v.beginPath();v.arc(lX,lY,r,0,Math.PI*2);v.lineWidth=4;v.strokeStyle='#98a89a';v.stroke();v.lineWidth=1;v.strokeStyle='#263c42';v.stroke();v.beginPath();v.arc(lX,lY,r-3,3.6,5.2);v.strokeStyle='#e4e2ba';v.stroke();
+  function corners(color,pad){
+   const left=target.x-20-pad,right=target.x+78+pad,top=target.y-22-pad,bottom=target.y+20+pad;
+   for(const [cx,dx] of [[left,1],[right,-1]])for(const [cy,dy] of [[top,1],[bottom,-1]]){
+    rect(screen,dx>0?cx:cx-6,dy>0?cy:cy-1,7,2,color);rect(screen,dx>0?cx:cx-1,dy>0?cy:cy-6,2,7,color);
+   }
   }
-  function move(nx,ny){x=Math.max(23,Math.min(w-24,nx));y=Math.max(23,Math.min(h-24,ny));
-    if(!locked&&Math.hypot(x-target.x,y-target.y)<18){locked=true;x=target.x;y=target.y;l.sealRead=true;onRead();}draw();}
-  function pos(e){const b=c.getBoundingClientRect();move((e.clientX-b.left)*w/b.width,(e.clientY-b.top)*h/b.height);}
-  c.onpointerdown=e=>{c.setPointerCapture?.(e.pointerId);pos(e);};c.onpointermove=e=>{if(c.hasPointerCapture(e.pointerId))pos(e);};
-  c.onkeydown=e=>{const d={ArrowLeft:[-8,0],ArrowRight:[8,0],ArrowUp:[0,-8],ArrowDown:[0,8]}[e.key];if(d){e.preventDefault();move(x+d[0],y+d[1]);}else if(e.key==='Enter'||e.key===' '){e.preventDefault();move(target.x,target.y);}};
-  paint();if(locked){x=target.x;y=target.y;}draw();
+  function lens(cx,cy){
+   const r=24,m=1.55;screen.save();screen.lineCap='round';
+   screen.beginPath();screen.moveTo(cx-16,cy+16);screen.lineTo(cx-30,cy+30);screen.lineWidth=8;screen.strokeStyle='#182c32';screen.stroke();
+   screen.lineWidth=4;screen.strokeStyle='#ba9868';screen.stroke();
+   screen.beginPath();screen.arc(cx,cy,r,0,Math.PI*2);screen.clip();
+   screen.drawImage(board,cx-r/m,cy-r/m,2*r/m,2*r/m,cx-r,cy-r,2*r,2*r);
+   screen.restore();
+   screen.beginPath();screen.arc(cx,cy,r,0,Math.PI*2);screen.lineWidth=4;screen.strokeStyle=locked?'#ede1ae':'#bfad88';screen.stroke();
+   screen.beginPath();screen.arc(cx,cy,r-3,3.57,5.06);screen.lineWidth=1;screen.strokeStyle='#eff1d9';screen.stroke();
+  }
+  function draw(now=performance.now()){
+   const time=(now-started)/1000;screen.imageSmoothingEnabled=false;screen.drawImage(board,0,0);
+   corners(locked?'#d9c8a1':'#ffce73',!manual&&!locked&&!reduced?Math.round((1+Math.sin(time*3))*1.1):0);
+   if(locked){
+    // Park the lens at the punch instead of over the serial. Both remain legible.
+    lens(target.x,target.y);
+   }else if(!manual){
+    const phase=reduced?0:Math.min(1,Math.max(0,((time%3.8)-.65)/1.4)),t=phase*phase*(3-2*phase);
+    // Demonstration stops just before the seal. Only user input can read it.
+    for(let i=0;i<4;i++)rect(screen,117+i*6,54+i*2,2,2,'#c9aa74');
+    lens(start.x+37*t,start.y+9*t);
+   }else lens(x,y);
+  }
+  function stop(){if(frame)cancelAnimationFrame(frame);frame=0;}
+  function hint(now){
+   frame=0;if(!c.isConnected||c.closest('dialog:not([open])')||document.hidden||manual||locked)return;
+   draw(now);frame=requestAnimationFrame(hint);
+  }
+  function move(nx,ny){
+   if(locked)return;
+   manual=true;stop();x=Math.max(24,Math.min(232,nx));y=Math.max(24,Math.min(90,ny));
+   if(x>=target.x-20&&x<=target.x+76&&Math.abs(y-target.y)<=21){
+    locked=true;lot.sealRead=true;draw();onRead();return;
+   }
+   draw();
+  }
+  function pointer(e){const bounds=c.getBoundingClientRect();if(bounds.width&&bounds.height)move((e.clientX-bounds.left)*width/bounds.width,(e.clientY-bounds.top)*height/bounds.height);}
+  c.onpointerdown=e=>{if(!locked){c.setPointerCapture?.(e.pointerId);pointer(e);}};
+  c.onpointermove=e=>{if(!locked&&c.hasPointerCapture?.(e.pointerId))pointer(e);};
+  c.onkeydown=e=>{
+   const delta={ArrowLeft:[-8,0],ArrowRight:[8,0],ArrowUp:[0,-8],ArrowDown:[0,8]}[e.key];
+   if(delta){e.preventDefault();move(x+delta[0],y+delta[1]);}
+   else if(e.key==='Enter'||e.key===' '){e.preventDefault();move(target.x,target.y);}
+  };
+  sessions.set(c,stop);backdrop();draw();if(!manual&&!locked&&!reduced)frame=requestAnimationFrame(hint);
  }
  return {install};
 })();
@@ -1495,8 +1558,126 @@ function closeShift(s){
  s.phase=s.cash<0?'failed':'night';s.patron=null;
 }
 
+</script><script>/* Reusable action symbols. Each master occupies a fixed 16 × 16 pixel grid. */
+globalThis.CounterIcons=(()=>{
+  const masters={
+    tray:[
+      '...++++.........','..+####+..##....','..+####+..##....','..+####+..##....',
+      '...++++...##....','........######..','.........####...','..........##....',
+      '................','..##........##..','.##..........##.','.##..........##.',
+      '.##############.','..############..','...++++++++++...','................'],
+    lens:[
+      '....####........','..########......','.###....###.....','.##......##.....',
+      '##..++....##....','##.++.....##....','##........##....','##........##....',
+      '.##......##.....','.###....####....','..###########...','....####..####..',
+      '...........####.','............####','.............###','..............#.'],
+    buy:[
+      '.........######.','............###.','...........####.','..........##.##.',
+      '.........##..##.','........##......','..++++.##.......','.++++++.........',
+      '.#############..','.##.........###.','.##.......#####.','.##.......##.##.',
+      '.##.......#####.','.##.........###.','.#############..','..+++++++++++...'],
+    sell:[
+      '.............##.','............##..','...........##...','.......##.##....',
+      '.......####.....','.......###......','..+++..######...','.+++++..........',
+      '.#############..','.##.........###.','.##.......#####.','.##.......##.##.',
+      '.##.......#####.','.##.........###.','.#############..','..+++++++++++...'],
+    shelf:[
+      '................','.##..........##.','.##..++......##.','.##.###.####.##.',
+      '.##.###.####.##.','.##############.','.##++++++++++##.','.##..........##.',
+      '.##.....++...##.','.##.###.####.##.','.##.###.####.##.','.##.###.####.##.',
+      '.##############.','.##++++++++++##.','.##..........##.','................'],
+    bell:[
+      '................','......####......','.......##.......','.....######.....',
+      '....###..###....','...###...+###...','..###.....++##..','..##........##..',
+      '.##..........##.','.##..........##.','################','################',
+      '................','..############..','...++++++++++...','................'],
+    shutter:[
+      '................','.##############.','.##############.','.##..........##.',
+      '.##.########.##.','.##.++++++++.##.','.##.########.##.','.##.++++++++.##.',
+      '.##.########.##.','.##.++++++++.##.','.##.########.##.','.##....##....##.',
+      '.##..........##.','.##############.','................','................'],
+    coin:[
+      '.....######.....','...##########...','..###..++..###..','.###...##...###.',
+      '.##..#####...##.','##..###..##...##','##..##........##','##..##........##',
+      '##..##........##','##..###..##...##','.##..#####...##.','.###...##...###.',
+      '..###..++..###..','...##########...','.....######.....','................'],
+    profit:[
+      '................','..........#####.','............###.','...........####.',
+      '..........##.##.','.....##..##.....','....#######.....','...##..###......',
+      '..##.......+++..','.##........+++..','.......+++..+++.','.......+++..+++.',
+      '...+++.+++..+++.','...+++.+++..+++.','.##############.','................'],
+    stamp:[
+      '......####......','.....######.....','....###..###....','....###..###....',
+      '.....######.....','......####......','......####......','...##########...',
+      '..############..','..############..','..++++++++++++..','................',
+      '...##########...','................','................','................'],
+    pass:[
+      '................','................','..##........##..','.####......####.',
+      '..####....####..','...####..####...','....########....','.....######.....',
+      '.....######.....','....########....','...####..####...','..####....####..',
+      '.####......####.','..##........##..','................','................'],
+    ledger:[
+      '................','..############..','..##+.......###.','####+..++++..##.',
+      '..##+........##.','..##+..####..##.','####+........##.','..##+..###...##.',
+      '..##+........##.','####+..####..##.','..##+........##.','..##+........##.',
+      '####+........##.','..############..','...++++++++++...','................'],
+    help:[
+      '.....######.....','...##########...','..##........##..','.##...####...##.',
+      '.##..##..##..##.','##.......##...##','##......##....##','##.....##.....##',
+      '##.....##.....##','##............##','.##....##....##.','.##....##....##.',
+      '..##........##..','...##########...','.....######.....','................'],
+    ring:[
+      '...++......++...','..++...##...++..','.++...####...++.','.++....##....++.',
+      '.....######.....','....###..###....','...###....###...','..###......###..',
+      '..##........##..','..##........##..','.##############.','.##############.',
+      '......####......','.......##.......','................','................'],
+    rent:[
+      '..............+.','......##.....++.','.....####...++..','....##..##......',
+      '...##....##.....','..##......##....','####......####..','.##........##...',
+      '.##........##...','.##..####..##...','.##..#++#..##...','.##..#++#..##...',
+      '.##..#++#..##...','.############...','................','................'],
+    glass:[
+      '....########....','....########....','.....##..##.....','.....##..##.....',
+      '.....##..##.....','....##....##....','....##....##....','...##..+...##...',
+      '...##.++++.##...','..##..++++..##..','..##.++++++.##..','.##..++++++..##.',
+      '.##..........##.','..############..','...++++++++++...','................'],
+    market:[
+      '................','...##########...','..##++##++##++..','..##++##++##++..',
+      '.###++##++##++#.','.##############.','..##.####.####..','..##........##..',
+      '..##........##..','..##...++...##..','..##..####..##..','.##############.',
+      '..##..++++..##..','..############..','................','................']
+  };
+  // Compose each color as a single filled path. No SVG markup comes from callers.
+  const paths=new Map();
+  function build(rows,channel){
+    let d='';for(const [y,row] of rows.entries()){for(let x=0;x<16;){
+      if(row[x]!==channel){x++;continue;}const start=x;while(x<16&&row[x]===channel)x++;
+      const w=x-start;d+='M'+start+' '+y+'h'+w+'v1h-'+w+'z';
+    }}return d;
+  }
+  for(const [name,rows] of Object.entries(masters)){
+    const a=build(rows,'#'),b=build(rows,'+');
+    paths.set(name,'<path d="'+a+'"/>'+(b?'<path opacity=".68" d="'+b+'"/>':''));
+  }
+  const aliases={wallet:'coin',credits:'coin',next:'ring',scan:'lens',book:'ledger',window:'market',display:'market'};
+  function html(name,size=22){
+    const key=typeof name==='string'&&Object.hasOwn(aliases,name)?aliases[name]:name;
+    const content=paths.get(key);if(!content)return '';
+    const n=typeof size==='number'&&Number.isFinite(size)?Math.max(12,Math.min(64,Math.round(size))):22;
+    return '<svg class="counter-icon" aria-hidden="true" focusable="false" width="'+n+'" height="'+n+'" viewBox="0 0 16 16" fill="currentColor" shape-rendering="crispEdges">'+content+'</svg>';
+  }
+  return Object.freeze({html});
+})();
 </script><script>'use strict';
 
+const pict=(name,size=22)=>CounterIcons.html(name,size);
+function buttonFace(button,name,label){
+ button.innerHTML=pict(name)+'<span>'+esc(label)+'</span>';button.classList.add('pictureButton');return button;
+}
+function actionsMap(steps,current){
+ return '<div class="actionMap stops'+steps.length+'" aria-label="'+esc(steps.map(q=>q[1]).join(', '))+'">'+steps.map(([icon,label],idx)=>
+  '<div class="mapStop '+(idx===current?'now':idx<current?'done':'')+'"'+(idx===current?' aria-current="step"':'')+'>'+pict(icon,27)+'<span>'+esc(label)+'</span></div>').join('<i aria-hidden="true">›</i>')+'</div>';
+}
 function firstSeller(s) {
  return s.deskVersion===2 && s.day===1 && s.turn===1 && !s.patron?.buyer;
 }
@@ -1522,8 +1703,7 @@ function bindAppraisal(body,s,v){
   const read=!!l.sealRead,judged=!manual||typeof l.stampCall==='boolean';
   judge.hidden=!read||judged;panel.hidden=!read||!judged;back.hidden=panel.hidden;
   if(report)report.hidden=panel.hidden;
-  if(read)note.textContent=!judged?'Compare the two serials. Is this a factory stamp?':
-   !manual?'The two serials match. Review the deal.':(l.stampCall===!l.fake?'Correct. ':'Check the last digit. ')+(l.fake?'The stamped code differs from the register.':'Both codes match the register.');
+  if(read)note.textContent=!judged?'Same code?':!manual?'Match ✓':(l.stampCall===!l.fake?'Correct ✓':(l.fake?'Different codes':'Same code'));
  }
  for(const b of judge.querySelectorAll('button'))b.onclick=()=>{
   if(!l.sealRead||typeof l.stampCall==='boolean')return;
@@ -1538,53 +1718,48 @@ function printDeal(s) {
  if(!outcome)return;
  CounterSound.play(outcome);if(s.phase==='receipt')delta(v.ticket);
 }
+function customerSpeech(s){
+ const v=s.patron,who=PEOPLE[v.person];
+ return v.response||(v.windowLot?'I saw it in your window.':v.lessonCoil?'I’ll pay '+money(38)+' for Pip’s coil.':firstSeller(s)?'I want '+money(22)+' for my coil.':v.trainingCase?'Take a look at the lens.':v.buyer?'I need '+['machine parts','survey gear','freight goods'][v.wants]+'.':who[3]);
+}
 function renderTrade(s,desk) {
  const v=s.patron,person=PEOPLE[v.person],lot=v.lot,name=GOODS[lot.item][0],staged=trayReady(v);
  const fresh=firstSeller(s),lesson=fresh||!!v.lessonCoil,scanning=fresh&&staged&&!lot.sealRead;
  const firstWeekday=s.deskVersion===2&&s.day===1;
  const second=sideOf(v),cost=lot.cost+(v.extra?.cost||0);
  const category=['machine parts','survey gear','freight goods'][v.wants];
- const prefix=v.buyer?'CUSTOMER BUYS':'CUSTOMER SELLS';
- const message=v.response||(fresh?'“This coil’s genuine. Twenty-two credits and it’s yours.”':
-  v.lessonCoil?'“Pip said you have a relay coil. I’ll give you '+money(38)+' for it.”':
-  v.trainingCase?'“I found this lens in a survey pod. Is it worth my asking price?”':
-  v.windowLot&&s.stock.some(q=>q.id===v.windowLot)?'“I saw the '+GOODS[s.stock.find(q=>q.id===v.windowLot).item][0]+' in your window. Can I see it?”':
-  v.buyer?'“I’m buying '+category+'. '+(v.pairOrder?'Got two? I’ll pay a rush bonus.':'What have you got?')+'”':
-  '“'+person[3]+'”');
- const step=!staged?(v.buyer?'Pick stock to sell':'Move the goods to your tray'):scanning?'Check the brass stamp':v.buyer?'Make the sale':'Review the price';
- const detail=!staged?(v.lessonCoil?'Tap the glowing coil on your shelf.':v.buyer?'Tap a shelf item or drag it to the tray.':'Tap the loose item or drag it onto the center tray.'):
-  scanning?'The stamp tells you if the coil is genuine.':
-  v.lessonCoil?'Same coil. Your cost '+money(cost)+' · Buyer offers '+money(v.ask)+'.':
-  fresh?'The serial matches. Pay Pip to keep the coil.':
-  v.trainingCase?(lot.sealRead&&(!v.manualCheck||typeof lot.stampCall==='boolean')?(lot.fake?'Replica stamp. Compare its scrap value with the asking price.':'Factory stamp matched. Compare its value with the asking price.'):'Try the lens, then decide whether to buy or pass.'):
-  v.buyer?'Compare the offer with what you paid.':'Compare the asking price with the guide value.';
- desk.innerHTML='<div class="slipTop"><span class="direction '+(v.buyer?'selling':'buying')+'">'+prefix+'</span><small>VISITOR '+s.turn+' / '+s.limit+'</small></div>'+
-  '<div class="dialogue clerk"><b>'+esc(person[0])+'</b><small>'+esc(person[1])+'</small><p>'+esc(message)+'</p></div>'+
-  '<div class="taskline"><i aria-hidden="true">'+(!staged?'▣':scanning?'◎':'✓')+'</i><div><h3>'+step+'</h3><p>'+esc(detail)+'</p></div></div>';
+ const prefix=v.buyer?'You sell':'You buy';
+ const steps=v.buyer?[['shelf','Pick'],['sell','Sell']]:[['tray','Place'],['lens','Check'],['buy','Buy']];
+ const current=!staged?0:v.buyer?1:scanning?1:2;
+ const watch=v.buyer?(v.windowLot?'Window request':v.pairOrder?'Two items welcome':!v.lessonCoil?'Wants '+category:''):(v.trainingCase&&!lot.sealRead?'Check the stamp':'');
+ desk.innerHTML='<div class="slipTop"><span class="direction '+(v.buyer?'selling':'buying')+'">'+pict(v.buyer?'sell':'buy',18)+prefix+'</span><button class="talkchip" id="talk" aria-label="Talk to '+esc(person[0])+'">'+esc(person[0])+' ···</button></div>'+
+  (lesson?actionsMap(steps,current):'')+(watch?'<p class="wish">'+esc(watch)+'</p>':'')+
+  (v.response?'<p class="wish">'+esc(v.patience<3?'Counteroffer '+money(v.ask):'Need more cash')+'</p>':'');
+ $('#talk').onclick=()=>showModal('talk');
  if(!staged) {
   const expected=v.lessonCoil||v.windowLot||(!v.buyer?lot.id:null);
-  if(expected)desk.insertAdjacentHTML('beforeend','<div class="stockline">'+goodsIcon(lot.item)+'<div><small>'+(!v.buyer?'OFFERED ITEM':'REQUESTED ITEM')+'</small><strong>'+esc(name)+'</strong></div><b>'+money(v.ask)+'</b></div>');
-  actions(action(expected?'Place '+name.toLowerCase()+' on tray':'Choose from shelf',()=>{
+  if(expected)desk.insertAdjacentHTML('beforeend','<div class="stockline">'+goodsIcon(lot.item)+'<div><strong>'+esc(name)+'</strong></div><b>'+money(v.ask)+'</b></div>');
+  actions(buttonFace(action('',()=>{
    if(expected)placeOnCounter(s,expected);else showModal('swap');
-  }),...skipButtons(s,lesson));
+  }),v.buyer?'shelf':'tray',v.lessonCoil?'Pick the coil':v.buyer?'Pick an item':'Place on tray'),...skipButtons(s,lesson));
   return;
  }
  const assessed=lot.sealRead&&(!v.manualCheck||typeof lot.stampCall==='boolean');
  const reference=assessed?lotValue(lot,demand(s,lot.item)):Math.round(GOODS[lot.item][1]*demand(s,lot.item));
- desk.insertAdjacentHTML('beforeend','<div class="stockline paperLot">'+goodsIcon(lot.item)+'<div><small>ON THE TRAY</small><strong>'+esc(name)+(second?' + '+esc(GOODS[second.item][0]):'')+'</strong>'+
-  '<small>'+(v.buyer?'You paid '+money(cost):'Guide ~'+money(reference)+(second?' for main lot':''))+'</small></div>'+
+ desk.insertAdjacentHTML('beforeend','<div class="stockline paperLot">'+goodsIcon(lot.item)+'<div><strong>'+esc(name)+(second?' + '+esc(GOODS[second.item][0]):'')+'</strong>'+
+  '<small>'+(v.buyer?'Cost '+money(cost):'Value ~'+money(reference)+(second?' (first item)':''))+'</small></div>'+
   (scanning?'':!lesson?'<button id="unplace" aria-label="Remove goods from tray">Lift off</button>':'')+'</div>');
  if($('#unplace'))$('#unplace').onclick=()=>{if(unstageLot(s)){v.negotiating=false;CounterSound.play('tap');save();render();}};
- if(scanning){actions(action('Inspect the stamp',()=>readOnCounter(s)));return;}
+ if(scanning){actions(buttonFace(action('',()=>readOnCounter(s)),'lens','Check stamp'));return;}
  const readonly=firstWeekday||!!v.lessonCoil;
  const custom=!readonly&&(!!v.negotiating||(v.staged===undefined&&v.offer!==v.ask));
  if(!custom&&v.staged!==undefined)v.offer=v.ask;
  const label=v.buyer?'Buyer offers':'Asking price';
- desk.insertAdjacentHTML('beforeend','<div class="offerline"><span>'+label+'</span><b>'+money(v.ask)+'</b></div>');
+ if(custom)desk.insertAdjacentHTML('beforeend','<div class="offerline"><span>'+label+'</span><b>'+money(v.ask)+'</b></div>');
  if(custom){
   const low=v.buyer?v.ask:Math.max(1,(v.includeSide?v.sideAsk:0)+1,Math.floor(v.ask*.35));
   const high=v.buyer?Math.max(v.ask+8,Math.round(v.opening*1.65)):v.ask;
-  desk.insertAdjacentHTML('beforeend','<div class="pricehead"><label for="price">YOUR COUNTEROFFER</label><b id="value"></b></div><div class="dial"><button id="minus" aria-label="Decrease offer">−</button><input id="price" type="range" aria-label="Counteroffer"><button id="plus" aria-label="Increase offer">+</button></div><p class="patience">Patience '+v.patience+' / 3</p>');
+  desk.insertAdjacentHTML('beforeend','<div class="pricehead"><label for="price">YOUR PRICE</label><b id="value"></b></div><div class="dial"><button id="minus" aria-label="Decrease offer">−</button><input id="price" type="range" aria-label="Counteroffer"><button id="plus" aria-label="Increase offer">+</button></div><p class="patience">Patience '+v.patience+' / 3</p>');
   const range=$('#price');range.min=low;range.max=high;range.value=v.offer;
   function update(){v.offer=+range.value;$('#value').textContent=money(v.offer);updateConfirm();}
   range.oninput=update;range.onchange=()=>{CounterSound.play('tap');save();};
@@ -1594,21 +1769,21 @@ function renderTrade(s,desk) {
  const main=action('',()=>printDeal(s));actions(main,...skipButtons(s,lesson));
  function updateConfirm(){
   const b=$('#primary');if(!b)return;
-  b.textContent=custom&&v.offer!==v.ask?'Offer '+money(v.offer):(v.buyer?'Sell for ':'Buy for ')+money(v.offer);
+  buttonFace(b,v.buyer?'sell':'buy',(custom&&v.offer!==v.ask?'Offer ':v.buyer?'Sell ':'Buy ')+money(v.offer));
   b.disabled=!v.buyer&&v.offer>s.cash;
   const net=$('#net');if(net)net.textContent=signedCredits(v.offer-cost);
  }
  updateConfirm();
- if(v.buyer)desk.insertAdjacentHTML('beforeend','<div class="marginline"><span>Profit if sold</span><b id="net">'+signedCredits(v.offer-cost)+'</b></div>');
- else if(v.offer>s.cash)desk.insertAdjacentHTML('beforeend','<p class="cashwarning">You have '+money(s.cash)+'. Choose another offer or pass.</p>');
+ if(v.buyer)desk.insertAdjacentHTML('beforeend','<div class="marginline"><span>Profit</span><b id="net">'+signedCredits(v.offer-cost)+'</b></div>');
+ else if(v.offer>s.cash)desk.insertAdjacentHTML('beforeend','<p class="cashwarning">You have '+money(s.cash)+'.</p>');
  if(!lesson){
   const tools=document.createElement('div');tools.className='dealtools';
   function tool(id,label,fn,disabled=false){const b=action(label,fn,'tool',id);b.disabled=disabled;tools.append(b);}
-  if(!v.buyer)tool('inspect',v.scanned?'Read stamp':'Inspect · '+s.scans,()=>readOnCounter(s),!v.scanned&&!s.scans);
-  if(v.buyer)tool('inspect',v.pairOrder?'Pack a pair':'Change stock',()=>showModal('swap'));
+  if(!v.buyer)tool('inspect',v.scanned?'Stamp':'Check · '+s.scans,()=>readOnCounter(s),!v.scanned&&!s.scans);
+  if(v.buyer)tool('inspect',v.pairOrder?'Pair items':'Swap',()=>showModal('swap'));
   if(v.extra)tool('unpair','Unpack pair',()=>unstageLot(s,'extra'));
   if(!v.buyer&&v.sideLot)tool('bundle',(v.includeSide?'Remove ':'Add ')+GOODS[v.sideLot.item][0]+' · '+money(v.sideAsk),()=>{toggleSide(s);});
-  if(!readonly)tool('haggle',custom?'Use asking price':'Negotiate',()=>{v.negotiating=!v.negotiating;v.offer=v.ask;});
+  if(!readonly)tool('haggle',custom?'Reset price':'Name price',()=>{v.negotiating=!v.negotiating;v.offer=v.ask;});
   desk.append(tools);
  }
 }
@@ -1618,14 +1793,11 @@ function skipButtons(s,lesson){
 function renderTicket(s,desk,next){
  const v=s.patron,l=v.lot,paid=v.ticket==='PURCHASED',sold=v.ticket==='SOLD',extra=sideOf(v);
  const cost=l.cost+(v.extra?.cost||0),margin=v.tender-cost;
- const title=paid?'Stock received.':sold?'Sale complete.':v.ticket==='PASSED'?'Offer declined.':v.ticket==='CUSTOMS TIP'?'Report filed.':'Customer left.';
- const hint=paid?(firstSeller(s)?'The coil is yours. Ring for the mechanic who wants to buy it.':'The goods are on your shelf, ready for a buyer.'):
-  sold?(v.lessonCoil?'You bought low and sold high. The next deal is yours.':'The buyer takes the goods. Your till has been credited.'):v.response;
- desk.innerHTML='<div class="slipTop"><span class="direction">'+(paid?'PURCHASE RECEIPT':sold?'SALES RECEIPT':'COUNTER RECEIPT')+'</span><small>NO. '+String(s.day*100+s.turn)+'</small></div><h2 class="resultTitle">'+title+'</h2>'+
-  '<div class="stockline">'+goodsIcon(l.item)+'<div><strong>'+esc(GOODS[l.item][0])+(extra?' + '+esc(GOODS[extra.item][0]):'')+'</strong><small>'+esc(PEOPLE[v.person][0])+'</small></div></div>'+
-  (sold?'<div class="slipmath"><span>You paid <b>'+money(cost)+'</b></span><span>Sold for <b>'+money(v.tender)+'</b></span><span>Profit <b>'+signedCredits(margin)+'</b></span></div>':v.tender?'<div class="offerline"><span>'+(paid?'Paid from till':'Paid to you')+'</span><b>'+signedCredits(v.tender)+'</b></div>':'')+
-  '<p class="ticketHint">'+esc(hint)+'</p>';
- actions(action(s.turn>=s.limit?'Close the shutters':firstSeller(s)?'Ring for the buyer':'Ring for next customer',next));
+ const title=paid?'Bought':sold?'Sold':v.ticket==='PASSED'?'Passed':v.ticket==='CUSTOMS TIP'?'Reported':'Left';
+ desk.innerHTML='<div class="receiptHead">'+pict(paid?'shelf':sold?'profit':'pass',38)+'<h2 class="resultTitle">'+title+'</h2></div>'+
+  '<div class="stockline">'+goodsIcon(l.item)+'<div><strong>'+esc(GOODS[l.item][0])+(extra?' + '+esc(GOODS[extra.item][0]):'')+'</strong></div></div>'+
+  (sold?'<div class="slipmath"><span>Paid<b>'+money(cost)+'</b></span><span>Sold<b>'+money(v.tender)+'</b></span><span>Profit<b>'+signedCredits(margin)+'</b></span></div>':v.tender?'<div class="offerline"><span>'+(paid?'Paid':'Earned')+'</span><b>'+signedCredits(v.tender)+'</b></div>':'');
+ actions(buttonFace(action('',next),s.turn>=s.limit?'shutter':'bell',s.turn>=s.limit?'Close shop':'Next customer'));
 }
 </script><script>'use strict';
 const $=s=>document.querySelector(s), esc=s=>String(s).replace(/[&<>"']/g,k=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[k]));
@@ -1674,7 +1846,9 @@ function actions(...buttons){const d=document.createElement('div');d.className='
 const goodsIcon=i=>'<canvas class="icon" width="48" height="48" data-icon="'+i+'" aria-hidden="true"></canvas>';
 function drawIcon(c,i){if(i===12&&window.WaterArt)WaterArt.icon(c,2);else CounterArt.icon(c,i);}
 function icons(root=document){root.querySelectorAll('[data-icon]').forEach(c=>drawIcon(c,+c.dataset.icon));}
-function meter(label,val){return '<div><span>'+label+'</span><strong>'+val+'</strong></div>';}
+function meter(label,val,icon){
+ return '<div>'+pict(icon,18)+'<span>'+esc(label)+'</span><strong>'+esc(String(val))+'</strong></div>';
+}
 function render(){
  const s=run(),v=s.patron,desk=$('#desk'),cnt=s.stock.length,night=['night','failed','owned'].includes(s.phase);
  $('#time').textContent=s.phase==='ready'?'PORT 09':'SHIFT '+String(s.day).padStart(2,'0');
@@ -1686,16 +1860,21 @@ function render(){
  tray.onclick=()=>{if(s.phase==='bell')$('#primary')?.click();else if(atDesk&&!trayReady(v))$('#primary')?.click();else if(atDesk&&v.buyer)showModal('swap');else if(atDesk)readOnCounter(s);};
  loose.onclick=()=>{if(atDesk&&!trayReady(v))placeOnCounter(s,v.lot.id);};
  const bill=rentInfo(s);
- $('#meters').innerHTML=meter('Cash',money(s.cash))+meter(bill.amount?(bill.due?'Rent due':'Rent in '+bill.daysLeft+'d'):'Rent',money(bill.amount))+meter(s.day===1?'Visitors':'Heat',s.day===1?(s.turn+' / '+s.limit):s.heat+' / 5');
+ const opening=s.day===1&&s.turn<=2&&!['night','owned','failed','audit'].includes(s.phase);
+ $('#meters').innerHTML=meter('Cash',money(s.cash),'coin')+(opening?'':meter(bill.amount?(bill.due?'Rent due':'Rent · '+bill.daysLeft+'d'):'Rent',money(bill.amount),'rent'))+
+  (opening?'':s.day===1?meter('Guests',s.turn+'/'+s.limit,'bell'):meter('Heat',s.heat+'/5','stamp'));
+ $('#cabinet').classList.toggle('firstDeal',opening);
+ $('#world').dataset.focus=s.phase==='bell'?'bell':atDesk&&!trayReady(v)?(v.buyer?'shelf':'loose'):atDesk&&firstSeller(s)&&!v.lot.sealRead?'stamp':'';
+ $('#cabinet').classList.toggle('practiceMode',practice);
  $('#supplyFace').classList.toggle('windowOpen',s.day>=2);
  $('#supplyFace').setAttribute('aria-label',s.day>=2?'Open the display window':'Inspect shelf stock');
  $('#stockCount').textContent=cnt;$('#sound').innerHTML='<svg viewBox="0 0 24 24"><path d="M3 9h4l5-4v14l-5-4H3z"/>'+(profile.mute?'<path d="m16 9 6 6m0-6-6 6"/>':'<path d="M16 9q4 3 0 6m3-9q6 6 0 12"/>')+'</svg>';$('#sound').setAttribute('aria-label',profile.mute?'Turn sound on':'Mute sound');
  if(s.phase==='ready'){
-  desk.innerHTML='<div class="intro"><span class="kicker">'+(practice?'PRACTICE COUNTER':'ORBITAL PAWNSHOP')+'</span><h1>SECOND<br>ORBIT</h1><p class="lede">Run the pawnshop at Dock Nine. Buy a traveler’s salvage, then sell it to someone who needs it.</p></div>';
-  actions(action('Raise the shutters',raiseShutters));
+  desk.innerHTML='<div class="intro"><h1>SECOND<br>ORBIT</h1><p class="lede">'+(practice?'Practice sale':'Buy low. Sell high.')+'</p></div>';
+  actions(buttonFace(action('',raiseShutters),'shutter','Open shop'));
  }else if(s.phase==='bell'){
-  desk.innerHTML='<div class="slipTop"><span class="direction">OPEN FOR BUSINESS</span><small>DAY 01</small></div><h2 class="resultTitle">Ring the counter bell.</h2><p class="body">Pip is waiting with your first deal. Ring when you’re ready.</p>';
-  actions(action('Ring for a customer',begin));
+  desk.innerHTML='<div class="bellCue">'+pict('bell',56)+'<h2>Shop open</h2></div>';
+  actions(buttonFace(action('',begin),'bell','Ring bell'));
  }else if(s.phase==='trade'){
   renderTrade(s,desk);
  }else if(s.phase==='receipt'){
@@ -1704,41 +1883,41 @@ function render(){
    hostStart();if(s.turn>=s.limit){requestClose(s);if(s.phase!=='audit'){sdk?.end();session=false;}CounterSound.play(s.phase==='audit'?'alert':s.phase==='failed'?'lose':'stamp');}
    else{nextGuest(s);CounterSound.play('arrival');}
   });
-  if(practice&&s.patron.lessonCoil&&s.turn===2)$('#primary').textContent='Return to my shop';
+  if(practice&&s.patron.lessonCoil&&s.turn===2)buttonFace($('#primary'),'shutter','Back to shop');
  }else if(s.phase==='audit'){
   const wanted=s.stock.find(l=>l.id===s.audit.lotId);
-  desk.innerHTML='<span class="kicker">STATION CUSTOMS · INSPECTION</span><h2 class="resultTitle loss">Serial alert.</h2><p class="body">A customs officer stops the shutters. The filing shows '+s.heat+' heat marks.</p><div class="panel"><p><strong>Ruling · '+money(s.audit.levy)+'</strong></p><p>'+(wanted?'Customs will also seize the '+GOODS[wanted.item][0]+'. Turn it in yourself to reduce the fee to ₵3.':'The goods have left your shop. A handling fine is due.')+'</p></div>';
+  desk.innerHTML='<div class="receiptHead">'+pict('stamp',34)+'<h2>Customs check</h2></div><div class="panel"><p>'+esc(wanted?'Flagged: '+GOODS[wanted.item][0]:'Tagged goods sold.')+'</p><p>'+esc(wanted?'Hand it in to cut the fine.':'Pay the fine to close the shop.')+'</p></div>';
   const resolve=kind=>{hostStart();if(answerAudit(s,kind)){sdk?.end();session=false;CounterSound.play(s.phase==='failed'?'lose':'stamp');}};
-  const buttons=[action('Accept ruling',()=>resolve(false))];if(wanted)buttons.push(action('Turn it in',()=>resolve(true),'secondary','surrender'));actions(...buttons);
+  const buttons=[action('Pay '+money(s.audit.levy),()=>resolve(false))];if(wanted)buttons.push(action('Hand in · '+money(3),()=>resolve(true),'secondary','surrender'));actions(...buttons);
  }else if(night){
   const r=s.recap;
   if(s.phase==='failed'){
-   desk.innerHTML='<span class="kicker">LEASE TERMINATED</span><h2 class="resultTitle loss">Shutters down.</h2><p class="body">Even after clearing your shelf, the till came up '+money(-s.cash)+' short on rent. You completed '+s.deals+' deals.</p>';
-   actions(action('Start a new lease',()=>{profile.run=makeRun(seed());begin();}));
+   desk.innerHTML='<h2 class="resultTitle loss">Shop closed</h2><p class="body">Rent short by '+money(-s.cash)+'.</p>';
+   actions(action('Try again',()=>{profile.run=makeRun(seed());begin();}));
   }else if(s.phase==='owned'){
    const ending=s.charter===0?'The foreman bolts a union plaque beside your door.':s.charter===1?'The Survey Office files your shop among the ring’s permanent landmarks.':s.charter===2?'The evening convoy blinks its running lights in salute.':s.water?.bottles?'The dock crew raises a toast with water from your own line.':'The broker slides the brass keys across the counter.';
-   desk.innerHTML='<span class="kicker">DEED ISSUED · DOCK 09</span><h2 class="resultTitle">Yours, in writing.</h2><p class="body">'+ending+' After '+s.day+' shifts and '+s.deals+' deals, Second Orbit belongs to you.</p>';
+   desk.innerHTML='<span class="kicker">DEED ISSUED · DOCK 09</span><h2 class="resultTitle">The shop is yours!</h2><p class="body">'+ending+' Day '+s.day+' · '+s.deals+' deals.</p>';
    actions(action('Trade after hours',()=>{s.extended=true;s.day++;begin();}));
   }else{
-   desk.innerHTML='<span class="kicker">SHIFT '+String(s.day).padStart(2,'0')+' · CASHOUT</span><h2 class="resultTitle">Shutters down.</h2><div class="daybill"><span>Cash in / stock bought</span><b>+'+money(s.earned)+' / −'+money(s.spent)+'</b><span>Rent'+(s.extended?' rebate':'')+'</span><b>'+money(r.rent)+'</b>'+(r.fine?'<span>Customs'+(r.seized?' · seized '+esc(r.seized):'')+'</span><b>−'+money(r.fine)+'</b>':'')+(r.liquidation?'<span>Emergency stock sale</span><b>+'+money(r.liquidation)+'</b>':'')+'</div><div class="panel"><p><strong>'+(s.paid>=DEED?'Shop owned':'Deed '+money(s.paid)+' / '+money(DEED))+'</strong></p><div class="bookbar"><i style="width:'+Math.min(100,s.paid/DEED*100)+'%"></i></div><p>'+esc(EVENTS[s.day%6][1])+' Tomorrow.</p></div>';
-   const next=action('Open shift '+(s.day+1),()=>{s.day++;begin();}),bench=action('Workbench',()=>showModal('bench'),'secondary','bench');actions(next,bench);
-   if(s.paid<DEED){const due=Math.min(DEED-s.paid,60),b=action('Pay '+money(due)+' toward deed',()=>{s.cash-=due;s.paid+=due;logTrade(s,'Deed installment',-due);CounterSound.play('upgrade');if(s.paid===DEED){s.phase='owned';profile.best=profile.best?Math.min(profile.best,s.day):s.day;}},'secondary','deposit');const waiting=s.deskVersion===2&&s.paid+due>=DEED&&s.day<7;
+   desk.innerHTML='<h2 class="resultTitle">Day '+s.day+' totals</h2><div class="daybill"><span>In / Out</span><b>+'+money(s.earned)+' / −'+money(s.spent)+'</b><span>Rent'+(s.extended?' rebate':'')+'</span><b>'+money(r.rent)+'</b>'+(r.fine?'<span>Customs'+(r.seized?' · seized '+esc(r.seized):'')+'</span><b>−'+money(r.fine)+'</b>':'')+(r.liquidation?'<span>Emergency stock sale</span><b>+'+money(r.liquidation)+'</b>':'')+'</div><div class="panel"><p><strong>'+(s.paid>=DEED?'Shop owned':'Deed '+money(s.paid)+' / '+money(DEED))+'</strong></p><div class="bookbar"><i style="width:'+Math.min(100,s.paid/DEED*100)+'%"></i></div></div>';
+   const next=action('Day '+(s.day+1)+' →',()=>{s.day++;begin();}),bench=action('Workbench',()=>showModal('bench'),'secondary','bench');actions(next,bench);
+   if(s.paid<DEED){const due=Math.min(DEED-s.paid,60),b=action('Buy shop · '+money(due),()=>{s.cash-=due;s.paid+=due;logTrade(s,'Deed installment',-due);CounterSound.play('upgrade');if(s.paid===DEED){s.phase='owned';profile.best=profile.best?Math.min(profile.best,s.day):s.day;}},'secondary','deposit');const waiting=s.deskVersion===2&&s.paid+due>=DEED&&s.day<7;
     if(waiting)b.textContent='Final deed · Day 7';b.disabled=s.cash<due||waiting;actions(b);}
   }
  }
  if(s.phase==='night'&&s.deskVersion===2&&s.paid<DEED){
   const nextBill=rentInfo({...s,day:s.day+1}),note=document.createElement('p');
-  note.className='rentNote';note.textContent='Keep '+money(nextBill.amount)+' for rent on Day '+(s.day+1+nextBill.daysLeft)+'.';
+  note.className='rentNote';note.textContent='Rent '+money(nextBill.amount)+' · Day '+(s.day+1+nextBill.daysLeft);
   desk.querySelector('.daybill').after(note);
  }
  if(s.phase==='night'&&s.recap.bonus?.amount){const badge=document.createElement('p');badge.className='bonus';badge.textContent='✓ '+s.recap.bonus.title+' paid '+money(s.recap.bonus.amount);desk.querySelector('.daybill').after(badge);}
  if(s.phase==='night'&&s.day<=4){
    const unlock=document.createElement('p');unlock.className='unlock';
-   unlock.textContent=['Next shift · Haggling, display window & water plant','Next shift · Two-lot rush orders','Next shift · Drones & prisms','Next shift · Flight recorders & lunar relics'][s.day-1];
+   unlock.textContent=['Unlock: haggling & workshop','Unlock: pair orders','Unlock: drones & prisms','Unlock: rare relics'][s.day-1];
    desk.querySelector('.panel').append(unlock);
  }
  if(s.phase==='trade'&&s.day===2&&s.turn===1){
-   const button=document.createElement('button');button.className='permit';button.textContent='New permit · Visit water plant';button.onclick=()=>showModal('water');desk.append(button);
+   const button=document.createElement('button');button.className='permit';button.textContent='New · Water plant';button.onclick=()=>showModal('water');desk.append(button);
  }
  icons(desk);renderDrawer();draw(performance.now());if($('#modal').open&&modalKind)modalContents();
 }
@@ -1799,47 +1978,50 @@ function showModal(kind){modalKind=kind;modalContents();if(!modal.open)modal.sho
 function tile(i,h,sub,button=''){return '<div class="row">'+(i==null?'':goodsIcon(i))+'<div><b>'+h+'</b><small>'+sub+'</small></div>'+button+'</div>';}
 function modalContents(){
  const s=run(),v=s.patron,body=$('#modalBody'),sup=sdk?.support()||{},k=modalKind;let text='';
- $('#modalTitle').textContent=({help:'Counter guide',scan:'Inspection bench',shelf:'Shelf stock',swap:'Show another lot',ledger:'Station ledger',bench:'Night workbench',water:'Condensate plant',kits:'Opening licenses',restart:'A new lease',guide:'Salvage field guide',charter:'Trade charters'})[k]||'Station';
- if(k==='help'){
-  text='<article class="manual"><small>DOCK NINE · POCKET MANUAL</small><h3>Your first sale</h3><ol><li><b>Buy from a seller.</b> Put their item on the tray. Touch the brass stamp to check it, then pay.</li><li><b>Sell to a buyer.</b> Tap your stock or drag it to the tray. The difference between cost and sale price is your profit.</li><li><b>Keep rent money.</b> '+(s.deskVersion===2?'The landlord comes every seventh day.':'Your lease charges rent each shift.')+'</li></ol></article>'+
-   (practice?'<button id="practiceExit">Return to my shop</button>':'<button id="tryDeal">Practice one sale</button><small class="tiny">Practice uses a separate till. Your shop stays saved.</small>');
+ $('#modalTitle').textContent=({help:'How to play',talk:'Customer',scan:'Check stamp',shelf:'Shelf stock',swap:'Show another lot',ledger:'Station ledger',bench:'Night workbench',water:'Condensate plant',kits:'Opening licenses',restart:'A new lease',guide:'Salvage field guide',charter:'Trade charters'})[k]||'Station';
+ if(k==='talk'&&v){
+  $('#modalTitle').textContent=PEOPLE[v.person][0];
+  text='<p class="talkquote">“'+esc(customerSpeech(s).replace(/^[“"]|[”"]$/g,''))+'”</p>';
+ }else if(k==='help'){
+  text='<article class="manual pictureManual"><div>'+pict('tray',32)+'<b>Place the item</b></div><div>'+pict('lens',32)+'<b>Check its stamp</b></div><div>'+pict('profit',32)+'<b>Buy low. Sell high.</b></div></article>'+
+   (practice?'<button id="practiceExit">Back to shop</button>':'<button id="tryDeal">Practice one sale</button><small class="tiny">Your shop stays saved.</small>');
  }else if(k==='scan'&&v&&s.phase==='trade'){
   const l=v.lot,item=GOODS[l.item],mark=SEALS[l.item];const actual=l.fake?mark.slice(0,-1)+(Number(mark.at(-1))+2)%10:mark;
   const read=l.sealRead===true;
-  text=tile(l.item,item[0],GRADES[l.grade][0]+' condition')+'<canvas class="specimen" width="256" height="66" aria-label="Factory handbook specimen"></canvas><canvas class="loupe" tabindex="0" aria-label="Inspection lens. Touch the marked serial plate, use arrow keys, or press Enter to focus the plate."></canvas><p id="lensHint" class="mono">'+(read?'Serial resolved.':'Tap the outlined brass plate or drag the lens onto it.')+'</p><div class="sealpair"><div><span class="tiny">Factory register</span><b>'+mark+'</b></div><div><span class="tiny">Stamped serial</span><b id="readCode">'+(read?actual:'····')+'</b></div></div><div class="panel" id="scanReport" '+(read?'':'hidden')+'><p><strong>'+(l.fake?'Replica · seal mismatch':'Authentic · seal matched')+'</strong></p><p>Estimated resale '+money(lotValue(l,demand(s,l.item)))+' today. '+(l.tag?'Tagged by station customs. Buying adds heat.':'Serial cleared for resale.')+'</p></div>';
-  text+='<div id="stampChoice" hidden><button data-match="yes">Codes match</button><button data-match="no">Codes differ</button></div>';
-  text+='<button id="returnDeal" '+(read?'':'hidden')+'>Review the deal</button>';
-  if(l.tag)text+='<button data-act="report" '+(read?'':'hidden')+'>Report tagged goods · +₵5</button>'; }else if(k==='shelf'||k==='swap'){
-  if(k==='shelf'&&s.day>=2)text='<p class="mono">Place one lot in the window to attract a buyer for it.</p>';if(k==='swap'&&v)text='<p class="mono">The buyer pays more for '+['machine parts','survey gear','freight goods'][v.wants]+'.</p>';
-  text+=s.stock.length?s.stock.map(l=>tile(l.item,GOODS[l.item][0],GRADES[l.grade][0]+' · cost '+money(l.cost)+(l.sealRead&&l.tag?' · tagged':'')+(l.sealRead&&l.fake?' · replica':''),k==='swap'?'<button data-lot="'+l.id+'" '+(v.lessonCoil&&l.id!==v.lessonCoil?'disabled':'')+'>Place</button>'+(v.pairOrder&&l.id!==v.lot.id?'<button data-pair="'+l.id+'">Pair</button>':''):(s.day>=2?'<button data-window="'+l.id+'">'+(CounterWindow.featured(s)?.id===l.id?'In window ✓':'Display')+'</button>':'<span class="tiny">'+money(lotValue(l,demand(s,l.item)))+'</span>'))).join(''):'<p class="mono">Empty shelf. Buy salvage from the next seller.</p>';
+  text=tile(l.item,item[0],GRADES[l.grade][0])+'<canvas class="specimen" width="256" height="66" aria-label="Factory handbook specimen"></canvas><canvas class="loupe" tabindex="0" aria-label="Inspection lens. Touch the marked serial plate, use arrow keys, or press Enter to focus the plate."></canvas><p id="lensHint" class="mono">'+(read?'Stamp found':'Tap the glowing stamp.')+'</p><div class="sealpair"><div><span class="tiny">Guide</span><b>'+mark+'</b></div><div><span class="tiny">Item</span><b id="readCode">'+(read?actual:'····')+'</b></div></div><div class="panel" id="scanReport" '+(read?'':'hidden')+'><p><strong>'+(l.fake?'Copy':'Genuine')+'</strong></p><p>'+'Value '+money(lotValue(l,demand(s,l.item)))+(l.tag?' · Flagged':'')+'</p></div>';
+  text+='<div id="stampChoice" hidden><button data-match="yes">= Same</button><button data-match="no">≠ Different</button></div>';
+  text+='<button id="returnDeal" '+(read?'':'hidden')+'>Back to deal</button>';
+  if(l.tag)text+='<button data-act="report" '+(read?'':'hidden')+'>Report · +₵5</button>'; }else if(k==='shelf'||k==='swap'){
+  if(k==='shelf'&&s.day>=2)text='<p class="mono">Display an item to attract a buyer.</p>';if(k==='swap'&&v)text='<p class="mono">Wanted: '+['machine parts','survey gear','freight goods'][v.wants]+'.</p>';
+  text+=s.stock.length?s.stock.map(l=>tile(l.item,GOODS[l.item][0],GRADES[l.grade][0]+' · cost '+money(l.cost)+(l.sealRead&&l.tag?' · tagged':'')+(l.sealRead&&l.fake?' · replica':''),k==='swap'?'<button data-lot="'+l.id+'" '+(v.lessonCoil&&l.id!==v.lessonCoil?'disabled':'')+'>Place</button>'+(v.pairOrder&&l.id!==v.lot.id?'<button data-pair="'+l.id+'">Pair</button>':''):(s.day>=2?'<button data-window="'+l.id+'">'+(CounterWindow.featured(s)?.id===l.id?'In window ✓':'Display')+'</button>':'<span class="tiny">'+money(lotValue(l,demand(s,l.item)))+'</span>'))).join(''):'<p class="mono">Shelf empty. Buy an item.</p>';
  }else if(k==='charter'){
-  const effects=['Rent costs six fewer credits every shift.','Two extra assay charges and a rare opening lot each shift.','Matched-class buyers will bid up to 15% more.'];
-  text='<p class="mono">Sign one permanent charter for this lease. A crew needs four standing to sponsor you.</p>'+CREWS.map((name,i)=>tile([1,4,7][i],name,effects[i],'<button data-crew="'+i+'" '+(s.reps[i]<4||s.charter!=null?'disabled':'')+'>'+(s.charter===i?'Signed':s.reps[i]>=4?'Sign':s.reps[i]+'/4')+'</button>')).join('');
+  const effects=['Rent −₵6','+2 checks · rare stock','Matched sales +15%'];
+  text='<p class="mono">Choose one crew. Needs 4 stars.</p>'+CREWS.map((name,i)=>tile([1,4,7][i],name,effects[i],'<button data-crew="'+i+'" '+(s.reps[i]<4||s.charter!=null?'disabled':'')+'>'+(s.charter===i?'Signed':s.reps[i]>=4?'Sign':s.reps[i]+'/4')+'</button>')).join('');
  }else if(k==='guide'){
-  text='<p class="mono">'+s.serials.length+' / '+GOODS.length+' entries in your trading log. Board prices move each shift.</p>'+GOODS.map((g,i)=>tile(i,g[0],g[3]+' '+g[4],'<span class="tiny">'+(s.serials.includes(i)?'Logged':'Unseen')+'</span>')).join('');
+  text='<p class="mono">'+s.serials.length+' / '+GOODS.length+' items found.</p>'+GOODS.map((g,i)=>tile(i,g[0],g[3]+' '+g[4],'<span class="tiny">'+(s.serials.includes(i)?'Logged':'Unseen')+'</span>')).join('');
  }else if(k==='kits'){
   text=KITS.map(kit=>tile(kit.item,kit.name,kit.desc,'<button data-kit="'+kit.id+'">'+((s.kit||'salvage')===kit.id?'Selected':'Select')+'</button>')).join('');
  }else if(k==='restart'){
-  text='<p class="mono">Start another shop? This replaces the current lease. Your fastest deed and GameWave cosmetics stay in the ledger.</p><button id="newLease">Start a fresh lease</button>';
+  text='<p class="mono">Start over? This shop will be replaced. Your best score and rewards stay.</p><button id="newLease">Start a fresh lease</button>';
  }else if(k==='water'){
   const w=CounterWater.status(s),options=({uninstalled:[['install','Install · ₵16',16]],idle:[['source','Order tank · ₵7',7]],raw:[['sample','Draw sample',0]],sampled:[['gravity','Gravity bed · ₵3',3],['polish','Polish · ₵5',5]],filtered:[['bottle','Seal and stock',0]]})[w.phase]||[];
-  const desc=({locked:'License opens on shift 2.',uninstalled:'Test dock water, choose a filter, then stock a sealed six-pack for sale.',idle:'Intake empty. One batch can ship per shift.',raw:'Tank connected. Draw a vial to check for grit or dissolved pigment.',sampled:w.sampleText,filtered:w.quality===2?'Clear sample. Ready to bottle at premium grade.':'Tint remains. A utility-grade batch is ready to bottle.',bottled:'Shipment stocked. Next delivery arrives tomorrow.'})[w.phase];
+  const desc=({locked:'Opens on Day 2.',uninstalled:'Filter water to sell.',idle:'One batch per day.',raw:'Test the water.',sampled:w.sampleText,filtered:w.quality===2?'Clear · premium water.':'Cloudy · basic water.',bottled:'Bottled. More tomorrow.'})[w.phase];
   text='<canvas id="plantFace" aria-label="Water filtration machinery"></canvas><p class="mono">'+desc+'</p><div class="daybill"><span>Available cash</span><b>'+money(s.cash)+'</b>'+(w.contaminant?'<span>Assay</span><b>'+esc(w.contaminant)+'</b>':'')+'</div>'+
-    options.map(([act,label,price])=>'<button class="plantAction" data-plant="'+act+'" '+(s.cash<price||act==='bottle'&&s.stock.length>=7?'disabled':'')+'>'+label+'</button>').join('')+(w.phase==='filtered'&&s.stock.length>=7?'<p class="danger">Sell a lot to make room on the shelf.</p>':'');
+    options.map(([act,label,price])=>'<button class="plantAction" data-plant="'+act+'" '+(s.cash<price||act==='bottle'&&s.stock.length>=7?'disabled':'')+'>'+label+'</button>').join('')+(w.phase==='filtered'&&s.stock.length>=7?'<p class="danger">Shelf full. Sell an item.</p>':'');
  }else if(k==='bench'){
   const worked=s.recap?.worked,broken=s.stock.find(l=>l.grade<2&&!l.fake),cheap=s.stock.find(l=>l.item===0),coil=s.stock.find(l=>l.item===1);
   const button=(act,label,disabled)=>'<button data-act="'+act+'" '+(disabled?'disabled':'')+'>'+label+'</button>';
-  text='<p class="mono">One bench job each night. Equipment purchases are permanent for this lease.</p>'+
+  text='<p class="mono">One repair or build per night.</p>'+
    tile(1,'Restore a lot',broken?GOODS[broken.item][0]+' · raise condition one grade':'No damaged authentic stock',button('repair','₵4',worked||!broken||s.cash<4))+
-   tile(8,'Build a micro drone','Consumes one Pulse Cell and one Relay Coil',button('craft','Build',worked||!cheap||!coil))+
-   tile(2,'Assay reader','Next shifts get five scans instead of three.',button('reader',s.gear.includes('reader')?'Fitted':'₵32',s.cash<32||s.gear.includes('reader')))+
+   tile(8,'Build a micro drone','Pulse Cell + Relay Coil',button('craft','Build',worked||!cheap||!coil))+
+   tile(2,'Assay reader','3 → 5 scans per day',button('reader',s.gear.includes('reader')?'Fitted':'₵32',s.cash<32||s.gear.includes('reader')))+
    tile(0,'Order a parts crate','One serviceable Pulse Cell and Relay Coil.',button('supply','₵44',worked||s.cash<44||s.stock.length>5));
  }else if(k==='ledger'){
   const ev=EVENTS[(s.day-1)%6],news=CounterContracts.headline(s),order=CounterContracts.status(s);
-  text='<article class="bulletin"><small>THE RING GAZETTE</small><h3>'+news.title+'</h3><p>'+news.body+'</p></article>'+(order?'<div class="panel"><p><strong>'+order.title+' · '+order.progress+'/'+order.goal+'</strong></p><p>'+order.brief+'</p></div>':'')+'<div class="panel"><p><strong>'+ev[0]+'</strong></p><p>'+ev[1]+'</p></div><p class="mono">Bid below the seller’s ask. Quote above the buyer’s bid. Three rejected offers cost the customer. Two heat marks trigger customs at closing.</p>'+
+  text='<details class="logDetail"><summary>Station news</summary><article class="bulletin"><small>THE RING GAZETTE</small><h3>'+news.title+'</h3><p>'+news.body+'</p></article></details>'+(order?'<div class="panel"><p><strong>'+order.title+' · '+order.progress+'/'+order.goal+'</strong></p><p>'+order.brief+'</p></div>':'')+'<div class="panel"><p><strong>'+ev[0]+'</strong></p><p>'+ev[1]+'</p></div>'+
    '<div class="daybill"><span>Shop deed</span><b>'+money(s.paid)+' / '+money(DEED)+'</b>'+CREWS.map((c,i)=>'<span>'+c+'</span><b>'+s.reps[i]+' / 9</b>').join('')+'</div>'+
    (profile.best?'<p class="accent">Fastest deed · '+profile.best+' shifts</p>':'')+
-   (s.ledger.length?s.ledger.slice(0,8).map(e=>tile(null,esc(e.text),'Shift '+e.day,'<span class="tiny">'+(e.amount>0?'+':'')+money(e.amount)+'</span>')).join(''):'<p class="tiny">Your trades will appear here.</p>')+
+   (s.ledger.length?'<details class="logDetail"><summary>Receipts · '+s.ledger.length+'</summary>'+s.ledger.slice(0,8).map(e=>tile(null,esc(e.text),'Shift '+e.day,'<span class="tiny">'+(e.amount>0?'+':'')+money(e.amount)+'</span>')).join('')+'</details>':'')+
    ((sup.like||sup.comment||profile.rewards.like||profile.rewards.comment)?'<div class="panel"><p>'+[profile.rewards.like?'Gold Trader plate fitted':sup.like?'Like in GameWave to fit a Gold Trader plate.':'',profile.rewards.comment?'Violet receipt ink fitted':sup.comment?'Comment in GameWave to unlock violet receipt ink.':''].filter(Boolean).join(' ')+'</p></div>':'');
  }
  body.innerHTML=text;icons(body);if(k==='scan'&&body.querySelector('.loupe')){const l=v.lot;CounterStamps.page(body.querySelector('.specimen'),l);const sync=bindAppraisal(body,s,v);AssayGlass.install(body.querySelector('.loupe'),l,()=>{CounterSound.play('stamp');save();const mark=SEALS[l.item];document.getElementById("readCode").textContent=l.fake?mark.slice(0,-1)+(Number(mark.at(-1))+2)%10:mark;sync();});}body.querySelectorAll('[data-lot]').forEach(b=>b.onclick=()=>{
@@ -1923,7 +2105,9 @@ function returnFromPractice(){
  if(parent!==window){parent.postMessage('second-orbit.practice-finished','*');return;}
  history.replaceState(null,'',location.href.split('#')[0]);location.reload();
 }
-$('#help').onclick=()=>showModal('help');
+$('#help').innerHTML=pict('help',22);$('#help').onclick=()=>showModal('help');
+$('#shelf').prepend(makeSmallIcon('shelf'));$('#ledger').prepend(makeSmallIcon('ledger'));
+function makeSmallIcon(name){const span=document.createElement('span');span.className='navGlyph';span.innerHTML=pict(name,19);return span;}
 $('#dismiss').onclick=()=>{modal.close();render();};modal.addEventListener('close',()=>{modalKind='';});
 $('#shelf').onclick=()=>showModal('shelf');$('#ledger').onclick=()=>showModal('ledger');
 function worldControl(id,label,open){const b=document.createElement('button');b.id=id;b.className='worldControl';b.setAttribute('aria-label',label);b.title=label;b.onclick=open;$('#world').append(b);}
