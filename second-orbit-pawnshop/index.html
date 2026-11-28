@@ -53,11 +53,36 @@ dialog{width:min(calc(100% - 20px),445px);max-height:85dvh;padding:0;color:var(-
 
 #desk .unlock{margin-top:7px;padding:5px 0 0;border-top:1px dashed #909580;font-size:11px;letter-spacing:.1px;color:#315b4f}#desk .permit{align-self:flex-start;margin-top:4px;background:#c7d3b9;color:#2b493d;font-size:12px}.worldControl{position:absolute;border:0;box-shadow:none;background:transparent;min-height:34px;padding:0}.worldControl:hover{box-shadow:inset 0 0 0 1px #c7d3a33b}.worldControl:focus-visible{outline:2px dashed #ffe3ad}#registerFace{left:75%;top:56%;width:20%;height:23%}#supplyFace{left:0;top:52%;width:20%;height:16%}
 
+
+/* A single stamped counter slip guides each exchange. */
+.headtools{display:flex;align-items:center;gap:2px}.headtools #help{min-width:40px;min-height:40px;padding:2px;color:#c6d1bd;box-shadow:none;border:0;background:transparent;font:17px Silk}
+#looseItem{position:absolute;left:62%;top:51%;width:17%;height:25%;min-height:34px;padding:0;touch-action:none;border:0;background:none;box-shadow:none}
+[data-phase=bell] #desk{background:#d4d0b6;color:#233333;border:5px solid #293c3b;box-shadow:inset 2px 2px #efe8c8}
+.slipTop,.offerline,.marginline{display:flex;align-items:center;justify-content:space-between;gap:9px}
+.slipTop{padding-bottom:8px;border-bottom:1px dashed #79877b;margin-bottom:9px}.slipTop small,.stockline small{font:10px/1.35 Consolas,monospace;letter-spacing:.35px;color:#43594e}
+.direction{display:inline-block;padding:4px 6px;background:#344f4c;color:#fff0ce;font:11px/1.2 Silk,monospace}.direction.buying{background:#79513a}.direction.selling{background:#285c50}
+.clerk{margin-bottom:8px}.taskline{display:flex;gap:9px;align-items:center;margin:7px 0 10px}.taskline i{font:20px/30px monospace;color:#f3d991;background:#334c45;min-width:31px;text-align:center;font-style:normal}.taskline h3{font:16px/1.17 Silk,monospace;color:#253b37}.taskline p,.ticketHint{font:13px/1.35 Consolas,monospace;color:#384d40;margin:3px 0 0}
+.stockline{display:flex;align-items:center;gap:9px;border:1px solid #879883;border-left-width:3px;background:#c6c8ad;min-height:48px;padding:5px 7px}.stockline .icon{width:39px;height:39px}.stockline>div{flex:1;min-width:0}.stockline strong,.stockline small{display:block}.stockline strong{font:14px/1.18 Silk,monospace;color:#263f39}.stockline>b,.offerline b,.marginline b{font:15px/1.2 Silk,monospace;color:#244f41}.stockline button{font:11px Consolas,monospace;color:#384e40;background:transparent;border:1px dashed #788772;min-height:36px;padding:4px 7px;box-shadow:none}
+.offerline{margin-top:9px}.offerline span,.marginline span,.patience,.cashwarning{font:12px/1.35 Consolas,monospace}.offerline b{color:#604329}.marginline{margin-top:6px}.marginline b{font-size:13px}.cashwarning{color:#7f392e;margin:5px 0}.dealtools{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}.dealtools button{background:#c5c7b1;color:#314c40;border:1px solid #80927e;box-shadow:none;font:12px Consolas,monospace;min-height:34px;padding:4px 7px}.patience{margin-top:3px}.slipmath{display:grid;grid-template-columns:repeat(3,1fr);margin:10px 0;gap:5px}.slipmath span{font:11px/1.2 Consolas,monospace;color:#404d42;border-left:2px solid #929e88;padding-left:7px}.slipmath b{display:block;color:#30463c;font:15px Silk,monospace;margin-top:3px}.slipmath span:last-child{border-color:#356f54}.slipmath span:last-child b{color:#225639}.ticketHint{margin:8px 0}
+.bin.requested{outline:2px solid #f0cd78;outline-offset:-3px;background:#30433b}.bin.requested:before{content:'▼';position:absolute;left:3px;top:1px;color:#ffdf91;font-size:12px}.bin.ontray:after{content:'✓';position:absolute;left:3px;bottom:2px;color:#acf2c8}.bin.featured:before{content:'◆';position:absolute;left:3px;top:2px;color:#ffcb79}
+.manual{background:#e0d5b6;color:#263d38;border:3px double #7f8a77;padding:12px 14px}.manual small{font:9px Silk;color:#58644f}.manual h3{margin:5px 0 10px}.manual ol{padding-left:19px;margin:0}.manual li{font:14px/1.4 Consolas,monospace;margin:7px 0}
+.specimen{width:100%;height:auto;display:block;image-rendering:pixelated}.practiceOverlay{background:#152228;border:1px solid #647d6c;padding:0;width:min(100vw,900px);height:96dvh;max-height:96dvh;max-width:100vw;overflow:hidden}.practiceOverlay[open]{display:flex;flex-direction:column}.practiceOverlay iframe{width:100%;border:0;flex:1;min-height:0}.leavePractice{align-self:flex-end;min-height:36px}.cashwarning,.ticketHint,.manual{overflow-wrap:break-word}
+#returnDeal,#tryDeal{background:#83c2a3;color:#173b31;font:13px Silk}.manual li b{color:#203e36}
+@media(max-height:720px){.taskline{margin:5px 0}.slipTop{margin-bottom:5px;padding-bottom:5px}.clerk{margin-bottom:4px}.stockline{min-height:40px}.stockline .icon{width:33px;height:33px}.actions{margin-top:8px}.dealtools{margin-top:4px}}
+@media(max-width:350px){.direction{font-size:10px}.slipTop small{font-size:9px}.taskline h3{font-size:14px}#desk{padding-inline:10px}.stockline strong{font-size:13px}}
+
+.rentNote{font:12px/1.4 Consolas,monospace;color:#674f39;margin-top:5px}#meters.cashPulse>div:first-child{animation:cashPulse .55s ease-out}
+@keyframes cashPulse{30%{background:#546b52;box-shadow:0 0 0 4px #546b52}100%{background:transparent;box-shadow:none}}
+@media(prefers-reduced-motion:reduce){#meters.cashPulse>div:first-child{animation:none}}
+
+#stampChoice{display:flex;gap:8px}#stampChoice button{flex:1;background:#334e49;color:#e5efcc}#stampChoice button:last-child{background:#4f3d34;color:#f2d7b6}
+
+#supplyFace.windowOpen{left:3.2%;top:36.5%;width:16.6%;height:23.8%}
 </style></head><body>
 <main id="cabinet">
  <header><div class="brand"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#efba66" d="M10 6h11v3h4v4h2v7h-3v4h-4v2H10v-2H7v-4H5v-8h3V9h2z"/><path fill="#22323b" d="M17 6h5v3h3v5h-3v4h-4v3h-6v-3h4v-3h3v-5h-2z"/><path fill="#91e3c5" d="M1 21h5v-3h5v-2h7v-3h7v-3h6v4h-5v3h-6v3h-7v2H6v3H1z"/></svg><span>SECOND ORBIT</span></div>
- <button id="sound" aria-label="Mute sound"></button></header>
- <div id="world"><canvas id="shopArt" width="320" height="185" aria-label="The orbital pawnshop counter"></canvas><button id="trayHit" hidden aria-label="Examine the item on the counter"></button><div class="channel"><i></i><span id="sector">DOCK 09</span></div><div class="shift" id="time"></div><div id="delta" aria-live="polite"></div></div>
+ <div class="headtools"><button id="help" aria-label="Counter guide" title="Counter guide">?</button><button id="sound" aria-label="Mute sound"></button></div></header>
+ <div id="world"><canvas id="shopArt" width="320" height="185" aria-label="The orbital pawnshop counter"></canvas><button id="looseItem" hidden aria-label="Place offered goods on the tray"></button><button id="trayHit" hidden aria-label="Examine the item on the counter"></button><div class="channel"><i></i><span id="sector">DOCK 09</span></div><div class="shift" id="time"></div><div id="delta" aria-live="polite"></div></div>
  <div id="meters"></div>
  <section id="desk" aria-label="Shop counter"></section>
  <nav><button id="shelf">▥ &nbsp;Shelf <span id="stockCount"></span></button><button id="ledger">≡ &nbsp;Ledger</button></nav>
@@ -727,7 +752,7 @@ window.CounterArt = (() => {
     if((state.progress||0)>.50){const twilight=Math.min(.28,((state.progress||0)-.50)*.55);ctx.fillStyle='rgba(76,33,61,'+twilight+')';ctx.fillRect(76,13,170,94);}
     ctx.restore();
     if(closed){for(let y=15;y<111;y+=7){r(73,y,175,7,'#374d4d');r(73,y+4,175,2,'#1e343c');r(73,y,175,1,'#65726a');}r(139,50,48,20,ink);r(141,52,44,16,'#74594c');w(151,57,'CLOSED',cream);}
-    else {ctx.save();ctx.beginPath();ctx.rect(72,15,178,113);ctx.clip();const a=state.approach??1,dx=Math.round((1-a)*(1-a)*42);ctx.translate(dx,Math.round((1-a)*6));portrait(ctx,n,t,state.mood||'idle');ctx.restore();}
+    else if(state.scene!=='empty'){ctx.save();ctx.beginPath();ctx.rect(72,15,178,113);ctx.clip();const a=state.approach??1,dx=Math.round((1-a)*(1-a)*42);ctx.translate(dx,Math.round((1-a)*6));portrait(ctx,n,t,state.mood||'idle');ctx.restore();}
     counter(ctx,Array.isArray(state.stock)?state.stock:[],award?null:state.item,t,!!state.scan,state.mood,closed,state.extra);
     if(award){
       // The broker slides the actual ownership deed and its brass key across the tray.
@@ -900,6 +925,303 @@ globalThis.CounterContracts = (() => {
 
   return Object.freeze({start,record,settle,status,headline});
 })();
+</script><script>/* Second Orbit: short exchanges layered onto the live 320 × 185 counter. */
+globalThis.CounterStage=(()=>{
+  const items=new Map();
+  const people=[
+    ['#895a4d','#d99669','#c1a18b'],['#425e59','#88947b','#93a984'],
+    ['#656f82','#a2b2ac','#b7bdab'],['#665668','#b49194','#d7b59a'],
+    ['#735674','#b38f9f','#c7aab0'],['#5b6867','#9fac92','#d4ba8c'],
+    ['#5c536b','#a1889b','#d69a7f'],['#426366','#86a798','#c18373']
+  ];
+  const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x);};
+  const between=(a,b,t)=>Math.round(a+(b-a)*t);
+  function tile(id){
+    if(items.has(id))return items.get(id);
+    const c=document.createElement('canvas');c.width=c.height=32;
+    if(id===12){if(!globalThis.WaterArt)return null;WaterArt.icon(c,2);}
+    else{if(!globalThis.CounterArt)return null;CounterArt.icon(c,id);}
+    items.set(id,c);return c;
+  }
+  function draw(ctx,{run,now=0,age=0,reduced=false,trayReady}={}){
+    if(!ctx||!run||!['bell','night','trade','receipt'].includes(run.phase))return;
+    const v=run.patron;if(!v&&['trade','receipt'].includes(run.phase))return;
+    ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.imageSmoothingEnabled=false;
+    try{
+      const t=reduced?3:Math.max(0,Number(age)||0),clock=reduced?0:(Number(now)||0)/1000;
+      const ink='#26343a',till='#315747',mint='#b6dfaa',paper='#e5d7b2',gold='#e7bd7e';
+      const [sleeve,cuff,skin]=people[(v?.person|0)%8]||people[0];
+      const r=(x,y,w,h,c)=>{ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),w,h);};
+      function poly(c,...points){
+        let min=185,max=0;
+        for(let j=1;j<points.length;j+=2){min=Math.min(min,points[j]);max=Math.max(max,points[j]);}
+        for(let y=Math.floor(min);y<max;y++){let cuts=[];
+          for(let j=0,k=points.length-2;j<points.length;k=j,j+=2){const a=points[k+1],b=points[j+1];
+            if((a>y+.5)!==(b>y+.5))cuts.push(points[k]+(y+.5-a)*(points[j]-points[k])/(b-a));}
+          cuts.sort((a,b)=>a-b);for(let j=0;j<cuts.length;j+=2){const left=Math.ceil(cuts[j]-.5);r(left,y,Math.ceil(cuts[j+1]-.5)-left,1,c);}
+        }
+      }
+      function hand(progress,open){
+        // Attached to the near right cuff. Wrist and thumb move together.
+        const x=between(194,193,progress),y=between(119,135,progress);
+        poly(ink,194,109,202,112,205,119,x+7,y-1,x+4,y+3,x-6,y+3,x-7,y-1,194,117);
+        poly(sleeve,195,111,201,113,203,119,x+5,y-2,x-4,y-2,196,116);
+        poly(cuff,x-3,y-4,x+6,y-3,x+5,y,x-4,y);
+        poly(skin,x-5,y-1,x+3,y-1,x+5,y+1,x+3,y+4,x-4,y+4,x-6,y+2);
+        r(x-3,y,4,1,'#e8c4a1');
+        for(let n=0;n<3;n++){r(x-5+n*3,y+3,2,open?4-n%2:2,skin);r(x-5+n*3,y+(open?6-n%2:4),2,1,'#94786d');}
+      }
+      function ticket(open,good){
+        // Fan-fold paper advances beneath the physical printer lip.
+        const len=Math.round(18*open);if(len<2)return;
+        const d=Math.round(len*.48);poly(ink,249,144,266,143,264-d,145+len,246-d,146+len);
+        poly(paper,250,143,264,142,263-d,143+len,248-d,144+len);
+        for(let i=3;i<len-1;i+=3){const a=250-Math.round(i*.48);
+          r(a,143+i,Math.min(9,4+(i*7)%8),1,'#938e78');r(a+11,142+i,1,1,'#a99d7f');}
+        if(open>.85){let x=249-d,y=139+len;
+          r(x,y,8,4,good?'#65987f':'#bb8469');r(x+2,y+1,4,1,good?'#a5c5a1':'#e7b593');}
+        r(248,143,16,1,ink);
+      }
+      function credit(x,y,flip,stack){
+        const dy=flip?2:0;
+        if(stack){poly(ink,x-8,y,x+4,y-4,x+10,y,x+8,y+4,x-4,y+6,x-9,y+3);
+          poly('#997a55',x-8,y+2,x+7,y-2,x+8,y+2,x-5,y+5);}
+        poly(ink,x-9,y-1,x+5,y-5+dy,x+10,y-2,x+9,y+1,x-5,y+5-dy,x-10,y+2);
+        poly(mint,x-8,y-1,x+5,y-4+dy,x+8,y-2,x+8,y,x-5,y+3-dy);
+        poly('#82a677',x-6,y,x+5,y-3+dy,x+6,y-2,x-4,y+2-dy);
+        r(x-1,y-1,3,2,till);r(x+3,y-2,2,1,paper);r(x-6,y+1,2,1,gold);
+      }
+      function lot(x,y,scale,opacity=1){
+        if(opacity<=0)return;ctx.save();ctx.globalAlpha*=opacity;
+        const side=v.buyer?v.extra:(v.includeSide?v.sideLot:null);
+        const one=tile(v.lot.item),two=side&&tile(side.item),w=Math.round(32*scale);
+        if(one)ctx.drawImage(one,x-(two?27:16)*scale,y-27*scale,w,w);
+        if(two)ctx.drawImage(two,x+scale,y-26*scale,w,w);
+        ctx.restore();
+      }
+      function tray(){
+        // Empty jade felt dish. Space inside it stays blank until the item is laid down.
+        poly('#243c41',113,130,128,124,185,124,204,133,200,141,117,143,108,139);
+        poly('#839185',114,130,129,125,184,125,202,133,198,139,118,141,110,138);
+        poly('#506e64',116,131,129,126,182,126,199,133,196,138,119,140,113,138);
+        poly('#38564f',118,132,131,127,181,127,196,133,194,137,121,139,116,137);
+        for(let i=0;i<5;i++){r(131+i*10,128,4,1,'#537168');r(125+i*12,137,4,1,'#547269');}
+        r(129,125,10,1,paper);r(182,126,4,1,'#c3c9af');r(114,137,7,1,'#bac0a8');
+      }
+      function chevron(x,y,down,color){
+        if(down){
+          poly(ink,x-7,y-5,x,y-1,x+7,y-5,x+7,y,x,y+6,x-7,y);
+          poly(color,x-6,y-3,x,y+1,x+6,y-3,x+6,y-1,x,y+4,x-6,y);
+        }else{
+          poly(ink,x+5,y-7,x+5,y-2,x+2,y,x+5,y+2,x+5,y+7,x-5,y);
+          poly(color,x+4,y-5,x+4,y-3,x,y,x+4,y+3,x+4,y+5,x-3,y);
+        }
+      }
+      if(run.day>=2&&globalThis.CounterWindow){
+        const displayed=globalThis.CounterWindow.featured(run);
+        // A wall-mounted shadow box sits above the stock shelf. The glass and
+        // vacant velvet cushion remain visible when a displayed lot is sold.
+        poly(ink,12,73,18,68,58,68,61,72,61,102,54,108,14,107,11,104);
+        poly('#6f7667',13,73,19,70,58,70,59,72,53,75);
+        r(13,74,40,29,'#455c52');r(15,76,37,25,'#263d3d');r(16,77,35,23,'#354d47');
+        poly('#2b4542',53,75,60,72,60,100,53,104);
+        poly('#9d8663',14,102,52,103,59,100,58,103,53,106,15,105);
+        poly('#657664',18,100,25,96,46,95,52,98,47,101,20,102);
+        r(23,99,23,1,'#87927a');r(17,76,33,1,'#b9ae85');r(21,77,25,1,'#80937f');
+        if(displayed){
+          const image=tile(displayed.item);if(image)ctx.drawImage(image,22,75,27,27);
+          // The punch in the tiny paper price tag and its brass wire are part of the sprite.
+          r(43,98,1,3,'#b7996e');poly(paper,40,101,45,100,50,103,46,106,40,104);
+          r(42,101,1,1,'#9d856a');r(44,103,4,1,'#747a65');
+        }else{
+          poly('#6a7a68',31,94,35,92,39,94,36,96,32,96);
+        }
+        // Reflection lives on the glass near the edge, clear of the merchandise.
+        r(16,77,1,22,'#789589');r(17,78,5,1,'#bfc3a4');r(17,79,3,1,'#88a599');
+        r(53,76,1,25,'#7e9280');r(56,75,1,12,'#5f7b70');r(15,104,4,1,'#c7b494');
+        if(displayed&&Math.sin(clock*.95)>.9){r(50,74,3,1,paper);r(51,73,1,3,paper);}
+      }
+      if(run.phase==='bell'){
+        // A polished service bell occupies the inspection pad between visitors.
+        poly('rgba(18,29,32,.62)',134,138,147,134,176,134,185,139,176,143,143,143);
+        poly(ink,137,136,141,132,147,131,148,125,151,120,156,116,162,116,168,120,172,125,173,131,181,133,183,137,179,140,143,141,137,139);
+        poly('#ad7e55',143,132,148,126,150,121,156,117,164,118,169,122,171,127,172,132,178,134,177,136,143,137);
+        poly('#d9ac78',146,130,149,124,151,122,156,119,161,118,163,120,157,120,154,123,153,128,150,130);
+        r(149,126,3,2,paper);r(152,122,4,2,paper);r(166,125,2,4,'#8d705b');r(145,132,27,1,'#f4d897');
+        r(156,113,7,3,'#91775b');r(155,112,9,2,gold);r(158,112,4,1,paper);
+        r(140,136,39,2,'#79674f');r(142,137,34,1,'#c5ab76');r(143,139,34,1,'#39423c');
+        const q=Math.round(Math.sin(clock*2)*1.5);
+        chevron(160,104+q,true,gold);return;
+      }
+      if(run.phase==='night'){
+        // The bookkeeper leaves the rent envelope on the night counter.
+        poly('#29383a',122,138,163,128,188,141,146,153);
+        poly('#b59a78',122,136,163,127,186,139,144,150);
+        poly('#e2c399',124,136,163,128,183,139,144,148);
+        poly('#b79772',124,136,160,138,163,128,158,141);
+        poly('#e5cba3',124,136,162,128,158,138);
+        poly('#904e42',152,137,157,135,161,137,161,140,156,142,152,140);r(155,137,3,1,'#c57b58');
+        const pulse=(Math.sin(clock*1.3)+1)*.04+.08;
+        poly('rgba(248,187,105,'+pulse+')',104,19,120,19,185,148,99,146);return;
+      }
+      if(run.phase==='trade'){
+        const staged=typeof trayReady==='boolean'?trayReady:(typeof globalThis.trayReady==='function'?globalThis.trayReady(v):v.staged!==false);
+        if(!staged){
+          tray();
+          if(v.buyer){
+            // The stock drawer lies below the cabinet. Leave both the tray and counter empty.
+            for(let i=0;i<2;i++)chevron(158,151+i*7+Math.round(Math.sin(clock*2)*1.5),true,i===0?'#9cad96':gold);
+          }else{
+            // The seller sets the loose lot in a shallow cardboard transit case.
+            poly(ink,202,125,217,119,238,119,247,126,246,130,219,133,202,129);
+            poly('#91765c',204,125,217,120,237,120,244,126,219,131);
+            poly('#bd9c73',204,125,218,121,236,121,242,125,219,129);
+            lot(225,128,1.12);
+            const off=Math.round(Math.sin(clock*3.2)*1.5);
+            chevron(202+off,122,false,'#ffd67b');chevron(192+off,126,false,'#ffdf84');
+          }
+          return;
+        }
+        // A simple loupe pointing at the tray only on the very first unexamined offer.
+        if(run.day===1&&run.turn===1&&!v.buyer&&!v.scanned&&t>.45){
+          const x=185,y=123+Math.round(Math.sin(clock*3.4)*1.2);
+          poly(ink,x-5,y-5,x+1,y-5,x+4,y-2,x+4,y+2,x+7,y+5,x+5,y+7,x+1,y+4,x-4,y+4,x-7,y+1,x-7,y-2);
+          r(x-4,y-4,5,1,gold);r(x-6,y-2,1,3,gold);r(x+2,y-2,1,4,gold);r(x-4,y+2,5,1,gold);
+          r(x-4,y-2,4,3,'#4e7d75');r(x-3,y-2,2,1,mint);r(x+3,y+3,2,2,gold);r(x+5,y+5,1,1,gold);
+        }
+        return;
+      }
+      const buying=v.ticket==='PURCHASED',selling=v.ticket==='SOLD',paid=buying||selling,tip=v.ticket==='CUSTOMS TIP';
+      const reach=ease(t/.31)*(1-ease((t-1.13)/.34));
+      if(reach>0)hand(reach,t<.77||selling);
+      // Positive actions send the goods and banknote in opposite directions.
+      // On a walk-away each party takes its own goods back.
+      const shelf=buying||(!paid&&v.buyer),slide=ease((t-.21)/.79);
+      const x=between(157,shelf?44:193,slide),y=between(135,shelf?116:124,slide)-Math.round(8*Math.sin(Math.PI*slide));
+      const shrinking=1-.37*slide,fade=1-ease((t-.82)/.25);
+      if(fade>0){const width=Math.max(5,Math.round(17*shrinking));
+        ctx.save();ctx.globalAlpha=fade*.28;r(x-width,between(139,shelf?120:129,slide),width*2,2,ink);ctx.restore();
+        lot(x,y,shrinking,fade);}
+      if(paid||tip){
+        const a=ease((t-.49)/.64);
+        if(t>=.48&&t<1.22){
+          const endX=buying?193:250,startX=buying?250:193;
+          const cx=between(startX,endX,a),cy=between(buying?141:132,buying?132:141,a)-Math.round(8*Math.sin(Math.PI*a));
+          credit(cx,cy,a>.4&&a<.58,Math.abs(v.tender||0)>=45);
+        }
+        if(t>1.03&&t<1.36){const d=Math.round((t-1.03)*21),xx=buying?194:251,yy=buying?132:139;
+          r(xx-6-d,yy-3-d,2,1,gold);r(xx+6+d,yy-d,2,1,mint);r(xx,yy-6-d,1,2,paper);}
+      }
+      ticket(ease((t-(paid?.90:.60))/.4),paid||tip);
+    }finally{ctx.restore();}
+  }
+  return Object.freeze({draw});
+})();
+</script><script>/* Second Orbit. Maker's punches and inspection handbook art. */
+globalThis.CounterStamps=(()=>{
+  const ink='#394943',oxide='#9c5c45',paper='#e8d4aa';
+  // Each paired drawing is a real die and an imitation cut by another hand.
+  // Each row is a seven-bit, MSB-first impression. Whitespace is unprinted paper.
+  const dies=[
+    [[8,24,48,126,12,24,16],[8,12,6,63,24,12,4]],                  // forked charge
+    [[54,73,73,54,73,73,54],[28,34,65,28,65,34,28]],               // double winding
+    [[0,28,34,73,34,28,0],[0,28,42,85,42,28,0]],                  // lens countermark
+    [[8,28,42,8,8,28,62],[8,20,34,65,8,28,62]],                  // transmitter crown
+    [[8,8,42,28,127,28,8],[8,28,127,28,42,8,8]],                  // star atlas
+    [[62,34,20,8,20,34,62],[62,34,20,8,8,28,62]],                 // escapement
+    [[34,34,42,42,28,8,28],[34,42,54,42,34,8,28]],               // split cathode
+    [[24,36,36,24,8,14,8],[24,36,36,24,8,56,8]],                 // right cut
+    [[99,85,42,28,42,85,99],[99,85,42,8,20,34,65]],              // four fans
+    [[8,20,42,73,42,20,8],[8,20,34,127,34,20,8]],                // prism cut
+    [[127,65,93,85,93,65,127],[127,65,85,73,85,65,127]],        // sealed recorder
+    [[14,24,48,48,49,27,14],[56,12,6,6,70,108,56]],              // crescent
+    [[8,20,20,34,65,34,28],[8,20,34,65,93,34,28]]                // condensate
+  ];
+  const glyph={
+    A:[14,17,17,31,17,17,17],B:[30,17,17,30,17,17,30],C:[15,16,16,16,16,16,15],D:[30,17,17,17,17,17,30],
+    E:[31,16,16,30,16,16,31],F:[31,16,16,30,16,16,16],G:[14,17,16,23,17,17,14],H:[17,17,17,31,17,17,17],
+    I:[31,4,4,4,4,4,31],J:[7,2,2,2,18,18,12],K:[17,18,20,24,20,18,17],L:[16,16,16,16,16,16,31],
+    M:[17,27,21,21,17,17,17],N:[17,25,21,21,19,17,17],O:[14,17,17,17,17,17,14],P:[30,17,17,30,16,16,16],
+    Q:[14,17,17,17,21,18,13],R:[30,17,17,30,20,18,17],S:[15,16,16,14,1,1,30],T:[31,4,4,4,4,4,4],
+    U:[17,17,17,17,17,17,14],V:[17,17,17,17,17,10,4],W:[17,17,17,21,21,21,10],X:[17,17,10,4,10,17,17],
+    Y:[17,17,10,4,4,4,4],Z:[31,1,2,4,8,16,31],'-':[0,0,0,14,0,0,0],
+    '0':[14,17,19,21,25,17,14],'1':[4,12,4,4,4,4,14],'2':[14,17,1,2,4,8,31],'3':[30,1,1,14,1,1,30],
+    '4':[2,6,10,18,31,2,2],'5':[31,16,16,30,1,1,30],'6':[14,16,16,30,17,17,14],'7':[31,1,2,4,8,8,8],
+    '8':[14,17,17,14,17,17,14],'9':[14,17,17,15,1,1,14],'.':[0,0,0,0,0,0,4]
+  };
+  const spares=['EB-4','HN-7','LM-2','RX-1','AT-8','TM-5','VA-9','KY-3','DR-4','PR-6','BX-2','MN-8','FW-1'];
+  function rows(ctx,x,y,bits,columns,scale){
+    for(let row=0;row<bits.length;row++)for(let col=0;col<columns;col++)
+      if(bits[row]&(1<<(columns-col-1)))ctx.fillRect(x+col*scale,y+row*scale,scale,scale);
+  }
+  function drawMark(ctx,x,y,itemId,isFake,scale=1){
+    if(!ctx)return;const pair=dies[itemId]||dies[0];ctx.save();ctx.fillStyle=ink;
+    rows(ctx,Math.round(x),Math.round(y),pair[isFake?1:0],7,Math.max(1,Math.round(scale)));ctx.restore();
+  }
+  function page(canvas,lot){
+    if(!canvas)return;if(canvas.width!==256)canvas.width=256;if(canvas.height!==66)canvas.height=66;
+    const ctx=canvas.getContext('2d');if(!ctx)return;
+    ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.imageSmoothingEnabled=false;
+    const id=Number.isInteger(lot?.item)&&dies[lot.item]?lot.item:0;
+    const code=(typeof SEALS!=='undefined'&&SEALS[id])||spares[id];
+    function r(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h);}
+    function lettering(x,y,text,c,s=1){
+      ctx.fillStyle=c;for(const ch of text){if(glyph[ch])rows(ctx,x,y,glyph[ch],5,s);x+=6*s;}
+    }
+    function line(x,y,ex,ey,c){const dx=Math.abs(ex-x),dy=-Math.abs(ey-y),sx=x<ex?1:-1,sy=y<ey?1:-1;let e=dx+dy;
+      while(true){r(x,y,1,1,c);if(x===ex&&y===ey)break;const a=2*e;if(a>=dy){e+=dy;x+=sx;}if(a<=dx){e+=dx;y+=sy;}}}
+    r(0,0,256,66,paper);
+    // Spine and punched binding. Thin hatch rules are printed with the same two inks.
+    r(0,0,3,66,ink);r(5,0,1,66,oxide);r(12,0,1,66,oxide);
+    for(const y of [13,48]){r(3,y,7,3,ink);r(4,y-1,5,1,ink);r(3,y,3,1,paper);}
+    r(17,4,234,1,ink);r(17,60,234,1,ink);r(249,6,1,53,ink);r(251,4,1,57,oxide);
+    // A squared-off seal proof with paper registration marks at every corner.
+    const cx=47,cy=32;
+    for(const [sx,sy] of [[-1,-1],[1,-1],[-1,1],[1,1]]){
+      const x=cx+sx*22,y=cy+sy*22;r(x+(sx<0?0:-5),y,6,1,oxide);r(x,y+(sy<0?0:-5),1,6,oxide);
+    }
+    drawMark(ctx,cx-14,cy-14,id,false,4);
+    // Factory serial in lead type. Inks share the specimen and the item plate.
+    r(78,10,1,45,oxide);lettering(88,13,'FACTORY SPECIMEN',oxide);lettering(88,29,code,ink,3);
+    // Side tab reads as a numbered drawer index even on a short phone screen.
+    r(192,27,47,25,oxide);r(194,29,43,21,paper);lettering(199,31,'PL.',oxide);
+    lettering(217,40,String(id+1).padStart(2,'0'),ink);
+    for(let x=202;x<234;x+=4)line(x,50,Math.min(x+2,235),48,oxide);
+    ctx.restore();
+  }
+  return Object.freeze({drawMark,page});
+})();
+</script><script>'use strict';
+
+globalThis.CounterWindow = (() => {
+  // The window holds a reference to one physical lot. The lot still occupies
+  // its normal stock slot and can be traded, seized, restored or repacked.
+  function featured(s){
+    const id=s?.displayLotId;
+    if(s?.day<2||!Number.isSafeInteger(id)||id<1||!Array.isArray(s.stock))return null;
+    return s.stock.find(l=>l.id===id)||null;
+  }
+  function pin(s,lotId){
+    if(!s||s.day<2||!Array.isArray(s.stock)||s.phase==='failed')return false;
+    if(lotId===null){delete s.displayLotId;return true;}
+    if(!Number.isSafeInteger(lotId)||lotId<1)return false;
+    const matches=s.stock.filter(l=>l.id===lotId);
+    if(matches.length!==1)return false;
+    s.displayLotId=lotId;return true;
+  }
+  function preferred(s,v){
+    // The second scheduled visitor is a natural buying slot whenever stock
+    // exists. Other visitors and existing negotiations keep their own orders.
+    if(!v?.buyer||v.lessonCoil||s?.turn!==2)return null;
+    return featured(s);
+  }
+  function recordSale(s,soldIds){
+    if(!s||!Array.isArray(soldIds)||!Number.isSafeInteger(s.displayLotId))return false;
+    if(!soldIds.includes(s.displayLotId))return false;
+    delete s.displayLotId;return true;
+  }
+  return Object.freeze({featured,pin,preferred,recordSale});
+})();
 </script><script>/* Counter magnifier. The entire inspection is drawn on a low-resolution test tray.
    The lens samples the very same pixels as the proof; no network textures. */
 const AssayGlass=(()=>{
@@ -915,7 +1237,7 @@ const AssayGlass=(()=>{
    g.fillStyle='#3a4d4d';g.fillRect(62,17,132,86);g.fillStyle='#73887b';g.fillRect(62,17,132,2);g.fillStyle='#263c3c';g.fillRect(65,21,126,78);
    const icon=document.createElement('canvas');CounterArt.icon(icon,l.item);g.imageSmoothingEnabled=false;g.drawImage(icon,77,21,80,78);
    if(l.grade===0){g.strokeStyle='#9a9a7d';for(let i=0;i<4;i++){let xx=92+i*7,yy=52+(l.item*3+i*8)%16;g.beginPath();g.moveTo(xx,yy);g.lineTo(xx+4,yy-3);g.stroke();}}
-   g.fillStyle='#ab9d75';g.fillRect(target.x-15,target.y-6,30,13);g.fillStyle='#dbd1a3';g.fillRect(target.x-14,target.y-5,28,10);tiny(stamped,target.x-7,target.y+2,'#293d38',6);
+   g.fillStyle='#ab9d75';g.fillRect(target.x-15,target.y-6,30,13);g.fillStyle='#dbd1a3';g.fillRect(target.x-14,target.y-5,28,10);CounterStamps.drawMark(g,target.x-13,target.y-4,l.item,l.fake===true,1);tiny(stamped,target.x-4,target.y+2,'#293d38',6);
    for(let j=0;j<12;j++){g.fillStyle='#7c846c';g.fillRect(74+j*3,91,1+((j+l.item)%2),j%3?3:5);}
    tiny(['G / III','G / II','G / I'][l.grade],155,92,'#9caa8d');
    for(const [qx,qy] of [[67,24],[185,24],[67,93],[185,93]]){g.fillStyle='#879484';g.fillRect(qx,qy,3,3);g.fillStyle='#48574f';g.fillRect(qx,qy+1,2,1);}
@@ -980,11 +1302,19 @@ const DEED=240,START=104;
 const money=n=>'₵'+Math.round(n);
 const lotValue=(lot,demand=1)=>CounterEconomy.resale(GOODS[lot.item][1],GRADES[lot.grade][1]*(lot.fake?.53:1),demand);
 const shiftRent=d=>Math.min(40,11+d*2);
-const rentDue=s=>s.paid>=DEED||s.extended?0:Math.max(0,shiftRent(s.day)-(s.charter===0?6:0));
+function rentInfo(s){
+ if(s.paid>=DEED||s.extended)return {due:false,daysLeft:0,amount:0};
+ const discount=s.charter===0?6:0;
+ if(s.deskVersion!==2)return {due:true,daysLeft:0,amount:Math.max(0,shiftRent(s.day)-discount)};
+ const daysLeft=(7-(s.day%7))%7;
+ const amount=Math.min(168,88+16*(Math.ceil(s.day/7)-1))-discount;
+ return {due:daysLeft===0,daysLeft,amount};
+}
+const rentDue=s=>{const r=rentInfo(s);return r.due?r.amount:0;};
 const catalogSize=d=>d<2?4:d<3?6:d<4?8:d<5?10:12;
 const demand=(s,i)=>CounterEconomy.market(s.day,GOODS[i][2],i)*(EVENTS[(s.day-1)%EVENTS.length][2]===GOODS[i][2]?1.26:1);
 function makeRun(seed){
- return {seed:seed>>>0,day:1,cash:START,paid:0,phase:'ready',turn:0,limit:6,nonce:2,stock:[
+ return {deskVersion:2,seed:seed>>>0,day:1,cash:START,paid:0,phase:'ready',turn:0,limit:5,nonce:2,stock:[
  {id:1,item:0,grade:1,fake:false,tag:false,cost:20},{id:2,item:3,grade:1,fake:false,tag:false,cost:26}],
  reps:[0,0,0],heat:0,scans:3,gear:[],patron:null,deals:0,sold:0,totalSales:0,
  earned:0,spent:0,ledger:[],intel:null,recap:null,served:[],serials:[],extended:false};
@@ -1005,47 +1335,98 @@ function openingKit(s,kit){
 function dice(s){s.seed=(Math.imul(s.seed,1664525)+1013904223)>>>0;return s.seed/4294967296;}
 function logTrade(s,text,amount=0){s.ledger.unshift({day:s.day,text,amount});s.ledger=s.ledger.slice(0,32);}
 function beginShift(s){
- s.phase='trade';s.turn=0;s.earned=0;s.spent=0;s.sold=0;s.served=[];s.audit=null;s.limit=Math.min(8,5+s.day);
+ s.phase='trade';s.turn=0;s.earned=0;s.spent=0;s.sold=0;s.served=[];s.audit=null;s.limit=s.deskVersion===2&&s.day===1?5:Math.min(8,5+s.day);
  s.scans=(s.gear.includes('reader')?5:3)+(s.charter===1?2:0);s.recap=null;nextGuest(s);
  CounterContracts.start(s);
 }
 function nextGuest(s){
  s.turn++;s.phase='trade';s.intel=null;
  const first=s.day===1&&s.turn===1, second=s.day===1&&s.turn===2;
- const person=first?0:second?1:Math.floor(dice(s)*8), buyer=s.stock.length>0&&(s.turn%2===0||s.stock.length>=5||s.cash<16);
- const visitor={person,buyer,wants:buyer?GOODS[s.stock[Math.floor(dice(s)*s.stock.length)].item][2]:null,
+ const appraisalCase=s.deskVersion===2&&s.day===1&&s.turn===3;
+ const person=first?0:second?1:appraisalCase?3:Math.floor(dice(s)*8);
+ const buyer=!appraisalCase&&s.stock.length>0&&(s.turn%2===0||s.stock.length>=5||s.cash<16);
+ const visitor={person,buyer,staged:false,wants:buyer?GOODS[s.stock[Math.floor(dice(s)*s.stock.length)].item][2]:null,
  patience:3,scanned:false,mood:'idle',response:'',ticket:'',tender:0,offer:0};
  if(buyer){
    visitor.pairOrder=s.day>=3&&s.turn%4===0&&s.stock.length>=2;
+   const coil=s.deskVersion===2&&second?s.stock.find(l=>l.id===s.firstCoil&&l.item===1):null;
+   const featured=typeof CounterWindow==='object'?CounterWindow.preferred(s,visitor):null;
+   if(featured&&!coil){visitor.windowLot=featured.id;visitor.wants=GOODS[featured.item][2];}
+   if(coil){visitor.lessonCoil=coil.id;visitor.wants=GOODS[coil.item][2];}
    const fits=s.stock.filter(l=>GOODS[l.item][2]===visitor.wants);
-   assignSale(s,visitor,fits[0]);
+   assignSale(s,visitor,coil||featured||fits[0]);
  }else{
-   const item=first?1:s.charter===1&&s.turn===1?9+(s.day%3):Math.floor(dice(s)*catalogSize(s.day));
-   const grade=first?2:Math.floor(dice(s)*3),fake=!first&&s.day>=2&&dice(s)<.21,tag=!first&&s.day>=2&&dice(s)<.26;
+   const item=first?1:appraisalCase?2:s.charter===1&&s.turn===1?9+(s.day%3):Math.floor(dice(s)*catalogSize(s.day));
+   const grade=first?2:Math.floor(dice(s)*3),fake=appraisalCase?dice(s)<.5:!first&&s.day>=2&&dice(s)<.21,tag=!first&&s.day>=2&&dice(s)<.26;
    const l={id:++s.nonce,item,grade,fake,tag,cost:0};visitor.lot=l;
    const v=lotValue(l,demand(s,item));
    visitor.floor=Math.max(5,Math.round(v*(tag?.40:.51)+dice(s)*5-s.reps[PEOPLE[person][2]]*.4));
    visitor.ask=Math.max(visitor.floor+3,Math.round(GOODS[item][1]*demand(s,item)*(tag?.60:.77+dice(s)*.24)));
+   if(first&&s.deskVersion===2){visitor.ask=22;visitor.floor=22;}
+   if(appraisalCase){visitor.trainingCase=true;visitor.ask=34;visitor.floor=Math.min(visitor.floor,34);}
    visitor.offer=visitor.ask;visitor.opening=visitor.ask;
+   if(s.day>=2&&s.stock.length<6&&(s.turn===1||dice(s)<.30)){
+     const i=(item+1+Math.floor(dice(s)*(catalogSize(s.day)-1)))%catalogSize(s.day);
+     visitor.sideLot={id:++s.nonce,item:i,grade:Math.floor(dice(s)*3),fake:false,tag:dice(s)<.15,cost:0};
+     visitor.sideAsk=Math.max(3,Math.round(lotValue(visitor.sideLot,demand(s,i))*(visitor.sideLot.tag?.48:.65)));
+     visitor.includeSide=false;
+   }
  }
  s.patron=visitor;
 }
 function buyerLimit(s,v,l){
  const favored=GOODS[l.item][2]===v.wants,rep=s.reps[PEOPLE[v.person][2]];
- return Math.max(4,Math.round(lotValue(l,demand(s,l.item))*(favored?1.02:.75)*(1+Math.min(6,rep)*.014)*(s.charter===2&&favored?1.15:1)));
+ const retail=favored?(s.deskVersion===2?1.17:1.02):.75;
+ return Math.max(4,Math.round(lotValue(l,demand(s,l.item))*retail*(1+Math.min(6,rep)*.014)*(s.charter===2&&favored?1.15:1)));
 }
 function assignSale(s,v,l,extra=null){
+ if(v.lessonCoil&&l.id!==v.lessonCoil)return false;
+ const different=v.lot?.id!==l.id;
  v.lot=l;v.extra=v.pairOrder&&extra&&l.id!==extra.id&&s.stock.some(q=>q.id===extra.id)?extra:null;
  v.max=v.extra?Math.round((buyerLimit(s,v,l)+buyerLimit(s,v,v.extra))*1.12):buyerLimit(s,v,l);
- v.ask=Math.max(2,Math.round(v.max*.82));v.opening=v.ask;v.offer=v.ask;v.scanned=false;v.response='';
+ v.ask=Math.max(2,Math.round(v.max*.82));
+ if(v.lessonCoil){v.extra=null;v.max=38;v.ask=38;}
+ v.opening=v.ask;v.offer=v.ask;if(different){v.scanned=false;s.intel=null;}v.response='';return true;
+}
+const trayReady=v=>!!v&&v.staged!==false;
+function stageLot(s,id,position='primary'){
+ const v=s.patron;if(s.phase!=='trade'||!v)return false;
+ if(!v.buyer){if(id!==v.lot.id||position!=='primary')return false;v.staged=true;return true;}
+ const lot=s.stock.find(l=>l.id===id);
+ if(!lot||v.lessonCoil&&id!==v.lessonCoil)return false;
+ if(position==='extra'){
+   if(!v.pairOrder||!trayReady(v)||id===v.lot.id)return false;
+   assignSale(s,v,v.lot,lot);
+ }else if(position==='primary'){
+   if(!trayReady(v)||id!==v.lot.id)assignSale(s,v,lot,v.extra);
+ }else return false;
+ v.staged=true;return true;
+}
+function toggleSide(s){
+ const v=s.patron;if(s.phase!=='trade'||!v||v.buyer||!v.sideLot||!trayReady(v))return false;
+ const delta=v.includeSide?-v.sideAsk:v.sideAsk;v.includeSide=!v.includeSide;
+ v.ask+=delta;v.offer=Math.max(1,v.offer+delta);v.opening+=delta;v.floor+=delta;return true;
+}
+function unstageLot(s,position='primary'){
+ const v=s.patron;if(s.phase!=='trade'||!trayReady(v))return false;
+ if(position==='extra'){
+   if(v.buyer&&v.extra)return assignSale(s,v,v.lot,null);
+   if(!v.buyer&&v.includeSide)return toggleSide(s);
+   return false;
+ }
+ if(position!=='primary')return false;
+ if(v.includeSide)toggleSide(s);
+ if(v.extra)assignSale(s,v,v.lot);
+ v.staged=false;return true;
 }
 function inspectLot(s){
  const v=s.patron;if(s.phase!=='trade'||!v||v.buyer||v.scanned||s.scans<1)return false;
  v.scanned=true;s.scans--;v.mood='inspect';return true;
 }
 function trade(s){
- if(s.phase!=='trade')return false;
+ if(s.phase!=='trade'||!trayReady(s.patron))return false;
  const v=s.patron,crew=PEOPLE[v.person][2],l=v.lot,n=v.buyer?Math.max(v.ask,v.offer):Math.min(v.ask,v.offer);
+ if(!Number.isFinite(n)||!Number.isInteger(n)||n<1||v.lessonCoil&&v.lot.id!==v.lessonCoil)return false;
  if(!v.buyer&&n>s.cash){v.response='Your till cannot cover that offer.';return 'reject';}
  // A buyer's ceiling is the mirror image of a seller's reserve.
  const ceiling=Math.max(500,v.max||0,n,v.ask)+200;
@@ -1061,17 +1442,24 @@ function trade(s){
  }
  if(v.buyer){
    const batch=v.extra?[l,v.extra]:[l];if(!batch.every(a=>s.stock.some(b=>b.id===a.id)))return false;
+   if(typeof CounterWindow==='object')CounterWindow.recordSale(s,batch.map(a=>a.id));
    s.stock=s.stock.filter(q=>!batch.some(a=>q.id===a.id));s.cash+=n;s.earned+=n;s.sold+=batch.length;s.totalSales+=batch.length;
    for(const a of batch){s.served.push(a.item);if(!s.serials.includes(a.item))s.serials.push(a.item);}
    logTrade(s,'Sold '+batch.map(a=>GOODS[a.item][0]).join(' + '),n);
  }else{
-   l.cost=n;s.cash-=n;s.spent+=n;s.stock.push(l);if(l.tag)s.heat=Math.min(5,s.heat+1);
-   logTrade(s,'Bought '+GOODS[l.item][0],-n);
+   const side=v.includeSide?v.sideLot:null;if(side&&n<=v.sideAsk)return false;
+   const batch=side?[l,side]:[l];
+   if(batch.some(a=>s.stock.some(b=>b.id===a.id)))return false;
+   l.cost=n-(side?v.sideAsk:0);if(side)side.cost=v.sideAsk;
+   s.cash-=n;s.spent+=n;s.stock.push(...batch);
+   for(const a of batch){if(a.tag)s.heat=Math.min(5,s.heat+1);if(!s.serials.includes(a.item))s.serials.push(a.item);}
+   if(s.deskVersion===2&&s.day===1&&s.turn===1&&l.item===1)s.firstCoil=l.id;
+   logTrade(s,'Bought '+batch.map(a=>GOODS[a.item][0]).join(' + '),-n);
  }
  if(v.scanned)l.assayed=true;
  if(!s.serials.includes(l.item))s.serials.push(l.item);
  s.deals++;s.reps[crew]=Math.min(9,s.reps[crew]+1);
- CounterContracts.record(s,{type:v.buyer?'sell':'buy',lot:l,amount:n,scanned:v.scanned||l.assayed===true,lotCount:v.extra?2:1,crew});
+ CounterContracts.record(s,{type:v.buyer?'sell':'buy',lot:l,amount:n,scanned:v.scanned||l.assayed===true,lotCount:v.extra||v.includeSide?2:1,crew});
  const margin=n-l.cost-(v.extra?.cost||0);
  const msg=v.buyer?(v.extra?'Two-lot shipment · ':'')+'Margin '+(margin>=0?'+':'')+money(margin)+' · '+CREWS[crew]+' standing +1':'Added to your shelf. Buyers can now bid on it.';
  receipt(s,v.buyer?'SOLD':'PURCHASED',msg,v.buyer?n:-n,'happy');return v.buyer?'sell':'buy';
@@ -1102,17 +1490,151 @@ function closeShift(s){
  if(fine){if(seize)s.stock=s.stock.filter(l=>l.id!==c.id);s.heat=Math.max(0,s.heat-2);}
  const before=s.cash;s.cash-=rent+fine;
  let liquidation=0;while(s.cash<0&&s.stock.length){const l=s.stock.shift();const coins=Math.max(1,Math.round(lotValue(l)*.48));s.cash+=coins;liquidation+=coins;}
- logTrade(s,'Dock rent',-rent);if(fine)logTrade(s,'Customs inspection',-fine);
+ if(rent)logTrade(s,'Dock rent',-rent);if(fine)logTrade(s,'Customs inspection',-fine);
  s.recap={rent,fine,seized:s.audit?.returned||(seize?GOODS[c.item][0]:''),liquidation,before,sold:s.sold,bonus};
  s.phase=s.cash<0?'failed':'night';s.patron=null;
 }
 
 </script><script>'use strict';
+
+function firstSeller(s) {
+ return s.deskVersion===2 && s.day===1 && s.turn===1 && !s.patron?.buyer;
+}
+function sideOf(v) { return v.buyer?v.extra:v.includeSide?v.sideLot:null; }
+const signedCredits=n=>(n<0?'−':'+')+money(Math.abs(n));
+function placeOnCounter(s, id, position='primary') {
+ if(!stageLot(s,id,position))return false;
+ hostStart();s.patron.negotiating=false;CounterSound.play('tap');save();render();return true;
+}
+function readOnCounter(s) {
+ const v=s.patron;
+ if(v.buyer||!trayReady(v))return;
+ if(!v.scanned&&!s.scans)return;
+ hostStart();CounterSound.wake();
+ if(inspectLot(s)){if(!firstSeller(s))v.manualCheck=true;CounterSound.play('scan');scanUntil=performance.now()+1400;save();}
+ render();showModal('scan');
+}
+function bindAppraisal(body,s,v){
+ const l=v.lot,manual=!!v.manualCheck;
+ const panel=body.querySelector('#scanReport'),back=body.querySelector('#returnDeal');
+ const report=body.querySelector('[data-act="report"]'),judge=body.querySelector('#stampChoice'),note=body.querySelector('#lensHint');
+ function sync(){
+  const read=!!l.sealRead,judged=!manual||typeof l.stampCall==='boolean';
+  judge.hidden=!read||judged;panel.hidden=!read||!judged;back.hidden=panel.hidden;
+  if(report)report.hidden=panel.hidden;
+  if(read)note.textContent=!judged?'Compare the two serials. Is this a factory stamp?':
+   !manual?'The two serials match. Review the deal.':(l.stampCall===!l.fake?'Correct. ':'Check the last digit. ')+(l.fake?'The stamped code differs from the register.':'Both codes match the register.');
+ }
+ for(const b of judge.querySelectorAll('button'))b.onclick=()=>{
+  if(!l.sealRead||typeof l.stampCall==='boolean')return;
+  l.stampCall=b.dataset.match==='yes';CounterSound.play(l.stampCall===!l.fake?'stamp':'counter');save();sync();back.scrollIntoView({block:'nearest'});
+ };
+ sync();return sync;
+}
+function printDeal(s) {
+ const v=s.patron;
+ if(firstSeller(s)&&!v.lot.sealRead){readOnCounter(s);return;}
+ hostStart();const outcome=trade(s);
+ if(!outcome)return;
+ CounterSound.play(outcome);if(s.phase==='receipt')delta(v.ticket);
+}
+function renderTrade(s,desk) {
+ const v=s.patron,person=PEOPLE[v.person],lot=v.lot,name=GOODS[lot.item][0],staged=trayReady(v);
+ const fresh=firstSeller(s),lesson=fresh||!!v.lessonCoil,scanning=fresh&&staged&&!lot.sealRead;
+ const firstWeekday=s.deskVersion===2&&s.day===1;
+ const second=sideOf(v),cost=lot.cost+(v.extra?.cost||0);
+ const category=['machine parts','survey gear','freight goods'][v.wants];
+ const prefix=v.buyer?'CUSTOMER BUYS':'CUSTOMER SELLS';
+ const message=v.response||(fresh?'“This coil’s genuine. Twenty-two credits and it’s yours.”':
+  v.lessonCoil?'“Pip said you have a relay coil. I’ll give you '+money(38)+' for it.”':
+  v.trainingCase?'“I found this lens in a survey pod. Is it worth my asking price?”':
+  v.windowLot&&s.stock.some(q=>q.id===v.windowLot)?'“I saw the '+GOODS[s.stock.find(q=>q.id===v.windowLot).item][0]+' in your window. Can I see it?”':
+  v.buyer?'“I’m buying '+category+'. '+(v.pairOrder?'Got two? I’ll pay a rush bonus.':'What have you got?')+'”':
+  '“'+person[3]+'”');
+ const step=!staged?(v.buyer?'Pick stock to sell':'Move the goods to your tray'):scanning?'Check the brass stamp':v.buyer?'Make the sale':'Review the price';
+ const detail=!staged?(v.lessonCoil?'Tap the glowing coil on your shelf.':v.buyer?'Tap a shelf item or drag it to the tray.':'Tap the loose item or drag it onto the center tray.'):
+  scanning?'The stamp tells you if the coil is genuine.':
+  v.lessonCoil?'Same coil. Your cost '+money(cost)+' · Buyer offers '+money(v.ask)+'.':
+  fresh?'The serial matches. Pay Pip to keep the coil.':
+  v.trainingCase?(lot.sealRead&&(!v.manualCheck||typeof lot.stampCall==='boolean')?(lot.fake?'Replica stamp. Compare its scrap value with the asking price.':'Factory stamp matched. Compare its value with the asking price.'):'Try the lens, then decide whether to buy or pass.'):
+  v.buyer?'Compare the offer with what you paid.':'Compare the asking price with the guide value.';
+ desk.innerHTML='<div class="slipTop"><span class="direction '+(v.buyer?'selling':'buying')+'">'+prefix+'</span><small>VISITOR '+s.turn+' / '+s.limit+'</small></div>'+
+  '<div class="dialogue clerk"><b>'+esc(person[0])+'</b><small>'+esc(person[1])+'</small><p>'+esc(message)+'</p></div>'+
+  '<div class="taskline"><i aria-hidden="true">'+(!staged?'▣':scanning?'◎':'✓')+'</i><div><h3>'+step+'</h3><p>'+esc(detail)+'</p></div></div>';
+ if(!staged) {
+  const expected=v.lessonCoil||v.windowLot||(!v.buyer?lot.id:null);
+  if(expected)desk.insertAdjacentHTML('beforeend','<div class="stockline">'+goodsIcon(lot.item)+'<div><small>'+(!v.buyer?'OFFERED ITEM':'REQUESTED ITEM')+'</small><strong>'+esc(name)+'</strong></div><b>'+money(v.ask)+'</b></div>');
+  actions(action(expected?'Place '+name.toLowerCase()+' on tray':'Choose from shelf',()=>{
+   if(expected)placeOnCounter(s,expected);else showModal('swap');
+  }),...skipButtons(s,lesson));
+  return;
+ }
+ const assessed=lot.sealRead&&(!v.manualCheck||typeof lot.stampCall==='boolean');
+ const reference=assessed?lotValue(lot,demand(s,lot.item)):Math.round(GOODS[lot.item][1]*demand(s,lot.item));
+ desk.insertAdjacentHTML('beforeend','<div class="stockline paperLot">'+goodsIcon(lot.item)+'<div><small>ON THE TRAY</small><strong>'+esc(name)+(second?' + '+esc(GOODS[second.item][0]):'')+'</strong>'+
+  '<small>'+(v.buyer?'You paid '+money(cost):'Guide ~'+money(reference)+(second?' for main lot':''))+'</small></div>'+
+  (scanning?'':!lesson?'<button id="unplace" aria-label="Remove goods from tray">Lift off</button>':'')+'</div>');
+ if($('#unplace'))$('#unplace').onclick=()=>{if(unstageLot(s)){v.negotiating=false;CounterSound.play('tap');save();render();}};
+ if(scanning){actions(action('Inspect the stamp',()=>readOnCounter(s)));return;}
+ const readonly=firstWeekday||!!v.lessonCoil;
+ const custom=!readonly&&(!!v.negotiating||(v.staged===undefined&&v.offer!==v.ask));
+ if(!custom&&v.staged!==undefined)v.offer=v.ask;
+ const label=v.buyer?'Buyer offers':'Asking price';
+ desk.insertAdjacentHTML('beforeend','<div class="offerline"><span>'+label+'</span><b>'+money(v.ask)+'</b></div>');
+ if(custom){
+  const low=v.buyer?v.ask:Math.max(1,(v.includeSide?v.sideAsk:0)+1,Math.floor(v.ask*.35));
+  const high=v.buyer?Math.max(v.ask+8,Math.round(v.opening*1.65)):v.ask;
+  desk.insertAdjacentHTML('beforeend','<div class="pricehead"><label for="price">YOUR COUNTEROFFER</label><b id="value"></b></div><div class="dial"><button id="minus" aria-label="Decrease offer">−</button><input id="price" type="range" aria-label="Counteroffer"><button id="plus" aria-label="Increase offer">+</button></div><p class="patience">Patience '+v.patience+' / 3</p>');
+  const range=$('#price');range.min=low;range.max=high;range.value=v.offer;
+  function update(){v.offer=+range.value;$('#value').textContent=money(v.offer);updateConfirm();}
+  range.oninput=update;range.onchange=()=>{CounterSound.play('tap');save();};
+  for(const [id,inc] of [['#minus',-1],['#plus',1]])$(id).onclick=()=>{range.value=+range.value+inc;update();save();};
+  $('#value').textContent=money(v.offer);
+ }
+ const main=action('',()=>printDeal(s));actions(main,...skipButtons(s,lesson));
+ function updateConfirm(){
+  const b=$('#primary');if(!b)return;
+  b.textContent=custom&&v.offer!==v.ask?'Offer '+money(v.offer):(v.buyer?'Sell for ':'Buy for ')+money(v.offer);
+  b.disabled=!v.buyer&&v.offer>s.cash;
+  const net=$('#net');if(net)net.textContent=signedCredits(v.offer-cost);
+ }
+ updateConfirm();
+ if(v.buyer)desk.insertAdjacentHTML('beforeend','<div class="marginline"><span>Profit if sold</span><b id="net">'+signedCredits(v.offer-cost)+'</b></div>');
+ else if(v.offer>s.cash)desk.insertAdjacentHTML('beforeend','<p class="cashwarning">You have '+money(s.cash)+'. Choose another offer or pass.</p>');
+ if(!lesson){
+  const tools=document.createElement('div');tools.className='dealtools';
+  function tool(id,label,fn,disabled=false){const b=action(label,fn,'tool',id);b.disabled=disabled;tools.append(b);}
+  if(!v.buyer)tool('inspect',v.scanned?'Read stamp':'Inspect · '+s.scans,()=>readOnCounter(s),!v.scanned&&!s.scans);
+  if(v.buyer)tool('inspect',v.pairOrder?'Pack a pair':'Change stock',()=>showModal('swap'));
+  if(v.extra)tool('unpair','Unpack pair',()=>unstageLot(s,'extra'));
+  if(!v.buyer&&v.sideLot)tool('bundle',(v.includeSide?'Remove ':'Add ')+GOODS[v.sideLot.item][0]+' · '+money(v.sideAsk),()=>{toggleSide(s);});
+  if(!readonly)tool('haggle',custom?'Use asking price':'Negotiate',()=>{v.negotiating=!v.negotiating;v.offer=v.ask;});
+  desk.append(tools);
+ }
+}
+function skipButtons(s,lesson){
+ return lesson?[]:[action('Pass',()=>{hostStart();pass(s);CounterSound.play('pass');},'secondary','pass')];
+}
+function renderTicket(s,desk,next){
+ const v=s.patron,l=v.lot,paid=v.ticket==='PURCHASED',sold=v.ticket==='SOLD',extra=sideOf(v);
+ const cost=l.cost+(v.extra?.cost||0),margin=v.tender-cost;
+ const title=paid?'Stock received.':sold?'Sale complete.':v.ticket==='PASSED'?'Offer declined.':v.ticket==='CUSTOMS TIP'?'Report filed.':'Customer left.';
+ const hint=paid?(firstSeller(s)?'The coil is yours. Ring for the mechanic who wants to buy it.':'The goods are on your shelf, ready for a buyer.'):
+  sold?(v.lessonCoil?'You bought low and sold high. The next deal is yours.':'The buyer takes the goods. Your till has been credited.'):v.response;
+ desk.innerHTML='<div class="slipTop"><span class="direction">'+(paid?'PURCHASE RECEIPT':sold?'SALES RECEIPT':'COUNTER RECEIPT')+'</span><small>NO. '+String(s.day*100+s.turn)+'</small></div><h2 class="resultTitle">'+title+'</h2>'+
+  '<div class="stockline">'+goodsIcon(l.item)+'<div><strong>'+esc(GOODS[l.item][0])+(extra?' + '+esc(GOODS[extra.item][0]):'')+'</strong><small>'+esc(PEOPLE[v.person][0])+'</small></div></div>'+
+  (sold?'<div class="slipmath"><span>You paid <b>'+money(cost)+'</b></span><span>Sold for <b>'+money(v.tender)+'</b></span><span>Profit <b>'+signedCredits(margin)+'</b></span></div>':v.tender?'<div class="offerline"><span>'+(paid?'Paid from till':'Paid to you')+'</span><b>'+signedCredits(v.tender)+'</b></div>':'')+
+  '<p class="ticketHint">'+esc(hint)+'</p>';
+ actions(action(s.turn>=s.limit?'Close the shutters':firstSeller(s)?'Ring for the buyer':'Ring for next customer',next));
+}
+</script><script>'use strict';
 const $=s=>document.querySelector(s), esc=s=>String(s).replace(/[&<>"']/g,k=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[k]));
 const seed=()=>crypto.getRandomValues(new Uint32Array(1))[0];
+const practice=location.hash==='#counter-practice';
+let stageKey='',stageAt=0;
 const localKey='second-orbit.exchange.v1';
 let profile={v:1,revision:0,run:makeRun(seed()),rewards:{},mute:false,best:0}, sdk,session=false,modalKind='',pulseUntil=0,lastDraw=-1,scanUntil=0,visitorKey='',approachAt=0,plantUntil=0;
-const phases=['ready','trade','receipt','audit','night','failed','owned'];
+const phases=['bell','ready','trade','receipt','audit','night','failed','owned'];
 function isLot(l){return l&&Number.isInteger(l.item)&&!!GOODS[l.item]&&Number.isInteger(l.grade)&&!!GRADES[l.grade]&&Number.isFinite(l.id)&&Number.isFinite(l.cost);}
 function validRun(s){
  if(!s||!phases.includes(s.phase)||!['seed','cash','day','turn','limit','paid','scans','nonce','heat','deals','totalSales'].every(k=>Number.isFinite(s[k]))||s.day<1||!Array.isArray(s.stock)||!s.stock.every(isLot)||!Array.isArray(s.reps)||s.reps.length!==3||!s.reps.every(Number.isFinite)||!['gear','ledger','served','serials'].every(k=>Array.isArray(s[k])))return false;
@@ -1122,7 +1644,7 @@ function validRun(s){
  if(s.phase==='audit'&&(!s.audit||!Number.isFinite(s.audit.levy)))return false;
  return !['night','failed','owned'].includes(s.phase)||!!s.recap;
 }
-function persist(){try{localStorage.setItem(localKey,JSON.stringify(profile));}catch{}}
+function persist(){try{if(practice)sessionStorage.setItem(localKey+'.practice',JSON.stringify(profile));else localStorage.setItem(localKey,JSON.stringify(profile));}catch{}}
 function merge(data,remote=false){
  if(!data||typeof data!=='object')return;
  for(const k of ['like','comment'])if(data.rewards?.[k]===true)profile.rewards[k]=true;
@@ -1133,20 +1655,19 @@ function merge(data,remote=false){
   if(remote&&$('#modal').open)$('#modal').close();
  }
 }
-try{merge(JSON.parse(localStorage.getItem(localKey)));}catch{}
+try{merge(JSON.parse(practice?sessionStorage.getItem(localKey+'.practice'):localStorage.getItem(localKey)));}catch{}
 const run=()=>profile.run;window.shopState=()=>JSON.parse(JSON.stringify(profile));
 function save(){profile.revision=Math.max(Date.now(),profile.revision+1);persist();sdk?.save();}
 function hostStart(){if(session)return;session=true;sdk?.prepare();sdk?.start();}
+function raiseShutters(){run().phase='bell';CounterSound.play('open');}
 function begin(){hostStart();beginShift(run());CounterSound.play('open');}
-function slotMotion(item,buy){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
- const tray=$('#trayHit').getBoundingClientRect(),drawer=$('#drawer').getBoundingClientRect();
- const a=[tray.left+tray.width/2,tray.top+tray.height/2],b=[drawer.left+drawer.width*.44,drawer.top+18];
- const from=buy?a:b,to=buy?b:a,c=document.createElement('canvas');c.className='travelling';drawIcon(c,item);document.body.append(c);c.style.left=(from[0]-18)+'px';c.style.top=(from[1]-18)+'px';
- if(typeof c.animate!=='function'){c.remove();return;}const dx=to[0]-from[0],dy=to[1]-from[1];const animation=c.animate([{transform:'translate(0,0) scale(.8)',opacity:0},{offset:.18,transform:'translate(0,-11px) scale(1.1)',opacity:1},{offset:.85,opacity:1},{transform:'translate('+dx+'px,'+dy+'px) scale(.64)',opacity:0}],{duration:560,easing:'cubic-bezier(.26,.5,.65,1)'});animation.onfinish=()=>c.remove();
-}
 function delta(text){
- const v=run().patron;if(v&&(text==='SOLD'||text==='PURCHASED'))slotMotion(v.lot.item,!v.buyer);
- const el=$('#delta');el.textContent=text;el.classList.remove('show');void el.offsetWidth;el.classList.add('show');pulseUntil=performance.now()+1200;
+ const el=$('#delta');el.textContent=text;
+ if(text==='SOLD'||text==='PURCHASED'){
+  const cash=$('#meters');cash.classList.remove('cashPulse');void cash.offsetWidth;cash.classList.add('cashPulse');
+  return;
+ }
+ el.classList.remove('show');void el.offsetWidth;el.classList.add('show');pulseUntil=performance.now()+1200;
 }
 function action(label,fn,cls='primary',id='primary'){const b=document.createElement('button');b.id=id;b.className=cls;b.textContent=label;b.onclick=()=>{if(!b.isConnected||b.disabled)return;CounterSound.wake();fn();save();render();};return b;}
 function actions(...buttons){const d=document.createElement('div');d.className='actions';d.append(...buttons);$('#desk').append(d);}
@@ -1159,26 +1680,31 @@ function render(){
  $('#time').textContent=s.phase==='ready'?'PORT 09':'SHIFT '+String(s.day).padStart(2,'0');
  $('#sector').textContent=profile.rewards.like?'GOLD TRADER':'DOCK 09';
  $('#cabinet').dataset.phase=s.phase;$('#cabinet').classList.toggle('inked',!!profile.rewards.comment);
- $('#trayHit').hidden=s.phase!=='trade';$('#trayHit').onclick=()=>$('#inspect')?.click();
- $('#meters').innerHTML=meter('Till',money(s.cash))+meter('Rent',money(rentDue(s)))+meter('Heat',s.heat+' / 5');
+ const tray=$('#trayHit'),loose=$('#looseItem'),atDesk=s.phase==='trade'&&v;
+ tray.hidden=!atDesk&&s.phase!=='bell';loose.hidden=!atDesk||v.buyer||trayReady(v);
+ tray.setAttribute('aria-label',s.phase==='bell'?'Ring the counter bell':'Use the deal tray');
+ tray.onclick=()=>{if(s.phase==='bell')$('#primary')?.click();else if(atDesk&&!trayReady(v))$('#primary')?.click();else if(atDesk&&v.buyer)showModal('swap');else if(atDesk)readOnCounter(s);};
+ loose.onclick=()=>{if(atDesk&&!trayReady(v))placeOnCounter(s,v.lot.id);};
+ const bill=rentInfo(s);
+ $('#meters').innerHTML=meter('Cash',money(s.cash))+meter(bill.amount?(bill.due?'Rent due':'Rent in '+bill.daysLeft+'d'):'Rent',money(bill.amount))+meter(s.day===1?'Visitors':'Heat',s.day===1?(s.turn+' / '+s.limit):s.heat+' / 5');
+ $('#supplyFace').classList.toggle('windowOpen',s.day>=2);
+ $('#supplyFace').setAttribute('aria-label',s.day>=2?'Open the display window':'Inspect shelf stock');
  $('#stockCount').textContent=cnt;$('#sound').innerHTML='<svg viewBox="0 0 24 24"><path d="M3 9h4l5-4v14l-5-4H3z"/>'+(profile.mute?'<path d="m16 9 6 6m0-6-6 6"/>':'<path d="M16 9q4 3 0 6m3-9q6 6 0 12"/>')+'</svg>';$('#sound').setAttribute('aria-label',profile.mute?'Turn sound on':'Mute sound');
  if(s.phase==='ready'){
-  desk.innerHTML='<div class="intro"><span class="kicker">ORBITAL PAWNSHOP</span><h1>SECOND<br>ORBIT</h1><p class="lede">Buy salvage. Read the seals. Name your price. Pay off the lease and this counter is yours.</p></div><div class="panel"><p><strong>'+KITS.find(kit=>kit.id===(s.kit||'salvage')).name+'</strong> · Opening float '+money(s.cash)+'</p></div>';
-  actions(action('Open the shutters',begin),action('Kits',()=>showModal('kits'),'secondary','kits'));
+  desk.innerHTML='<div class="intro"><span class="kicker">'+(practice?'PRACTICE COUNTER':'ORBITAL PAWNSHOP')+'</span><h1>SECOND<br>ORBIT</h1><p class="lede">Run the pawnshop at Dock Nine. Buy a traveler’s salvage, then sell it to someone who needs it.</p></div>';
+  actions(action('Raise the shutters',raiseShutters));
+ }else if(s.phase==='bell'){
+  desk.innerHTML='<div class="slipTop"><span class="direction">OPEN FOR BUSINESS</span><small>DAY 01</small></div><h2 class="resultTitle">Ring the counter bell.</h2><p class="body">Pip is waiting with your first deal. Ring when you’re ready.</p>';
+  actions(action('Ring for a customer',begin));
  }else if(s.phase==='trade'){
-  const l=v.lot,item=GOODS[l.item],p=PEOPLE[v.person],ref=Math.round(item[1]*demand(s,l.item));
-  let note=v.response||(v.pairOrder?'“I can take two lots. Pack a pair for a rush premium.”':null)||(v.buyer?'“Looking for '+['machine parts','survey gear','freight goods'][v.wants]+'. What can you show me?”':(s.day===1&&s.turn===1?'“A relay coil from my last run. Check it if you like.”':'“'+p[3]+'”'));
-  desk.innerHTML='<div class="dialogue"><b>'+p[0]+'</b><small>'+p[1]+' · '+s.turn+'/'+s.limit+'</small><p>'+esc(note)+'</p></div><div class="lot">'+goodsIcon(l.item)+'<div><span class="kicker">'+(v.buyer?'BUYER REQUEST':'INCOMING LOT')+'</span><h3>'+item[0]+(v.extra?' + '+GOODS[v.extra.item][0]:'')+'</h3><div class="tiny">'+(v.buyer?'Your cost '+money(l.cost+(v.extra?.cost||0)):'Board price ~'+money(ref))+'</div></div><button id="inspect">'+(v.buyer?(v.pairOrder?'Pack tray':'Swap lot'):v.scanned?'Findings':'Scan · '+s.scans)+'</button></div><div class="pricehead"><label for="price">'+(v.buyer?'YOUR SALE PRICE':'YOUR BUY OFFER')+'</label><b id="value"></b></div><div class="dial"><button id="minus" aria-label="Lower offer">−</button><input id="price" type="range" aria-label="Offer in credits"><button id="plus" aria-label="Raise offer">+</button></div>';
-  const range=$('#price'),min=v.buyer?v.ask:Math.max(1,Math.floor(v.ask*.35)),max=v.buyer?Math.max(v.ask+8,Math.round(v.opening*1.65)):v.ask;
-  range.min=min;range.max=max;range.step=1;range.value=v.offer;const upd=()=>{v.offer=+range.value;$('#value').textContent=money(v.offer);const b=$('#primary');if(b){b.textContent=(v.buyer?'Sell':'Buy')+' for '+money(v.offer);b.disabled=!v.buyer&&v.offer>s.cash;}};
-  range.oninput=upd;range.onchange=()=>{CounterSound.play('tap');save();};$('#minus').onclick=()=>{range.value=+range.value-1;upd();save();};$('#plus').onclick=()=>{range.value=+range.value+1;upd();save();};
-  $('#inspect').disabled=!v.buyer&&!v.scanned&&s.scans<1;
-  $('#inspect').onclick=()=>{CounterSound.wake();if(v.buyer){showModal('swap');return;}hostStart();const fresh=inspectLot(s);if(fresh){CounterSound.play('scan');scanUntil=performance.now()+1700;save();render();}showModal('scan');};
-  const quote=action('Counter',()=>{hostStart();v.offer=v.buyer?Math.max(v.ask,Math.round(v.ask*1.15)):Math.max(1,Math.min(s.cash,Math.round(v.ask*.83)));if(v.offer>0&&(!v.buyer&&s.cash===0))return;const result=trade(s);CounterSound.play(result||'tap');if(s.phase==='receipt')delta(s.patron.ticket);},'secondary','haggle');
-  actions(action('Make offer',()=>{hostStart();const result=trade(s);if(result){CounterSound.play(result);if(s.phase==='receipt')delta(s.patron.ticket);}}),quote,action('Pass',()=>{hostStart();pass(s);CounterSound.play('pass');},'secondary','pass'));upd();
+  renderTrade(s,desk);
  }else if(s.phase==='receipt'){
-  const l=v.lot,amt=v.tender;desk.innerHTML='<span class="kicker">COUNTER TICKET '+String(s.day*100+s.turn)+'</span><div class="receipt"><h2 class="resultTitle">'+esc(v.ticket)+'</h2><b>'+((amt>0?'+':'')+money(amt))+'</b></div><div class="lot">'+goodsIcon(l.item)+'<div><h3>'+GOODS[l.item][0]+'</h3><span class="tiny">'+PEOPLE[v.person][0]+' · '+CREWS[PEOPLE[v.person][2]]+'</span></div></div><p class="body break">'+esc(v.response)+'</p>';
-  actions(action(s.turn>=s.limit?'Close the shutters':'Next customer',()=>{hostStart();if(s.turn>=s.limit){requestClose(s);if(s.phase!=='audit'){sdk?.end();session=false;}CounterSound.play(s.phase==='audit'?'alert':s.phase==='failed'?'lose':'stamp');}else{nextGuest(s);CounterSound.play('arrival');}}));
+  renderTicket(s,desk,()=>{
+   if(practice&&s.patron.lessonCoil&&s.turn===2){returnFromPractice();return;}
+   hostStart();if(s.turn>=s.limit){requestClose(s);if(s.phase!=='audit'){sdk?.end();session=false;}CounterSound.play(s.phase==='audit'?'alert':s.phase==='failed'?'lose':'stamp');}
+   else{nextGuest(s);CounterSound.play('arrival');}
+  });
+  if(practice&&s.patron.lessonCoil&&s.turn===2)$('#primary').textContent='Return to my shop';
  }else if(s.phase==='audit'){
   const wanted=s.stock.find(l=>l.id===s.audit.lotId);
   desk.innerHTML='<span class="kicker">STATION CUSTOMS · INSPECTION</span><h2 class="resultTitle loss">Serial alert.</h2><p class="body">A customs officer stops the shutters. The filing shows '+s.heat+' heat marks.</p><div class="panel"><p><strong>Ruling · '+money(s.audit.levy)+'</strong></p><p>'+(wanted?'Customs will also seize the '+GOODS[wanted.item][0]+'. Turn it in yourself to reduce the fee to ₵3.':'The goods have left your shop. A handling fine is due.')+'</p></div>';
@@ -1194,20 +1720,21 @@ function render(){
    desk.innerHTML='<span class="kicker">DEED ISSUED · DOCK 09</span><h2 class="resultTitle">Yours, in writing.</h2><p class="body">'+ending+' After '+s.day+' shifts and '+s.deals+' deals, Second Orbit belongs to you.</p>';
    actions(action('Trade after hours',()=>{s.extended=true;s.day++;begin();}));
   }else{
-   desk.innerHTML='<span class="kicker">SHIFT '+String(s.day).padStart(2,'0')+' · CASHOUT</span><h2 class="resultTitle">Shutters down.</h2><div class="daybill"><span>Sales / purchases</span><b>+'+money(s.earned)+' / −'+money(s.spent)+'</b><span>Rent'+(s.extended?' rebate':'')+'</span><b>'+money(r.rent)+'</b>'+(r.fine?'<span>Customs'+(r.seized?' · seized '+esc(r.seized):'')+'</span><b>−'+money(r.fine)+'</b>':'')+(r.liquidation?'<span>Emergency stock sale</span><b>+'+money(r.liquidation)+'</b>':'')+'</div><div class="panel"><p><strong>'+(s.paid>=DEED?'Shop owned':'Deed '+money(s.paid)+' / '+money(DEED))+'</strong></p><div class="bookbar"><i style="width:'+Math.min(100,s.paid/DEED*100)+'%"></i></div><p>'+esc(EVENTS[s.day%6][1])+' Tomorrow.</p></div>';
+   desk.innerHTML='<span class="kicker">SHIFT '+String(s.day).padStart(2,'0')+' · CASHOUT</span><h2 class="resultTitle">Shutters down.</h2><div class="daybill"><span>Cash in / stock bought</span><b>+'+money(s.earned)+' / −'+money(s.spent)+'</b><span>Rent'+(s.extended?' rebate':'')+'</span><b>'+money(r.rent)+'</b>'+(r.fine?'<span>Customs'+(r.seized?' · seized '+esc(r.seized):'')+'</span><b>−'+money(r.fine)+'</b>':'')+(r.liquidation?'<span>Emergency stock sale</span><b>+'+money(r.liquidation)+'</b>':'')+'</div><div class="panel"><p><strong>'+(s.paid>=DEED?'Shop owned':'Deed '+money(s.paid)+' / '+money(DEED))+'</strong></p><div class="bookbar"><i style="width:'+Math.min(100,s.paid/DEED*100)+'%"></i></div><p>'+esc(EVENTS[s.day%6][1])+' Tomorrow.</p></div>';
    const next=action('Open shift '+(s.day+1),()=>{s.day++;begin();}),bench=action('Workbench',()=>showModal('bench'),'secondary','bench');actions(next,bench);
-   if(s.paid<DEED){const due=Math.min(DEED-s.paid,60),b=action('Pay '+money(due)+' toward deed',()=>{s.cash-=due;s.paid+=due;logTrade(s,'Deed installment',-due);CounterSound.play('upgrade');if(s.paid===DEED){s.phase='owned';profile.best=profile.best?Math.min(profile.best,s.day):s.day;}},'secondary','deposit');b.disabled=s.cash<due;actions(b);}
+   if(s.paid<DEED){const due=Math.min(DEED-s.paid,60),b=action('Pay '+money(due)+' toward deed',()=>{s.cash-=due;s.paid+=due;logTrade(s,'Deed installment',-due);CounterSound.play('upgrade');if(s.paid===DEED){s.phase='owned';profile.best=profile.best?Math.min(profile.best,s.day):s.day;}},'secondary','deposit');const waiting=s.deskVersion===2&&s.paid+due>=DEED&&s.day<7;
+    if(waiting)b.textContent='Final deed · Day 7';b.disabled=s.cash<due||waiting;actions(b);}
   }
  }
- if(s.phase==='trade'){
-  const order=CounterContracts.status(s),line=document.createElement('div');line.className='terms';
-  line.innerHTML='<span>Patience <b>'+('▮'.repeat(v.patience))+('▯'.repeat(Math.max(0,3-v.patience)))+'</b></span><span>'+esc(EVENTS[(s.day-1)%6][0])+'</span>';desk.prepend(line);
-  const tip=document.createElement('button');tip.className='orderline';tip.textContent=(s.turn===1&&s.day===1)?'↳ Counter to bid below the asking price.':order?'✉ '+order.title+' · '+order.progress+'/'+order.goal:'Station notices';tip.onclick=()=>showModal('ledger');desk.append(tip);
+ if(s.phase==='night'&&s.deskVersion===2&&s.paid<DEED){
+  const nextBill=rentInfo({...s,day:s.day+1}),note=document.createElement('p');
+  note.className='rentNote';note.textContent='Keep '+money(nextBill.amount)+' for rent on Day '+(s.day+1+nextBill.daysLeft)+'.';
+  desk.querySelector('.daybill').after(note);
  }
  if(s.phase==='night'&&s.recap.bonus?.amount){const badge=document.createElement('p');badge.className='bonus';badge.textContent='✓ '+s.recap.bonus.title+' paid '+money(s.recap.bonus.amount);desk.querySelector('.daybill').after(badge);}
  if(s.phase==='night'&&s.day<=4){
    const unlock=document.createElement('p');unlock.className='unlock';
-   unlock.textContent=['Next shift · Water plant & trade charters','Next shift · Two-lot rush orders','Next shift · Drones & prisms','Next shift · Flight recorders & lunar relics'][s.day-1];
+   unlock.textContent=['Next shift · Haggling, display window & water plant','Next shift · Two-lot rush orders','Next shift · Drones & prisms','Next shift · Flight recorders & lunar relics'][s.day-1];
    desk.querySelector('.panel').append(unlock);
  }
  if(s.phase==='trade'&&s.day===2&&s.turn===1){
@@ -1221,8 +1748,15 @@ function renderDrawer(){
   const l=s.stock[i],b=document.createElement(l?'button':'div');b.className='bin';
   if(l){b.innerHTML=goodsIcon(l.item)+'<span>'+money(l.cost)+'</span>';b.title=GOODS[l.item][0];b.setAttribute('aria-label','View '+b.title);
    const buyer=s.phase==='trade'&&s.patron.buyer;
-   const choose=()=>{if(s.patron.lot.id!==l.id){hostStart();assignSale(s,s.patron,l);CounterSound.play('tap');save();render();}};
-   if(buyer)handleLift(b,l,choose);
+   if(buyer){
+    b.setAttribute('aria-label','Place '+b.title+' on the tray');
+    if(s.patron.lessonCoil===l.id)b.classList.add('requested');
+    if(s.patron.lessonCoil&&s.patron.lessonCoil!==l.id)b.disabled=true;
+    if(trayReady(s.patron)&&s.patron.lot.id===l.id)b.classList.add('ontray');
+   }
+   if(CounterWindow.featured(s)?.id===l.id)b.classList.add('featured');
+   const choose=()=>{if(!b.disabled&&(!trayReady(s.patron)||s.patron.lot.id!==l.id))placeOnCounter(s,l.id);};
+   if(buyer&&!b.disabled)handleLift(b,l,choose);
    b.onclick=()=>{if(b.dataset.dragged==='true')return;if(buyer)choose();else showModal('shelf');};}
   d.append(b);
  }icons(d);
@@ -1247,18 +1781,37 @@ if(typeof modal.showModal!=='function'){
  modal.close=()=>{modal.removeAttribute('open');modal.open=false;modal.dispatchEvent(new Event('close'));};
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.open)modal.close();});
 }
+$('#looseItem').addEventListener('pointerdown',e=>{
+ const b=e.currentTarget,s=run(),v=s.patron;if(!v||v.buyer||trayReady(v))return;
+ const start=[e.clientX,e.clientY];let ghost=null;b.setPointerCapture(e.pointerId);
+ const move=ev=>{if(ev.pointerId!==e.pointerId||Math.hypot(ev.clientX-start[0],ev.clientY-start[1])<7&&!ghost)return;
+  if(!ghost){ghost=document.createElement('canvas');ghost.className='lifted';drawIcon(ghost,v.lot.item);document.body.append(ghost);$('#world').classList.add('dropzone');}
+  ghost.style.left=(ev.clientX-20)+'px';ghost.style.top=(ev.clientY-30)+'px';};
+ const finish=ev=>{if(ev.pointerId!==e.pointerId)return;
+  b.removeEventListener('pointermove',move);b.removeEventListener('pointerup',finish);b.removeEventListener('pointercancel',finish);
+  if(!ghost)return;ghost.remove();$('#world').classList.remove('dropzone');
+  const rect=$('#trayHit').getBoundingClientRect(),hit=ev.clientX>=rect.left-8&&ev.clientX<=rect.right+8&&ev.clientY>=rect.top-8&&ev.clientY<=rect.bottom+8;
+  const ignore=ev=>{ev.stopImmediatePropagation();};b.addEventListener('click',ignore,{capture:true,once:true});setTimeout(()=>b.removeEventListener('click',ignore,true),350);
+  if(hit&&ev.type==='pointerup')placeOnCounter(s,v.lot.id);
+ };b.addEventListener('pointermove',move);b.addEventListener('pointerup',finish);b.addEventListener('pointercancel',finish);
+});
 function showModal(kind){modalKind=kind;modalContents();if(!modal.open)modal.showModal();$('#dismiss').focus();}
 function tile(i,h,sub,button=''){return '<div class="row">'+(i==null?'':goodsIcon(i))+'<div><b>'+h+'</b><small>'+sub+'</small></div>'+button+'</div>';}
 function modalContents(){
  const s=run(),v=s.patron,body=$('#modalBody'),sup=sdk?.support()||{},k=modalKind;let text='';
- $('#modalTitle').textContent=({scan:'Assay reader',shelf:'Shelf stock',swap:'Show another lot',ledger:'Station ledger',bench:'Night workbench',water:'Condensate plant',kits:'Opening licenses',restart:'A new lease',guide:'Salvage field guide',charter:'Trade charters'})[k]||'Station';
- if(k==='scan'&&v&&s.phase==='trade'){
+ $('#modalTitle').textContent=({help:'Counter guide',scan:'Inspection bench',shelf:'Shelf stock',swap:'Show another lot',ledger:'Station ledger',bench:'Night workbench',water:'Condensate plant',kits:'Opening licenses',restart:'A new lease',guide:'Salvage field guide',charter:'Trade charters'})[k]||'Station';
+ if(k==='help'){
+  text='<article class="manual"><small>DOCK NINE · POCKET MANUAL</small><h3>Your first sale</h3><ol><li><b>Buy from a seller.</b> Put their item on the tray. Touch the brass stamp to check it, then pay.</li><li><b>Sell to a buyer.</b> Tap your stock or drag it to the tray. The difference between cost and sale price is your profit.</li><li><b>Keep rent money.</b> '+(s.deskVersion===2?'The landlord comes every seventh day.':'Your lease charges rent each shift.')+'</li></ol></article>'+
+   (practice?'<button id="practiceExit">Return to my shop</button>':'<button id="tryDeal">Practice one sale</button><small class="tiny">Practice uses a separate till. Your shop stays saved.</small>');
+ }else if(k==='scan'&&v&&s.phase==='trade'){
   const l=v.lot,item=GOODS[l.item],mark=SEALS[l.item];const actual=l.fake?mark.slice(0,-1)+(Number(mark.at(-1))+2)%10:mark;
   const read=l.sealRead===true;
-  text=tile(l.item,item[0],GRADES[l.grade][0]+' condition')+'<canvas class="loupe" tabindex="0" aria-label="Inspection lens. Touch the marked serial plate, use arrow keys, or press Enter to focus the plate."></canvas><p id="lensHint" class="mono">'+(read?'Serial resolved.':'Move the glass onto the little brass plate.')+'</p><div class="sealpair"><div><span class="tiny">Factory register</span><b>'+mark+'</b></div><div><span class="tiny">Stamped serial</span><b id="readCode">'+(read?actual:'····')+'</b></div></div><div class="panel" id="scanReport" '+(read?'':'hidden')+'><p><strong>'+(l.fake?'Replica · seal mismatch':'Authentic · seal matched')+'</strong></p><p>Estimated resale '+money(lotValue(l,demand(s,l.item)))+' today. '+(l.tag?'Tagged by station customs. Buying adds heat.':'Serial cleared for resale.')+'</p></div>';
+  text=tile(l.item,item[0],GRADES[l.grade][0]+' condition')+'<canvas class="specimen" width="256" height="66" aria-label="Factory handbook specimen"></canvas><canvas class="loupe" tabindex="0" aria-label="Inspection lens. Touch the marked serial plate, use arrow keys, or press Enter to focus the plate."></canvas><p id="lensHint" class="mono">'+(read?'Serial resolved.':'Tap the outlined brass plate or drag the lens onto it.')+'</p><div class="sealpair"><div><span class="tiny">Factory register</span><b>'+mark+'</b></div><div><span class="tiny">Stamped serial</span><b id="readCode">'+(read?actual:'····')+'</b></div></div><div class="panel" id="scanReport" '+(read?'':'hidden')+'><p><strong>'+(l.fake?'Replica · seal mismatch':'Authentic · seal matched')+'</strong></p><p>Estimated resale '+money(lotValue(l,demand(s,l.item)))+' today. '+(l.tag?'Tagged by station customs. Buying adds heat.':'Serial cleared for resale.')+'</p></div>';
+  text+='<div id="stampChoice" hidden><button data-match="yes">Codes match</button><button data-match="no">Codes differ</button></div>';
+  text+='<button id="returnDeal" '+(read?'':'hidden')+'>Review the deal</button>';
   if(l.tag)text+='<button data-act="report" '+(read?'':'hidden')+'>Report tagged goods · +₵5</button>'; }else if(k==='shelf'||k==='swap'){
-  if(k==='swap'&&v)text='<p class="mono">The buyer pays more for '+['machine parts','survey gear','freight goods'][v.wants]+'.</p>';
-  text+=s.stock.length?s.stock.map(l=>tile(l.item,GOODS[l.item][0],GRADES[l.grade][0]+' · cost '+money(l.cost)+(l.tag?' · tagged':'')+(l.fake?' · replica':''),k==='swap'?'<button data-lot="'+l.id+'">Show</button>'+(v.pairOrder&&l.id!==v.lot.id?'<button data-pair="'+l.id+'">Pair</button>':''):'<span class="tiny">'+money(lotValue(l,demand(s,l.item)))+'</span>')).join(''):'<p class="mono">Empty shelf. Buy salvage from the next seller.</p>';
+  if(k==='shelf'&&s.day>=2)text='<p class="mono">Place one lot in the window to attract a buyer for it.</p>';if(k==='swap'&&v)text='<p class="mono">The buyer pays more for '+['machine parts','survey gear','freight goods'][v.wants]+'.</p>';
+  text+=s.stock.length?s.stock.map(l=>tile(l.item,GOODS[l.item][0],GRADES[l.grade][0]+' · cost '+money(l.cost)+(l.sealRead&&l.tag?' · tagged':'')+(l.sealRead&&l.fake?' · replica':''),k==='swap'?'<button data-lot="'+l.id+'" '+(v.lessonCoil&&l.id!==v.lessonCoil?'disabled':'')+'>Place</button>'+(v.pairOrder&&l.id!==v.lot.id?'<button data-pair="'+l.id+'">Pair</button>':''):(s.day>=2?'<button data-window="'+l.id+'">'+(CounterWindow.featured(s)?.id===l.id?'In window ✓':'Display')+'</button>':'<span class="tiny">'+money(lotValue(l,demand(s,l.item)))+'</span>'))).join(''):'<p class="mono">Empty shelf. Buy salvage from the next seller.</p>';
  }else if(k==='charter'){
   const effects=['Rent costs six fewer credits every shift.','Two extra assay charges and a rare opening lot each shift.','Matched-class buyers will bid up to 15% more.'];
   text='<p class="mono">Sign one permanent charter for this lease. A crew needs four standing to sponsor you.</p>'+CREWS.map((name,i)=>tile([1,4,7][i],name,effects[i],'<button data-crew="'+i+'" '+(s.reps[i]<4||s.charter!=null?'disabled':'')+'>'+(s.charter===i?'Signed':s.reps[i]>=4?'Sign':s.reps[i]+'/4')+'</button>')).join('');
@@ -1289,12 +1842,16 @@ function modalContents(){
    (s.ledger.length?s.ledger.slice(0,8).map(e=>tile(null,esc(e.text),'Shift '+e.day,'<span class="tiny">'+(e.amount>0?'+':'')+money(e.amount)+'</span>')).join(''):'<p class="tiny">Your trades will appear here.</p>')+
    ((sup.like||sup.comment||profile.rewards.like||profile.rewards.comment)?'<div class="panel"><p>'+[profile.rewards.like?'Gold Trader plate fitted':sup.like?'Like in GameWave to fit a Gold Trader plate.':'',profile.rewards.comment?'Violet receipt ink fitted':sup.comment?'Comment in GameWave to unlock violet receipt ink.':''].filter(Boolean).join(' ')+'</p></div>':'');
  }
- body.innerHTML=text;icons(body);if(k==='scan'&&body.querySelector('.loupe')){const l=v.lot;AssayGlass.install(body.querySelector('.loupe'),l,()=>{CounterSound.play('stamp');save();const mark=SEALS[l.item];document.getElementById("readCode").textContent=l.fake?mark.slice(0,-1)+(Number(mark.at(-1))+2)%10:mark;document.getElementById("scanReport").hidden=false;document.getElementById("lensHint").textContent='Serial resolved.';const rb=body.querySelector('[data-act=report]');if(rb)rb.hidden=false;});}body.querySelectorAll('[data-lot]').forEach(b=>b.onclick=()=>{
-  if(s.phase!=='trade'||!v?.buyer)return;const l=s.stock.find(q=>q.id===Number(b.dataset.lot));if(!l)return;hostStart();assignSale(s,v,l);modal.close();CounterSound.play('tap');save();render();});
- body.querySelectorAll('[data-pair]').forEach(b=>b.onclick=()=>{const extra=s.stock.find(l=>l.id===Number(b.dataset.pair));if(!v?.buyer||!v.pairOrder||!extra||extra.id===v.lot.id)return;hostStart();assignSale(s,v,v.lot,extra);save();modal.close();CounterSound.play('tap');render();});
+ body.innerHTML=text;icons(body);if(k==='scan'&&body.querySelector('.loupe')){const l=v.lot;CounterStamps.page(body.querySelector('.specimen'),l);const sync=bindAppraisal(body,s,v);AssayGlass.install(body.querySelector('.loupe'),l,()=>{CounterSound.play('stamp');save();const mark=SEALS[l.item];document.getElementById("readCode").textContent=l.fake?mark.slice(0,-1)+(Number(mark.at(-1))+2)%10:mark;sync();});}body.querySelectorAll('[data-lot]').forEach(b=>b.onclick=()=>{
+  if(s.phase!=='trade'||!v?.buyer)return;const l=s.stock.find(q=>q.id===Number(b.dataset.lot));if(!l)return;if(!stageLot(s,l.id))return;hostStart();modal.close();CounterSound.play('tap');save();render();});
+ body.querySelectorAll('[data-pair]').forEach(b=>b.onclick=()=>{const extra=s.stock.find(l=>l.id===Number(b.dataset.pair));if(!v?.buyer||!v.pairOrder||!extra||extra.id===v.lot.id)return;if(!stageLot(s,extra.id,'extra'))return;hostStart();save();modal.close();CounterSound.play('tap');render();});
+ if(k==='scan')$('#returnDeal').onclick=()=>{modal.close();render();};
+ if(k==='shelf')body.querySelectorAll('[data-window]').forEach(b=>b.onclick=()=>{const id=Number(b.dataset.window);if(CounterWindow.pin(s,CounterWindow.featured(s)?.id===id?null:id)){save();CounterSound.play('tap');render();}});
+ if(k==='help'){if(practice)$('#practiceExit').onclick=returnFromPractice;else $('#tryDeal').onclick=enterPractice;}
  if(k==='shelf'||k==='ledger'){const guide=document.createElement('button');guide.textContent='Field guide · '+s.serials.length+'/'+GOODS.length;guide.onclick=()=>showModal('guide');body.append(guide);}
  if(k==='kits')body.querySelectorAll('[data-kit]').forEach(b=>b.onclick=()=>{openingKit(s,b.dataset.kit);save();modal.close();render();});
  if(k==='ledger'){
+  if(s.phase==='ready'){const kits=document.createElement('button');kits.textContent='Choose an opening license';kits.onclick=()=>showModal('kits');body.prepend(kits);}
   if(s.day>=2){const charter=document.createElement('button');charter.textContent=s.charter!=null?'Charter · '+CREWS[s.charter]:'Trade charters';charter.onclick=()=>showModal('charter');body.prepend(charter);}
   const reset=document.createElement('button');reset.textContent='Apply for a new lease';reset.onclick=()=>showModal('restart');body.append(reset);
  }
@@ -1327,7 +1884,7 @@ document.addEventListener('pointerdown',e=>{
  lastModalTouch=null;modalPress=null;
  if(e.pointerType!=='touch'||!e.isPrimary)return;
  const drawerSale=!modal.open&&run().phase==='trade'&&run().patron?.buyer&&performance.now()<drawerReleaseUntil;
- const button=modal.open?e.target.closest?.('#dismiss,[data-act="report"]'):drawerSale?e.target.closest?.('#primary'):null;
+ const button=modal.open?e.target.closest?.('#dismiss,#returnDeal,[data-match],[data-act="report"]'):drawerSale?e.target.closest?.('#primary'):null;
  if(button&&!button.disabled)modalPress={button,id:e.pointerId,x:e.clientX,y:e.clientY,dialog:modal.open};
 },true);
 document.addEventListener('pointercancel',()=>{modalPress=null;},true);
@@ -1347,7 +1904,27 @@ document.addEventListener('click',e=>{
   e.preventDefault();e.stopImmediatePropagation();lastModalTouch=null;
  }
 },true);
-$('#dismiss').onclick=()=>modal.close();modal.addEventListener('close',()=>{modalKind='';});
+let practiceFrame=null;
+function enterPractice(){
+ if(practice||practiceFrame)return;
+ try{sessionStorage.removeItem(localKey+'.practice');}catch{}
+ if(modal.open)modal.close();
+ const overlay=document.createElement('dialog');overlay.className='practiceOverlay';
+ const frame=document.createElement('iframe');frame.title='Practice one sale';frame.src=location.href.split('#')[0]+'#counter-practice';
+ const leave=document.createElement('button');leave.className='leavePractice';leave.textContent='Leave practice';leave.onclick=closePractice;
+ overlay.append(leave,frame);document.body.append(overlay);practiceFrame=frame;
+ if(overlay.showModal)overlay.showModal();else overlay.setAttribute('open','');frame.focus();
+ overlay.addEventListener('cancel',e=>{e.preventDefault();closePractice();});
+}
+function closePractice(){if(!practiceFrame)return;const overlay=practiceFrame.parentElement;practiceFrame=null;overlay.remove();$('#help').focus();}
+window.addEventListener('message',e=>{if(practiceFrame&&e.source===practiceFrame.contentWindow&&e.data==='second-orbit.practice-finished')closePractice();});
+function returnFromPractice(){
+ try{sessionStorage.removeItem(localKey+'.practice');}catch{}
+ if(parent!==window){parent.postMessage('second-orbit.practice-finished','*');return;}
+ history.replaceState(null,'',location.href.split('#')[0]);location.reload();
+}
+$('#help').onclick=()=>showModal('help');
+$('#dismiss').onclick=()=>{modal.close();render();};modal.addEventListener('close',()=>{modalKind='';});
 $('#shelf').onclick=()=>showModal('shelf');$('#ledger').onclick=()=>showModal('ledger');
 function worldControl(id,label,open){const b=document.createElement('button');b.id=id;b.className='worldControl';b.setAttribute('aria-label',label);b.title=label;b.onclick=open;$('#world').append(b);}
 worldControl('registerFace','Open the register ledger',()=>showModal('ledger'));
@@ -1358,15 +1935,19 @@ function draw(ts){
  const s=run(),v=s.patron;const t=matchMedia('(prefers-reduced-motion: reduce)').matches?0:ts/1000;
  const id=(v?s.day+'/'+s.turn:'')+(!v?s.phase:'');if(id!==visitorKey){visitorKey=id;approachAt=ts;}
  const arrive=v&&t?Math.min(1,(ts-approachAt)/420):1;
+ const phaseKey=s.day+'/'+s.turn+'/'+s.phase+(v?'/'+trayReady(v):'');
+ if(stageKey!==phaseKey){stageKey=phaseKey;stageAt=ts;}
+ const showLot=v&&s.phase==='trade'&&trayReady(v);
  const ceremony=s.phase==='owned',crew=s.charter??s.reps.indexOf(Math.max(...s.reps));
- CounterArt.draw($('#shopArt'),{time:t,celebration:t?Math.min(1,Math.max(0,(ts-approachAt)/1000)):1,shutter:s.turn===1&&arrive<1?(1-arrive)**2:0,approach:arrive,extra:v?.extra?.item,progress:s.turn/s.limit,reader:s.gear.includes('reader'),heat:s.heat,charter:s.charter,receipt:s.phase==='receipt',water:s.water?.installed,patron:ceremony?[1,3,6][crew]:s.phase==='audit'?2:v?v.person:0,item:s.phase==='audit'?10:v?v.lot.item:1,mood:ceremony?'happy':s.phase==='audit'?'angry':v?v.mood:'idle',day:s.day,stock:s.stock.map(l=>l.item),scan:ts<scanUntil,scene:ceremony?'award':['night','failed'].includes(s.phase)?'closed':'shop'});
+ CounterArt.draw($('#shopArt'),{time:t,celebration:t?Math.min(1,Math.max(0,(ts-approachAt)/1000)):1,shutter:s.turn===1&&arrive<1?(1-arrive)**2:0,approach:arrive,extra:showLot?sideOf(v)?.item:null,progress:s.turn/s.limit,reader:s.gear.includes('reader'),heat:s.heat,charter:s.charter,receipt:false,water:s.water?.installed,patron:ceremony?[1,3,6][crew]:s.phase==='audit'?2:v?v.person:0,item:s.phase==='audit'?10:showLot?v.lot.item:null,mood:ceremony?'happy':s.phase==='audit'?'angry':v?v.mood:'idle',day:s.day,stock:s.stock.map(l=>l.item),scan:ts<scanUntil,scene:ceremony?'award':['night','failed','ready'].includes(s.phase)?'closed':s.phase==='bell'?'empty':'shop'});
+ CounterStage.draw($('#shopArt').getContext('2d'),{run:s,now:ts,age:Math.max(0,(ts-stageAt)/1000),reduced:matchMedia('(prefers-reduced-motion: reduce)').matches,trayReady:!!v&&trayReady(v)});
  if(ts>pulseUntil)$('#delta').classList.remove('show');
 }
 function paintPlant(ts){const c=$('#plantFace');if(!c)return;const w=CounterWater.status(run());
  WaterArt.machine(c,{time:ts/1000,fill:['raw','sampled','filtered'].includes(w.phase)?.83:0,quality:w.quality===2?1:w.clarity/100||.2,stage:ts<plantUntil&&w.phase==='filtered'?'filtering':({raw:'testing',sampled:'testing',filtered:'ready',bottled:'ready'})[w.phase]||'empty'});}
 function animate(ts){if(!document.hidden&&ts-lastDraw>=65){lastDraw=ts;draw(ts);if(modal.open&&modalKind==='water')paintPlant(ts);}requestAnimationFrame(animate);}
 CounterSound.mute(profile.mute);
-sdk=bridge({read:()=>profile,write:(d,rem)=>{merge(d,rem);persist();},changed:e=>{
+sdk=practice?null:bridge({read:()=>profile,write:(d,rem)=>{merge(d,rem);persist();},changed:e=>{
  if(e.type==='reward'){profile.revision=Math.max(Date.now(),profile.revision+1);persist();delta(e.kind==='like'?'GOLD PLATE':'VIOLET INK');}
  if(e.type==='support'||e.type==='reward'||e.type==='cloud'){render();}if(e.type==='connected')hostSize();
 }});
@@ -1388,6 +1969,9 @@ Steam reference: https://store.steampowered.com/app/4348910/
 SOURCE COMPONENTS
 The changing station prices in economy.js use the price wave from the MIT-licensed trading game Pazillionaire. ECONOMY-LICENSE.txt identifies the source revision and preserves its license.
 Silkscreen is distributed under the SIL Open Font License. See fonts/OFL.txt.
+
+AT THE COUNTER
+Raise the shutters and ring the bell. Place Pip's relay coil on the tray, check its stamped serial, and buy it. Brack comes for that same coil. The receipt shows what you paid and what you earned. The ? button opens the handbook and a separate practice till for anyone returning to a saved shop.
 
 PLAY OFFLINE
 Extract the whole ZIP and open index.html. It bundles the complete, playable game, including fonts and audio synthesis. index-source.html is the editable entry for the separate scripts. Both entries use the same local save key when served from the same origin.
