@@ -823,7 +823,7 @@ globalThis.CounterContracts = (() => {
       done:'Brack’s tug now has a working bench light.'},
     {name:'Vale’s paper trail', brief:'Scan a lot before buying or selling it.', goal:1, bonus:8, crew:1,
       test:e=>e.scanned===true && (e.type==='buy'||e.type==='sell'), done:'Vale has pinned your first assay slip in the public archive.'},
-    {name:'Pip’s second trip', brief:'Sell two lots. Any buyer can sign for them.', goal:2, bonus:9, crew:2, test:e=>e.type==='sell',
+    {name:'Pip’s second trip', brief:'Sell two lots. Any buyer can sign for them.', goal:2, bonus:9, crew:2, test:e=>e.type==='sell', countLots:true,
       done:'Pip caught the night courier with both parcels.'},
     {name:'Ferro’s spare shelf', brief:'Buy two lots for the dock workshop.', goal:2, bonus:10, crew:0, test:e=>e.type==='buy',
       done:'Two new bins at Ferro’s bench carry your shop mark.'},
@@ -873,7 +873,10 @@ globalThis.CounterContracts = (() => {
     // A patron signs one receipt per visit; workshop actions have their own slot.
     const visit=s.turn+(['repair','craft'].includes(event.type)?'/bench':'/counter');
     if(a.visits.includes(visit))return false;
-    a.visits.push(visit);a.progress++;return true;
+    a.visits.push(visit);
+    const quantity=o.countLots && event.lotCount===2 ? 2 : 1;
+    a.progress=Math.min(o.goal,a.progress+quantity);
+    return true;
   }
 
   function settle(s) {
@@ -977,7 +980,7 @@ const DEED=240,START=104;
 const money=n=>'₵'+Math.round(n);
 const lotValue=(lot,demand=1)=>CounterEconomy.resale(GOODS[lot.item][1],GRADES[lot.grade][1]*(lot.fake?.53:1),demand);
 const shiftRent=d=>Math.min(40,11+d*2);
-const rentDue=s=>s.extended?0:Math.max(0,shiftRent(s.day)-(s.charter===0?6:0));
+const rentDue=s=>s.paid>=DEED||s.extended?0:Math.max(0,shiftRent(s.day)-(s.charter===0?6:0));
 const catalogSize=d=>d<2?4:d<3?6:d<4?8:d<5?10:12;
 const demand=(s,i)=>CounterEconomy.market(s.day,GOODS[i][2],i)*(EVENTS[(s.day-1)%EVENTS.length][2]===GOODS[i][2]?1.26:1);
 function makeRun(seed){
@@ -1068,7 +1071,7 @@ function trade(s){
  if(v.scanned)l.assayed=true;
  if(!s.serials.includes(l.item))s.serials.push(l.item);
  s.deals++;s.reps[crew]=Math.min(9,s.reps[crew]+1);
- CounterContracts.record(s,{type:v.buyer?'sell':'buy',lot:l,amount:n,scanned:v.scanned,crew});
+ CounterContracts.record(s,{type:v.buyer?'sell':'buy',lot:l,amount:n,scanned:v.scanned||l.assayed===true,lotCount:v.extra?2:1,crew});
  const margin=n-l.cost-(v.extra?.cost||0);
  const msg=v.buyer?(v.extra?'Two-lot shipment · ':'')+'Margin '+(margin>=0?'+':'')+money(margin)+' · '+CREWS[crew]+' standing +1':'Added to your shelf. Buyers can now bid on it.';
  receipt(s,v.buyer?'SOLD':'PURCHASED',msg,v.buyer?n:-n,'happy');return v.buyer?'sell':'buy';
